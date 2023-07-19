@@ -1,11 +1,3 @@
-import styles from "@/styles/Home.module.css";
+import Home from "@/container/Home";
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <h1>Proper Homes</h1>
-      </div>
-    </main>
-  );
-}
+export default Home;
