@@ -1,3 +1,3 @@
-import Home from "@/container/Home";
+import Home from "@/containers/Home";
 
 export default Home;

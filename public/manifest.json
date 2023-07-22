@@ -1,0 +1,124 @@
+{
+  "name": "ProperHomes",
+  "short_name": "ProperHomes",
+  "icons": [
+    {
+      "src": "/assets/images/PWA/android/android-launchericon-512-512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/assets/images/PWA/android/android-launchericon-192-192.png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/PWA/ios/16.png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/assets/images/PWA/ios/20.png",
+      "sizes": "20x20"
+    },
+    {
+      "src": "/assets/images/PWA/ios/29.png",
+      "sizes": "29x29"
+    },
+    {
+      "src": "/assets/images/PWA/ios/32.png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/assets/images/PWA/ios/40.png",
+      "sizes": "40x40"
+    },
+    {
+      "src": "/assets/images/PWA/ios/50.png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "/assets/images/PWA/ios/57.png",
+      "sizes": "57x57"
+    },
+    {
+      "src": "/assets/images/PWA/ios/58.png",
+      "sizes": "58x58"
+    },
+    {
+      "src": "/assets/images/PWA/ios/60.png",
+      "sizes": "60x60"
+    },
+    {
+      "src": "/assets/images/PWA/ios/64.png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/assets/images/PWA/ios/72.png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/assets/images/PWA/ios/76.png",
+      "sizes": "76x76"
+    },
+    {
+      "src": "/assets/images/PWA/ios/80.png",
+      "sizes": "80x80"
+    },
+    {
+      "src": "/assets/images/PWA/ios/87.png",
+      "sizes": "87x87"
+    },
+    {
+      "src": "/assets/images/PWA/ios/100.png",
+      "sizes": "100x100"
+    },
+    {
+      "src": "/assets/images/PWA/ios/114.png",
+      "sizes": "114x114"
+    },
+    {
+      "src": "/assets/images/PWA/ios/120.png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/assets/images/PWA/ios/128.png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/assets/images/PWA/ios/144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/assets/images/PWA/ios/152.png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/assets/images/PWA/ios/167.png",
+      "sizes": "167x167"
+    },
+    {
+      "src": "/assets/images/PWA/ios/180.png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "/assets/images/PWA/ios/192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/images/PWA/ios/256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/assets/images/PWA/ios/512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/assets/images/PWA/ios/1024.png",
+      "sizes": "1024x1024"
+    }
+  ],
+  "theme_color": "#0e0e0e",
+  "background_color": "#0e0e0e",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

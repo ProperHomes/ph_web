@@ -1,6 +1,65 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
 
-module.exports = nextConfig
+const advancedHeaders = [
+  {
+    key: "X-DNS-Prefetch-Control",
+    value: "on",
+  },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
+  {
+    key: "X-XSS-Protection",
+    value: "1; mode=block",
+  },
+  {
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
+  },
+  {
+    key: "X-Content-Type-Options",
+    value: "nosniff",
+  },
+  {
+    key: "Referrer-Policy",
+    value: "origin-when-cross-origin",
+  },
+];
+
+const withPWA = require("next-pwa")({
+  dest: "public",
+  mode: "production",
+  disable:
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "preview",
+});
+
+const nextConfig = {
+  reactStrictMode: false,
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: false,
+  },
+  // images: {
+  //   unoptimized: true, // process.env.NODE_ENV === "development"
+  //   remotePatterns: [
+  //     { protocol: "https", hostname: process.env.NEXT_PUBLIC_CLOUDFRONT_URL },
+  //   ],
+  // },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: advancedHeaders,
+      },
+    ];
+  },
+};
+
+module.exports = withPWA(nextConfig);
