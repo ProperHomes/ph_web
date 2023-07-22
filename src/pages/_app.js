@@ -16,6 +16,7 @@ import { AppProvider } from "src/appContext";
 import { NotificationsProvider } from "@/containers/Notifications/context";
 
 import "../styles/globals.css";
+import { PropertyProvider } from "@/containers/Properties/context";
 
 dayjs.extend(relativeTime);
 
@@ -37,16 +38,18 @@ function App({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
         <ApolloProvider client={apolloClient}>
           <AppProvider>
             <NotificationsProvider>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Box
-                  sx={{
-                    backgroundColor: "#fff",
-                    margin: "0 auto",
-                  }}
-                >
-                  <Component {...pageProps} />
-                </Box>
-              </LocalizationProvider>
+              <PropertyProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <Box
+                    sx={{
+                      backgroundColor: "#fff",
+                      margin: "0 auto",
+                    }}
+                  >
+                    <Component {...pageProps} />
+                  </Box>
+                </LocalizationProvider>
+              </PropertyProvider>
             </NotificationsProvider>
           </AppProvider>
         </ApolloProvider>

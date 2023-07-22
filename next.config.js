@@ -52,6 +52,14 @@ const nextConfig = {
   //     { protocol: "https", hostname: process.env.NEXT_PUBLIC_CLOUDFRONT_URL },
   //   ],
   // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "loremflickr.com",
+      },
+    ],
+  },
   async headers() {
     return [
       {
