@@ -38,6 +38,7 @@ function PropertyCard({ data }) {
         <Image
           src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
           fill
+          quality={100}
           sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 10vw"
           style={{
             backgroundColor: "#000",
