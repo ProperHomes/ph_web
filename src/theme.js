@@ -41,26 +41,45 @@ const defaultThemeOptions = {
       textTransform: "none",
     },
   },
-  //   components: {
-  //     MuiMobileStepper: {
-  //       styleOverrides: {
-  //         progress: {
-  //           width: "100%",
-  //           backgroundColor: "#3F4044",
-  //           "& span": {
-  //             backgroundColor: "#e0e6e9",
-  //           },
-  //         },
-  //       },
-  //     },
-  //     MuiTooltip: {
-  //       styleOverrides: {
-  //         tooltip: {
-  //           backgroundColor: "transparent",
-  //         },
-  //       },
-  //     },
-  //   },
+  components: {
+    MuiInput: {
+      styleOverrides: {
+        input: {
+          backgroundColor: "transparent",
+        },
+        root: {
+          "&::before": {
+            borderColor: "#3f4044",
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          borderRadius: "8px",
+        },
+        root: {
+          "& fieldset": {
+            borderRadius: "6px",
+          },
+          "&::before": {
+            borderRadius: "6px",
+          },
+          "&.Mui-error": {
+            borderRadius: "8px",
+          },
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          border: "none",
+        },
+      },
+    },
+  },
   overrides: {
     MuiCssBaseline: {
       "@global": {

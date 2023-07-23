@@ -2,6 +2,7 @@ import Image from "next/image";
 import Stack from "@mui/material/Stack";
 import Logo from "public/assets/images/LogoTransparent.png";
 import PropertyList from "../Properties/List";
+import AuthModal from "../Auth";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         priority
         style={{ maxWidth: "300px", height: "auto" }}
       />
+      <AuthModal />
       <PropertyList />
     </Stack>
   );
