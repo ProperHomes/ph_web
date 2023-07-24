@@ -1,11 +1,9 @@
-import { useApollo } from "src/apolloClient";
-
+import { useApollo } from "@/utils/hooks/useApollo";
 import { getPropertyUrl } from "@/utils/helper";
 import {
   GET_PROPERTY_BY_SLUG,
   GET_ALL_PROPERTIES_FOR_STATIC_PATHS,
 } from "src/containers/Properties/graphql";
-
 import Profile from "@/containers/Properties/Profile";
 
 function Page({ profileData }) {

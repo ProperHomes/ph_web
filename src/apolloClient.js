@@ -77,7 +77,3 @@ export function initializeApollo(ctx) {
   }
   return _apolloClient;
 }
-
-export function useApollo(ctx) {
-  return initializeApollo(ctx);
-}
