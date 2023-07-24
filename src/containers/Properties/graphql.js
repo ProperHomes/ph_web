@@ -68,18 +68,16 @@ export const GET_PROPERTY_BY_NUMBER = gql`
 export const GET_PROPERTY_BY_SLUG = gql`
   ${PROPERTY_FIELDS}
   query PropertyBySlug($slug: String!) {
-    properties(condition: { slug: $slug }, first: 1) {
-      nodes {
-        ...PropertyFields
-        media: propertyMedias {
-          nodes {
-            id
-            mediaUrl
-            media {
-              signedUrl
-            }
-            isCoverImage
+    propertyBySlug(slug: $slug) {
+      ...PropertyFields
+      media: propertyMedias {
+        nodes {
+          id
+          mediaUrl
+          media {
+            signedUrl
           }
+          isCoverImage
         }
       }
     }
@@ -90,7 +88,6 @@ export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
   query getPropertiesForStaticPaths {
     properties {
       nodes {
-        number
         type
         city
         listedFor

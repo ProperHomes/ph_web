@@ -15,13 +15,12 @@ export async function getStaticProps(context) {
   let profileData = null;
   try {
     const client = useApollo(context);
-    const res = await client.query({
+    const { data } = await client.query({
       query: GET_PROPERTY_BY_SLUG,
       variables: { slug: params.slug },
       fetchPolicy: "network-only",
     });
-
-    profileData = res?.data?.properties?.nodes[0];
+    profileData = data?.propertyBySlug;
   } catch (err) {
     console.error("Error fetching property data: ", err);
   }
@@ -43,9 +42,9 @@ export async function getStaticPaths() {
       query: GET_ALL_PROPERTIES_FOR_STATIC_PATHS,
       fetchPolicy: "network-only",
     });
-    const jobs = data?.jobs?.nodes ?? [];
-    if (jobs.length > 0) {
-      paths = jobs.map(({ city, type, listedFor }) => {
+    const properties = data?.properties?.nodes ?? [];
+    if (properties.length > 0) {
+      paths = properties.map(({ city, type, listedFor }) => {
         return {
           params: { slug: getPropertyUrl({ city, type, listedFor }) },
         };
