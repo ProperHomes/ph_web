@@ -1,31 +1,20 @@
 import { useState } from "react";
-import Image from "next/image";
 import Stack from "@mui/material/Stack";
-import Logo from "public/assets/images/LogoTransparent.png";
 import PropertyList from "../Properties/List";
 import AuthModal from "../Auth";
+import HomeLayout from "@/components/Layouts/HomeLayout";
 
 export default function Home() {
-  const [openAuth, setOpenAuth] = useState(false);
+  const [openAuth, setOpenAuth] = useState(true);
   const toggleAuth = () => {
     setOpenAuth((prev) => !prev);
   };
   return (
-    <Stack
-      spacing={8}
-      alignItems="center"
-      justifyContent="center"
-      sx={{ padding: "2rem" }}
-    >
-      <Image
-        src={Logo}
-        alt="logo"
-        quality={100}
-        priority
-        style={{ maxWidth: "300px", height: "auto" }}
-      />
-      <AuthModal open={openAuth} handleClose={toggleAuth} />
-      <PropertyList />
-    </Stack>
+    <HomeLayout>
+      <Stack spacing={8} alignItems="center" justifyContent="center">
+        <AuthModal open={openAuth} handleClose={toggleAuth} />
+        <PropertyList />
+      </Stack>
+    </HomeLayout>
   );
 }

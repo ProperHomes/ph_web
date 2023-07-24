@@ -1,12 +1,12 @@
-import { useRouter } from "next/router";
+import HomeLayout from "@/components/Layouts/HomeLayout";
 
-function PropertyProfile() {
-  const router = useRouter();
-  const { type, listedFor, city } = router.query;
+function PropertyProfile({ data }) {
+  const { title, description } = data;
   return (
-    <h2>
-      A {type} in {city} for {listedFor}
-    </h2>
+    <HomeLayout>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </HomeLayout>
   );
 }
 

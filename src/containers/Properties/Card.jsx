@@ -6,10 +6,11 @@ import Fade from "@mui/material/Fade";
 import Image from "next/image";
 import { useTheme } from "@mui/material";
 import Link from "next/link";
+import { getPropertyUrl } from "@/utils/helper";
 
 function PropertyCard({ data }) {
   const theme = useTheme();
-  const { title, description, media, type, price, city, listedFor } = data;
+  const { slug, title, description, media, type, price, city } = data;
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
 
@@ -84,7 +85,7 @@ function PropertyCard({ data }) {
 
       <Box sx={{ width: "100%" }}>
         <Link
-          href={`/property/${type}-for-${listedFor}-in-${city}`}
+          href={`/property/${slug}`}
           sx={{
             cursor: "pointer",
             overflow: "hidden",
@@ -92,6 +93,9 @@ function PropertyCard({ data }) {
             whiteSpace: "nowrap",
             fontWeight: "bold",
             fontFamily: theme.typography.fontFamily.Raleway,
+            "&:hover": {
+              textDecoration: "underline !important",
+            },
           }}
         >
           {title}

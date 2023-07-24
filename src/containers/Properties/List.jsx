@@ -17,6 +17,7 @@ const Section = styled(Box)(({ theme }) => ({
     flexDirection: "column",
   },
   width: "100%",
+  maxWidth: "1200px",
 }));
 
 function PropertyList() {
@@ -24,7 +25,7 @@ function PropertyList() {
   const { list } = state;
 
   return (
-    <Section sx={{ maxWidth: "1200px" }}>
+    <Section>
       {list.map((l) => {
         return <Card key={l.id} data={l} />;
       })}

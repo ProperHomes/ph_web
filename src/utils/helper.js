@@ -72,6 +72,13 @@ export function convertStringToSlug(str) {
   return updatedStr;
 }
 
+export function getPropertyUrl({ type, listedFor, city }) {
+  if (!city || !listedFor || !type) {
+    return "/";
+  }
+  return `/property/${type.toLowerCase()}-for-${listedFor.toLowerCase()}-in-${city.toLowerCase()}`;
+}
+
 // Below two functions are needed mainly because we're converting/resizing the images added to the s3 buckets
 // as per our needs. Avatar images are resized and heic extension are converted to jpegs.
 
