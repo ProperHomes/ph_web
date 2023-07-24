@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 function PropertyProfile() {
   const router = useRouter();
-  const { type, listedFor, city } = router.query();
+  const { type, listedFor, city } = router.query;
   return (
     <h2>
       A {type} in {city} for {listedFor}
