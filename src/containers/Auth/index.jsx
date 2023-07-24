@@ -51,7 +51,7 @@ const FETCH_USER_BY_PHONE = gql`
   }
 `;
 
-function AuthModal({ handleClose }) {
+function AuthModal({ open, handleClose }) {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [otpReqSuccessful, setOtpReqSuccesful] = useState(false);
@@ -242,7 +242,7 @@ function AuthModal({ handleClose }) {
   };
 
   return (
-    <Dialog open onClose={handleClose} sx={{ borderRadius: "1em" }}>
+    <Dialog open={open} onClose={handleClose} sx={{ borderRadius: "1em" }}>
       <DialogTitle>
         <Stack
           direction="row"
