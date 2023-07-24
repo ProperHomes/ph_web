@@ -2,9 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,7 +22,6 @@ import LoginForm from "./Login";
 import ForgorPasswordForm from "./ForgotPassword";
 import Loading from "@/components/Loading";
 import { passwordRules } from "@/utils/helper";
-import { DialogTitle } from "@mui/material";
 
 const OtpInput = styled(MuiOtpInput)({
   "& input": {
@@ -52,6 +53,8 @@ const FETCH_USER_BY_PHONE = gql`
 `;
 
 function AuthModal({ open, handleClose }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [otpReqSuccessful, setOtpReqSuccesful] = useState(false);
@@ -242,7 +245,12 @@ function AuthModal({ open, handleClose }) {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} sx={{ borderRadius: "1em" }}>
+    <Dialog
+      fullScreen={isMobile}
+      open={open}
+      onClose={handleClose}
+      sx={{ borderRadius: "1em" }}
+    >
       <DialogTitle>
         <Stack
           direction="row"
@@ -256,7 +264,7 @@ function AuthModal({ open, handleClose }) {
           >
             {showLogin
               ? "Welcome back my friend"
-              : "Ready to choose your dream space ?"}
+              : "Ready to own your dream home ?"}
           </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -278,21 +286,6 @@ function AuthModal({ open, handleClose }) {
             <SignupForm control={control} />
           )}
           {showForgotPassword && <ForgorPasswordForm control={control} />}
-          {!showForgotPassword && !showSignup && (
-            <Stack
-              spacing={2}
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <LoginWithTypography onClick={toggleIsLoginWithOtp}>
-                Login with {isLoginWithOtp ? "Password" : "OTP"}
-              </LoginWithTypography>
-              <LoginWithTypography onClick={toggleForgotPassword}>
-                Forgot Password?
-              </LoginWithTypography>
-            </Stack>
-          )}
           {isLoginWithOtp &&
             (!otpReqSuccessful ? (
               <Button
@@ -322,6 +315,21 @@ function AuthModal({ open, handleClose }) {
             >
               {showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"}
             </Button>
+          )}
+          {!showForgotPassword && !showSignup && (
+            <Stack
+              spacing={2}
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <LoginWithTypography onClick={toggleIsLoginWithOtp}>
+                Login with {isLoginWithOtp ? "Password" : "OTP"}
+              </LoginWithTypography>
+              <LoginWithTypography onClick={toggleForgotPassword}>
+                Forgot Password?
+              </LoginWithTypography>
+            </Stack>
           )}
           <Typography
             sx={{ cursor: "pointer" }}

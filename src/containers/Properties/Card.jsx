@@ -8,13 +8,14 @@ import { useTheme } from "@mui/material";
 import Link from "next/link";
 import { getPropertyUrl } from "@/utils/helper";
 
-function PropertyCard({ data }) {
+function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
-  const { slug, title, description, media, type, price, city } = data;
+  const { slug, description, media, title, listedFor, type, price, city } =
+    data;
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
 
-  const [showDescription, setShowDescription] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const formattedPrice = Number(price).toLocaleString("en-in", {
     style: "currency",
@@ -22,68 +23,40 @@ function PropertyCard({ data }) {
   });
 
   const toggleOnHover = () => {
-    setShowDescription((prev) => !prev);
+    setIsHovered((prev) => !prev);
   };
 
   return (
-    <Stack spacing={4} alignItems="center">
+    <Stack spacing={1}>
       <Box
         onMouseEnter={toggleOnHover}
         onMouseLeave={toggleOnHover}
         sx={{
           position: "relative",
           width: { xs: "100%", md: "280px" },
-          height: "300px",
+          height: "280px",
           cursor: "pointer",
         }}
       >
-        <Image
-          src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
-          fill
-          quality={100}
-          sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 10vw"
-          style={{
-            backgroundColor: "#000",
-            borderRadius: "1em",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-          alt={`image of ${title}`}
-        />
-
-        <Fade in={showDescription}>
-          <Box
-            sx={{
-              position: "absolute",
-              zIndex: 1,
-              padding: "1.5em",
+        <Link href={`/property/${slug}`}>
+          <Image
+            src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
+            fill
+            priority={isPriority}
+            quality={100}
+            sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 10vw"
+            style={{
+              backgroundColor: "#000",
               borderRadius: "1em",
-              backgroundColor: "rgba(0,0,0,0.2)",
-              height: "100%",
-              overflow: "hidden",
+              objectFit: "cover",
+              objectPosition: "center",
             }}
-          >
-            <Typography
-              fontSize="1em"
-              color="#fff"
-              fontWeight="semibold"
-              fontFamily={theme.typography.fontFamily.Manrope}
-              mt="30%"
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: "6",
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {description}
-            </Typography>
-          </Box>
-        </Fade>
+            alt={`image of ${title}`}
+          />
+        </Link>
       </Box>
 
-      <Box sx={{ width: "100%" }}>
+      <Box>
         <Link
           href={`/property/${slug}`}
           sx={{
@@ -92,22 +65,20 @@ function PropertyCard({ data }) {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
             fontWeight: "bold",
-            fontFamily: theme.typography.fontFamily.Raleway,
-            "&:hover": {
-              textDecoration: "underline !important",
-            },
           }}
         >
-          {title}
+          <Typography
+            sx={{
+              fontFamily: theme.typography.fontFamily.Raleway,
+              textTransform: "capitalize",
+              "&:hover": {
+                textDecoration: "underline !important",
+              },
+            }}
+          >
+            {type.toLowerCase()} for {listedFor.toLowerCase()} in {city}
+          </Typography>
         </Link>
-        <Typography
-          gutterBottom
-          fontSize="0.9rem"
-          fontWeight="semibold"
-          fontFamily={theme.typography.fontFamily.Raleway}
-        >
-          {type} in <b>{city}</b>
-        </Typography>
 
         <Typography
           fontSize="1rem"

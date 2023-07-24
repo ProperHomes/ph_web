@@ -1,23 +1,16 @@
 import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import Image from "next/image";
+import Box from "@mui/material/Box";
 
-import Logo from "public/assets/images/LogoTransparent.png";
+import Navbar from "../Navbar";
 
 function HomeLayout({ children }) {
   return (
-    <Container maxWidth="xl">
-      <Stack py={2} spacing={8} alignItems="center" justifyContent="center">
-        <Image
-          src={Logo}
-          alt="logo"
-          quality={100}
-          priority
-          style={{ maxWidth: "300px", height: "auto" }}
-        />
-        {children}
-      </Stack>
-    </Container>
+    <Box sx={{ width: "100%" }}>
+      <Navbar />
+      <Container maxWidth="xl">
+        <Box py={4}>{children}</Box>
+      </Container>
+    </Box>
   );
 }
 
