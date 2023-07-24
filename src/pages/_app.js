@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import createEmotionCache from "../utils/createEmotionCache";
-import { useApollo } from "../apolloClient";
+import { useApollo } from "@/utils/hooks/useApollo";
 import { lightTheme } from "../theme";
 import { AppProvider } from "src/appContext";
 import { NotificationsProvider } from "@/containers/Notifications/context";
