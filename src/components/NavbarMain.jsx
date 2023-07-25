@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Avatar from "@mui/material/Avatar";
@@ -9,23 +8,31 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-import AuthModal from "@/containers/Auth";
 import Logo from "public/assets/images/LogoTransparent.png";
+import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
 function Navbar() {
   const theme = useTheme();
   const router = useRouter();
-  const [openAuth, setOpenAuth] = useState(false);
-  const toggleAuth = () => {
-    setOpenAuth((prev) => !prev);
-  };
+  const isHomePage = router.pathname === "/";
+  const { Auth, toggleAuth } = useToggleAuth();
+
   const navigateToHome = () => {
     router.push("/");
   };
 
+  const handleClickRentOrSell = () => {};
+
   return (
-    <Box>
-      <Container maxWidth="xl">
+    <Box
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
+        backgroundColor: theme.palette.background.default,
+      }}
+    >
+      <Container maxWidth={isHomePage ? "xl" : "lg"}>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -51,7 +58,7 @@ function Navbar() {
                 display: { xs: "none", sm: "flex" },
                 marginLeft: "auto",
                 borderRadius: "1em",
-                fontWeight: "semibold",
+                fontWeight:600,
                 color: theme.palette.primary.main,
                 fontFamily: theme.typography.fontFamily.Manrope,
                 backgroundColor: theme.palette.secondary.main,
@@ -59,6 +66,7 @@ function Navbar() {
                   backgroundColor: theme.palette.secondary.contrastText,
                 },
               }}
+              onClick={handleClickRentOrSell}
             >
               Rent/Sell your property
             </Button>
@@ -67,7 +75,7 @@ function Navbar() {
         </Stack>
       </Container>
       <Divider />
-      <AuthModal open={openAuth} handleClose={toggleAuth} />
+      {Auth}
     </Box>
   );
 }

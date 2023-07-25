@@ -22,6 +22,7 @@ import LoginForm from "./Login";
 import ForgorPasswordForm from "./ForgotPassword";
 import Loading from "@/components/Loading";
 import { passwordRules } from "@/utils/helper";
+import { Divider } from "@mui/material";
 
 const OtpInput = styled(MuiOtpInput)({
   "& input": {
@@ -249,7 +250,7 @@ function AuthModal({ open, handleClose }) {
       fullScreen={isMobile}
       open={open}
       onClose={handleClose}
-      sx={{ borderRadius: "1em" }}
+      PaperProps={{ sx: { borderRadius: isMobile ? 0 : "1em" } }}
     >
       <DialogTitle>
         <Stack
@@ -257,28 +258,34 @@ function AuthModal({ open, handleClose }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography
-            variant="body"
-            fontWeight="semibold"
-            sx={{ textAlign: "center" }}
-          >
-            {showLogin
-              ? "Welcome back my friend"
-              : "Ready to own your dream home ?"}
-          </Typography>
-          <IconButton onClick={handleClose}>
-            <CloseIcon />
+          <IconButton size="small" onClick={handleClose}>
+            <CloseIcon fontSize="12px" />
           </IconButton>
+          <Typography
+            variant="subtitle1"
+            fontFamily={theme.typography.fontFamily.Manrope}
+            fontWeight={500}
+            sx={{ margin: "0 auto" }}
+          >
+            Log in or sign up
+          </Typography>
         </Stack>
       </DialogTitle>
+      <Divider />
       <DialogContent sx={{ minWidth: { xs: "100%", md: "380px" } }}>
         <Stack
-          mt={2}
           sx={{ position: "relative", borderRadius: "1em" }}
           spacing={2}
           alignItems="center"
         >
           {(submitting || isLoading) && <Loading />}
+          <Typography
+            variant="subtitle1"
+            fontFamily={theme.typography.fontFamily.Manrope}
+            fontWeight="bold"
+          >
+            Welcome to Proper Homes
+          </Typography>
           {showLogin && (
             <LoginForm control={control} isLoginWithOtp={isLoginWithOtp} />
           )}

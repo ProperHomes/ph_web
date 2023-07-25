@@ -6,16 +6,18 @@ import Fade from "@mui/material/Fade";
 import Image from "next/image";
 import { useTheme } from "@mui/material";
 import Link from "next/link";
-import { getPropertyUrl } from "@/utils/helper";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
 function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
-  const { slug, description, media, title, listedFor, type, price, city } =
+  const { slug, media, title, listedFor, type, price, city } =
     data;
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
 
   const [isHovered, setIsHovered] = useState(false);
+  const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
 
   const formattedPrice = Number(price).toLocaleString("en-in", {
     style: "currency",
@@ -24,6 +26,14 @@ function PropertyCard({ data, isPriority }) {
 
   const toggleOnHover = () => {
     setIsHovered((prev) => !prev);
+  };
+
+  const handleToggleFavorite = () => {
+    if (!isLoggedIn) {
+      toggleAuth();
+    } else {
+      // Todo: save/remove as favorite
+    }
   };
 
   return (
@@ -54,6 +64,26 @@ function PropertyCard({ data, isPriority }) {
             alt={`image of ${title}`}
           />
         </Link>
+
+        <Fade in={isHovered}>
+          <Box
+            onClick={handleToggleFavorite}
+            sx={{
+              position: "absolute",
+              right: 10,
+              top: 10,
+              zIndex: 1,
+            }}
+          >
+            <FavoriteIcon
+              sx={{
+                color: "rgba(0, 0, 0, 0.5)",
+                stroke: "#fff",
+                strokeWidth: 2,
+              }}
+            />
+          </Box>
+        </Fade>
       </Box>
 
       <Box>
@@ -88,6 +118,7 @@ function PropertyCard({ data, isPriority }) {
           {formattedPrice}
         </Typography>
       </Box>
+      {Auth}
     </Stack>
   );
 }
