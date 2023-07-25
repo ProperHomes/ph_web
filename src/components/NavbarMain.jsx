@@ -1,27 +1,74 @@
+import { memo } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
+import DarkMode from "@mui/icons-material/DarkMode";
+import LightMode from "@mui/icons-material/LightMode";
+import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
 
-import Logo from "public/assets/images/ProperHomesLogoTransparent.png";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
+import useDarkMode from "@/utils/hooks/useDarkMode";
+import { Typography } from "@mui/material";
 
 function Navbar() {
   const theme = useTheme();
   const router = useRouter();
-  const isHomePage = router.pathname === "/";
+  const isPropertyProfilePage = router.pathname.includes("/property/");
   const { Auth, toggleAuth } = useToggleAuth();
+  const { isDarkModeActive, toggleDarkMode } = useDarkMode();
 
   const navigateToHome = () => {
     router.push("/");
   };
 
   const handleClickRentOrSell = () => {};
+
+  const NavLinks = memo(() => {
+    const links = [
+      { title: "Properties For Sale", path: "/list/properties-for-sale" },
+      { title: "Properties For Rent", path: "/list/properties-for-rent" },
+      { title: "Houses For Sale", path: "/list/houses-for-sale" },
+      { title: "Houses For Rent", path: "/list/houses-for-rent" },
+    ];
+    return (
+      <Stack
+        sx={{
+          display: { xs: "none", md: "flex" },
+          marginRight: "auto",
+          marginLeft: "5em",
+        }}
+        direction="row"
+        spacing={2}
+        alignItems="center"
+      >
+        {links.map(({ title, path }) => {
+          return (
+            <Link href={path} key={path}>
+              <Typography
+                fontWeight={700}
+                fontSize={isPropertyProfilePage ? "0.8rem" : "1rem"}
+                color={theme.palette.text.primary}
+                fontFamily={theme.typography.fontFamily.Manrope}
+                sx={{
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                {title}
+              </Typography>
+            </Link>
+          );
+        })}
+      </Stack>
+    );
+  }, []);
 
   return (
     <Box
@@ -32,27 +79,30 @@ function Navbar() {
         backgroundColor: theme.palette.background.default,
       }}
     >
-      <Container maxWidth={isHomePage ? "xl" : "lg"}>
+      <Container maxWidth={isPropertyProfilePage ? "lg" : "xl"}>
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
           sx={{ height: "80px" }}
         >
-          <Image
-            src={Logo}
-            alt="logo"
-            quality={100}
-            priority
-            style={{
+          <Typography
+            onClick={navigateToHome}
+            color={theme.palette.primary.main}
+            fontFamily={theme.typography.fontFamily.Manrope}
+            fontSize="2rem"
+            fontWeight={600}
+            sx={{
               cursor: "pointer",
               maxWidth: "280px",
               height: "auto",
             }}
-            onClick={navigateToHome}
-          />
+          >
+            ProperHomes
+          </Typography>
 
-          <Stack direction="row" spacing={2}>
+          <NavLinks />
+          <Stack direction="row" spacing={2} alignItems="center">
             <Button
               size="large"
               sx={{
@@ -60,9 +110,11 @@ function Navbar() {
                 marginLeft: "auto",
                 borderRadius: "1em",
                 fontWeight: 600,
-                color: theme.palette.primary.main,
+                color: theme.palette.text.primary,
                 fontFamily: theme.typography.fontFamily.Manrope,
-                backgroundColor: theme.palette.secondary.main,
+                backgroundColor: isDarkModeActive
+                  ? "transparent"
+                  : theme.palette.secondary.main,
                 "&:hover": {
                   backgroundColor: theme.palette.secondary.contrastText,
                 },
@@ -71,6 +123,14 @@ function Navbar() {
             >
               Rent/Sell your property
             </Button>
+            <IconButton onClick={toggleDarkMode}>
+              {isDarkModeActive ? (
+                <LightMode htmlColor="#fff" />
+              ) : (
+                <DarkMode htmlColor="#000" />
+              )}
+            </IconButton>
+
             <Avatar onClick={toggleAuth} sx={{ cursor: "pointer" }} />
           </Stack>
         </Stack>

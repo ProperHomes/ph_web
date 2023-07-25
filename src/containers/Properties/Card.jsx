@@ -11,8 +11,7 @@ import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
 function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
-  const { slug, media, title, listedFor, type, price, city } =
-    data;
+  const { slug, media, title, listedFor, type, price, city } = data;
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
 
@@ -99,6 +98,8 @@ function PropertyCard({ data, isPriority }) {
         >
           <Typography
             sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 600,
               fontFamily: theme.typography.fontFamily.Raleway,
               textTransform: "capitalize",
               "&:hover": {
@@ -113,6 +114,7 @@ function PropertyCard({ data, isPriority }) {
         <Typography
           fontSize="1rem"
           fontWeight="bold"
+          color={theme.palette.text.primary}
           fontFamily={theme.typography.fontFamily.Roboto}
         >
           {formattedPrice}

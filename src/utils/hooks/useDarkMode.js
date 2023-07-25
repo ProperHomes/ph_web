@@ -9,12 +9,12 @@ function useDarkMode() {
     state: { isDarkModeActive },
     dispatch,
   } = useAppContext();
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  // const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [active, setDarkModeActive] = useLocalStorage(
     "properhomes-dark-mode-active"
   );
 
-  const isActive = active ?? prefersDarkMode;
+  const isActive = active; //?? prefersDarkMode;
 
   const toggleDarkMode = () => {
     setDarkModeActive((prev) => !prev);

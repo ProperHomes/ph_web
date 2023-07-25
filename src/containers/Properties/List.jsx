@@ -19,13 +19,13 @@ const Section = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-function PropertyList() {
+function PropertyList({ data }) {
   const { state } = usePropertyContext();
   const { list } = state;
-
+  const listToShow = data ?? list;
   return (
     <Section>
-      {list.map((l, i) => {
+      {listToShow.map((l, i) => {
         return (
           <Box key={l.id} sx={{ justifySelf: "center" }}>
             <Card data={l} isPriority={i < 9} />

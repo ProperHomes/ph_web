@@ -5,7 +5,7 @@ import Navbar from "../NavbarMain";
 
 function HomeLayout({ children }) {
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", minHeight: "100vh" }}>
       <Navbar />
       <Container maxWidth="xl">
         <Box py={4} sx={{ overflow: "scroll", width: "100%", height: "100%" }}>

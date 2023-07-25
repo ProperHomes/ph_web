@@ -27,8 +27,18 @@ export const PROPERTY_FIELDS = gql`
 
 export const GET_PROPERTIES = gql`
   ${PROPERTY_FIELDS}
-  query getProperties($first: Int!, $offset: Int!) {
-    properties(first: $first, offset: $offset, orderBy: CREATED_AT_DESC) {
+  query getProperties(
+    $listedFor: TypeOfListing
+    $type: PropertyType
+    $first: Int!
+    $offset: Int!
+  ) {
+    properties(
+      condition: { listedFor: $listedFor, type: $type }
+      first: $first
+      offset: $offset
+      orderBy: CREATED_AT_DESC
+    ) {
       nodes {
         ...PropertyFields
         media: propertyMedias {

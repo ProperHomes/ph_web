@@ -11,12 +11,13 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import createEmotionCache from "../utils/createEmotionCache";
 import { useApollo } from "@/utils/hooks/useApollo";
-import { lightTheme } from "../theme";
+import { lightTheme, darkTheme } from "../theme";
 import { AppProvider } from "src/appContext";
 import { NotificationsProvider } from "@/containers/Notifications/context";
 
 import "../styles/globals.css";
 import { PropertyProvider } from "@/containers/Properties/context";
+import useDarkMode from "@/utils/hooks/useDarkMode";
 
 dayjs.extend(relativeTime);
 
@@ -26,35 +27,46 @@ function App({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
   const apolloClient = useApollo();
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        <Head>
-          <title>ProperHomes: Find Your Dream Space!</title>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-          />
-        </Head>
-        <ApolloProvider client={apolloClient}>
-          <AppProvider>
-            <NotificationsProvider>
-              <PropertyProvider>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Box
-                    sx={{
-                      backgroundColor: "#fff",
-                      margin: "0 auto",
-                    }}
-                  >
-                    <Component {...pageProps} />
-                  </Box>
-                </LocalizationProvider>
-              </PropertyProvider>
-            </NotificationsProvider>
-          </AppProvider>
-        </ApolloProvider>
-      </ThemeProvider>
+      <CssBaseline />
+      <Head>
+        <title>ProperHomes: Find Your Dream Space!</title>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+        />
+      </Head>
+
+      <ApolloProvider client={apolloClient}>
+        <AppProvider>
+          <Main>
+            <Component {...pageProps} />
+          </Main>
+        </AppProvider>
+      </ApolloProvider>
     </CacheProvider>
+  );
+}
+
+function Main({ children }) {
+  const { isDarkModeActive } = useDarkMode();
+  const theme = isDarkModeActive ? darkTheme : lightTheme;
+  return (
+    <ThemeProvider theme={theme}>
+      <NotificationsProvider>
+        <PropertyProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Box
+              sx={{
+                backgroundColor: theme.palette.background.default,
+                margin: "0 auto",
+              }}
+            >
+              {children}
+            </Box>
+          </LocalizationProvider>
+        </PropertyProvider>
+      </NotificationsProvider>
+    </ThemeProvider>
   );
 }
 
