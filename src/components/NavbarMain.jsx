@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-import Logo from "public/assets/images/LogoTransparent.png";
+import Logo from "public/assets/images/ProperHomesLogoTransparent.png";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
 function Navbar() {
@@ -37,6 +37,7 @@ function Navbar() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          sx={{ height: "80px" }}
         >
           <Image
             src={Logo}
@@ -58,7 +59,7 @@ function Navbar() {
                 display: { xs: "none", sm: "flex" },
                 marginLeft: "auto",
                 borderRadius: "1em",
-                fontWeight:600,
+                fontWeight: 600,
                 color: theme.palette.primary.main,
                 fontFamily: theme.typography.fontFamily.Manrope,
                 backgroundColor: theme.palette.secondary.main,
