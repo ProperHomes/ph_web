@@ -25,7 +25,7 @@ function PropertyProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   const { data, loading } = useQuery(GET_PROPERTIES, {
-    variables: { first: 10, offset: 0 },
+    variables: { first: 20, offset: 0 },
   });
 
   const [updateProperty] = useMutation(UPDATE_PROPERTY);

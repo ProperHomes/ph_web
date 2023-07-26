@@ -25,8 +25,8 @@ function PropertyProfile({ data }) {
   return (
     <HomeLayout>
       {isMobile && <ImageSwiper images={images} onClick={toggleGallery} />}
-      <Container maxWidth="lg" sx={{ height: "100%" }}>
-        <Stack spacing={2}>
+      <Stack sx={{ height: "100%" }}>
+        <Stack spacing={2} sx={{ width: "80%" }}>
           <Typography
             variant="h1"
             fontSize="2.5rem !important"
@@ -47,7 +47,7 @@ function PropertyProfile({ data }) {
             {description}
           </Typography>
         </Stack>
-      </Container>
+      </Stack>
       <ImageModal
         images={images}
         open={showImageGallery}

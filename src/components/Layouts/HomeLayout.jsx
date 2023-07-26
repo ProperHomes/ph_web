@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import Navbar from "../NavbarMain";
+import Navbar from "../Navbar";
 
 function HomeLayout({ children }) {
   return (

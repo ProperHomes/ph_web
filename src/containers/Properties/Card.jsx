@@ -8,6 +8,7 @@ import { useTheme } from "@mui/material";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
+import { PROPERTY_TYPE } from "@/utils/constants";
 
 function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
@@ -106,6 +107,8 @@ function PropertyCard({ data, isPriority }) {
         >
           <Typography
             sx={{
+              width: "100%",
+              maxWidth: { xs: "100%", md: "280px" },
               color: theme.palette.text.primary,
               fontWeight: 600,
               fontFamily: theme.typography.fontFamily.Raleway,
@@ -115,7 +118,8 @@ function PropertyCard({ data, isPriority }) {
               },
             }}
           >
-            {type.toLowerCase()} for {listedFor.toLowerCase()} in {city}
+            {PROPERTY_TYPE[type].toLowerCase()} for {listedFor.toLowerCase()} in{" "}
+            {city}
           </Typography>
         </Link>
 
