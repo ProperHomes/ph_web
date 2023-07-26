@@ -38,10 +38,10 @@ const OtpInput = styled(MuiOtpInput)({
 const LoginWithTypography = styled(Typography)(({ theme }) => ({
   fontFamily: theme.typography.fontFamily.Manrope,
   fontWeight: "500",
+  color: theme.palette.primary,
   textDecoration: "underline",
   cursor: "pointer",
   fontSize: "0.9rem",
-  color: "#000",
 }));
 
 const FETCH_USER_BY_PHONE = gql`

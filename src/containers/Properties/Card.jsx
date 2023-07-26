@@ -48,20 +48,28 @@ function PropertyCard({ data, isPriority }) {
         }}
       >
         <Link href={`/property/${slug}`}>
-          <Image
-            src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
-            fill
-            priority={isPriority}
-            quality={100}
-            sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 10vw"
-            style={{
-              backgroundColor: "#000",
-              borderRadius: "1em",
-              objectFit: "cover",
-              objectPosition: "center",
+          <Box
+            sx={{
+              position: "relative",
+              width: { xs: "100%", md: "280px" },
+              height: "280px",
             }}
-            alt={`image of ${title}`}
-          />
+          >
+            <Image
+              src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
+              fill
+              priority={isPriority}
+              quality={100}
+              sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 10vw"
+              style={{
+                backgroundColor: "#000",
+                borderRadius: "1em",
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              alt={`image of ${title}`}
+            />
+          </Box>
         </Link>
 
         <Fade in={isHovered}>

@@ -29,12 +29,12 @@ function Navbar() {
 
   const handleClickRentOrSell = () => {};
 
+  // use 99acress nav menu instead
   const NavLinks = memo(() => {
     const links = [
-      { title: "Properties For Sale", path: "/list/properties-for-sale" },
-      { title: "Properties For Rent", path: "/list/properties-for-rent" },
-      { title: "Houses For Sale", path: "/list/houses-for-sale" },
-      { title: "Houses For Rent", path: "/list/houses-for-rent" },
+      { title: "For Sale", path: "/list/properties-for-sale" },
+      { title: "For Rent", path: "/list/properties-for-rent" },
+      { title: "EMI Calculator", path: "/homeloan/emi-calculator" },
     ];
     return (
       <Stack

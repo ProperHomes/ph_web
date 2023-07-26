@@ -1,29 +1,30 @@
-import Box from "@mui/material/Box";
+import { useState } from "react";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useTheme, styled } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import HomeLayout from "@/components/Layouts/HomeLayout";
 import ImageSwiper from "@/components/ImageSwiper";
 import ImageGrid from "@/components/ImageGrid";
-import useImageGallery from "@/utils/hooks/useImageGallery";
+import ImageModal from "@/components/ImageGallery";
 
 function PropertyProfile({ data }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const [showImageGallery, setShowImageGallery] = useState(false);
+  const toggleGallery = () => {
+    setShowImageGallery((prev) => !prev);
+  };
   const { title, description, media } = data ?? {};
   const images = (media?.nodes ?? []).map((m) => {
     return m.media?.signedUrl ?? m.mediaUrl;
   });
 
-  const { MediaGallery, toggleGallery } = useImageGallery({ images });
-
   return (
     <HomeLayout>
-      {isMobile && <ImageSwiper images={images} />}
+      {isMobile && <ImageSwiper images={images} onClick={toggleGallery} />}
       <Container maxWidth="lg" sx={{ height: "100%" }}>
         <Stack spacing={2}>
           <Typography
@@ -47,7 +48,11 @@ function PropertyProfile({ data }) {
           </Typography>
         </Stack>
       </Container>
-      {MediaGallery}
+      <ImageModal
+        images={images}
+        open={showImageGallery}
+        handleClose={toggleGallery}
+      />
     </HomeLayout>
   );
 }

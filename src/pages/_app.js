@@ -29,7 +29,7 @@ function App({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
     <CacheProvider value={emotionCache}>
       <CssBaseline />
       <Head>
-        <title>ProperHomes: Find Your Dream Space!</title>
+        <title>ProperHomes: Find Your Dream Home!</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"

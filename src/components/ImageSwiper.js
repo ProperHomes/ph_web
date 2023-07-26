@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 
-function ImageSwiper({ images }) {
+function ImageSwiper({ images, onClick }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -20,7 +20,7 @@ function ImageSwiper({ images }) {
   };
 
   return (
-    <Box pb={2}>
+    <Box pb={2} onClick={onClick}>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}

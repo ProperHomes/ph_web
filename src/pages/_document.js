@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta
             name="description"
-            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream space!`}
+            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
           />
           <meta name="application-name" content="ProperHomes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
           />
           <meta
             name="apple-mobile-web-app-title"
-            content="ProperHomes: Find Your Dream Space!"
+            content="ProperHomes: Find Your Dream Home!"
           />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
@@ -71,22 +71,22 @@ export default class MyDocument extends Document {
           <meta name="twitter:url" content="https://www.properhomes.in" />
           <meta
             name="twitter:title"
-            content="ProperHomes: Find Your Dream Space!"
+            content="ProperHomes: Find Your Dream Home!"
           />
           <meta
             name="twitter:description"
-            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream space!`}
+            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
           />
           <meta name="twitter:image" content="/assets/images/Logo.png" />
           <meta name="twitter:creator" content="@ProperHomes" />
           <meta property="og:type" content="website" />
           <meta
             property="og:title"
-            content="ProperHomes: Find Your Dream Space!"
+            content="ProperHomes: Find Your Dream Home!"
           />
           <meta
             property="og:description"
-            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream space!`}
+            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
           />
           <meta property="og:site_name" content="ProperHomes" />
           <meta property="og:url" content="https://www.properhomes.in" />

@@ -40,3 +40,12 @@ export const PROPERTY_STATUS = {
   NOT_FOR_RENT: "NOT FOR RENT",
   SOLD: "SOLD",
 };
+
+export const ALL_CITIES = [
+  "HYDERABAD",
+  "VISHAKAPATNAM",
+  "VIJAYAWADA",
+  "AMALAPURAM",
+  "BANGALORE",
+  "PUNE",
+];
