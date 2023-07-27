@@ -47,7 +47,6 @@ export async function getStaticProps(context) {
         fetchPolicy: "network-only",
       });
       propertiesList = res?.data?.properties?.nodes ?? [];
-
       if (propertiesList.length === 0) {
         const res = await client.query({
           query: GET_PROPERTIES,

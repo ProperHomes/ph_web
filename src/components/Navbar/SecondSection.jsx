@@ -10,28 +10,28 @@ import CabinOutlined from "@mui/icons-material/CabinOutlined";
 const links = [
   {
     label: "Flats",
-    link: "flats-for-sale-and-rent",
+    link: "/flats-for-sale-and-rent",
     Icon: LocationCityOutlined,
   },
-  { label: "Villas", link: "villas-for-sale-and-rent", Icon: Villa },
+  { label: "Villas", link: "/villas-for-sale-and-rent", Icon: Villa },
   {
     label: "Independent Houses",
-    link: "independent-houses-for-sale-and-rent",
+    link: "/independent-houses-for-sale-and-rent",
     Icon: HouseOutlined,
   },
   {
     label: "Farm Houses",
-    link: "farm-houses-for-sale-and-rent",
+    link: "/farm-houses-for-sale-and-rent",
     Icon: CabinOutlined,
   },
   {
     label: "Commercial Properties",
-    link: "commercial-properties-for-sale-and-rent",
+    link: "/commercial-properties-for-sale-and-rent",
     Icon: WarehouseOutlined,
   },
   {
     label: "Pent Houses",
-    link: "pent-houses-for-sale-and-rent",
+    link: "/pent-houses-for-sale-and-rent",
     Icon: WarehouseOutlined,
   },
 ];

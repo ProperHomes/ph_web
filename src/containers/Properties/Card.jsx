@@ -29,7 +29,8 @@ function PropertyCard({ data, isPriority }) {
     setIsHovered((prev) => !prev);
   };
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (e) => {
+    e.stopPropagation();
     if (!isLoggedIn) {
       toggleAuth();
     } else {
@@ -71,40 +72,39 @@ function PropertyCard({ data, isPriority }) {
               }}
               alt={`image of ${title}`}
             />
+            <Fade in={isHovered}>
+              <Box
+                sx={{
+                  position: "absolute",
+                  zIndex: 1,
+                  bottom: 0,
+                  padding: "1.5em",
+                  borderRadius: "1em",
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                  height: "100%",
+                  overflow: "hidden",
+                }}
+              >
+                <Typography
+                  fontSize="1em"
+                  color="#fff"
+                  fontWeight="semibold"
+                  fontFamily={theme.typography.fontFamily.Manrope}
+                  mt="50%"
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: "5",
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {description}
+                </Typography>
+              </Box>
+            </Fade>
           </Box>
         </Link>
-
-        <Fade in={isHovered}>
-          <Box
-            sx={{
-              position: "absolute",
-              zIndex: 1,
-              bottom: 0,
-              padding: "1.5em",
-              borderRadius: "1em",
-              backgroundColor: "rgba(0,0,0,0.2)",
-              height: "100%",
-              overflow: "hidden",
-            }}
-          >
-            <Typography
-              fontSize="1em"
-              color="#fff"
-              fontWeight="semibold"
-              fontFamily={theme.typography.fontFamily.Manrope}
-              mt="50%"
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: "5",
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {description}
-            </Typography>
-          </Box>
-        </Fade>
 
         <Fade in={isHovered}>
           <FavoriteIcon
