@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const FETCH_NOTIFICATIONS = gql`
   query fetchNotifications($userId: UUID!, $first: Int, $offset: Int) {
     notifications(
-      condition: { forUserId: $userId }
+      condition: { toUserId: $userId }
       first: $first
       offset: $offset
       orderBy: CREATED_AT_DESC
@@ -19,7 +19,7 @@ export const FETCH_NOTIFICATIONS = gql`
             signedUrl
           }
         }
-        forUserId
+        toUserId
         readAt
         createdAt
       }
@@ -55,7 +55,7 @@ export const SUBSCRIBE_TO_NEW_NOTIFICATIONS = gql`
       notification {
         id
         actionText
-        forUserId
+        toUserId
         byUser {
           id
           name

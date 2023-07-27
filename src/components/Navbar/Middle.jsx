@@ -7,6 +7,8 @@ const links = [
   { title: "For Sale", path: "/list/properties-for-sale" },
   { title: "For Rent", path: "/list/properties-for-rent" },
   { title: "EMI Calculator", path: "/homeloan/emi-calculator" },
+  { title: "Rent your property", path: "/rent-your-property" },
+  { title: "Sell your property", path: "/sell-your-property" },
 ];
 
 function NavLinks() {
@@ -27,9 +29,10 @@ function NavLinks() {
           <Link href={path} key={path}>
             <Typography
               fontWeight={600}
-              color={theme.palette.text.secondary}
+              color={theme.palette.text.primary}
               fontFamily={theme.typography.fontFamily.Manrope}
               sx={{
+                transition: "all 0.3s ease",
                 "&:hover": {
                   textDecoration: "underline",
                 },

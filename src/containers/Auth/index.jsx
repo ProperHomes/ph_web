@@ -10,6 +10,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import Divider from "@mui/material/Divider";
 import * as yup from "yup";
 import "yup-phone-lite";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,7 +23,7 @@ import LoginForm from "./Login";
 import ForgorPasswordForm from "./ForgotPassword";
 import Loading from "@/components/Loading";
 import { passwordRules } from "@/utils/helper";
-import { Divider } from "@mui/material";
+import { useAppContext } from "src/appContext";
 
 const OtpInput = styled(MuiOtpInput)({
   "& input": {
@@ -66,6 +67,8 @@ function AuthModal({ open, handleClose }) {
   const [showForgotPassword, setForgotPassword] = useState(false);
 
   const [getUserByPhone] = useLazyQuery(FETCH_USER_BY_PHONE);
+
+  const { handleFetchUser } = useAppContext();
 
   const resolvers = {
     signup: {
@@ -150,12 +153,13 @@ function AuthModal({ open, handleClose }) {
       const res = await axios({
         method: "post",
         url: `${process.env.NEXT_PUBLIC_API_URL}/auth/login/phone`,
-        data: { ...data, phoneNumber: `+91${data.phoneNumber}` },
+        data: { ...data, phoneNumber: `91${data.phoneNumber}` },
         withCredentials: true,
       });
-
+      console.log(res);
       if (res?.data?.userId) {
         await handleFetchUser(res.data.userId);
+        handleClose();
       }
     } catch (err) {
       setError("password", {
@@ -317,7 +321,6 @@ function AuthModal({ open, handleClose }) {
             <Button
               variant="contained"
               fullWidth
-              disabled={isSubmitSuccessful || submitting}
               onClick={handleSubmit(onSubmit)}
             >
               {showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"}

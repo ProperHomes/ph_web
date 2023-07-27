@@ -7,6 +7,7 @@ import RentRecieptGenerator from "@/containers/RentRecieptGenerator";
 import PropertyList from "@/containers/Properties/List";
 
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
+import SellOrRentYourProperty from "@/containers/Properties/SellRentProperty";
 
 const navlinks = [
   "flats-for-sale-and-rent",
@@ -17,11 +18,19 @@ const navlinks = [
   "pent-houses-for-sale-and-rent",
 ];
 
-function Page({ propertiesList, isRentalAgreementPage, city }) {
+function Page({
+  city,
+  isForRent,
+  propertiesList,
+  isSellOrRentPage,
+  isRentalAgreementPage,
+}) {
   return propertiesList ? (
     <PropertyList data={propertiesList} />
   ) : isRentalAgreementPage ? (
     <RentalAgreement city={city} />
+  ) : isSellOrRentPage ? (
+    <SellOrRentYourProperty isForRent={isForRent} />
   ) : (
     <RentRecieptGenerator />
   );
@@ -31,6 +40,13 @@ export async function getStaticProps(context) {
   const client = useApollo(context);
   const { params } = context;
   const { slug } = params;
+
+  const isRentalAgreementPage =
+    slug === "rental-agreement" ||
+    slug.split("-").slice(0, 3).join("-") === "rental-agreement-in";
+
+  const isSellOrRentPage =
+    slug === "sell-your-property" || slug === "rent-your-property";
 
   if (navlinks.includes(slug)) {
     let propertiesList;
@@ -64,16 +80,21 @@ export async function getStaticProps(context) {
         propertiesList,
       },
     };
-  } else {
-    const isRentalAgreementPage =
-      slug === "rental-agreement" ||
-      slug.split("-").slice(0, 3).join("-") === "rental-agreement-in";
+  } else if (isRentalAgreementPage) {
     const rentalAgreementCity =
       slug === "rental-agreement" ? "" : slug.split("-").pop();
     return {
       props: {
         isRentalAgreementPage,
         city: rentalAgreementCity,
+      },
+    };
+  } else if (isSellOrRentPage) {
+    const isForRent = slug.split("-")[0] === "rent";
+    return {
+      props: {
+        isForRent,
+        isSellOrRentPage,
       },
     };
   }
