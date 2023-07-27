@@ -1,6 +1,7 @@
 import Drawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function SlideDrawer({
   open,
@@ -10,9 +11,10 @@ function SlideDrawer({
   children,
 }) {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Drawer
-      anchor={position}
+      anchor={isMobile ? "bottom" : position}
       open={open}
       onClose={handleClose}
       p={1}
@@ -20,14 +22,14 @@ function SlideDrawer({
         position: "relative",
         background: {
           xs: theme.palette.background.default,
-          minHeight: "80vh",
           md: "initial",
         },
       }}
       PaperProps={{
         style: {
-          width: "350px",
+          width: isMobile ? "100%" : "350px",
           padding: "0.5em 1em",
+          borderRadius: isMobile ? "1em 1em 0 0" : 0,
           background: theme.palette.background.paper,
         },
       }}

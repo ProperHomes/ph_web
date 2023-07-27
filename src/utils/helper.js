@@ -76,7 +76,10 @@ export function getPropertyUrl({ type, listedFor, city }) {
   if (!city || !listedFor || !type) {
     return "/";
   }
-  return `/property/${type.toLowerCase()}-for-${listedFor.toLowerCase()}-in-${city.toLowerCase()}`;
+  const path = convertStringToSlug(
+    `${type.toLowerCase()}-for-${listedFor.toLowerCase()}-in-${city.toLowerCase()}`
+  );
+  return `/property/${path}`;
 }
 
 // Below two functions are needed mainly because we're converting/resizing the images added to the s3 buckets

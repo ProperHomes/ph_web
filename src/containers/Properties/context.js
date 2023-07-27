@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { GET_PROPERTIES, UPDATE_PROPERTY } from "./graphql";
+import { useQuery } from "@apollo/client";
+import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "./graphql";
+import { useAppContext } from "src/appContext";
 
 const PropertyContext = createContext(null);
 
@@ -12,7 +13,7 @@ const propertyActionTypes = {
   LOAD_PROPERTIES: "LOAD_PROPERTIES",
 };
 
-function appReducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case propertyActionTypes.LOAD_PROPERTIES:
       return { ...state, list: action.list };
@@ -22,17 +23,24 @@ function appReducer(state = initialState, action) {
 }
 
 function PropertyProvider({ children }) {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { data, loading } = useQuery(GET_PROPERTIES, {
+  const { state: appState } = useAppContext();
+
+  const loggedInUserId = appState.user?.id;
+
+  const { data: propertiesNotLoggedIn } = useQuery(GET_PROPERTIES, {
     variables: { first: 20, offset: 0 },
+    skip: loggedInUserId,
   });
 
-  const [updateProperty] = useMutation(UPDATE_PROPERTY);
+  const { data: loggedInProperties } = useQuery(GET_PROPERTIES_LOGGED_IN, {
+    variables: { first: 20, offset: 0, userId: loggedInUserId },
+    skip: !loggedInUserId,
+  });
 
+  const data = loggedInUserId ? loggedInProperties : propertiesNotLoggedIn;
   const properties = data?.properties?.nodes ?? [];
-
-  const handleSaveProperty = (id) => {};
 
   useEffect(() => {
     if (properties.length > 0) {
@@ -45,7 +53,6 @@ function PropertyProvider({ children }) {
       value={{
         state,
         dispatch,
-        handleSaveProperty,
       }}
     >
       {children}

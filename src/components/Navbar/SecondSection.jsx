@@ -7,6 +7,7 @@ import LocationCityOutlined from "@mui/icons-material/LocationCityOutlined";
 import WarehouseOutlined from "@mui/icons-material/WarehouseOutlined";
 import CabinOutlined from "@mui/icons-material/CabinOutlined";
 import { useRouter } from "next/router";
+import { Typography } from "@mui/material";
 
 const links = [
   {
@@ -54,23 +55,21 @@ function SecondSection() {
       {links.map(({ label, link, Icon }) => {
         const isActive = link === router.asPath;
         return (
-          <Link
-            href={link}
-            key={link}
-            style={{
-              fontSize: "0.9rem",
-              fontWeight: isActive ? 600 : 500,
-              color: isActive
-                ? theme.palette.text.primary
-                : theme.palette.text.secondary,
-              fontFamily: theme.typography.fontFamily.Monsterrat,
-              whiteSpace: "nowrap",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Icon sx={{ marginRight: "4px" }} />
-            {label}
+          <Link href={link} key={link}>
+            <Stack spacing={1} direction="row" alignItems="center">
+              <Icon htmlColor={theme.palette.text.secondary} />
+              <Typography
+                color={theme.palette.text[isActive ? "primary" : "secondary"]}
+                fontFamily={theme.typography.fontFamily.Monsterrat}
+                fontSize="0.9rem"
+                fontWeight={isActive ? 600 : 500}
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {label}
+              </Typography>
+            </Stack>
           </Link>
         );
       })}

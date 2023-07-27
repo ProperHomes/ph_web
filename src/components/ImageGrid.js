@@ -2,16 +2,16 @@ import Box from "@mui/material/Box";
 
 import { styled } from "@mui/material/styles";
 
-const Grid = styled(Box)({
+const Grid = styled(Box)(({ theme }) => ({
   position: "relative",
   width: "100%",
   height: "auto",
   maxHeight: "560px",
   display: "grid",
-  gridGap: "4px",
-  gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
+  gridGap: "0.25rem",
+  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
   gridAutoFlow: "row dense",
-});
+}));
 
 function ImageGrid({ images, onClick }) {
   return (
@@ -21,14 +21,8 @@ function ImageGrid({ images, onClick }) {
           key={url}
           onClick={onClick}
           sx={{
-            gridColumn: {
-              xs: "auto",
-              lg: `${i === 0 ? "1 / 3" : "auto"}`,
-            },
-            gridRow: {
-              xs: "auto",
-              lg: `${i === 0 ? "1 / 3" : "auto"}`,
-            },
+            gridColumn: `${i === 0 ? "span 2 / span 2" : "auto"}`,
+            gridRow: `${i === 0 ? "span 2 / span 2" : "auto"}`,
             cursor: "pointer",
             objectFit: "cover",
           }}

@@ -29,7 +29,7 @@ function NavLinks() {
           <Link href={path} key={path}>
             <Typography
               fontWeight={600}
-              color={theme.palette.text.primary}
+              color={theme.palette.text.secondary}
               fontFamily={theme.typography.fontFamily.Manrope}
               sx={{
                 transition: "all 0.3s ease",

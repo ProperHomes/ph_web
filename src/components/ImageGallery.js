@@ -11,12 +11,12 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Close from "@mui/icons-material/Close";
 
-function ImageModal({ images, open, handleClose }) {
+function ImageModal({ images, open, handleClose, activeIndex }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [activeStep, setActiveStep] = useState(0);
 
-  const imageUrls = images.map((i) => i.url ?? i);
+  let imageUrls = images.map((i) => i.url ?? i);
 
   const handleStepChange = (step) => {
     setActiveStep(step);

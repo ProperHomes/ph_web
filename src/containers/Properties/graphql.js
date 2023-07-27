@@ -56,6 +56,74 @@ export const GET_PROPERTIES = gql`
   }
 `;
 
+export const GET_PROPERTIES_LOGGED_IN = gql`
+  ${PROPERTY_FIELDS}
+  query getProperties(
+    $listedFor: TypeOfListing
+    $type: PropertyType
+    $first: Int!
+    $offset: Int!
+    $userId: UUID!
+  ) {
+    properties(
+      condition: { listedFor: $listedFor, type: $type }
+      first: $first
+      offset: $offset
+      orderBy: CREATED_AT_DESC
+    ) {
+      nodes {
+        ...PropertyFields
+        currentUserSavedProperties: savedProperties(
+          condition: { userId: $userId }
+        ) {
+          nodes {
+            id
+          }
+        }
+        media: propertyMedias {
+          nodes {
+            id
+            mediaUrl
+            media {
+              signedUrl
+            }
+            isCoverImage
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_USER_SAVED_PROPERTIES = gql`
+  ${PROPERTY_FIELDS}
+  query getSavedProperties($first: Int!, $offset: Int!, $userId: UUID!) {
+    savedProperties(
+      condition: { userId: $userId }
+      first: $first
+      offset: $offset
+      # orderBy: CREATED_AT_DESC
+    ) {
+      nodes {
+        id
+        property {
+          ...PropertyFields
+          media: propertyMedias {
+            nodes {
+              id
+              mediaUrl
+              media {
+                signedUrl
+              }
+              isCoverImage
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_PROPERTY_BY_NUMBER = gql`
   ${PROPERTY_FIELDS}
   query getPropertyByNumber($number: Int!) {
@@ -119,6 +187,26 @@ export const UPDATE_PROPERTY = gql`
   mutation updateProperty($input: UpdatePropertyInput!) {
     updateProperty(input: $input) {
       property {
+        id
+      }
+    }
+  }
+`;
+
+export const SAVE_PROPERTY = gql`
+  mutation createSavedProperty($input: CreateSavedPropertyInput!) {
+    createSavedProperty(input: $input) {
+      savedProperty {
+        id
+      }
+    }
+  }
+`;
+
+export const DELETE_SAVED_PROPERTY = gql`
+  mutation deleteSavedProperty($input: DeleteSavedPropertyInput!) {
+    deleteSavedProperty(input: $input) {
+      savedProperty {
         id
       }
     }

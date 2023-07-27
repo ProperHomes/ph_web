@@ -1,20 +1,23 @@
+import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import DarkMode from "@mui/icons-material/DarkMode";
 import LightMode from "@mui/icons-material/LightMode";
 import ReorderOutlined from "@mui/icons-material/ReorderOutlined";
-import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import useDarkMode from "@/utils/hooks/useDarkMode";
-import { Typography } from "@mui/material";
 import { useState } from "react";
 import SlideDrawer from "../Drawer";
 
 function NavbarRight() {
+  const router = useRouter();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { Auth, loggedInUser, isLoggedIn, toggleAuth, logout } =
     useToggleAuth();
   const [showDrawer, setShowDrawer] = useState(false);
@@ -22,6 +25,10 @@ function NavbarRight() {
 
   const toggleDrawer = () => {
     setShowDrawer((prev) => !prev);
+  };
+
+  const navigateTo = (link) => () => {
+    router.push(link);
   };
 
   return (
@@ -43,10 +50,7 @@ function NavbarRight() {
         }}
         onClick={toggleDrawer}
       >
-        <Avatar
-          sx={{ width: 30, height: 30, marginRight: "0.5em" }}
-          onClick={toggleDrawer}
-        />
+        <Avatar sx={{ width: 30, height: 30, marginRight: "0.5em" }} />
         {!!loggedInUser ? (
           <Typography
             fontWeight="bold"
@@ -66,9 +70,16 @@ function NavbarRight() {
         title={
           !isLoggedIn ? "Welcome to ProperHomes" : `Hello ${loggedInUser?.name}`
         }
-        position="right"
+        position={isMobile ? "bottom" : "right"}
       >
         <Stack sx={{ height: "100%" }}>
+          {isLoggedIn && (
+            <Stack>
+              <Button onClick={navigateTo("/dashboard/saved")}>
+                View Saved Properties
+              </Button>
+            </Stack>
+          )}
           <Stack spacing={2} sx={{ marginTop: "auto" }}>
             <Button onClick={toggleDarkMode} variant="contained">
               {isDarkModeActive ? (
