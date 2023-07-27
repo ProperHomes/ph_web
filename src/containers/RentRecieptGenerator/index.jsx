@@ -1,9 +1,19 @@
-function RentRecieptGenerator() {
+import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+
+function RentReceiptGenerator({ city }) {
+  const theme = useTheme();
   return (
     <>
-      <h2>Create Rent Reciepts For Free</h2>
+      <Typography
+        variant="h2"
+        fontSize="2rem !important"
+        color={theme.palette.text.secondary}
+      >
+        Create Rental Receipt
+      </Typography>
     </>
   );
 }
 
-export default RentRecieptGenerator;
+export default RentReceiptGenerator;

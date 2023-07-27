@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider } from "@emotion/react";
@@ -8,6 +10,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import NProgress from "nprogress";
 
 import createEmotionCache from "../utils/createEmotionCache";
 import { useApollo } from "@/utils/hooks/useApollo";
@@ -15,10 +18,14 @@ import { lightTheme, darkTheme } from "../theme";
 import { AppProvider } from "src/appContext";
 import { NotificationsProvider } from "@/containers/Notifications/context";
 
-import "../styles/globals.css";
 import { PropertyProvider } from "@/containers/Properties/context";
 import useDarkMode from "@/utils/hooks/useDarkMode";
 import HomeLayout from "@/components/Layouts/HomeLayout";
+
+import "../styles/globals.css";
+import "nprogress/nprogress.css";
+
+NProgress.configure({ showSpinner: false });
 
 dayjs.extend(relativeTime);
 
@@ -26,6 +33,13 @@ const clientSideEmotionCache = createEmotionCache();
 
 function App({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
   const apolloClient = useApollo();
+  const router = useRouter();
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => NProgress.start());
+    router.events.on("routeChangeComplete", () => NProgress.done());
+    router.events.on("routeChangeError", () => NProgress.done());
+  }, []);
+
   return (
     <CacheProvider value={emotionCache}>
       <CssBaseline />
