@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
 import { useTheme } from "@mui/material/styles";
 import Villa from "@mui/icons-material/VillaOutlined";
 import HouseOutlined from "@mui/icons-material/HouseOutlined";
@@ -22,7 +21,7 @@ const links = [
   },
   {
     label: "Farm Houses",
-    link: "flats-for-sale-and-rent",
+    link: "farm-houses-for-sale-and-rent",
     Icon: CabinOutlined,
   },
   {
@@ -30,7 +29,13 @@ const links = [
     link: "commercial-properties-for-sale-and-rent",
     Icon: WarehouseOutlined,
   },
+  {
+    label: "Pent Houses",
+    link: "pent-houses-for-sale-and-rent",
+    Icon: WarehouseOutlined,
+  },
 ];
+
 function SecondSection() {
   const theme = useTheme();
   return (
@@ -52,6 +57,7 @@ function SecondSection() {
             style={{
               fontSize: "0.9rem",
               fontWeight: 500,
+              color: theme.palette.text.secondary,
               fontFamily: theme.typography.fontFamily.Monsterrat,
               whiteSpace: "nowrap",
               display: "flex",

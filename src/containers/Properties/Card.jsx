@@ -12,7 +12,8 @@ import { PROPERTY_TYPE } from "@/utils/constants";
 
 function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
-  const { slug, media, title, listedFor, type, price, city } = data;
+  const { description, slug, media, title, listedFor, type, price, city } =
+    data;
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
 
@@ -75,22 +76,49 @@ function PropertyCard({ data, isPriority }) {
 
         <Fade in={isHovered}>
           <Box
+            sx={{
+              position: "absolute",
+              zIndex: 1,
+              bottom: 0,
+              padding: "1.5em",
+              borderRadius: "1em",
+              backgroundColor: "rgba(0,0,0,0.2)",
+              height: "100%",
+              overflow: "hidden",
+            }}
+          >
+            <Typography
+              fontSize="1em"
+              color="#fff"
+              fontWeight="semibold"
+              fontFamily={theme.typography.fontFamily.Manrope}
+              mt="50%"
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: "5",
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {description}
+            </Typography>
+          </Box>
+        </Fade>
+
+        <Fade in={isHovered}>
+          <FavoriteIcon
             onClick={handleToggleFavorite}
             sx={{
+              color: "rgba(0, 0, 0, 0.5)",
+              stroke: "#fff",
+              strokeWidth: 2,
               position: "absolute",
               right: 10,
               top: 10,
               zIndex: 1,
             }}
-          >
-            <FavoriteIcon
-              sx={{
-                color: "rgba(0, 0, 0, 0.5)",
-                stroke: "#fff",
-                strokeWidth: 2,
-              }}
-            />
-          </Box>
+          />
         </Fade>
       </Box>
 
