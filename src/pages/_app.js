@@ -18,6 +18,7 @@ import { NotificationsProvider } from "@/containers/Notifications/context";
 import "../styles/globals.css";
 import { PropertyProvider } from "@/containers/Properties/context";
 import useDarkMode from "@/utils/hooks/useDarkMode";
+import HomeLayout from "@/components/Layouts/HomeLayout";
 
 dayjs.extend(relativeTime);
 
@@ -61,7 +62,7 @@ function Main({ children }) {
                 margin: "0 auto",
               }}
             >
-              {children}
+              <HomeLayout>{children}</HomeLayout>
             </Box>
           </LocalizationProvider>
         </PropertyProvider>

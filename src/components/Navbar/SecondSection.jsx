@@ -6,6 +6,7 @@ import HouseOutlined from "@mui/icons-material/HouseOutlined";
 import LocationCityOutlined from "@mui/icons-material/LocationCityOutlined";
 import WarehouseOutlined from "@mui/icons-material/WarehouseOutlined";
 import CabinOutlined from "@mui/icons-material/CabinOutlined";
+import { useRouter } from "next/router";
 
 const links = [
   {
@@ -38,6 +39,7 @@ const links = [
 
 function SecondSection() {
   const theme = useTheme();
+  const router = useRouter();
   return (
     <Stack
       spacing={4}
@@ -50,14 +52,17 @@ function SecondSection() {
       }}
     >
       {links.map(({ label, link, Icon }) => {
+        const isActive = link === router.asPath;
         return (
           <Link
             href={link}
             key={link}
             style={{
               fontSize: "0.9rem",
-              fontWeight: 500,
-              color: theme.palette.text.secondary,
+              fontWeight: isActive ? 600 : 500,
+              color: isActive
+                ? theme.palette.text.primary
+                : theme.palette.text.secondary,
               fontFamily: theme.typography.fontFamily.Monsterrat,
               whiteSpace: "nowrap",
               display: "flex",

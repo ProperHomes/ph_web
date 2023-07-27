@@ -96,7 +96,7 @@ function ImageModal({ images, open, handleClose }) {
       <IconButton
         onClick={handleClose}
         sx={{
-          backgroundColor: "#fff",
+          backgroundColor: theme.palette.background.default,
           position: "absolute",
           top: "10px",
           right: "10px",

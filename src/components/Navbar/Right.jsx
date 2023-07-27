@@ -11,7 +11,7 @@ import useDarkMode from "@/utils/hooks/useDarkMode";
 
 function NavbarRight() {
   const theme = useTheme();
-  const { toggleAuth } = useToggleAuth();
+  const { Auth, toggleAuth } = useToggleAuth();
   const { isDarkModeActive, toggleDarkMode } = useDarkMode();
 
   const handleClickRentOrSell = () => {};
@@ -47,6 +47,7 @@ function NavbarRight() {
       </IconButton>
 
       <Avatar onClick={toggleAuth} sx={{ cursor: "pointer" }} />
+      {Auth}
     </Stack>
   );
 }

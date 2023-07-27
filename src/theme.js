@@ -102,6 +102,9 @@ const darkTheme = responsiveFontSizes(
       secondary: {
         main: "#b4b4b4",
       },
+      text: {
+        secondary: "rgba(255, 255, 255, 0.9)",
+      },
     },
     ...defaultThemeOptions,
   })
@@ -119,7 +122,7 @@ const lightTheme = responsiveFontSizes(
       },
       secondary: {
         main: "#2222220a",
-        mainHover: "#222222"
+        mainHover: "#222222",
       },
     },
     ...defaultThemeOptions,

@@ -5,7 +5,6 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import NavbarLeft from "./Left";
 import NavLinks from "./Middle";
 import NavbarRight from "./Right";
@@ -15,7 +14,6 @@ function Navbar() {
   const theme = useTheme();
   const router = useRouter();
   const isPropertyProfilePage = router.pathname.includes("/property/");
-  const { Auth } = useToggleAuth();
 
   return (
     <Box
@@ -44,8 +42,6 @@ function Navbar() {
           <SecondSection />
         </Stack>
       </Container>
-
-      {Auth}
     </Box>
   );
 }

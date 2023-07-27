@@ -96,7 +96,7 @@ function AuthModal({ open, handleClose }) {
 
   const resolverObj =
     resolvers[
-      showSignup ? "signup" : showForgotPassword ? "forgotpassword" : "login"
+      showSignup ? "signup" : showForgotPassword ? "forgotPassword" : "login"
     ];
 
   const formValues = useForm({
@@ -343,7 +343,9 @@ function AuthModal({ open, handleClose }) {
             onClick={showLogin ? toggleSignup : toggleLogin}
           >
             {showLogin
-              ? "Don't have an account yet ?  "
+              ? "Don't have an account yet ? "
+              : showForgotPassword
+              ? "Back"
               : "Already have an account ?"}
           </Typography>
         </Stack>

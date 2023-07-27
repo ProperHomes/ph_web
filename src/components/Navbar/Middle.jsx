@@ -26,8 +26,8 @@ function NavLinks() {
         return (
           <Link href={path} key={path}>
             <Typography
-              fontWeight={700}
-              color={theme.palette.text.primary}
+              fontWeight={600}
+              color={theme.palette.text.secondary}
               fontFamily={theme.typography.fontFamily.Manrope}
               sx={{
                 "&:hover": {

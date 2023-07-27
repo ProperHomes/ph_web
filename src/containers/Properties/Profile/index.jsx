@@ -1,11 +1,9 @@
 import { useState } from "react";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import HomeLayout from "@/components/Layouts/HomeLayout";
 import ImageSwiper from "@/components/ImageSwiper";
 import ImageGrid from "@/components/ImageGrid";
 import ImageModal from "@/components/ImageGallery";
@@ -23,13 +21,13 @@ function PropertyProfile({ data }) {
   });
 
   return (
-    <HomeLayout>
+    <>
       {isMobile && <ImageSwiper images={images} onClick={toggleGallery} />}
       <Stack sx={{ height: "100%" }}>
-        <Stack spacing={2} sx={{ width: "80%" }}>
+        <Stack spacing={2} sx={{ width: { xs: "100%", lg: "80%" } }}>
           <Typography
             variant="h1"
-            fontSize="2.5rem !important"
+            fontSize={{ xs: "1.5rem !important", md: "2.5rem !important" }}
             fontWeight={600}
             color={theme.palette.text.primary}
             fontFamily={theme.typography.fontFamily.Manrope}
@@ -53,7 +51,7 @@ function PropertyProfile({ data }) {
         open={showImageGallery}
         handleClose={toggleGallery}
       />
-    </HomeLayout>
+    </>
   );
 }
 

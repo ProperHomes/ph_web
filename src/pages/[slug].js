@@ -7,7 +7,6 @@ import RentRecieptGenerator from "@/containers/RentRecieptGenerator";
 import PropertyList from "@/containers/Properties/List";
 
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
-import HomeLayout from "@/components/Layouts/HomeLayout";
 
 const navlinks = [
   "flats-for-sale-and-rent",
@@ -20,9 +19,7 @@ const navlinks = [
 
 function Page({ propertiesList, isRentalAgreementPage, city }) {
   return propertiesList ? (
-    <HomeLayout>
-      <PropertyList data={propertiesList} />
-    </HomeLayout>
+    <PropertyList data={propertiesList} />
   ) : isRentalAgreementPage ? (
     <RentalAgreement city={city} />
   ) : (
