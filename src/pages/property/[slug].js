@@ -1,4 +1,5 @@
 import { useApollo } from "@/utils/hooks/useApollo";
+
 import { getPropertyUrl } from "@/utils/helper";
 import {
   GET_PROPERTY_BY_SLUG,
@@ -7,7 +8,11 @@ import {
 import Profile from "@/containers/Properties/Profile";
 
 function Page({ profileData }) {
-  return <Profile data={profileData} />;
+  return (
+    <>
+      <Profile data={profileData} />;
+    </>
+  );
 }
 
 export async function getStaticProps(context) {

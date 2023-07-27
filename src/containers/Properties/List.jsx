@@ -1,9 +1,10 @@
 import Box from "@mui/material/Box";
-
-import { styled } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
+import { styled, useTheme } from "@mui/material/styles";
 
 import Card from "./Card";
 import { usePropertyContext } from "./context";
+import { Typography } from "@mui/material";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -19,20 +20,32 @@ const Section = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-function PropertyList({ data }) {
+function PropertyList({ data, title }) {
+  const theme = useTheme();
   const { state } = usePropertyContext();
   const { list } = state;
   const listToShow = data ?? list;
   return (
-    <Section>
-      {listToShow.map((l, i) => {
-        return (
-          <Box key={l.id} sx={{ justifySelf: "center" }}>
-            <Card data={l} isPriority={i < 9} />
-          </Box>
-        );
-      })}
-    </Section>
+    <Stack spacing={2}>
+      {title && (
+        <Typography
+          color={theme.palette.text.secondary}
+          variant="h4"
+          textAlign="left"
+        >
+          {title}
+        </Typography>
+      )}
+      <Section>
+        {listToShow.map((l, i) => {
+          return (
+            <Box key={l.id} sx={{ justifySelf: "center" }}>
+              <Card data={l} isPriority={i < 9} />
+            </Box>
+          );
+        })}
+      </Section>
+    </Stack>
   );
 }
 

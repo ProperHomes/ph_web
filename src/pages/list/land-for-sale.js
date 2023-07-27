@@ -1,4 +1,5 @@
 import { useApollo } from "@/utils/hooks/useApollo";
+
 import { GET_PROPERTIES } from "src/containers/Properties/graphql";
 
 import PropertyList from "@/containers/Properties/List";

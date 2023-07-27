@@ -3,7 +3,7 @@ import PropertyList from "../Properties/List";
 export default function Home() {
   return (
     <>
-      <PropertyList />
+      <PropertyList title="New properties listed in the last 24 hours" />
     </>
   );
 }

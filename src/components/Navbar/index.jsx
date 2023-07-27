@@ -6,12 +6,15 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
 import NavbarLeft from "./Left";
-import NavLinks from "./Middle";
+import NavLinks from "./NavLinks";
 import NavbarRight from "./Right";
 import SecondSection from "./SecondSection";
+import SearchInput from "./Searchinput";
+import { useMediaQuery } from "@mui/material";
 
 function Navbar() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const router = useRouter();
   const isPropertyProfilePage = router.pathname.includes("/property/");
 
@@ -31,10 +34,11 @@ function Navbar() {
           <Stack
             direction="row"
             justifyContent="space-between"
-                      alignItems="center"
-                      py={1}
+            alignItems="center"
+            py={1}
           >
-            <NavbarLeft />
+            {!isMobile && <NavbarLeft />}
+            <SearchInput />
             <NavLinks isPropertyProfilePage={isPropertyProfilePage} />
             <NavbarRight />
           </Stack>

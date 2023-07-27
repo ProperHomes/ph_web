@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
+
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "./graphql";
 import { useAppContext } from "src/appContext";
 
@@ -23,24 +25,35 @@ function reducer(state = initialState, action) {
 }
 
 function PropertyProvider({ children }) {
+  const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { state: appState } = useAppContext();
 
   const loggedInUserId = appState.user?.id;
 
-  const { data: propertiesNotLoggedIn } = useQuery(GET_PROPERTIES, {
-    variables: { first: 20, offset: 0 },
-    skip: loggedInUserId,
-  });
+  const { data: propertiesNotLoggedIn, refetchPropertiesNotLoggedIn } =
+    useQuery(GET_PROPERTIES, {
+      variables: { first: 20, offset: 0 },
+      skip: loggedInUserId,
+    });
 
-  const { data: loggedInProperties } = useQuery(GET_PROPERTIES_LOGGED_IN, {
-    variables: { first: 20, offset: 0, userId: loggedInUserId },
-    skip: !loggedInUserId,
-  });
+  const { data: loggedInProperties, refetch: refetchPropertiesLoggedIn } =
+    useQuery(GET_PROPERTIES_LOGGED_IN, {
+      variables: {
+        first: 20,
+        offset: 0,
+        userId: loggedInUserId,
+      },
+      skip: !loggedInUserId,
+    });
 
   const data = loggedInUserId ? loggedInProperties : propertiesNotLoggedIn;
   const properties = data?.properties?.nodes ?? [];
+
+  const refetch = loggedInUserId
+    ? refetchPropertiesLoggedIn
+    : refetchPropertiesNotLoggedIn;
 
   useEffect(() => {
     if (properties.length > 0) {
@@ -53,6 +66,7 @@ function PropertyProvider({ children }) {
       value={{
         state,
         dispatch,
+        refetch
       }}
     >
       {children}

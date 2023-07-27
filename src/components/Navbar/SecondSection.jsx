@@ -63,8 +63,12 @@ function SecondSection() {
                 fontFamily={theme.typography.fontFamily.Monsterrat}
                 fontSize="0.9rem"
                 fontWeight={isActive ? 600 : 500}
-                style={{
+                sx={{
                   whiteSpace: "nowrap",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    color: theme.palette.text.primary,
+                  },
                 }}
               >
                 {label}

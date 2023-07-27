@@ -1,34 +1,23 @@
-import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import DarkMode from "@mui/icons-material/DarkMode";
-import LightMode from "@mui/icons-material/LightMode";
 import ReorderOutlined from "@mui/icons-material/ReorderOutlined";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import useDarkMode from "@/utils/hooks/useDarkMode";
 import { useState } from "react";
-import SlideDrawer from "../Drawer";
+import UserSlideDrawer from "../UserSlideDrawer";
 
 function NavbarRight() {
-  const router = useRouter();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const { Auth, loggedInUser, isLoggedIn, toggleAuth, logout } =
-    useToggleAuth();
+  const { Auth, loggedInUser } = useToggleAuth();
   const [showDrawer, setShowDrawer] = useState(false);
-  const { isDarkModeActive, toggleDarkMode } = useDarkMode();
+  const { isDarkModeActive } = useDarkMode();
 
   const toggleDrawer = () => {
     setShowDrawer((prev) => !prev);
-  };
-
-  const navigateTo = (link) => () => {
-    router.push(link);
   };
 
   return (
@@ -41,6 +30,8 @@ function NavbarRight() {
           fontWeight: 600,
           color: theme.palette.text.primary,
           fontFamily: theme.typography.fontFamily.Manrope,
+          border: "1px solid",
+          borderColor: theme.palette.info.main,
           backgroundColor: isDarkModeActive
             ? "transparent"
             : theme.palette.secondary.main,
@@ -50,10 +41,14 @@ function NavbarRight() {
         }}
         onClick={toggleDrawer}
       >
-        <Avatar sx={{ width: 30, height: 30, marginRight: "0.5em" }} />
+        <Avatar
+          alt={loggedInUser?.name ?? ""}
+          sx={{ width: 30, height: 30, marginRight: "0.5em" }}
+        />
         {!!loggedInUser ? (
           <Typography
             fontWeight="bold"
+            color={theme.palette.info.main}
             fontFamily={theme.typography.fontFamily.Manrope}
           >
             {loggedInUser?.name}
@@ -63,44 +58,7 @@ function NavbarRight() {
         )}
       </Button>
       {Auth}
-
-      <SlideDrawer
-        open={showDrawer}
-        handleClose={toggleDrawer}
-        title={
-          !isLoggedIn ? "Welcome to ProperHomes" : `Hello ${loggedInUser?.name}`
-        }
-        position={isMobile ? "bottom" : "right"}
-      >
-        <Stack sx={{ height: "100%" }}>
-          {isLoggedIn && (
-            <Stack>
-              <Button onClick={navigateTo("/dashboard/saved")}>
-                View Saved Properties
-              </Button>
-            </Stack>
-          )}
-          <Stack spacing={2} sx={{ marginTop: "auto" }}>
-            <Button onClick={toggleDarkMode} variant="contained">
-              {isDarkModeActive ? (
-                <LightMode htmlColor="#fff" />
-              ) : (
-                <DarkMode htmlColor="#000" />
-              )}
-              {isDarkModeActive ? "Light Mode" : "Dark Mode"}
-            </Button>
-            {!isLoggedIn ? (
-              <Button variant="contained" onClick={toggleAuth}>
-                Login or Signup
-              </Button>
-            ) : (
-              <Button variant="contained" onClick={logout}>
-                Logout
-              </Button>
-            )}
-          </Stack>
-        </Stack>
-      </SlideDrawer>
+      <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
     </Stack>
   );
 }

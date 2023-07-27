@@ -22,9 +22,9 @@ function PropertyProfile({ data }) {
   });
 
   return (
-    <>
+    <Stack py={2}>
       {isMobile && <ImageSwiper images={images} onClick={toggleGallery} />}
-      <Stack spacing={2} sx={{ height: "100%" }}>
+      <Stack spacing={2} sx={{ height: "100%", width: "80%" }}>
         <Typography
           variant="h1"
           fontSize={{ xs: "1.5rem !important", md: "2.5rem !important" }}
@@ -53,7 +53,7 @@ function PropertyProfile({ data }) {
         open={showImageGallery}
         handleClose={toggleGallery}
       />
-    </>
+    </Stack>
   );
 }
 

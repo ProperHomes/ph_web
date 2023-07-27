@@ -6,7 +6,6 @@ import { Typography } from "@mui/material";
 const links = [
   { title: "For Sale", path: "/list/properties-for-sale" },
   { title: "For Rent", path: "/list/properties-for-rent" },
-  { title: "EMI Calculator", path: "/homeloan/emi-calculator" },
   { title: "Rent your property", path: "/rent-your-property" },
   { title: "Sell your property", path: "/sell-your-property" },
 ];
@@ -17,11 +16,9 @@ function NavLinks() {
     <Stack
       sx={{
         display: { xs: "none", md: "flex" },
-        marginRight: "auto",
-        marginLeft: "5em",
       }}
       direction="row"
-      spacing={2}
+      spacing={3}
       alignItems="center"
     >
       {links.map(({ title, path }) => {
@@ -29,12 +26,13 @@ function NavLinks() {
           <Link href={path} key={path}>
             <Typography
               fontWeight={600}
+              fontSize={theme.spacing(2)}
               color={theme.palette.text.secondary}
               fontFamily={theme.typography.fontFamily.Manrope}
               sx={{
                 transition: "all 0.3s ease",
                 "&:hover": {
-                  textDecoration: "underline",
+                  color: theme.palette.text.primary,
                 },
               }}
             >

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Fade from "@mui/material/Fade";
 import Image from "next/image";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import { useTheme } from "@mui/material";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -161,19 +162,24 @@ function PropertyCard({ data, isPriority }) {
         </Link>
 
         <Fade in={isHovered}>
-          <FavoriteIcon
-            onClick={handleToggleFavorite}
-            sx={{
-              color: "rgba(0, 0, 0, 0.5)",
-              stroke: "#fff",
-              strokeWidth: 2,
-              position: "absolute",
-              right: 10,
-              top: 10,
-              zIndex: 1,
-              fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
-            }}
-          />
+          <Tooltip
+            enterDelay={0}
+            title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
+          >
+            <FavoriteIcon
+              onClick={handleToggleFavorite}
+              sx={{
+                color: "rgba(0, 0, 0, 0.5)",
+                stroke: "#fff",
+                strokeWidth: 2,
+                position: "absolute",
+                right: 10,
+                top: 10,
+                zIndex: 1,
+                fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Tooltip>
         </Fade>
       </Box>
 

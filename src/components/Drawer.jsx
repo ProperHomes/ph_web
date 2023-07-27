@@ -1,12 +1,10 @@
 import Drawer from "@mui/material/Drawer";
-import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 function SlideDrawer({
   open,
   handleClose,
-  title,
   position = "right",
   children,
 }) {
@@ -28,25 +26,13 @@ function SlideDrawer({
       PaperProps={{
         style: {
           width: isMobile ? "100%" : "350px",
+          height: isMobile ? "70%" : "100%",
           padding: "0.5em 1em",
           borderRadius: isMobile ? "1em 1em 0 0" : 0,
           background: theme.palette.background.paper,
         },
       }}
     >
-      <Typography
-        color={theme.palette.text.primary}
-        fontFamily={theme.typography.fontFamily.Monsterrat}
-        fontWeight={500}
-        textAlign={"center"}
-        sx={{
-          marginTop: 1,
-          marginLeft: { xs: "1rem", md: 0 },
-        }}
-      >
-        {title}
-      </Typography>
-
       {children}
     </Drawer>
   );

@@ -25,14 +25,18 @@ function Page({
   isSellOrRentPage,
   isRentalAgreementPage,
 }) {
-  return propertiesList ? (
-    <PropertyList data={propertiesList} />
-  ) : isRentalAgreementPage ? (
-    <RentalAgreement city={city} />
-  ) : isSellOrRentPage ? (
-    <SellOrRentYourProperty isForRent={isForRent} />
-  ) : (
-    <RentRecieptGenerator />
+  return (
+    <>
+      {propertiesList ? (
+        <PropertyList data={propertiesList} />
+      ) : isRentalAgreementPage ? (
+        <RentalAgreement city={city} />
+      ) : isSellOrRentPage ? (
+        <SellOrRentYourProperty isForRent={isForRent} />
+      ) : (
+        <RentRecieptGenerator />
+      )}
+    </>
   );
 }
 
