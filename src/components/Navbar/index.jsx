@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
@@ -9,14 +8,9 @@ import NavbarLeft from "./Left";
 import NavLinks from "./NavLinks";
 import NavbarRight from "./Right";
 import SecondSection from "./SecondSection";
-import { useMediaQuery } from "@mui/material";
 
 function Navbar() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const router = useRouter();
-  const isPropertyProfilePage = router.pathname.includes("/property/");
-
   return (
     <Box
       pt={1}
@@ -38,7 +32,6 @@ function Navbar() {
             spacing={1}
           >
             <NavbarLeft />
-            <NavLinks isPropertyProfilePage={isPropertyProfilePage} />
             <NavbarRight />
           </Stack>
           <Divider />

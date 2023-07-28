@@ -17,7 +17,7 @@ import { ALL_CITIES } from "@/utils/constants";
 function SearchBlock() {
   const ref = useRef(null);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [city, setCity] = useState();
 

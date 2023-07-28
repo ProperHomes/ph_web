@@ -1,9 +1,7 @@
 import { useApollo } from "@/utils/hooks/useApollo";
-
-import { getPropertyUrl } from "@/utils/helper";
 import {
-  GET_PROPERTY_BY_SLUG,
   GET_ALL_PROPERTIES_FOR_STATIC_PATHS,
+  GET_PROPERTY_BY_NUMBER,
 } from "src/containers/Properties/graphql";
 import Profile from "@/containers/Properties/Profile";
 
@@ -21,11 +19,11 @@ export async function getStaticProps(context) {
   try {
     const client = useApollo(context);
     const { data } = await client.query({
-      query: GET_PROPERTY_BY_SLUG,
-      variables: { slug: params.slug },
+      query: GET_PROPERTY_BY_NUMBER,
+      variables: { number: Number(params.number) },
       fetchPolicy: "network-only",
     });
-    profileData = data?.propertyBySlug;
+    profileData = data?.propertyByNumber;
   } catch (err) {
     console.error("Error fetching property data: ", err);
   }
@@ -49,9 +47,9 @@ export async function getStaticPaths() {
     });
     const properties = data?.properties?.nodes ?? [];
     if (properties.length > 0) {
-      paths = properties.map(({ city, type, listedFor }) => {
+      paths = properties.map(({ slug, number }) => {
         return {
-          params: { slug: getPropertyUrl({ city, type, listedFor }) },
+          params: { number: `${number}`, slug },
         };
       });
     }

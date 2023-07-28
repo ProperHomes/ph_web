@@ -19,6 +19,7 @@ function PropertyCard({ data, isPriority }) {
   const { state: appState } = useAppContext();
   const {
     id,
+    number,
     description,
     slug,
     media,
@@ -102,7 +103,7 @@ function PropertyCard({ data, isPriority }) {
           borderRadius: "1em",
         }}
       >
-        <Link href={`/property/${slug}`}>
+        <Link href={`/property/${number}/${slug}`}>
           <Box
             sx={{
               position: "relative",
@@ -185,7 +186,7 @@ function PropertyCard({ data, isPriority }) {
 
       <Box>
         <Link
-          href={`/property/${slug}`}
+          href={`/property/${number}/${slug}`}
           sx={{
             cursor: "pointer",
             overflow: "hidden",

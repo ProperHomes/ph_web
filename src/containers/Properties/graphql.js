@@ -166,9 +166,8 @@ export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
   query getPropertiesForStaticPaths {
     properties {
       nodes {
-        type
-        city
-        listedFor
+        number
+        slug
       }
     }
   }
