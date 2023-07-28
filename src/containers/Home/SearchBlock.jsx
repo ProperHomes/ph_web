@@ -14,7 +14,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { ALL_CITIES } from "@/utils/constants";
 
-function SearchInput() {
+function SearchBlock() {
   const ref = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -122,4 +122,4 @@ function SearchInput() {
   );
 }
 
-export default SearchInput;
+export default SearchBlock;

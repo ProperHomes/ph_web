@@ -1,10 +1,9 @@
-import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-import SearchInput from "@/components/Navbar/SearchInput";
 import PropertyList from "../Properties/List";
 import { Typography } from "@mui/material";
+import SearchBlock from "@/containers/Home/SearchBlock";
 
 export default function Home() {
   const theme = useTheme();
@@ -18,7 +17,7 @@ export default function Home() {
         >
           India&apos;s authentic real estate platform
         </Typography>
-        <SearchInput />
+        <SearchBlock />
       </Stack>
       <PropertyList title="New properties listed in the last 24 hours" />
     </>
