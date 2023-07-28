@@ -14,6 +14,8 @@ function NavLinks() {
   const theme = useTheme();
   return (
     <Stack
+      ml={4}
+      mr="auto"
       sx={{
         display: { xs: "none", md: "flex" },
       }}

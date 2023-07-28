@@ -2,17 +2,22 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import ReorderOutlined from "@mui/icons-material/ReorderOutlined";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import useDarkMode from "@/utils/hooks/useDarkMode";
 import { useState } from "react";
 import UserSlideDrawer from "../UserSlideDrawer";
+import { useAppContext } from "src/appContext";
 
 function NavbarRight() {
   const theme = useTheme();
-  const { Auth, loggedInUser } = useToggleAuth();
+  const { state: appState } = useAppContext();
+  const loggedInUser = appState.user;
   const [showDrawer, setShowDrawer] = useState(false);
   const { isDarkModeActive } = useDarkMode();
 
@@ -25,18 +30,19 @@ function NavbarRight() {
       <Button
         size="large"
         sx={{
+          maxWidth: { xs: "150px", sm: "100%" },
           marginLeft: "auto",
           borderRadius: "1em",
           fontWeight: 600,
           color: theme.palette.text.primary,
           fontFamily: theme.typography.fontFamily.Manrope,
-          border: "1px solid",
-          borderColor: theme.palette.info.main,
-          backgroundColor: isDarkModeActive
-            ? "transparent"
-            : theme.palette.secondary.main,
+          backgroundColor: theme.palette.background.default,
+          borderColor: theme.palette.grey[200],
+          transition: "0.3s ease",
+          boxShadow: theme.shadows[1],
+          transition: "0.3s ease",
           "&:hover": {
-            backgroundColor: theme.palette.secondary.contrastText,
+            boxShadow: theme.shadows[4],
           },
         }}
         onClick={toggleDrawer}
@@ -47,17 +53,20 @@ function NavbarRight() {
         />
         {!!loggedInUser ? (
           <Typography
-            fontWeight="bold"
-            color={theme.palette.info.main}
+            sx={{
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+            fontWeight={theme.typography.fontWeightMedium}
             fontFamily={theme.typography.fontFamily.Manrope}
           >
             {loggedInUser?.name}
           </Typography>
         ) : (
-          <ReorderOutlined htmlColor={theme.palette.text.secondary} />
+          <MenuIcon htmlColor={theme.palette.text.secondary} />
         )}
       </Button>
-      {Auth}
       <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
     </Stack>
   );

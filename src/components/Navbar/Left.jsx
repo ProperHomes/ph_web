@@ -15,7 +15,7 @@ function NavbarLeft() {
       onClick={navigateToHome}
       color={theme.palette.primary.main}
       fontFamily={theme.typography.fontFamily.Manrope}
-      fontSize="2rem"
+      fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
       fontWeight={600}
       sx={{
         cursor: "pointer",

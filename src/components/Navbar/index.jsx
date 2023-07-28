@@ -9,7 +9,6 @@ import NavbarLeft from "./Left";
 import NavLinks from "./NavLinks";
 import NavbarRight from "./Right";
 import SecondSection from "./SecondSection";
-import SearchInput from "./Searchinput";
 import { useMediaQuery } from "@mui/material";
 
 function Navbar() {
@@ -36,9 +35,9 @@ function Navbar() {
             justifyContent="space-between"
             alignItems="center"
             py={1}
+            spacing={1}
           >
-            {!isMobile && <NavbarLeft />}
-            <SearchInput />
+            <NavbarLeft />
             <NavLinks isPropertyProfilePage={isPropertyProfilePage} />
             <NavbarRight />
           </Stack>

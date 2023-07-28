@@ -83,7 +83,7 @@ const defaultThemeOptions = {
   overrides: {
     MuiCssBaseline: {
       "@global": {
-        "@font-face": "Raleway",
+        "@font-face": "Manrope",
       },
     },
   },

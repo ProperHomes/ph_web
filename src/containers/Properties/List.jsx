@@ -29,9 +29,10 @@ function PropertyList({ data, title }) {
     <Stack spacing={2}>
       {title && (
         <Typography
-          color={theme.palette.text.secondary}
+          color={theme.palette.text.primary}
           variant="h4"
           textAlign="left"
+          fontSize={{ xs: "1.2rem", sm: "1.5rem" }}
         >
           {title}
         </Typography>

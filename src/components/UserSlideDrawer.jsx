@@ -16,7 +16,8 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { loggedInUser, isLoggedIn, toggleAuth, logout } = useToggleAuth();
+  const { Auth, loggedInUser, isLoggedIn, toggleAuth, logout } =
+    useToggleAuth();
   const { isDarkModeActive, toggleDarkMode } = useDarkMode();
 
   const navigateTo = (link) => () => {
@@ -90,6 +91,21 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
             </Button>
           </Stack>
         )}
+        {!isLoggedIn && (
+          <Stack>
+            <Typography
+              color={theme.palette.text.primary}
+              fontFamily={theme.typography.fontFamily.Monsterrat}
+              fontWeight={600}
+              fontSize={20}
+              textAlign={"center"}
+              mt={1}
+              ml={{ xs: "1rem", md: 0 }}
+            >
+              Welcome to ProperHomes
+            </Typography>
+          </Stack>
+        )}
         <Stack direction="row" alignItems="center" spacing={2} mt="auto">
           {!isLoggedIn ? (
             <Button fullWidth variant="contained" onClick={toggleAuth}>
@@ -102,6 +118,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           )}
         </Stack>
       </Stack>
+      {Auth}
     </SlideDrawer>
   );
 }

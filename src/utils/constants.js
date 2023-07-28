@@ -56,3 +56,12 @@ export const ALL_CITIES = [
   "BANGALORE",
   "PUNE",
 ];
+
+export const LOCALITIES = {
+  HYDERABAD: [],
+  VISHAKAPATNAM: [],
+  VIJAYAWADA: [],
+  AMALAPURAM: [],
+  BANGALORE: [],
+  PUNE: [],
+};

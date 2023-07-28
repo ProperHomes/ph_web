@@ -200,7 +200,7 @@ function PropertyCard({ data, isPriority }) {
               maxWidth: { xs: "100%", md: "280px" },
               color: theme.palette.text.primary,
               fontWeight: 600,
-              fontFamily: theme.typography.fontFamily.Raleway,
+              fontFamily: theme.typography.fontFamily.Manrope,
               textTransform: "capitalize",
               "&:hover": {
                 textDecoration: "underline !important",
@@ -216,7 +216,7 @@ function PropertyCard({ data, isPriority }) {
           fontSize="1rem"
           fontWeight="bold"
           color={theme.palette.text.primary}
-          fontFamily={theme.typography.fontFamily.Roboto}
+          fontFamily={theme.typography.fontFamily.Manrope}
         >
           {formattedPrice.slice(0, -3)}
         </Typography>
