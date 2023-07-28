@@ -5,7 +5,7 @@ import PropertyList from "../Properties/List";
 import { Typography } from "@mui/material";
 import SearchBlock from "@/containers/Home/SearchBlock";
 
-export default function Home() {
+export default function Home({ data }) {
   const theme = useTheme();
   return (
     <>
@@ -19,7 +19,10 @@ export default function Home() {
         </Typography>
         <SearchBlock />
       </Stack>
-      <PropertyList title="New properties listed in the last 24 hours" />
+      <PropertyList
+        data={data}
+        title="New properties listed in the last 24 hours"
+      />
     </>
   );
 }
