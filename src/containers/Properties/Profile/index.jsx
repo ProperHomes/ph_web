@@ -46,15 +46,15 @@ function PropertyProfile({ data }) {
           { label: "list", path: "/list" },
           {
             label: `${type}s For ${isForSale ? "Sale" : "Rent"}`,
-            path: `/list/${type.toLowerCase()}s-for-${
+            path: `/list/${type?.toLowerCase()}s-for-${
               isForSale ? "sale" : "rent"
             }`,
           },
           {
             label: city,
-            path: `/list/${type.toLowerCase()}s-for-${
+            path: `/list/${type?.toLowerCase()}s-for-${
               isForSale ? "sale" : "rent"
-            }/${city.toLowerCase()}`,
+            }/${city?.toLowerCase()}`,
           },
         ]}
       />
