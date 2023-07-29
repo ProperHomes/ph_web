@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Select from "@mui/material/Select";
@@ -13,13 +13,16 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { ALL_CITIES } from "@/utils/constants";
+import useKeyDown from "@/utils/hooks/useKeyDown";
+import { convertStringToSlug } from "@/utils/helper";
 
 function SearchBlock() {
   const ref = useRef(null);
+  const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [city, setCity] = useState();
+  const [city, setCity] = useState("");
 
   const handleChangeCity = (e) => {
     setCity(e.target.value);
@@ -28,6 +31,17 @@ function SearchBlock() {
   useEffect(() => {
     ref.current.focus();
   }, []);
+
+  const handleSubmit = () => {
+    const searchText = convertStringToSlug(ref.current.value);
+    let path = `/search?searchText=${searchText}`;
+    if (city) {
+      path = `${path}&city=${city}`;
+    }
+    router.push(path);
+  };
+
+  useKeyDown("Enter", handleSubmit);
 
   return (
     <Stack
@@ -81,7 +95,6 @@ function SearchBlock() {
         })}
       </Select>
       <Stack
-        component="form"
         direction="row"
         alignItems="center"
         p={1}
@@ -108,6 +121,7 @@ function SearchBlock() {
       </Stack>
       <Button
         variant="contained"
+        onClick={handleSubmit}
         sx={{
           display: { xs: "none", sm: "flex" },
           borderRadius: "0px 8px 8px 0px",

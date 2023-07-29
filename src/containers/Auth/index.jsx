@@ -156,7 +156,6 @@ function AuthModal({ open, handleClose }) {
         data: { ...data, phoneNumber: `91${data.phoneNumber}` },
         withCredentials: true,
       });
-      console.log(res);
       if (res?.data?.userId) {
         await handleFetchUser(res.data.userId);
         handleClose();

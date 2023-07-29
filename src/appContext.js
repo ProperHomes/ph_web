@@ -3,10 +3,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import {
-  UPDATE_USER,
-  FETCH_USER_PROFILE,
-} from "./containers/Profile/graphql";
+import { UPDATE_USER, FETCH_USER_PROFILE } from "./containers/Profile/graphql";
 
 import { USER_TYPE } from "./utils/constants";
 

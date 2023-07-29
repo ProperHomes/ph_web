@@ -101,8 +101,7 @@ export const GET_USER_SAVED_PROPERTIES = gql`
     savedProperties(
       condition: { userId: $userId }
       first: $first
-      offset: $offset
-      # orderBy: CREATED_AT_DESC
+      offset: $offset # orderBy: CREATED_AT_DESC
     ) {
       nodes {
         id
@@ -172,6 +171,40 @@ export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
     }
   }
 `;
+
+export const SEARCH_PROPERTIES = gql`
+  ${PROPERTY_FIELDS}
+  query searchProperties(
+    $first: Int
+    $offset: Int
+    $searchText: String!
+    $city: String
+    $locality: String
+  ) {
+    searchProperties(
+      first: $first
+      offset: $offset
+      searchText: $searchText
+      city: $city
+      locality: $locality
+    ) {
+      nodes {
+        ...PropertyFields
+        media: propertyMedias {
+          nodes {
+            id
+            mediaUrl
+            media {
+              signedUrl
+            }
+            isCoverImage
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const CREATE_PROPERTY = gql`
   mutation createProperty($input: CreatePropertyInput!) {
     createProperty(input: $input) {
