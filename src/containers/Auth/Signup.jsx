@@ -24,7 +24,7 @@ function SignupForm({ control }) {
             fullWidth
             label="Name"
             type="text"
-            value={value}
+            value={value ?? ""}
             onChange={onChange}
             error={!!error?.message}
             helperText={error?.message ?? ""}
@@ -40,7 +40,7 @@ function SignupForm({ control }) {
             variant="outlined"
             label="Mobile Number"
             type="text"
-            value={value}
+            value={value ?? ""}
             onChange={onChange}
             error={!!error?.message}
             helperText={error?.message ?? ""}

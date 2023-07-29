@@ -8,7 +8,7 @@ function HomeLayout({ children }) {
     <Box sx={{ width: "100%", minHeight: "100vh" }}>
       <Navbar />
       <Container maxWidth="xl">
-        <Box py={4} sx={{ overflow: "scroll", width: "100%", height: "100%" }}>
+        <Box py={4} sx={{  width: "100%", height: "100%" }}>
           {children}
         </Box>
       </Container>

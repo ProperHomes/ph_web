@@ -2,6 +2,7 @@ import { useApollo } from "@/utils/hooks/useApollo";
 
 import { GET_PROPERTIES } from "@/containers/Properties/graphql";
 
+import Home from "@/containers/Home";
 import RentalAgreement from "@/containers/RentalAgreement";
 import RentRecieptGenerator from "@/containers/RentRecieptGenerator";
 import PropertyList from "@/containers/Properties/List";
@@ -10,20 +11,29 @@ import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
 import SellOrRentYourProperty from "@/containers/Properties/SellRentProperty";
 
 const navlinks = [
-  "flats-for-sale-and-rent",
-  "villas-for-sale-and-rent",
-  "independent-houses-for-sale-and-rent",
-  "farm-houses-for-sale-and-rent",
-  "commercial-properties-for-sale-and-rent",
-  "pent-houses-for-sale-and-rent",
+  "flats-for-sale",
+  "villas-for-sale",
+  "houses-for-sale",
+  "farm-houses-for-sale",
+  "commercial-properties-for-sale",
+  "pent-houses-for-sale",
+  "properties-for-sale",
+  // RENTS FROM NOW
+  "flats-for-rent",
+  "villas-for-rent",
+  "houses-for-rent",
+  "farm-houses-for-rent",
+  "commercial-properties-for-rent",
+  "pent-houses-for-rent",
+  "properties-for-rent",
 ];
 
 function Page({
   city,
-  isForRent,
   propertiesList,
-  isSellOrRentPage,
+  isListPropertyPage,
   isRentalAgreementPage,
+  rentReceiptGenerator,
 }) {
   return (
     <>
@@ -31,10 +41,12 @@ function Page({
         <PropertyList data={propertiesList} />
       ) : isRentalAgreementPage ? (
         <RentalAgreement city={city} />
-      ) : isSellOrRentPage ? (
-        <SellOrRentYourProperty isForRent={isForRent} />
-      ) : (
+      ) : isListPropertyPage ? (
+        <SellOrRentYourProperty />
+      ) : rentReceiptGenerator ? (
         <RentRecieptGenerator />
+      ) : (
+        <Home />
       )}
     </>
   );
@@ -49,18 +61,24 @@ export async function getStaticProps(context) {
     slug === "rental-agreement" ||
     slug.split("-").slice(0, 3).join("-") === "rental-agreement-in";
 
-  const isSellOrRentPage =
-    slug === "sell-your-property" || slug === "rent-your-property";
+  const isListPropertyPage = slug === "list-your-property";
 
   if (navlinks.includes(slug)) {
     let propertiesList;
-    let propertyType = slug.split("-for-sale-and-rent")[0];
+    const listedFor = slug.split("-").pop().toUpperCase();
+    let propertyType = slug.split("-for-")[0];
     propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
-    propertyType = PROPERTY_TYPE[propertyType];
+    const variables = { listedFor, first: 20, offset: 0 };
+    if (slug !== "properties-for-sale" && slug !== "properties-for-rent") {
+      variables.type = propertyType;
+    }
+    if (slug.includes("commercial-properties")) {
+      variables.type = PROPERTY_TYPE.COMMERCIAL;
+    }
     try {
       const res = await client.query({
         query: GET_PROPERTIES,
-        variables: { type: propertyType, first: 20, offset: 0 },
+        variables,
         fetchPolicy: "network-only",
       });
       propertiesList = res?.data?.properties?.nodes ?? [];
@@ -93,19 +111,34 @@ export async function getStaticProps(context) {
         city: rentalAgreementCity,
       },
     };
-  } else if (isSellOrRentPage) {
-    const isForRent = slug.split("-")[0] === "rent";
+  } else if (
+    slug === "online-rent-reciept-generator-free" ||
+    slug === "rent-reciept-generator-online"
+  ) {
     return {
       props: {
-        isForRent,
-        isSellOrRentPage,
+        rentReceiptGenerator: true,
       },
+    };
+  } else if (isListPropertyPage) {
+    return {
+      props: {
+        isListPropertyPage,
+      },
+    };
+  } else {
+    return {
+      notFound: true,
     };
   }
 }
 
 export async function getStaticPaths() {
-  let paths = [{ params: { slug: "rental-agreement" } }];
+  let paths = [
+    { params: { slug: "rental-agreement" } },
+    { params: { slug: "online-rent-reciept-generator-free" } },
+    { params: { slug: "rent-reciept-generator-online" } },
+  ];
   for (let city of ALL_CITIES) {
     paths.push({
       params: { slug: `rental-agreement-in-${city.toLowerCase()}` },

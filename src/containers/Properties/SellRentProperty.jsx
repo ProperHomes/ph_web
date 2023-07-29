@@ -1,12 +1,10 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-function SellOrRentYourProperty({ isForRent }) {
+function SellOrRentYourProperty() {
   return (
     <Stack>
-      <Typography>
-        {isForRent ? "Rent your property" : "Sell your property"}
-      </Typography>
+      <Typography>List your property to sell or rent</Typography>
     </Stack>
   );
 }

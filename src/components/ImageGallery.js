@@ -96,13 +96,15 @@ function ImageModal({ images, open, handleClose, activeIndex }) {
       <IconButton
         onClick={handleClose}
         sx={{
-          backgroundColor: theme.palette.background.default,
+          border: "1px solid",
+          borderRadius: "50%",
+          borderColor: theme.palette.background.default,
           position: "absolute",
           top: "10px",
           right: "10px",
         }}
       >
-        <Close />
+        <Close htmlColor="#fff" />
       </IconButton>
       {imageUrls.length > 1 && (
         <Stack>
@@ -110,27 +112,31 @@ function ImageModal({ images, open, handleClose, activeIndex }) {
             id="fullscreenModalPrevBtn"
             onClick={handlePrev}
             sx={{
-              backgroundColor: theme.palette.background.paper,
+              border: "1px solid",
+              borderRadius: "50%",
+              borderColor: theme.palette.background.default,
               position: "absolute",
               top: "50%",
-              left: 0,
+              left: 10,
               transform: "translateY(-50%)",
             }}
           >
-            <KeyboardArrowLeft />
+            <KeyboardArrowLeft htmlColor="#fff" />
           </IconButton>
           <IconButton
             id="fullscreenModalNextBtn"
             onClick={handleNext}
             sx={{
-              backgroundColor: theme.palette.background.paper,
+              border: "1px solid",
+              borderRadius: "50%",
+              borderColor: theme.palette.background.default,
               position: "absolute",
               top: "50%",
               transform: "translateY(-50%)",
-              right: "0",
+              right: 10,
             }}
           >
-            <KeyboardArrowRight />
+            <KeyboardArrowRight htmlColor="#fff" />
           </IconButton>
         </Stack>
       )}

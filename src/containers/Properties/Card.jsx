@@ -162,26 +162,24 @@ function PropertyCard({ data, isPriority }) {
           </Box>
         </Link>
 
-        <Fade in={isHovered}>
-          <Tooltip
-            enterDelay={0}
-            title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
-          >
-            <FavoriteIcon
-              onClick={handleToggleFavorite}
-              sx={{
-                color: "rgba(0, 0, 0, 0.5)",
-                stroke: "#fff",
-                strokeWidth: 2,
-                position: "absolute",
-                right: 10,
-                top: 10,
-                zIndex: 1,
-                fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
-              }}
-            />
-          </Tooltip>
-        </Fade>
+        <Tooltip
+          enterDelay={0}
+          title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
+        >
+          <FavoriteIcon
+            onClick={handleToggleFavorite}
+            sx={{
+              color: "rgba(0, 0, 0, 0.5)",
+              stroke: "#fff",
+              strokeWidth: 2,
+              position: "absolute",
+              right: 10,
+              top: 10,
+              zIndex: 1,
+              fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
+            }}
+          />
+        </Tooltip>
       </Box>
 
       <Box>
@@ -203,24 +201,12 @@ function PropertyCard({ data, isPriority }) {
               fontWeight: 600,
               fontFamily: theme.typography.fontFamily.Manrope,
               textTransform: "capitalize",
-              "&:hover": {
-                textDecoration: "underline !important",
-              },
             }}
           >
             {PROPERTY_TYPE[type].toLowerCase()} for {listedFor.toLowerCase()} in{" "}
-            {city}
+            {city.toLowerCase()} <br /> {formattedPrice.slice(0, -3)}
           </Typography>
         </Link>
-
-        <Typography
-          fontSize="1rem"
-          fontWeight="bold"
-          color={theme.palette.text.primary}
-          fontFamily={theme.typography.fontFamily.Manrope}
-        >
-          {formattedPrice.slice(0, -3)}
-        </Typography>
       </Box>
       {Auth}
     </Stack>

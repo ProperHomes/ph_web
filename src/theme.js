@@ -124,6 +124,9 @@ const lightTheme = responsiveFontSizes(
         main: "#2222220a",
         mainHover: "#222222",
       },
+      text: {
+        secondary: "#374151",
+      },
     },
     ...defaultThemeOptions,
   })

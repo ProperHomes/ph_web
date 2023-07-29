@@ -14,7 +14,7 @@ function ForgorPasswordForm({ control }) {
           variant="outlined"
           label="Mobile Number"
           type="text"
-          value={value}
+          value={value ?? ""}
           onChange={onChange}
           error={!!error?.message}
           helperText={error?.message ?? ""}

@@ -107,7 +107,7 @@ function AuthModal({ open, handleClose }) {
   });
   const { setError, control, handleSubmit, getValues, reset, formState } =
     formValues;
-  const { isSubmitSuccessful, submitting } = formState;
+  const { submitting } = formState;
 
   const toggleForgotPassword = () => {
     setForgotPassword((prev) => !prev);

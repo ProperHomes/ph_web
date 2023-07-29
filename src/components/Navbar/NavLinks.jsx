@@ -4,10 +4,9 @@ import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 
 const links = [
-  { title: "For Sale", path: "/list/properties-for-sale" },
-  { title: "For Rent", path: "/list/properties-for-rent" },
-  { title: "Rent your property", path: "/rent-your-property" },
-  { title: "Sell your property", path: "/sell-your-property" },
+  { title: "For Sale", path: "/properties-for-sale" },
+  { title: "For Rent", path: "/properties-for-rent" },
+  { title: "List your Property For Free", path: "/list-your-property" },
 ];
 
 function NavLinks() {

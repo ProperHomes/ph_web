@@ -12,28 +12,28 @@ import { Typography } from "@mui/material";
 const links = [
   {
     label: "Flats",
-    link: "/flats-for-sale-and-rent",
+    link: "/flats-for-sale",
     Icon: LocationCityOutlined,
   },
-  { label: "Villas", link: "/villas-for-sale-and-rent", Icon: Villa },
+  { label: "Villas", link: "/villas-for-sale", Icon: Villa },
   {
     label: "Independent Houses",
-    link: "/independent-houses-for-sale-and-rent",
+    link: "/houses-for-sale",
     Icon: HouseOutlined,
   },
   {
     label: "Farm Houses",
-    link: "/farm-houses-for-sale-and-rent",
+    link: "/farm-houses-for-sale",
     Icon: CabinOutlined,
   },
   {
-    label: "Commercial Properties",
-    link: "/commercial-properties-for-sale-and-rent",
+    label: "Pent Houses",
+    link: "/pent-houses-for-sale",
     Icon: WarehouseOutlined,
   },
   {
-    label: "Pent Houses",
-    link: "/pent-houses-for-sale-and-rent",
+    label: "Commercial Properties",
+    link: "/commercial-properties-for-sale",
     Icon: WarehouseOutlined,
   },
 ];

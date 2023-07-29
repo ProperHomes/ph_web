@@ -25,7 +25,7 @@ function LoginForm({ control, isLoginWithOtp }) {
             variant="outlined"
             label="Mobile Number"
             type="text"
-            value={value}
+            value={value ?? ""}
             onChange={onChange}
             error={!!error?.message}
             helperText={error?.message ?? ""}
@@ -49,7 +49,7 @@ function LoginForm({ control, isLoginWithOtp }) {
               variant="outlined"
               label="Password"
               type={showPassword ? "text" : "password"}
-              value={value}
+              value={value ?? ""}
               onChange={onChange}
               error={!!error?.message}
               helperText={error?.message ?? ""}

@@ -22,6 +22,8 @@ export const PROPERTY_FIELDS = gql`
     attributes
     createdAt
     area
+    ownerId
+    agentId
   }
 `;
 
@@ -30,11 +32,12 @@ export const GET_PROPERTIES = gql`
   query getProperties(
     $listedFor: TypeOfListing
     $type: PropertyType
+    $city: PropertyCity
     $first: Int!
     $offset: Int!
   ) {
     properties(
-      condition: { listedFor: $listedFor, type: $type }
+      condition: { listedFor: $listedFor, type: $type, city: $city }
       first: $first
       offset: $offset
       orderBy: CREATED_AT_DESC
@@ -61,12 +64,13 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
   query getProperties(
     $listedFor: TypeOfListing
     $type: PropertyType
+    $city: PropertyCity
     $first: Int!
     $offset: Int!
     $userId: UUID!
   ) {
     properties(
-      condition: { listedFor: $listedFor, type: $type }
+      condition: { listedFor: $listedFor, type: $type, city: $city }
       first: $first
       offset: $offset
       orderBy: CREATED_AT_DESC
@@ -178,7 +182,7 @@ export const SEARCH_PROPERTIES = gql`
     $first: Int
     $offset: Int
     $searchText: String!
-    $city: String
+    $city: PropertyCity
     $locality: String
   ) {
     searchProperties(
