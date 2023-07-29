@@ -115,7 +115,7 @@ function SearchBlock() {
             fontFamily: theme.typography.fontFamily.Manrope,
           }}
           inputRef={ref}
-          placeholder="Search by locality or landmark"
+          placeholder="Eg: Apartment for sale in Memphis"
           inputProps={{ "aria-label": "search properties" }}
         />
       </Stack>
