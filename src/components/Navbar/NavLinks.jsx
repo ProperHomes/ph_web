@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 const links = [
   { title: "For Sale", path: "/properties-for-sale" },
   { title: "For Rent", path: "/properties-for-rent" },
-  { title: "List your Property For Free", path: "/list-your-property" },
+  { title: "List your Property For Free", path: "/list-your-property-for-sale-rent-lease" },
 ];
 
 function NavLinks() {

@@ -63,8 +63,11 @@ function PropertyProfile({ data }) {
 
   const importantInfo = [
     { label: "", value: type },
-    { label: "Bedrooms", value: bedrooms },
-    { label: "Bathrooms", value: bathrooms },
+    { label: bedrooms.length === 1 ? "Bedroom" : "Bedrooms", value: bedrooms },
+    {
+      label: bathrooms.length === 1 ? "Bathroom" : "Bathrooms",
+      value: bathrooms,
+    },
     { label: "Area", value: area },
     { label: "Facing", value: facing },
     { label: isFurnished ? "Furnished" : "Not Furnished", value: "" },
@@ -101,7 +104,7 @@ function PropertyProfile({ data }) {
       {!isMobile && <ImageGrid images={images} onClick={toggleGallery} />}
 
       <Content>
-        <Stack spacing={2} p={2}>
+        <Stack spacing={2} p={1}>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -122,7 +125,7 @@ function PropertyProfile({ data }) {
               variant="contained"
               disableRipple
               sx={{
-                width: { xs: "150px", md: "200px" },
+                width: { xs: "100%", md: "200px" },
                 whiteSpace: "nowrap",
                 fontWeight: 600,
                 fontSize: "1rem",
@@ -130,7 +133,7 @@ function PropertyProfile({ data }) {
                 borderRadius: "1rem",
               }}
             >
-              ₹{formattedPrice.slice(0, -3)}
+              {formattedPrice.slice(0, -3)}
             </Button>
           </Stack>
           <Divider />

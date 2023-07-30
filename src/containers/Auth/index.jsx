@@ -54,6 +54,32 @@ const FETCH_USER_BY_PHONE = gql`
   }
 `;
 
+const authResolvers = {
+  signup: {
+    name: yup.string().required("Name is required"),
+    password: passwordRules,
+  },
+  forgotPassword: {
+    phoneNumber: yup
+      .string()
+      .phone("IN", "Must be a valid phone number")
+      .required("Phone number is required"),
+  },
+  loginWithOtp: {
+    phoneNumber: yup
+      .string()
+      .phone("IN", "Must be a valid phone number")
+      .required("Phone number is required"),
+  },
+  login: {
+    phoneNumber: yup
+      .string()
+      .phone("IN", "Must be a valid phone number")
+      .required("Phone number is required"),
+    password: yup.string().required("Password is required"),
+  },
+};
+
 function AuthModal({ open, handleClose }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -70,36 +96,15 @@ function AuthModal({ open, handleClose }) {
 
   const { handleFetchUser } = useAppContext();
 
-  const resolvers = {
-    signup: {
-      name: yup.string().required("Name is required"),
-      password: passwordRules,
-    },
-    forgotPassword: {
-      phoneNumber: yup
-        .string()
-        .phone("IN", "Must be a valid phone number")
-        .required("Phone number is required"),
-    },
-    login: isLoginWithOtp
-      ? {
-          phoneNumber: yup
-            .string()
-            .phone("IN", "Must be a valid phone number")
-            .required("Phone number is required"),
-        }
-      : {
-          phoneNumber: yup
-            .string()
-            .phone("IN", "Must be a valid phone number")
-            .required("Phone number is required"),
-          password: yup.string().required("Password is required"),
-        },
-  };
-
   const resolverObj =
-    resolvers[
-      showSignup ? "signup" : showForgotPassword ? "forgotPassword" : "login"
+    authResolvers[
+      showSignup
+        ? "signup"
+        : showForgotPassword
+        ? "forgotPassword"
+        : isLoginWithOtp
+        ? "loginWithOtp"
+        : "login"
     ];
 
   const formValues = useForm({

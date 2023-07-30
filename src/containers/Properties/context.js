@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "./graphql";
 import { useAppContext } from "src/appContext";
@@ -25,7 +24,6 @@ function reducer(state = initialState, action) {
 }
 
 function PropertyProvider({ children }) {
-  const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { state: appState } = useAppContext();
@@ -66,7 +64,7 @@ function PropertyProvider({ children }) {
       value={{
         state,
         dispatch,
-        refetch
+        refetch,
       }}
     >
       {children}

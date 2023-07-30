@@ -8,7 +8,7 @@ import RentRecieptGenerator from "@/containers/RentRecieptGenerator";
 import PropertyList from "@/containers/Properties/List";
 
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
-import SellOrRentYourProperty from "@/containers/Properties/SellRentProperty";
+import CreateProperty from "@/containers/Properties/Create";
 
 const navlinks = [
   "flats-for-sale",
@@ -42,7 +42,7 @@ function Page({
       ) : isRentalAgreementPage ? (
         <RentalAgreement city={city} />
       ) : isListPropertyPage ? (
-        <SellOrRentYourProperty />
+        <CreateProperty />
       ) : rentReceiptGenerator ? (
         <RentRecieptGenerator />
       ) : (
@@ -61,7 +61,7 @@ export async function getStaticProps(context) {
     slug === "rental-agreement" ||
     slug.split("-").slice(0, 3).join("-") === "rental-agreement-in";
 
-  const isListPropertyPage = slug === "list-your-property";
+  const isListPropertyPage = slug === "list-your-property-for-sale-rent-lease";
 
   if (navlinks.includes(slug)) {
     let propertiesList;
