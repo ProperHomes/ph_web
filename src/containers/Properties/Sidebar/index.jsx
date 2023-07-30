@@ -20,7 +20,7 @@ function Sidebar({ data }) {
         </Button>
       </Stack>
 
-      <SellerInfoCard createdAt={data.createdAt} />
+      <SellerInfoCard createdAt={data?.createdAt} />
     </Stack>
   );
 }
