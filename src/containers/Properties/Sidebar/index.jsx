@@ -11,6 +11,7 @@ function Sidebar({ data }) {
   const theme = useTheme();
   return (
     <Stack spacing={2}>
+      <SellerInfoCard createdAt={data?.createdAt} />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Button startIcon={<Save />} fullWidth color="info">
           Save Property
@@ -19,8 +20,6 @@ function Sidebar({ data }) {
           Share Property
         </Button>
       </Stack>
-
-      <SellerInfoCard createdAt={data?.createdAt} />
     </Stack>
   );
 }

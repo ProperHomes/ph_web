@@ -79,7 +79,7 @@ function PropertyProfile({ data }) {
   ];
 
   return (
-    <Stack p={2} spacing={2}>
+    <Stack p={1} spacing={2}>
       <Breadcrumbs
         links={[
           { label: "list", path: "/list" },
@@ -98,16 +98,6 @@ function PropertyProfile({ data }) {
         ]}
       />
       {isMobile && <ImageSwiper images={images} onClick={toggleGallery} />}
-      <Typography
-        variant="h1"
-        fontSize={{ xs: "1.5rem !important", md: "2.5rem !important" }}
-        fontWeight={600}
-        color={theme.palette.text.primary}
-        fontFamily={theme.typography.fontFamily.Manrope}
-        textTransform="capitalize"
-      >
-        {title?.toLowerCase()}
-      </Typography>
       {!isMobile && <ImageGrid images={images} onClick={toggleGallery} />}
 
       <Content>
@@ -117,19 +107,30 @@ function PropertyProfile({ data }) {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography>{title}</Typography>
+            <Typography
+              variant="h1"
+              fontSize={{ xs: "1.4rem !important", md: "2.5rem !important" }}
+              fontWeight={600}
+              color={theme.palette.text.primary}
+              fontFamily={theme.typography.fontFamily.Manrope}
+              textTransform="capitalize"
+            >
+              {title?.toLowerCase()}
+            </Typography>
             <Button
               size="large"
               variant="contained"
               disableRipple
               sx={{
+                width: { xs: "150px", md: "200px" },
+                whiteSpace: "nowrap",
                 fontWeight: 600,
                 fontSize: "1rem",
                 fontFamily: theme.typography.fontFamily.Monsterrat,
                 borderRadius: "1rem",
               }}
             >
-              {formattedPrice.slice(0, -3)}
+              ₹{formattedPrice.slice(0, -3)}
             </Button>
           </Stack>
           <Divider />

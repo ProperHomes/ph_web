@@ -40,7 +40,7 @@ function PropertyList({ data, title }) {
       <Section>
         {listToShow.map((l, i) => {
           return (
-            <Box key={i} sx={{ justifySelf: "center" }}>
+            <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
               <Card data={l} isPriority={i < 9} />
             </Box>
           );

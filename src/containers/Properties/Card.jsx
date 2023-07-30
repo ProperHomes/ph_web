@@ -197,7 +197,7 @@ function PropertyCard({ data, isPriority }) {
             <Chip
               sx={{
                 "& .MuiChip-label": {
-                  fontWeight: 600
+                  fontWeight: 600,
                 },
               }}
               color={isDarkMode ? "default" : "secondary"}
