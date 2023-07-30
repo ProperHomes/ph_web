@@ -33,12 +33,14 @@ function SearchBlock() {
   }, []);
 
   const handleSubmit = () => {
-    const searchText = convertStringToSlug(ref.current.value);
-    let path = `/search?searchText=${searchText}`;
-    if (city) {
-      path = `${path}&city=${city}`;
+    if (ref.current.value?.length > 0) {
+      const searchText = convertStringToSlug(ref.current.value);
+      let path = `/search?searchText=${searchText}`;
+      if (city) {
+        path = `${path}&city=${city}`;
+      }
+      router.push(path);
     }
-    router.push(path);
   };
 
   useKeyDown("Enter", handleSubmit);
@@ -115,7 +117,7 @@ function SearchBlock() {
             fontFamily: theme.typography.fontFamily.Manrope,
           }}
           inputRef={ref}
-          placeholder="Eg: Apartment for sale in Memphis"
+          placeholder="Eg: Flats for sale in Hyderabad"
           inputProps={{ "aria-label": "search properties" }}
         />
       </Stack>

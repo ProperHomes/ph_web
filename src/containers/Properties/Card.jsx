@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Fade from "@mui/material/Fade";
 import Image from "next/image";
@@ -16,6 +17,7 @@ import { useAppContext } from "src/appContext";
 
 function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   const { state: appState } = useAppContext();
   const {
     id,
@@ -28,6 +30,7 @@ function PropertyCard({ data, isPriority }) {
     type,
     price,
     city,
+    bedrooms,
     currentUserSavedProperties,
   } = data;
 
@@ -103,7 +106,7 @@ function PropertyCard({ data, isPriority }) {
           borderRadius: "1em",
         }}
       >
-        <Link href={`/property/${number}/${slug}`}>
+        <Link href={`/property/${slug}`}>
           <Box
             sx={{
               position: "relative",
@@ -144,7 +147,7 @@ function PropertyCard({ data, isPriority }) {
                 <Typography
                   fontSize="1em"
                   color="#fff"
-                  fontWeight="semibold"
+                  fontWeight="regular"
                   fontFamily={theme.typography.fontFamily.Manrope}
                   mt="50%"
                   sx={{
@@ -180,34 +183,58 @@ function PropertyCard({ data, isPriority }) {
             }}
           />
         </Tooltip>
+
+        {bedrooms > 0 && (
+          <Box
+            sx={{
+              position: "absolute",
+              left: 10,
+              top: 10,
+              zIndex: 1,
+              fontWeight: "medium",
+            }}
+          >
+            <Chip
+              sx={{
+                "& .MuiChip-label": {
+                  fontWeight: 600
+                },
+              }}
+              color={isDarkMode ? "default" : "secondary"}
+              label={`${bedrooms} BHK`}
+            />
+          </Box>
+        )}
       </Box>
 
-      <Box>
-        <Link
-          href={`/property/${number}/${slug}`}
+      <Link href={`/property/${slug}`}>
+        <Typography
           sx={{
-            cursor: "pointer",
+            width: "100%",
+            maxWidth: { xs: "100%", md: "280px" },
+            color: theme.palette.text.primary,
+            fontWeight: "medium",
+            fontFamily: theme.typography.fontFamily.Manrope,
+            textTransform: "capitalize",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            fontWeight: "bold",
           }}
         >
-          <Typography
-            sx={{
-              width: "100%",
-              maxWidth: { xs: "100%", md: "280px" },
-              color: theme.palette.text.primary,
-              fontWeight: 600,
-              fontFamily: theme.typography.fontFamily.Manrope,
-              textTransform: "capitalize",
-            }}
-          >
-            {PROPERTY_TYPE[type].toLowerCase()} for {listedFor.toLowerCase()} in{" "}
-            {city.toLowerCase()} <br /> {formattedPrice.slice(0, -3)}
+          {PROPERTY_TYPE[type].toLowerCase()} for {listedFor.toLowerCase()} in{" "}
+          {city.toLowerCase()}
+        </Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography fontWeight="bold" color="primary.main">
+            {formattedPrice.slice(0, -3)}
           </Typography>
-        </Link>
-      </Box>
+        </Stack>
+      </Link>
+
       {Auth}
     </Stack>
   );

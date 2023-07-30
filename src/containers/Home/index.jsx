@@ -12,6 +12,7 @@ export default function Home({ data }) {
       <Stack px={{ xs: 0, md: 4 }} pb={4} alignItems="center">
         <Typography
           gutterBottom
+          color={theme.palette.text.primary}
           fontSize={{ xs: "1.25rem", sm: "1.5rem" }}
           fontFamily={theme.typography.fontFamily.Manrope}
         >

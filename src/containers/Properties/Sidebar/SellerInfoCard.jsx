@@ -23,10 +23,15 @@ function SellerInfoCard({ createdAt }) {
       px={2}
       py={2}
       spacing={2}
-      sx={{ boxShadow: theme.shadows[2], borderRadius: "1rem" }}
+      sx={{
+        boxShadow: 2,
+        borderRadius: "1rem",
+        borderColor: 'error.main',
+      }}
     >
       <Typography
         fontSize="large"
+        color={theme.palette.text.secondary}
         fontFamily={theme.typography.fontFamily.Manrope}
       >
         Interested in this property ?
@@ -44,7 +49,13 @@ function SellerInfoCard({ createdAt }) {
         Contact owner
       </Button>
 
-      <Stack spacing={1} mt={2} direction="row" alignItems="center" justifyContent="center">
+      <Stack
+        spacing={1}
+        mt={2}
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+      >
         <DateRangeIcon />
         <Typography>
           Listed on: {dayjs(createdAt).format("MMMM D, YYYY")}

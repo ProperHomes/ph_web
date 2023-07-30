@@ -1,4 +1,3 @@
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect } from "react";
 
 import { useAppContext } from "../../appContext";
