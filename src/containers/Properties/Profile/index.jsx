@@ -63,9 +63,9 @@ function PropertyProfile({ data }) {
 
   const importantInfo = [
     { label: "", value: type },
-    { label: bedrooms.length === 1 ? "Bedroom" : "Bedrooms", value: bedrooms },
+    { label: bedrooms?.length === 1 ? "Bedroom" : "Bedrooms", value: bedrooms },
     {
-      label: bathrooms.length === 1 ? "Bathroom" : "Bathrooms",
+      label: bathrooms?.length === 1 ? "Bathroom" : "Bathrooms",
       value: bathrooms,
     },
     { label: "Area", value: area },
