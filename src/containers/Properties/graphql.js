@@ -181,16 +181,16 @@ export const SEARCH_PROPERTIES = gql`
   query searchProperties(
     $first: Int
     $offset: Int
-    $searchText: String!
-    $city: PropertyCity
+    $city: String
     $locality: String
+    $searchText: String
   ) {
     searchProperties(
       first: $first
       offset: $offset
-      searchText: $searchText
       city: $city
       locality: $locality
+      searchText: $searchText
     ) {
       nodes {
         ...PropertyFields
