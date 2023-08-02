@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
@@ -5,12 +6,14 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
 import NavbarLeft from "./Left";
-import NavLinks from "./NavLinks";
 import NavbarRight from "./Right";
 import SecondSection from "./SecondSection";
+import { PRIVATE_ROUTES } from "@/utils/constants";
 
 function Navbar() {
+  const router = useRouter();
   const theme = useTheme();
+  const isPrivateRoute = PRIVATE_ROUTES.includes(router.pathname);
   return (
     <Box
       pt={1}
@@ -35,7 +38,7 @@ function Navbar() {
             <NavbarRight />
           </Stack>
           <Divider />
-          <SecondSection />
+          {!isPrivateRoute && <SecondSection />}
         </Stack>
       </Container>
     </Box>

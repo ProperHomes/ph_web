@@ -8,14 +8,12 @@ import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import useDarkMode from "@/utils/hooks/useDarkMode";
 import SlideDrawer from "./Drawer";
 import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
-import Save from "@mui/icons-material/Save";
-import Message from "@mui/icons-material/Message";
-import Settings from "@mui/icons-material/Settings";
 import Dashboard from "@mui/icons-material/Dashboard";
 import Login from "@mui/icons-material/Login";
 import Logout from "@mui/icons-material/Logout";
 import DarkMode from "@mui/icons-material/DarkMode";
 import LightMode from "@mui/icons-material/LightMode";
+import CurrencyRupeeOutlined from "@mui/icons-material/CurrencyRupeeOutlined";
 
 const StyledBtn = styled(Button)(({ theme }) => ({
   maxWidth: { xs: "150px", sm: "100%" },
@@ -57,7 +55,12 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
       }
       position={isMobile ? "bottom" : "right"}
     >
-      <Stack p={2} sx={{ height: "100%" }}>
+      <Stack
+        p={2}
+        direction="column"
+        justifyContent="space-between"
+        sx={{ height: "100%" }}
+      >
         <Stack spacing={2}>
           <Stack direction="row" alignItems="center">
             <Typography
@@ -88,7 +91,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
               />
             )}
           </Stack>
-
           {isLoggedIn && (
             <>
               <StyledBtn
@@ -97,26 +99,37 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
               >
                 Dashboard
               </StyledBtn>
-              <StyledBtn
-                startIcon={<Message />}
-                onClick={navigateTo("/dashboard/chat")}
-              >
-                Messages
-              </StyledBtn>
-              <StyledBtn
-                startIcon={<Settings />}
-                onClick={navigateTo("/dashboard/settings")}
-              >
-                Settings
-              </StyledBtn>
-              <StyledBtn
-                startIcon={<Save />}
-                onClick={navigateTo("/dashboard/saved")}
-              >
-                Saved Properties
-              </StyledBtn>
             </>
           )}
+        </Stack>
+
+        <Stack
+          direction="column"
+          justifyContent="space-between"
+          spacing={2}
+          sx={{ margin: "0 auto", width: "100%" }}
+        >
+          <StyledBtn
+            fullWidth
+            startIcon={<CurrencyRupeeOutlined />}
+            onClick={navigateTo("/pay-rent-online")}
+          >
+            Pay Rent
+          </StyledBtn>
+
+          <StyledBtn
+            startIcon={<CalculateOutlined />}
+            onClick={navigateTo("/rental-agreement")}
+          >
+            Generate Rental Agreement
+          </StyledBtn>
+
+          <StyledBtn
+            startIcon={<CalculateOutlined />}
+            onClick={navigateTo("/rent-reciept-generator-online")}
+          >
+            Generate Rent Receipt
+          </StyledBtn>
 
           <StyledBtn
             startIcon={<CalculateOutlined />}
@@ -126,7 +139,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           </StyledBtn>
         </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={2} mt="auto">
+        <Stack direction="row" alignItems="center" spacing={2}>
           {!isLoggedIn ? (
             <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
               Login or Signup

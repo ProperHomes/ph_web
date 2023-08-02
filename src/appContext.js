@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import { UPDATE_USER, FETCH_USER_PROFILE } from "./containers/Profile/graphql";
 
-import { USER_TYPE } from "./utils/constants";
+import { USER_TYPE, PRIVATE_ROUTES } from "./utils/constants";
 
 const AppContext = createContext(null);
 
@@ -45,6 +45,8 @@ function AppProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const { user } = state;
   const isBuyer = user?.type === USER_TYPE.BUYER;
+
+  const isPrivateRoute = PRIVATE_ROUTES.includes(router.pathname);
 
   const [updateUser] = useMutation(UPDATE_USER);
   const [fetchUserFullProfile] = useLazyQuery(FETCH_USER_PROFILE);
@@ -143,6 +145,7 @@ function AppProvider({ children }) {
         state,
         dispatch,
         isBuyer,
+        isPrivateRoute,
         handleLogout,
         handleFetchUser,
         handleUpdateUser,

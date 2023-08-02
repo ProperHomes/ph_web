@@ -6,7 +6,7 @@ export const USER_TYPE = {
 export const PROPERTY_TYPE = {
   HOUSE: "HOUSE",
   VILLA: "VILLA",
-  LOT: "LOT",
+  LAND: "LAND",
   FLAT: "FLAT",
   APARTMENT: "APARTMENT",
   BUNGALOW: "BUNGALOW",
@@ -69,3 +69,12 @@ export const LOCALITIES = {
   BANGALORE: [],
   PUNE: [],
 };
+
+export const PRIVATE_ROUTES = [
+  "/dashboard",
+  "/dashboard/messages",
+  "/dashboard/manage-properties",
+  "/dashboard/saved-properties",
+  "/dashboard/settings",
+  "/dashboard/subscriptions",
+];

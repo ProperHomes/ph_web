@@ -33,7 +33,7 @@ function SearchBlock() {
   }, []);
 
   const handleSubmit = () => {
-    if (ref.current.value?.length > 0) {
+    if (ref.current.value?.trim()?.length > 0) {
       const searchText = convertStringToSlug(ref.current.value);
       let path = `/search?searchText=${searchText}`;
       if (city) {

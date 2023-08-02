@@ -7,7 +7,14 @@ function useSearch({ searchText = "", enabled, city, locality }) {
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(0);
 
-  const alteredText = searchText
+  let alteredText = searchText;
+  if (searchText && city) {
+    alteredText = `${searchText.toLowerCase()} ${city.toLowerCase()}`;
+    if (locality) {
+      alteredText = `${alteredText} ${locality.toLowerCase()}`;
+    }
+  }
+  alteredText = alteredText
     .split(" ")
     .filter((x) => x.length > 0)
     .join(" & "); // needed for postgres fts for text with multiple words

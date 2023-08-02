@@ -1,39 +1,62 @@
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import Villa from "@mui/icons-material/VillaOutlined";
 import HouseOutlined from "@mui/icons-material/HouseOutlined";
 import LocationCityOutlined from "@mui/icons-material/LocationCityOutlined";
 import WarehouseOutlined from "@mui/icons-material/WarehouseOutlined";
 import CabinOutlined from "@mui/icons-material/CabinOutlined";
-import { useRouter } from "next/router";
-import { Typography } from "@mui/material";
+import { Divider } from "@mui/material";
 
 const links = [
   {
-    label: "Flats",
+    label: "Flats For Sale",
     link: "/flats-for-sale",
     Icon: LocationCityOutlined,
   },
-  { label: "Villas", link: "/villas-for-sale", Icon: Villa },
+  { label: "Villas For Sale", link: "/villas-for-sale", Icon: Villa },
   {
-    label: "Independent Houses",
+    label: "Independent Houses For Sale",
     link: "/houses-for-sale",
     Icon: HouseOutlined,
   },
   {
-    label: "Farm Houses",
+    label: "Farm Houses For Sale",
     link: "/farm-houses-for-sale",
     Icon: CabinOutlined,
   },
+
   {
-    label: "Pent Houses",
-    link: "/pent-houses-for-sale",
+    label: "Commercial Properties For Sale",
+    link: "/commercial-properties-for-sale",
     Icon: WarehouseOutlined,
   },
   {
-    label: "Commercial Properties",
-    link: "/commercial-properties-for-sale",
+    label: "Flats For Rent",
+    link: "/flats-for-rent",
+    Icon: LocationCityOutlined,
+  },
+  { label: "Villas For Rent", link: "/villas-for-rent", Icon: Villa },
+  {
+    label: "Independent Houses For Rent",
+    link: "/houses-for-rent",
+    Icon: HouseOutlined,
+  },
+  {
+    label: "Farm Houses",
+    link: "/farm-houses-for-rent",
+    Icon: CabinOutlined,
+  },
+  {
+    label: "Commercial Properties For Rent",
+    link: "/commercial-properties-for-rent",
+    Icon: WarehouseOutlined,
+  },
+  {
+    label: "Pent Houses For Rent",
+    link: "/pent-houses-for-rent",
     Icon: WarehouseOutlined,
   },
 ];
@@ -43,7 +66,7 @@ function SecondSection() {
   const router = useRouter();
   return (
     <Stack
-      spacing={4}
+      spacing={2}
       py={1}
       direction="row"
       alignItems="center"

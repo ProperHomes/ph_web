@@ -221,7 +221,7 @@ function PropertyCard({ data, isPriority }) {
             whiteSpace: "nowrap",
           }}
         >
-          {PROPERTY_TYPE[type].toLowerCase()} for {listedFor.toLowerCase()} in{" "}
+          {PROPERTY_TYPE[type]?.toLowerCase()} for {listedFor?.toLowerCase()} in{" "}
           {city.toLowerCase()}
         </Typography>
         <Stack
