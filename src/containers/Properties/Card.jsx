@@ -229,7 +229,11 @@ function PropertyCard({ data, isPriority }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography fontWeight="bold" color="primary.main">
+          <Typography
+            fontWeight="bold"
+            color="primary.main"
+            suppressHydrationWarning
+          >
             {formattedPrice.slice(0, -3)}
           </Typography>
         </Stack>

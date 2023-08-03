@@ -14,6 +14,7 @@ import Logout from "@mui/icons-material/Logout";
 import DarkMode from "@mui/icons-material/DarkMode";
 import LightMode from "@mui/icons-material/LightMode";
 import CurrencyRupeeOutlined from "@mui/icons-material/CurrencyRupeeOutlined";
+import HomeIcon from "@mui/icons-material/HomeOutlined";
 
 const StyledBtn = styled(Button)(({ theme }) => ({
   maxWidth: { xs: "150px", sm: "100%" },
@@ -109,6 +110,13 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           spacing={2}
           sx={{ margin: "0 auto", width: "100%" }}
         >
+          <StyledBtn
+            fullWidth
+            startIcon={<HomeIcon />}
+            onClick={navigateTo("/")}
+          >
+            Home
+          </StyledBtn>
           <StyledBtn
             fullWidth
             startIcon={<CurrencyRupeeOutlined />}

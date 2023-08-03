@@ -7,7 +7,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -105,6 +104,7 @@ function SearchBlock() {
           height: "55px",
           border: "1px solid",
           borderColor: theme.palette.grey[300],
+          borderRadius: isMobile ? "0 8px 8px 0" : 0,
           transition: "0.3s ease",
         }}
       >

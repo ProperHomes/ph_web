@@ -17,7 +17,7 @@ function useSearch({ searchText = "", enabled, city, locality }) {
   alteredText = alteredText
     .split(" ")
     .filter((x) => x.length > 0)
-    .join(" & "); // needed for postgres fts for text with multiple words
+    .join(" | "); // needed for postgres fts for text with multiple words
 
   const [searchProperties] = useLazyQuery(SEARCH_PROPERTIES);
 

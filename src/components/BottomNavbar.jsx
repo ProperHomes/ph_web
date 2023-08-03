@@ -1,68 +1,122 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 
+import HomeIcon from "@mui/icons-material/HomeOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import MessageIcon from "@mui/icons-material/Message";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
+import KeyIcon from "@mui/icons-material/Key";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import AddIcon from "@mui/icons-material/Add";
 
-import Main from "@/containers/Dashboard/Main";
-import Messages from "@/containers/Dashboard/Messages";
-import Settings from "@/containers/Dashboard/Settings";
-import SavedProperties from "@/containers/Dashboard/SavedProperties";
-import ManageProperties from "@/containers/Dashboard/ManageProperties";
+import { useRouter } from "next/router";
+import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
-const mobileTabList = [
+const dashboardTabList = [
+  {
+    label: "Home",
+    href: "/",
+    Icon: HomeIcon,
+  },
   {
     label: "Dashboard",
     href: "/dashboard",
-    Component: Main,
     Icon: DashboardIcon,
-  },
-  {
-    label: "Manage",
-    href: "/dashboard/manage-properties",
-    Component: ManageProperties,
-    Icon: PersonPinIcon,
   },
   {
     label: "Messages",
     href: "/dashboard/messages",
-    Component: Messages,
     Icon: MessageIcon,
   },
   {
     label: "Saved",
     href: "/dashboard/saved-properties",
-    Component: SavedProperties,
     Icon: SaveIcon,
   },
   {
     label: "Settings",
     href: "/dashboard/settings",
-    Component: Settings,
     Icon: SettingsIcon,
   },
 ];
 
+const homeList = [
+  {
+    label: "Home",
+    href: "/",
+    Icon: HomeIcon,
+  },
+  {
+    label: "For Sale",
+    href: "/properties-for-sale",
+    Icon: LoyaltyIcon,
+  },
+  {
+    label: "For Rent",
+    href: "/properties-for-rent",
+    Icon: KeyIcon,
+  },
+  {
+    label: "Sell/Rent",
+    href: "/list-your-property-for-sale-rent-lease",
+    Icon: AddIcon,
+  },
+];
+
+const homeListLoggedIn = [
+  {
+    label: "Home",
+    href: "/",
+    Icon: HomeIcon,
+  },
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    Icon: DashboardIcon,
+  },
+  {
+    label: "For Sale",
+    href: "/properties-for-sale",
+    Icon: LoyaltyIcon,
+  },
+  {
+    label: "For Rent",
+    href: "/properties-for-rent",
+    Icon: KeyIcon,
+  },
+  {
+    label: "Sell/Rent",
+    href: "/list-your-property-for-sale-rent-lease",
+    Icon: AddIcon,
+  },
+];
+
 function BottomNavbar() {
-  const [value, setValue] = useState("/dashboard");
+  const router = useRouter();
+  const { isLoggedIn } = useToggleAuth();
+  const isDashboard = router.pathname.includes("dashboard");
+  const [value, setValue] = useState("/home");
   const handleChangeValue = (_event, value) => {
     setValue(value);
   };
+
+  const list = isDashboard
+    ? dashboardTabList
+    : isLoggedIn
+    ? homeListLoggedIn
+    : homeList;
+
   return (
     <Paper
       sx={{ position: "fixed", zIndex: 99, bottom: 0, left: 0, right: 0 }}
       elevation={3}
     >
-      <BottomNavigation value={value} onChange={handleChangeValue}>
-        {mobileTabList.map(({ label, Icon, href }) => {
+      <BottomNavigation showLabels value={value} onChange={handleChangeValue}>
+        {list.map(({ label, Icon, href }) => {
           return (
             <BottomNavigationAction
               key={href}
