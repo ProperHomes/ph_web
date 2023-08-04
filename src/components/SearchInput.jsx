@@ -31,8 +31,8 @@ function SearchInput() {
       p={1}
       sx={{
         width: { xs: "100%", md: "500px" },
-        height: isMobile ? "40px" : "55px",
-        border: "1px solid",
+        height: isMobile ? "45px" : "55px",
+        border: isMobile ? "0.5px solid" : "1px solid",
         borderColor: theme.palette.grey[300],
         borderRadius: isMobile ? "8px" : 0,
         transition: "0.3s ease",
@@ -47,7 +47,7 @@ function SearchInput() {
           fontFamily: theme.typography.fontFamily.Manrope,
         }}
         inputRef={ref}
-        placeholder="Eg: Flats for sale in Hyderabad"
+        placeholder="Eg: Flats for sale in Delhi..."
         inputProps={{ "aria-label": "search properties" }}
       />
     </Stack>

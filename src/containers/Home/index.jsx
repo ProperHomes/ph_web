@@ -10,20 +10,29 @@ export default function Home({ data }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <>
-      {!isMobile && (
-        <Stack px={{ xs: 0, md: 4 }} pb={4} alignItems="center">
-          <Typography
-            gutterBottom
-            color={theme.palette.text.primary}
-            fontSize={{ xs: "1.25rem", sm: "1.5rem" }}
-            fontFamily={theme.typography.fontFamily.Manrope}
+      <Stack px={{ xs: 0, md: 4 }} pb={4} alignItems="center">
+        <Typography
+          color={theme.palette.text.primary}
+          fontSize={{ xs: "1.25rem", sm: "1.5rem" }}
+          fontFamily={theme.typography.fontFamily.Manrope}
+        >
+          Find a home that{" "}
+          <span
+            style={{
+              fontWeight: "700",
+              fontStyle: "italic",
+              fontFamily: theme.typography.fontFamily.Raleway,
+              color: theme.palette.info.main,
+            }}
           >
-            Find a home that loves you
-          </Typography>
+            loves
+          </span>{" "}
+          you
+        </Typography>
 
-          <SearchBlock />
-        </Stack>
-      )}
+        <SearchBlock />
+      </Stack>
+
       <PropertyList
         data={data}
         title="New properties listed in the last 24 hours"

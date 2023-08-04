@@ -4,12 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
-import useDarkMode from "@/utils/hooks/useDarkMode";
 import { useState } from "react";
 import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
@@ -19,7 +14,6 @@ function NavbarRight() {
   const { state: appState } = useAppContext();
   const loggedInUser = appState.user;
   const [showDrawer, setShowDrawer] = useState(false);
-  const { isDarkModeActive } = useDarkMode();
 
   const toggleDrawer = () => {
     setShowDrawer((prev) => !prev);

@@ -19,7 +19,7 @@ function HomeLayout({ children }) {
     >
       <Navbar />
       <Container maxWidth="xl">
-        <Box py={4} sx={{ width: "100%", height: "100%" }}>
+        <Box pt={2} pb={4} sx={{ width: "100%", height: "100%" }}>
           {children}
         </Box>
       </Container>

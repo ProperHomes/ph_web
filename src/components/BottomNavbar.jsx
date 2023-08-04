@@ -3,7 +3,7 @@ import Link from "next/link";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Paper from "@mui/material/Paper";
-
+import { useTheme } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import MessageIcon from "@mui/icons-material/Message";
@@ -79,6 +79,11 @@ const homeListLoggedIn = [
     Icon: DashboardIcon,
   },
   {
+    label: "Sell/Rent",
+    href: "/list-your-property-for-sale-rent-lease",
+    Icon: AddIcon,
+  },
+  {
     label: "For Sale",
     href: "/properties-for-sale",
     Icon: LoyaltyIcon,
@@ -88,14 +93,11 @@ const homeListLoggedIn = [
     href: "/properties-for-rent",
     Icon: KeyIcon,
   },
-  {
-    label: "Sell/Rent",
-    href: "/list-your-property-for-sale-rent-lease",
-    Icon: AddIcon,
-  },
 ];
 
 function BottomNavbar() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const router = useRouter();
   const { isLoggedIn } = useToggleAuth();
   const isDashboard = router.pathname.includes("dashboard");
@@ -112,10 +114,22 @@ function BottomNavbar() {
 
   return (
     <Paper
-      sx={{ position: "fixed", zIndex: 99, bottom: 0, left: 0, right: 0 }}
-      elevation={3}
+      sx={{
+        position: "fixed",
+        zIndex: 99,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        borderRadius: "2rem 2rem 0 0",
+      }}
+      elevation={8}
     >
-      <BottomNavigation showLabels value={value} onChange={handleChangeValue}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={handleChangeValue}
+        sx={{ borderRadius: "2rem", height: "4.5em" }}
+      >
         {list.map(({ label, Icon, href }) => {
           return (
             <BottomNavigationAction
@@ -125,6 +139,21 @@ function BottomNavbar() {
               icon={<Icon />}
               component={Link}
               href={href}
+              sx={{
+                fontFamily: theme.typography.fontFamily.Manrope,
+                fontWeight: 700,
+                "&.MuiButtonBase-root.Mui-selected": {
+                  fontWeight: 800,
+                  color: isDark
+                    ? theme.palette.info.main
+                    : theme.palette.info.dark,
+                  svg: {
+                    fill: isDark
+                      ? theme.palette.info.main
+                      : theme.palette.info.dark,
+                  },
+                },
+              }}
             />
           );
         })}

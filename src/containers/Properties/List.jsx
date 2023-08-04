@@ -3,6 +3,7 @@ import Stack from "@mui/material/Stack";
 import { styled, useTheme } from "@mui/material/styles";
 
 import Card from "./Card";
+import SecondSection from "@/components/Navbar/SecondSection";
 import { usePropertyContext } from "./context";
 import { Typography } from "@mui/material";
 
@@ -27,6 +28,9 @@ function PropertyList({ data, title }) {
   const listToShow = data ?? list;
   return (
     <Stack spacing={2}>
+      <Stack pb={4}>
+        <SecondSection  />
+      </Stack>
       {title && (
         <Typography
           color={theme.palette.text.primary}

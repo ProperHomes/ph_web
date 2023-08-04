@@ -117,7 +117,7 @@ function SearchBlock() {
             fontFamily: theme.typography.fontFamily.Manrope,
           }}
           inputRef={ref}
-          placeholder="Eg: Flats for sale in Hyderabad"
+          placeholder="Eg: Flats for sale in Delhi"
           inputProps={{ "aria-label": "search properties" }}
         />
       </Stack>

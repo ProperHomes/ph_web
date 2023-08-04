@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
+import Box from "@mui/material/Box";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Villa from "@mui/icons-material/VillaOutlined";
 import HouseOutlined from "@mui/icons-material/HouseOutlined";
 import LocationCityOutlined from "@mui/icons-material/LocationCityOutlined";
 import WarehouseOutlined from "@mui/icons-material/WarehouseOutlined";
 import CabinOutlined from "@mui/icons-material/CabinOutlined";
-import { Divider } from "@mui/material";
 
 const links = [
   {
@@ -18,18 +19,17 @@ const links = [
   },
   { label: "Villas For Sale", link: "/villas-for-sale", Icon: Villa },
   {
-    label: "Independent Houses For Sale",
+    label: "Houses For Sale",
     link: "/houses-for-sale",
     Icon: HouseOutlined,
   },
   {
-    label: "Farm Houses For Sale",
+    label: "FarmHouses For Sale",
     link: "/farm-houses-for-sale",
     Icon: CabinOutlined,
   },
-
   {
-    label: "Commercial Properties For Sale",
+    label: "Commercial For Sale",
     link: "/commercial-properties-for-sale",
     Icon: WarehouseOutlined,
   },
@@ -40,17 +40,17 @@ const links = [
   },
   { label: "Villas For Rent", link: "/villas-for-rent", Icon: Villa },
   {
-    label: "Independent Houses For Rent",
+    label: "Houses For Rent",
     link: "/houses-for-rent",
     Icon: HouseOutlined,
   },
   {
-    label: "Farm Houses",
+    label: "FarmHouses For Rent",
     link: "/farm-houses-for-rent",
     Icon: CabinOutlined,
   },
   {
-    label: "Commercial Properties For Rent",
+    label: "Commercial For Rent",
     link: "/commercial-properties-for-rent",
     Icon: WarehouseOutlined,
   },
@@ -61,47 +61,107 @@ const links = [
   },
 ];
 
-function SecondSection() {
+function SecondSection({ lineView }) {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.up("xs"));
   const router = useRouter();
-  return (
-    <Stack
-      spacing={2}
-      py={1}
-      direction="row"
-      alignItems="center"
-      sx={{
-        overflow: "scroll",
-        maxWidth: "100%",
-      }}
-    >
-      {links.map(({ label, link, Icon }) => {
-        const isActive = link === router.asPath;
-        return (
-          <Link href={link} key={link}>
-            <Stack spacing={1} direction="row" alignItems="center">
-              <Icon htmlColor={theme.palette.text.secondary} />
-              <Typography
-                color={theme.palette.text[isActive ? "primary" : "secondary"]}
-                fontFamily={theme.typography.fontFamily.Monsterrat}
-                fontSize="0.9rem"
-                fontWeight={isActive ? 600 : 500}
+
+  const LineView = () => {
+    return (
+      <Stack
+        spacing={2}
+        py={1}
+        direction="row"
+        alignItems="center"
+        sx={{
+          overflow: "scroll",
+          maxWidth: "100%",
+        }}
+      >
+        {links.map(({ link, Icon, label }) => {
+          const isActive = link === router.asPath;
+          return (
+            <Link href={link} key={link}>
+              <Stack spacing={1} direction="row" alignItems="center">
+                <Icon htmlColor={theme.palette.text.secondary} />
+                <Typography
+                  color={theme.palette.text[isActive ? "primary" : "secondary"]}
+                  fontFamily={theme.typography.fontFamily.Monsterrat}
+                  fontSize="0.9rem"
+                  fontWeight={isActive ? 600 : 500}
+                  sx={{
+                    whiteSpace: "nowrap",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      color: theme.palette.text.primary,
+                    },
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Stack>
+            </Link>
+          );
+        })}
+      </Stack>
+    );
+  };
+
+  const BoxView = () => {
+    return (
+      <Box
+        sx={{
+          display: "grid",
+          gap: "1em",
+          gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+        }}
+      >
+        {links.map(({ link, Icon, label }) => {
+          const isActive = link === router.asPath;
+          return (
+            <Link href={link} key={link}>
+              <Stack
+                spacing={1}
+                direction="column"
+                alignItems="center"
+                boxShadow={theme.shadows[2]}
+                p={1}
                 sx={{
-                  whiteSpace: "nowrap",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    color: theme.palette.text.primary,
+                  width: "100px",
+                  height: "auto",
+                  border: "0.5px",
+                  borderRadius: "0.5rem",
+                  transition: "0.3s ease",
+                  "&: hover": {
+                    boxShadow: theme.shadows[4],
                   },
                 }}
               >
-                {label}
-              </Typography>
-            </Stack>
-          </Link>
-        );
-      })}
-    </Stack>
-  );
+                <Icon htmlColor={theme.palette.text.secondary} />
+                <Typography
+                  textAlign="center"
+                  color={theme.palette.text[isActive ? "primary" : "secondary"]}
+                  fontFamily={theme.typography.fontFamily.Monsterrat}
+                  fontSize="0.8rem"
+                  fontWeight={isActive ? 600 : 500}
+                  sx={{
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      color: theme.palette.text.primary,
+                    },
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Stack>
+            </Link>
+          );
+        })}
+      </Box>
+    );
+  };
+
+  return lineView ? <LineView /> : <BoxView />;
 }
 
 export default SecondSection;

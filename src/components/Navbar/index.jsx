@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
@@ -12,7 +11,6 @@ import NavbarLeft from "./Left";
 import NavbarRight from "./Right";
 import SecondSection from "./SecondSection";
 import { PRIVATE_ROUTES } from "@/utils/constants";
-import SearchInput from "../SearchInput";
 import UserSlideDrawer from "../UserSlideDrawer";
 
 function Navbar() {
@@ -30,7 +28,7 @@ function Navbar() {
 
   return (
     <Box
-      pt={3}
+      pt={2}
       pb={{ xs: 1, sm: 0 }}
       sx={{
         position: "sticky",
@@ -41,33 +39,21 @@ function Navbar() {
       }}
     >
       <Container maxWidth="xl">
-        {!isMobile && (
-          <Stack spacing={1}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              py={1}
-              spacing={1}
-            >
-              <NavbarLeft />
-              <NavbarRight />
-            </Stack>
-            <Divider />
-            {!isPrivateRoute && <SecondSection />}
-          </Stack>
-        )}
-        {isMobile && (
+        <Stack spacing={1}>
           <Stack
-            spacing={1}
             direction="row"
-            alignItems="center"
             justifyContent="space-between"
+            alignItems="center"
+            py={1}
+            spacing={1}
           >
-            <Avatar sx={{ cursor: "pointer" }} onClick={toggleDrawer} />
-            <SearchInput />
+            <NavbarLeft />
+            <NavbarRight />
           </Stack>
-        )}
+          {!isMobile && <Divider />}
+          {/* {!isPrivateRoute ||
+            (router.pathname === "/" && <SecondSection lineView />)} */}
+        </Stack>
       </Container>
       <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
     </Box>
