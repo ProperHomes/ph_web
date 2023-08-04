@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "sst bind next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -46,5 +46,10 @@
     "yup": "^1.2.0",
     "yup-password": "^0.2.2",
     "yup-phone-lite": "^2.0.1"
+  },
+  "devDependencies": {
+    "sst": "^2.23.1",
+    "aws-cdk-lib": "2.84.0",
+    "constructs": "10.1.156"
   }
 }
