@@ -124,11 +124,12 @@ function SecondSection({ lineView }) {
                 spacing={1}
                 direction="column"
                 alignItems="center"
+                justifyContent="center"
                 boxShadow={theme.shadows[2]}
                 p={1}
                 sx={{
-                  width: "100px",
-                  height: "auto",
+                  width: { xs: "100%", md: "100px" },
+                  height: "100%",
                   border: "0.5px",
                   borderRadius: "0.5rem",
                   transition: "0.3s ease",
