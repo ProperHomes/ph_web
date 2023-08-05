@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta
             name="description"
-            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
+            content={`Rent, Sale, Lease Houses, Flats, Apartments, Lands without any brokers or middlemen. Exclusive homes and properties for sale, rent, or lease, carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
           />
           <meta name="application-name" content="ProperHomes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -75,7 +75,7 @@ export default class MyDocument extends Document {
           />
           <meta
             name="twitter:description"
-            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
+            content={`Rent, Sale, Lease Houses, Flats, Apartments, Lands without any brokers or middlemen. Exclusive homes and properties for sale, rent, or lease, carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
           />
           <meta name="twitter:image" content="/assets/images/Logo.png" />
           <meta name="twitter:creator" content="@ProperHomes" />
@@ -86,7 +86,7 @@ export default class MyDocument extends Document {
           />
           <meta
             property="og:description"
-            content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
+            content={`Rent, Sale, Lease Houses, Flats, Apartments, Lands without any brokers or middlemen. Exclusive homes and properties for sale, rent, or lease, carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream Home!`}
           />
           <meta property="og:site_name" content="ProperHomes" />
           <meta property="og:url" content="https://www.properhomes.in" />

@@ -94,10 +94,12 @@ function AppProvider({ children }) {
   const handleRevalidatePath = async (path) => {
     try {
       await axios.post(
-        `/api/revalidate?secret=${process.env.NEXT_PUBLIC_API_KEY}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/revalidate`,
         {
           path,
-        }
+          userId: user?.id,
+        },
+        { withCredentials: true }
       );
     } catch (err) {
       console.log("Error revalidating", err);
@@ -110,7 +112,9 @@ function AppProvider({ children }) {
       await axios({
         method: "POST",
         url: `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
-        withCredentials: true,
+        headers: {
+          withCredentials: true,
+        },
       });
       router.push("/login");
     } catch (err) {

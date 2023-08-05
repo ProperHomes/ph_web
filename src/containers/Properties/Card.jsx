@@ -18,7 +18,7 @@ import { useAppContext } from "src/appContext";
 function PropertyCard({ data, isPriority }) {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
-  const { state: appState } = useAppContext();
+  const { state: appState, handleRevalidatePath } = useAppContext();
   const {
     id,
     number,
@@ -78,6 +78,7 @@ function PropertyCard({ data, isPriority }) {
         });
         setSavedPropertyId(data?.createSavedProperty?.savedProperty?.id);
       }
+      await handleRevalidatePath("/");
     } catch (err) {
       console.log(err);
     }

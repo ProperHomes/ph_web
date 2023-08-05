@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.17",
     "@apollo/link-error": "^2.0.0-beta.3",
+    "@aws-sdk/client-cloudfront": "^3.385.0",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
@@ -48,8 +49,9 @@
     "yup-phone-lite": "^2.0.1"
   },
   "devDependencies": {
-    "sst": "^2.23.1",
     "aws-cdk-lib": "2.84.0",
-    "constructs": "10.1.156"
+    "constructs": "10.1.156",
+    "mini-css-extract-plugin": "^2.7.6",
+    "sst": "^2.23.1"
   }
 }
