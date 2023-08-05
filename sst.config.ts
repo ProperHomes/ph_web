@@ -17,8 +17,8 @@ export default {
       const site = new NextjsSite(stack, "site", {
         bind: [REVALIDATION_SECRET_KEY],
         customDomain: {
-          domainName: "www.properhomes.in",
-          domainAlias: "properhomes.in",
+          domainName: "properhomes.in",
+          domainAlias: "www.properhomes.in",
         },
       });
       stack.addOutputs({

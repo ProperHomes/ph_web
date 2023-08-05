@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -16,9 +17,10 @@ import { DELETE_SAVED_PROPERTY, SAVE_PROPERTY } from "./graphql";
 import { useAppContext } from "src/appContext";
 
 function PropertyCard({ data, isPriority }) {
+  const router = useRouter()
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
-  const { state: appState, handleRevalidatePath } = useAppContext();
+  const { state: appState } = useAppContext();
   const {
     id,
     number,
@@ -78,7 +80,6 @@ function PropertyCard({ data, isPriority }) {
         });
         setSavedPropertyId(data?.createSavedProperty?.savedProperty?.id);
       }
-      await handleRevalidatePath("/");
     } catch (err) {
       console.log(err);
     }

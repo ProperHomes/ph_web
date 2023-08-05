@@ -4,10 +4,25 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchBlock from "@/containers/Home/SearchBlock";
 import PropertyList from "../Properties/List";
+import { useQuery } from "@apollo/client";
+import { GET_PROPERTIES_LOGGED_IN } from "../Properties/graphql";
+import { useAppContext } from "src/appContext";
 
 export default function Home({ data }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { state } = useAppContext();
+  const loggedInUserId = state.user?.id;
+  const { data: propertiesData } = useQuery(GET_PROPERTIES_LOGGED_IN, {
+    variables: { userId: loggedInUserId, first: 20, offset: 0 },
+    skip: !loggedInUserId,
+    fetchPolicy: "network-only",
+  });
+
+  const list = !!loggedInUserId
+    ? propertiesData?.properties?.nodes ?? []
+    : data;
+
   return (
     <>
       <Stack px={{ xs: 0, md: 4 }} pb={4} alignItems="center">
@@ -34,7 +49,7 @@ export default function Home({ data }) {
       </Stack>
 
       <PropertyList
-        data={data}
+        data={list}
         title="New properties listed in the last 24 hours"
       />
     </>
