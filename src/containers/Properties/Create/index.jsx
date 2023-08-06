@@ -31,6 +31,8 @@ const newPropertyResolver = {
   description: yup.string(),
   city: yup.string().required(),
   listedFor: yup.string().required(),
+  isFurnished: yup.string().required(),
+  hasParking: yup.string().required(),
   media: yup
     .array()
     .min(5, "atleast one image is required")
@@ -62,7 +64,8 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
   },
 }));
 
-function CreatePropertySaleRentLease() {
+function CreatePropertySaleRentLease({ data, handleCancel }) {
+  console.log(data);
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
   const { state, dispatch } = usePropertyContext();
@@ -70,10 +73,10 @@ function CreatePropertySaleRentLease() {
   const [createProperty] = useMutation(CREATE_PROPERTY);
   const handleFileUpload = useUploadFile();
 
-  const { control, handleSubmit, setValue, trigger, reset, formState } =
-    useForm({
-      resolver: yupResolver(yup.object().shape(newPropertyResolver)),
-    });
+  const { control, handleSubmit, setValue, formState } = useForm({
+    resolver: yupResolver(yup.object().shape(newPropertyResolver)),
+    defaultValues: data || {},
+  });
 
   const handleUpdateMedia = (media) => {
     setValue("media", media);
@@ -122,7 +125,7 @@ function CreatePropertySaleRentLease() {
         fontSize="2.5rem !important"
         fontFamily={theme.typography.fontFamily.Manrope}
       >
-        List your property{" "}
+        {!!data ? "Update Property" : "List your property"}
       </Typography>
       <StyledForm>
         <Stack spacing={4}>
@@ -369,10 +372,24 @@ function CreatePropertySaleRentLease() {
           )}
 
           <Stack direction="row" alignItems="center" spacing={4}>
-            <Button onClick={onSubmitDraft} variant="outlined">
+            {!!data && (
+              <Button variant="contained" color="error" onClick={handleCancel}>
+                Cancel
+              </Button>
+            )}
+            <Button
+              sx={{ whiteSpace: "nowrap" }}
+              onClick={onSubmitDraft}
+              variant="outlined"
+            >
               Save as draft
             </Button>
-            <Button onClick={onSubmit} variant="contained" color="info">
+            <Button
+              sx={{ whiteSpace: "nowrap" }}
+              onClick={onSubmit}
+              variant="contained"
+              color="info"
+            >
               Submit Property For Review
             </Button>
           </Stack>

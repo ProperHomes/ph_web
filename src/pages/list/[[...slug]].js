@@ -94,7 +94,7 @@ export async function getStaticPaths() {
 
   for (let link of navlinks) {
     paths.push({
-      params: { slug: ["list", link] },
+      params: { slug: [link] },
     });
   }
   return { paths, fallback: true };

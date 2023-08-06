@@ -59,6 +59,32 @@ export const GET_PROPERTIES = gql`
   }
 `;
 
+export const GET_OWNER_PROPERTIES = gql`
+  ${PROPERTY_FIELDS}
+  query getProperties($ownerId: UUID!, $first: Int!, $offset: Int!) {
+    properties(
+      condition: { ownerId: $ownerId }
+      first: $first
+      offset: $offset
+      orderBy: CREATED_AT_DESC
+    ) {
+      nodes {
+        ...PropertyFields
+        media: propertyMedias {
+          nodes {
+            id
+            mediaUrl
+            media {
+              signedUrl
+            }
+            isCoverImage
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_PROPERTIES_LOGGED_IN = gql`
   ${PROPERTY_FIELDS}
   query getProperties(

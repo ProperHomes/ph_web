@@ -1,11 +1,15 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import { Modal, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 import { styled, useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Card from "./Card";
-import SecondSection from "@/components/Navbar/SecondSection";
+import CategoryBoxes from "@/components/CategoryBoxes";
 import { usePropertyContext } from "./context";
-import { Typography } from "@mui/material";
+import CreatePropertySaleRentLease from "./Create";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -22,15 +26,33 @@ const Section = styled(Box)(({ theme }) => ({
 }));
 
 function PropertyList({ data, title }) {
+  const router = useRouter();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [propertyIdToEdit, setPropertyIdToEdit] = useState(false);
+
   const { state } = usePropertyContext();
   const { list } = state;
   const listToShow = data ?? list;
+
+  const toggleEditor = (id) => () => {
+    setPropertyIdToEdit(id);
+  };
+
+  const isHome = router.pathname === "/";
+  const showCategoryBoxes =
+    (isHome || (!isHome && !isMobile)) &&
+    !router.pathname.includes("/dashboard");
+
+  const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
+
   return (
     <Stack spacing={2}>
-      <Stack pb={4}>
-        <SecondSection  />
-      </Stack>
+      {showCategoryBoxes && (
+        <Stack pb={4}>
+          <CategoryBoxes />
+        </Stack>
+      )}
       {title && (
         <Typography
           color={theme.palette.text.primary}
@@ -42,14 +64,25 @@ function PropertyList({ data, title }) {
         </Typography>
       )}
       <Section>
-        {listToShow.map((l, i) => {
-          return (
-            <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
-              <Card data={l} isPriority={i < 9} />
-            </Box>
-          );
-        })}
+        {!propertyIdToEdit &&
+          listToShow.map((l, i) => {
+            return (
+              <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
+                <Card
+                  data={l}
+                  isPriority={i < 9}
+                  togglePropertyEditor={toggleEditor(l.id)}
+                />
+              </Box>
+            );
+          })}
       </Section>
+      {!!propertyIdToEdit && (
+        <CreatePropertySaleRentLease
+          data={propertyToEdit}
+          handleCancel={toggleEditor()}
+        />
+      )}
     </Stack>
   );
 }

@@ -13,11 +13,16 @@ import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import { PROPERTY_TYPE } from "@/utils/constants";
-import { DELETE_SAVED_PROPERTY, SAVE_PROPERTY } from "./graphql";
+import {
+  DELETE_SAVED_PROPERTY,
+  SAVE_PROPERTY,
+  UPDATE_PROPERTY,
+} from "./graphql";
 import { useAppContext } from "src/appContext";
+import CustomTooltip from "@/components/CustomTooltip";
 
-function PropertyCard({ data, isPriority }) {
-  const router = useRouter()
+function PropertyCard({ data, isPriority, togglePropertyEditor }) {
+  const router = useRouter();
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const { state: appState } = useAppContext();
@@ -33,8 +38,11 @@ function PropertyCard({ data, isPriority }) {
     price,
     city,
     bedrooms,
+    ownerId,
     currentUserSavedProperties,
   } = data;
+
+  const isDashboardManage = router.pathname === "/dashboard/manage-properties";
 
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
@@ -43,15 +51,27 @@ function PropertyCard({ data, isPriority }) {
 
   const [createSavedProperty] = useMutation(SAVE_PROPERTY);
   const [deleteSavedProperty] = useMutation(DELETE_SAVED_PROPERTY);
+  const [updateProperty] = useMutation(UPDATE_PROPERTY);
 
   const [savedPropertyId, setSavedPropertyId] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [showOwnerActions, setShowOwnerActions] = useState(false);
   const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
 
   const formattedPrice = Number(price).toLocaleString("en-in", {
     style: "currency",
     currency: "INR",
   });
+
+  const handleChangePropertyStatus = () => {};
+  const handleEditProperty = () => {
+    togglePropertyEditor();
+  };
+
+  const ownerActionList = [
+    { title: "Edit Property", onClick: handleEditProperty },
+    { title: "Mark Property", onClick: handleChangePropertyStatus },
+  ];
 
   useEffect(() => {
     if (currentUserSavedPropertyId) {
@@ -61,6 +81,10 @@ function PropertyCard({ data, isPriority }) {
 
   const toggleOnHover = () => {
     setIsHovered((prev) => !prev);
+  };
+
+  const toggleOwnerActions = () => {
+    setShowOwnerActions((prev) => !prev);
   };
 
   const toggleSaveProperty = async () => {
@@ -93,6 +117,8 @@ function PropertyCard({ data, isPriority }) {
       toggleSaveProperty();
     }
   };
+
+  const isOwner = ownerId === appState.user?.id;
 
   return (
     <Stack spacing={1}>
@@ -167,24 +193,43 @@ function PropertyCard({ data, isPriority }) {
           </Box>
         </Link>
 
-        <Tooltip
-          enterDelay={0}
-          title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
-        >
-          <FavoriteIcon
-            onClick={handleToggleFavorite}
+        {!isOwner && (
+          <Tooltip
+            enterDelay={0}
+            title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
+          >
+            <FavoriteIcon
+              onClick={handleToggleFavorite}
+              sx={{
+                color: "rgba(0, 0, 0, 0.5)",
+                stroke: "#fff",
+                strokeWidth: 2,
+                position: "absolute",
+                right: 10,
+                top: 10,
+                zIndex: 1,
+                fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
+              }}
+            />
+          </Tooltip>
+        )}
+
+        {isOwner && isDashboardManage && (
+          <Box
             sx={{
-              color: "rgba(0, 0, 0, 0.5)",
-              stroke: "#fff",
-              strokeWidth: 2,
               position: "absolute",
               right: 10,
               top: 10,
               zIndex: 1,
-              fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
             }}
-          />
-        </Tooltip>
+          >
+            <CustomTooltip
+              open={showOwnerActions}
+              toggleOptions={toggleOwnerActions}
+              listItems={ownerActionList}
+            />
+          </Box>
+        )}
 
         {bedrooms > 0 && (
           <Box

@@ -9,7 +9,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import NavbarLeft from "./Left";
 import NavbarRight from "./Right";
-import SecondSection from "./SecondSection";
 import { PRIVATE_ROUTES } from "@/utils/constants";
 import UserSlideDrawer from "../UserSlideDrawer";
 
@@ -51,8 +50,6 @@ function Navbar() {
             <NavbarRight />
           </Stack>
           {!isMobile && <Divider />}
-          {/* {!isPrivateRoute ||
-            (router.pathname === "/" && <SecondSection lineView />)} */}
         </Stack>
       </Container>
       <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
