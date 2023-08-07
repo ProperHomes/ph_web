@@ -119,7 +119,7 @@ export async function generateStaticParams() {
   for (let link of navlinks) {
     for (let city of ALL_CITIES) {
       paths.push({
-        slug: [link, city],
+        slug: [link, city.toLowerCase()],
       });
     }
   }

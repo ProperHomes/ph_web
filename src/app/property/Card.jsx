@@ -121,6 +121,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor }) {
 
   const isOwner = ownerId === appState.user?.id;
 
+  console.log(slug);
   return (
     <Stack spacing={1}>
       <Box

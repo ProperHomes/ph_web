@@ -1,39 +1,30 @@
-import { gql } from "graphql-request";
 import Profile from "../profile";
-import graphqlServerClient from "@/utils/graphql";
 
-const PROPERTY_FIELDS = gql`
-  fragment PropertyFields on Property {
-    id
-    number
-    type
-    slug
-    title
-    city
-    price
-    listedFor
-    isFurnished
-    hasSwimmingPool
-    hasParking
-    hasBasement
-    description
-    country
-    condition
-    bedrooms
-    bathrooms
-    attributes
-    createdAt
-    area
-    ownerId
-    agentId
-  }
-`;
-
-const GET_PROPERTY_BY_SLUG = gql`
-  ${PROPERTY_FIELDS}
+const GET_PROPERTY_BY_SLUG = `
   query PropertyBySlug($slug: String!) {
     propertyBySlug(slug: $slug) {
-      ...PropertyFields
+      id
+      number
+      type
+      slug
+      title
+      city
+      price
+      listedFor
+      isFurnished
+      hasSwimmingPool
+      hasParking
+      hasBasement
+      description
+      country
+      condition
+      bedrooms
+      bathrooms
+      attributes
+      createdAt
+      area
+      ownerId
+      agentId
       media: propertyMedias {
         nodes {
           id
@@ -48,7 +39,7 @@ const GET_PROPERTY_BY_SLUG = gql`
   }
 `;
 
-const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
+const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = `
   query getPropertiesForStaticPaths {
     properties {
       nodes {
@@ -60,10 +51,19 @@ const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
 `;
 
 export default async function Page({ params }) {
-  const res = await graphqlServerClient.request(GET_PROPERTY_BY_SLUG, {
-    slug: params.slug,
+  let res = await fetch({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_PROPERTY_BY_SLUG,
+      variables: { slug: params.slug },
+    }),
   });
-  const data = res?.propertyBySlug;
+  res = await res.json();
+  const data = res?.data?.propertyBySlug;
   return (
     <>
       <Profile data={data} />
@@ -72,9 +72,17 @@ export default async function Page({ params }) {
 }
 
 export async function generateStaticParams() {
-  const res = await graphqlServerClient.request(
-    GET_ALL_PROPERTIES_FOR_STATIC_PATHS
-  );
+  let res = await fetch({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_ALL_PROPERTIES_FOR_STATIC_PATHS,
+    }),
+  });
+  res = await res.json();
   const properties = res?.data?.properties?.nodes ?? [];
   return properties.map(({ slug }) => {
     return { slug };

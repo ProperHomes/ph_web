@@ -1,5 +1,3 @@
-import { gql } from "graphql-request";
-import graphqlServerClient from "@/utils/graphql";
 import Home from "../Home";
 import RentalAgreement from "src/app/rentalAgreement";
 import RentRecieptGenerator from "src/app/rentRecieptGenerator";
@@ -7,7 +5,7 @@ import PropertyList from "src/app/property/List";
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
 import CreateProperty from "src/app/createProperty";
 
-const GET_PROPERTIES = gql`
+const GET_PROPERTIES = `
   query getProperties(
     $first: Int!
     $offset: Int!
@@ -102,14 +100,33 @@ export default async function Page({ params }) {
     if (slug.includes("commercial-properties")) {
       variables.type = PROPERTY_TYPE.COMMERCIAL;
     }
-    const res = await graphqlServerClient.request(GET_PROPERTIES, variables);
-    data = res?.properties?.nodes ?? [];
+    let res = await fetch({
+      method: "POST",
+      url: process.env.NEXT_PUBLIC_GRAPHQL_API,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: GET_PROPERTIES,
+        variables,
+      }),
+    });
+    res = await res.json();
+    data = res?.data?.properties?.nodes ?? [];
     if (data.length === 0) {
-      const res = await graphqlServerClient.request(GET_PROPERTIES, {
-        first: 20,
-        offset: 0,
+      res = await fetch({
+        method: "POST",
+        url: process.env.NEXT_PUBLIC_GRAPHQL_API,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: GET_PROPERTIES,
+          variables: { first: 20, offset: 0 },
+        }),
       });
-      data = res?.properties?.nodes ?? [];
+      res = await res.json();
+      data = res?.data?.properties?.nodes ?? [];
     }
     return <PropertyList data={data} title={navLink.title} />;
   } else if (isRentalAgreementPage) {
@@ -123,8 +140,9 @@ export default async function Page({ params }) {
     return <RentRecieptGenerator />;
   } else if (isListPropertyPage) {
     return <CreateProperty />;
+  } else {
+    return <Home data={data} />;
   }
-  return <Home data={data} />;
 }
 
 export function generateStaticParams() {

@@ -27,7 +27,7 @@ const manRopeFont = Manrope({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
-function PropertyLayout({ data }) {
+function PropertyProfile({ data }) {
   const {
     title,
     description,
@@ -55,8 +55,13 @@ function PropertyLayout({ data }) {
     currency: "INR",
   });
 
+  let formattedType = type;
+  if (type) {
+    formattedType = type.split("_").join("-").toLowerCase();
+  }
+  
   const importantInfo = [
-    { label: "", value: type },
+    { label: "", value: formattedType },
     { label: bedrooms?.length === 1 ? "Bedroom" : "Bedrooms", value: bedrooms },
     {
       label: bathrooms?.length === 1 ? "Bathroom" : "Bathrooms",
@@ -81,14 +86,12 @@ function PropertyLayout({ data }) {
         links={[
           { label: "list", path: "/list" },
           {
-            label: `${type}s For ${isForSale ? "Sale" : "Rent"}`,
-            path: `/list/${type?.toLowerCase()}s-for-${
-              isForSale ? "sale" : "rent"
-            }`,
+            label: `${formattedType}s For ${isForSale ? "Sale" : "Rent"}`,
+            path: `/list/${formattedType}s-for-${isForSale ? "sale" : "rent"}`,
           },
           {
             label: city,
-            path: `/list/${type?.toLowerCase()}s-for-${
+            path: `/list/${formattedType}s-for-${
               isForSale ? "sale" : "rent"
             }/${city?.toLowerCase()}`,
           },
@@ -182,4 +185,4 @@ function PropertyLayout({ data }) {
   );
 }
 
-export default PropertyLayout;
+export default PropertyProfile;

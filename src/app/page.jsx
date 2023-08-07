@@ -1,8 +1,6 @@
-import { gql } from "graphql-request";
-import graphqlServerClient from "@/utils/graphql";
 import Home from "./Home";
 
-const GET_PROPERTIES = gql`
+const GET_PROPERTIES = `
   query getProperties(
     $first: Int!
     $offset: Int!
@@ -55,10 +53,18 @@ const GET_PROPERTIES = gql`
 `;
 
 export default async function Page() {
-  const res = await graphqlServerClient.request(GET_PROPERTIES, {
-    first: 20,
-    offset: 0,
+  let res = await fetch({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_PROPERTIES,
+      variables: { first: 20, offset: 0 },
+    }),
   });
-  const data = res?.properties?.nodes ?? [];
+  res = await res.json();
+  const data = res?.data?.properties?.nodes ?? [];
   return <Home data={data} />;
 }
