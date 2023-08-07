@@ -1,8 +1,9 @@
+"use client";
 import { useMutation } from "@apollo/client";
 import {
   CREATE_NOTIFICATION,
   UPDATE_NOTIFICATION,
-} from "../../containers/Notifications/graphql";
+} from "../../app/notifications/graphql";
 
 function useNotification() {
   const [createNotification] = useMutation(CREATE_NOTIFICATION);

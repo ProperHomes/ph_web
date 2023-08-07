@@ -1,3 +1,4 @@
+"use client";
 import { ApolloClient, InMemoryCache, split, from } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { onError } from "@apollo/client/link/error";

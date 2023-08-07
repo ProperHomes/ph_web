@@ -17,9 +17,9 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.1",
-    "@mui/icons-material": "^5.14.1",
-    "@mui/lab": "^5.0.0-alpha.137",
-    "@mui/material": "^5.14.1",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/lab": "^5.0.0-alpha.138",
+    "@mui/material": "^5.14.3",
     "@mui/x-date-pickers": "^6.10.1",
     "apollo-upload-client": "^17.0.0",
     "axios": "^1.4.0",
@@ -27,11 +27,12 @@
     "eslint": "8.45.0",
     "eslint-config-next": "^13.4.10",
     "graphql": "^16.7.1",
+    "graphql-request": "^6.1.0",
     "graphql-ws": "^5.14.0",
     "mui-one-time-password-input": "^1.1.2",
     "next": "^13.4.10",
     "next-pwa": "^5.6.0",
-    "nprogress": "^0.2.0",
+    "nextjs-toploader": "^1.4.2",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-csv-importer": "^0.8.1",
@@ -44,6 +45,7 @@
     "react-sticky-box": "^2.0.4",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
+    "server-only": "^0.0.1",
     "yup": "^1.2.0",
     "yup-password": "^0.2.2",
     "yup-phone-lite": "^2.0.1"
@@ -51,6 +53,7 @@
   "devDependencies": {
     "aws-cdk-lib": "2.84.0",
     "constructs": "10.1.156",
+    "encoding": "^0.1.13",
     "mini-css-extract-plugin": "^2.7.6",
     "sst": "2.23.3"
   }

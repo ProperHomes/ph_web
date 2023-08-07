@@ -36,7 +36,6 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig = {
-  reactStrictMode: false,
   swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -46,12 +45,6 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  // images: {
-  //   unoptimized: true, // process.env.NODE_ENV === "development"
-  //   remotePatterns: [
-  //     { protocol: "https", hostname: process.env.NEXT_PUBLIC_CLOUDFRONT_URL },
-  //   ],
-  // },
   images: {
     remotePatterns: [
       {

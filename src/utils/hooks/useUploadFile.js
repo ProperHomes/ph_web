@@ -1,3 +1,4 @@
+'use client';
 import { useMutation, gql } from "@apollo/client";
 
 export const UPLOAD_FILE = gql`

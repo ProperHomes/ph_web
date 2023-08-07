@@ -1,3 +1,4 @@
+'use client';
 import Drawer from "@mui/material/Drawer";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";

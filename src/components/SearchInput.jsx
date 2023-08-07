@@ -1,5 +1,6 @@
+"use client";
 import { useRef } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Stack from "@mui/material/Stack";
 import InputBase from "@mui/material/InputBase";
 import { useTheme } from "@mui/material/styles";

@@ -1,3 +1,4 @@
+'use client';
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";

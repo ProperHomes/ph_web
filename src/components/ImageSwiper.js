@@ -1,11 +1,19 @@
+"use client";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 
-function ImageSwiper({ images, onClick }) {
+import ImageModal from "./ImageGallery";
+
+function ImageSwiper({ images }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
+  const [showImageGallery, setShowImageGallery] = useState(false);
+
+  const toggleGallery = () => {
+    setShowImageGallery((prev) => !prev);
+  };
 
   const handleStepChange = (step) => {
     setActiveStep(step);
@@ -20,42 +28,49 @@ function ImageSwiper({ images, onClick }) {
   };
 
   return (
-    <Box pb={2} onClick={onClick}>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-      >
-        {images.map((url) => {
-          return (
-            <Box
-              key={url}
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            >
-              <img
-                src={url}
-                alt=""
-                style={{
+    <>
+      <Box pb={2} onClick={toggleGallery}>
+        <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+        >
+          {images.map((url) => {
+            return (
+              <Box
+                key={url}
+                sx={{
+                  position: "relative",
                   width: "100%",
-                  height: "auto",
-                  objectFit: "contain",
-                  borderRadius: "10px",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
                 }}
-              />
-            </Box>
-          );
-        })}
-      </SwipeableViews>
-    </Box>
+              >
+                <img
+                  src={url}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "contain",
+                    borderRadius: "10px",
+                  }}
+                />
+              </Box>
+            );
+          })}
+        </SwipeableViews>
+      </Box>
+      <ImageModal
+        images={images}
+        open={showImageGallery}
+        handleClose={toggleGallery}
+      />
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
+"use client";
 import { useState } from "react";
 import axios from "axios";
-import AuthModal from "@/containers/Auth";
+import AuthModal from "src/app/auth";
 import { appActionTypes, useAppContext } from "src/appContext";
 
 function useToggleAuth() {

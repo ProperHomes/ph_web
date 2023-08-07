@@ -5,7 +5,8 @@
       "@/components/*": ["src/components/*"],
       "@/containers/*": ["src/containers/*"],
       "@/utils/*": ["src/utils/*"],
-      "@/styles/*": ["src/styles/*"]
+      "@/styles/*": ["src/styles/*"],
+      "@/graphql/*": ["src/graphql/*"]
     }
   },
   "exclude": ["node_modules"]

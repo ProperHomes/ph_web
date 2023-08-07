@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";

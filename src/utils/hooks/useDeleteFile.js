@@ -1,3 +1,4 @@
+'use client';
 import { useMutation, gql } from "@apollo/client";
 
 export const DELETE_FILE = gql`

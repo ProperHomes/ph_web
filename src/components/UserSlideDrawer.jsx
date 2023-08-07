@@ -1,4 +1,5 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -141,7 +142,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
 
           <StyledBtn
             startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/homeloan/emi-calculator")}
+            onClick={navigateTo("/homeloans/emi-calculator")}
           >
             EMI Calculator
           </StyledBtn>

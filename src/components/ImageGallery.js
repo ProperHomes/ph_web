@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from "react";
 import SwipeableViews from "react-swipeable-views";
 import Stack from "@mui/material/Stack";

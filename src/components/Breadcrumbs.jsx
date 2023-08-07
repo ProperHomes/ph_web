@@ -1,3 +1,4 @@
+'use client';
 import { useTheme } from "@mui/material/styles";
 import BreadcrumbsMUI from "@mui/material/Breadcrumbs";
 import Link from "next/link";

@@ -1,3 +1,5 @@
+// Deprecate this and use this instead: https://mui.com/material-ui/experimental-api/css-theme-variables/usage/#usecolorscheme-colorschemecontextvalue
+"use client";
 import { useEffect } from "react";
 
 import { useAppContext } from "../../appContext";

@@ -1,3 +1,4 @@
+'use client';
 import { initializeApollo } from "src/apolloClient";
 
 export function useApollo(ctx) {

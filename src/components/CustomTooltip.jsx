@@ -1,3 +1,4 @@
+'use client';
 import { useTheme } from "@mui/material/styles";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";

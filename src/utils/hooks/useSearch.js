@@ -1,7 +1,8 @@
+"use client";
 import { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 
-import { SEARCH_PROPERTIES } from "@/containers/Properties/graphql";
+import { SEARCH_PROPERTIES } from "@/graphql/properties";
 
 function useSearch({ searchText = "", enabled, city, locality }) {
   const [results, setResults] = useState([]);

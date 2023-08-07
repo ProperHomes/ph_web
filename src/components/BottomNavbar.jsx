@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import Link from "next/link";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -13,7 +14,7 @@ import KeyIcon from "@mui/icons-material/Key";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import AddIcon from "@mui/icons-material/Add";
 
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
 const dashboardTabList = [
@@ -99,8 +100,9 @@ function BottomNavbar() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const router = useRouter();
+  const pathname = usePathname();
   const { isLoggedIn } = useToggleAuth();
-  const isDashboard = router.pathname.includes("dashboard");
+  const isDashboard = pathname.includes("dashboard");
   const [value, setValue] = useState("/home");
   const handleChangeValue = (_event, value) => {
     setValue(value);
