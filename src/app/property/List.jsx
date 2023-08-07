@@ -29,7 +29,7 @@ function PropertyList({ data, title }) {
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [propertyIdToEdit, setPropertyIdToEdit] = useState(false);
+  const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
   const listToShow = data ?? [];
 

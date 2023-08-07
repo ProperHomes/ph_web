@@ -1,9 +1,7 @@
-import { gql } from "graphql-request";
-import graphqlServerClient from "@/utils/graphql";
 import PropertyList from "src/app/property/List";
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
 
-const GET_PROPERTIES = gql`
+const GET_PROPERTIES = `
   query getProperties(
     $first: Int!
     $offset: Int!
@@ -80,40 +78,34 @@ const navlinks = [
 export default async function Page({ params }) {
   const { slug } = params;
   let data = [];
-  const fetchPropertiesAsInHome = async () => {
-    const res = await graphqlServerClient.request(GET_PROPERTIES, {
-      first: 20,
-      offset: 0,
-    });
-    return res?.properties?.nodes ?? [];
-  };
-  if (slug?.[0] && navlinks.includes(slug?.[0])) {
-    const link = slug[0];
-    const city = slug[1];
-    const listedFor = link.split("-").pop().toUpperCase();
-    let propertyType = link.split("-for-")[0];
-    propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
-    const variables = { listedFor, first: 20, offset: 0 };
-    if (link !== "properties-for-sale" && link !== "properties-for-rent") {
-      variables.type = propertyType;
-    }
-    if (link.includes("commercial-properties")) {
-      variables.type = PROPERTY_TYPE.COMMERCIAL;
-    }
-    if (city) {
-      variables.city = decodeURIComponent(city.toUpperCase());
-    }
-    try {
-      const res = await graphqlServerClient.request(GET_PROPERTIES, variables);
-      data = res?.properties?.nodes ?? [];
-      console.log("main", slug[0], slug[1]);
-    } catch (err) {
-      data = await fetchPropertiesAsInHome();
-      console.log("error fetching properties for: ", slug[0], slug[1]);
-    }
-  } else {
-    data = await fetchPropertiesAsInHome();
+  const link = slug[0];
+  const city = slug[1];
+  const listedFor = link.split("-").pop().toUpperCase();
+  let propertyType = link.split("-for-")[0];
+  propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
+  const variables = { listedFor, first: 20, offset: 0 };
+  if (link !== "properties-for-sale" && link !== "properties-for-rent") {
+    variables.type = propertyType;
   }
+  if (link.includes("commercial-properties")) {
+    variables.type = PROPERTY_TYPE.COMMERCIAL;
+  }
+  if (city) {
+    variables.city = decodeURIComponent(city.toUpperCase());
+  }
+  let res = await fetch({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: GET_PROPERTIES,
+      variables,
+    }),
+  });
+  res = await res.json();
+  data = res?.data?.properties?.nodes ?? [];
   return <PropertyList data={data} />;
 }
 
