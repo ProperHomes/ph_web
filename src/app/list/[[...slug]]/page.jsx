@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
 import graphqlServerClient from "@/utils/graphql";
 import PropertyList from "src/app/property/List";
-import { PROPERTY_TYPE } from "@/utils/constants";
+import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
 
 const GET_PROPERTIES = gql`
   query getProperties(
@@ -80,7 +80,14 @@ const navlinks = [
 export default async function Page({ params }) {
   const { slug } = params;
   let data = [];
-  if (slug && navlinks.includes(slug?.[0])) {
+  const fetchPropertiesAsInHome = async () => {
+    const res = await graphqlServerClient.request(GET_PROPERTIES, {
+      first: 20,
+      offset: 0,
+    });
+    return res?.properties?.nodes ?? [];
+  };
+  if (slug?.[0] && navlinks.includes(slug?.[0])) {
     const link = slug[0];
     const city = slug[1];
     const listedFor = link.split("-").pop().toUpperCase();
@@ -96,14 +103,16 @@ export default async function Page({ params }) {
     if (city) {
       variables.city = decodeURIComponent(city.toUpperCase());
     }
-    const res = await graphqlServerClient.request(GET_PROPERTIES, variables);
-    data = res?.properties?.nodes ?? [];
+    try {
+      const res = await graphqlServerClient.request(GET_PROPERTIES, variables);
+      data = res?.properties?.nodes ?? [];
+      console.log("main", slug[0], slug[1]);
+    } catch (err) {
+      data = await fetchPropertiesAsInHome();
+      console.log("error fetching properties for: ", slug[0], slug[1]);
+    }
   } else {
-    const res = await graphqlServerClient.request(GET_PROPERTIES, {
-      first: 20,
-      offset: 0,
-    });
-    data = res?.properties?.nodes ?? [];
+    data = await fetchPropertiesAsInHome();
   }
   return <PropertyList data={data} />;
 }
@@ -114,6 +123,13 @@ export async function generateStaticParams() {
     paths.push({
       slug: [link],
     });
+  }
+  for (let link of navlinks) {
+    for (let city of ALL_CITIES) {
+      paths.push({
+        slug: [link, city],
+      });
+    }
   }
   return paths;
 }

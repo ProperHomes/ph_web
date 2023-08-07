@@ -125,26 +125,23 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           >
             Pay Rent
           </StyledBtn>
-
           <StyledBtn
             startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/rental-agreement")}
+            onClick={navigateTo("/homeloans/emi-calculator")}
           >
-            Generate Rental Agreement
+            EMI Calculator
           </StyledBtn>
-
           <StyledBtn
             startIcon={<CalculateOutlined />}
             onClick={navigateTo("/rent-reciept-generator-online")}
           >
             Generate Rent Receipt
           </StyledBtn>
-
           <StyledBtn
             startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/homeloans/emi-calculator")}
+            onClick={navigateTo("/rental-agreement")}
           >
-            EMI Calculator
+            Generate Rental Agreement
           </StyledBtn>
         </Stack>
 

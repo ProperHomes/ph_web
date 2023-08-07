@@ -9,7 +9,6 @@ import { useApollo } from "@/utils/hooks/useApollo";
 
 import { AppProvider } from "src/appContext";
 import { NotificationsProvider } from "src/app/notifications/context";
-import { PropertyProvider } from "src/app/property/context";
 import AppLayout from "src/components/Layouts/AppLayout";
 import useDarkMode from "@/utils/hooks/useDarkMode";
 import ThemeRegistry from "../ThemeRegistry";
@@ -37,18 +36,16 @@ function App({ children }) {
   return (
     <ThemeRegistry theme={theme} options={{ key: "mui" }}>
       <NotificationsProvider>
-        <PropertyProvider>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Box
-              sx={{
-                backgroundColor: theme.palette.background.default,
-                margin: "0 auto",
-              }}
-            >
-              <AppLayout>{children}</AppLayout>
-            </Box>
-          </LocalizationProvider>
-        </PropertyProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box
+            sx={{
+              backgroundColor: theme.palette.background.default,
+              margin: "0 auto",
+            }}
+          >
+            <AppLayout>{children}</AppLayout>
+          </Box>
+        </LocalizationProvider>
       </NotificationsProvider>
     </ThemeRegistry>
   );

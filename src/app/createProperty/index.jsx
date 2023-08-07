@@ -12,12 +12,10 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { styled, useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 
 import useUploadFile from "@/utils/hooks/useUploadFile";
 import { CREATE_PROPERTY } from "@/graphql/properties";
-import { usePropertyContext } from "src/app/property/context";
 import MediaBlocks from "./MediaBlocks";
 import { ALL_CITIES, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
@@ -67,7 +65,6 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
 function CreatePropertySaleRentLease({ data, handleCancel }) {
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
-  const { state, dispatch } = usePropertyContext();
 
   const [createProperty] = useMutation(CREATE_PROPERTY);
   const handleFileUpload = useUploadFile();

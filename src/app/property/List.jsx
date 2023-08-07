@@ -9,7 +9,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Card from "./Card";
 import CategoryBoxes from "src/components/CategoryBoxes";
-import { usePropertyContext } from "./context";
 import CreatePropertySaleRentLease from "../createProperty";
 
 const Section = styled(Box)(({ theme }) => ({
@@ -32,9 +31,7 @@ function PropertyList({ data, title }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(false);
 
-  const { state } = usePropertyContext();
-  const { list } = state;
-  const listToShow = data ?? list;
+  const listToShow = data ?? [];
 
   const toggleEditor = (id) => () => {
     setPropertyIdToEdit(id);
