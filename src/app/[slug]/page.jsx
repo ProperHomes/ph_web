@@ -1,3 +1,4 @@
+import { gql, client } from "@/graphql/index";
 import Home from "../Home";
 import RentalAgreement from "src/app/rentalAgreement";
 import RentRecieptGenerator from "src/app/rentRecieptGenerator";
@@ -5,7 +6,7 @@ import PropertyList from "src/app/property/List";
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
 import CreateProperty from "src/app/createProperty";
 
-const GET_PROPERTIES = `
+const GET_PROPERTIES = gql`
   query getProperties(
     $first: Int!
     $offset: Int!
@@ -66,6 +67,10 @@ const navlinks = [
     link: "commercial-properties-for-sale",
     title: "Commerical Properties For Sale",
   },
+  {
+    link: "bungalows-for-sale",
+    title: "Bungalows For Sale",
+  },
   { link: "pent-houses-for-sale", title: "Pent Houses For Sale" },
   { link: "properties-for-sale", title: "Properties For Sale" },
   // RENTS FROM NOW
@@ -79,6 +84,11 @@ const navlinks = [
   },
   { link: "pent-houses-for-rent", title: "Pent Houses For Rent" },
   { link: "properties-for-rent", title: "Properties For Rent" },
+  {
+    link: "bungalows-for-rent",
+    title: "Bungalows For Rent",
+  },
+  { link: "paying-guests-accomodation", title: "Paying Guest" },
 ];
 
 export default async function Page({ params }) {
@@ -100,33 +110,15 @@ export default async function Page({ params }) {
     if (slug.includes("commercial-properties")) {
       variables.type = PROPERTY_TYPE.COMMERCIAL;
     }
-    let res = await fetch({
-      method: "POST",
-      url: process.env.NEXT_PUBLIC_GRAPHQL_API,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: GET_PROPERTIES,
-        variables,
-      }),
-    });
-    res = await res.json();
-    data = res?.data?.properties?.nodes ?? [];
+    if (slug.includes("paying-guests") || slug.includes("pg")) {
+      variables.type = PROPERTY_TYPE.PG;
+      variables.listedFor = null;
+    }
+    let res = await client.request(GET_PROPERTIES, variables);
+    data = res?.properties?.nodes ?? [];
     if (data.length === 0) {
-      res = await fetch({
-        method: "POST",
-        url: process.env.NEXT_PUBLIC_GRAPHQL_API,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: GET_PROPERTIES,
-          variables: { first: 20, offset: 0 },
-        }),
-      });
-      res = await res.json();
-      data = res?.data?.properties?.nodes ?? [];
+      res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
+      data = res?.properties?.nodes ?? [];
     }
     return <PropertyList data={data} title={navLink.title} />;
   } else if (isRentalAgreementPage) {

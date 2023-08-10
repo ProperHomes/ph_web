@@ -1,6 +1,7 @@
+import { gql, client } from "@/graphql/index";
 import Profile from "../profile";
 
-const GET_PROPERTY_BY_SLUG = `
+const GET_PROPERTY_BY_SLUG = gql`
   query PropertyBySlug($slug: String!) {
     propertyBySlug(slug: $slug) {
       id
@@ -39,7 +40,7 @@ const GET_PROPERTY_BY_SLUG = `
   }
 `;
 
-const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = `
+const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
   query getPropertiesForStaticPaths {
     properties {
       nodes {
@@ -51,19 +52,8 @@ const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = `
 `;
 
 export default async function Page({ params }) {
-  let res = await fetch({
-    method: "POST",
-    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: GET_PROPERTY_BY_SLUG,
-      variables: { slug: params.slug },
-    }),
-  });
-  res = await res.json();
-  const data = res?.data?.propertyBySlug;
+  let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
+  const data = res?.propertyBySlug;
   return (
     <>
       <Profile data={data} />
@@ -72,18 +62,8 @@ export default async function Page({ params }) {
 }
 
 export async function generateStaticParams() {
-  let res = await fetch({
-    method: "POST",
-    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: GET_ALL_PROPERTIES_FOR_STATIC_PATHS,
-    }),
-  });
-  res = await res.json();
-  const properties = res?.data?.properties?.nodes ?? [];
+  let res = await client.request(GET_ALL_PROPERTIES_FOR_STATIC_PATHS);
+  const properties = res?.properties?.nodes ?? [];
   return properties.map(({ slug }) => {
     return { slug };
   });

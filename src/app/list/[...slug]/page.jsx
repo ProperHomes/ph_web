@@ -1,7 +1,8 @@
+import { gql, client } from "@/graphql/index";
 import PropertyList from "src/app/property/List";
 import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
 
-const GET_PROPERTIES = `
+const GET_PROPERTIES = gql`
   query getProperties(
     $first: Int!
     $offset: Int!
@@ -63,6 +64,7 @@ const navlinks = [
   "commercial-properties-for-sale",
   "pent-houses-for-sale",
   "properties-for-sale",
+  "bungalows-for-sale",
   // RENTS FROM NOW
   "flats-for-rent",
   "villas-for-rent",
@@ -73,6 +75,10 @@ const navlinks = [
   "properties-for-rent",
   "cabins-for-rent",
   "lots-for-lease",
+  "bungalows-for-rent",
+  // Others
+  "pg",
+  "paying-guests-accommodation",
 ];
 
 export default async function Page({ params }) {
@@ -87,25 +93,18 @@ export default async function Page({ params }) {
   if (link !== "properties-for-sale" && link !== "properties-for-rent") {
     variables.type = propertyType;
   }
-  if (link.includes("commercial-properties")) {
+  if (link.includes("commercial")) {
     variables.type = PROPERTY_TYPE.COMMERCIAL;
+  }
+  if (link.includes("pg") || link.includes("paying-guests")) {
+    variables.type = PROPERTY_TYPE.PG;
+    variables.listedFor = null;
   }
   if (city) {
     variables.city = decodeURIComponent(city.toUpperCase());
   }
-  let res = await fetch({
-    method: "POST",
-    url: process.env.NEXT_PUBLIC_GRAPHQL_API,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: GET_PROPERTIES,
-      variables,
-    }),
-  });
-  res = await res.json();
-  data = res?.data?.properties?.nodes ?? [];
+  const res = await client.request(GET_PROPERTIES, variables);
+  data = res?.properties?.nodes ?? [];
   return <PropertyList data={data} />;
 }
 

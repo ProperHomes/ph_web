@@ -57,11 +57,37 @@ function PropertyProfile({ data }) {
 
   let formattedType = type;
   if (type) {
-    formattedType = type.split("_").join("-").toLowerCase();
+    formattedType = `${type.split("_").join("-").toLowerCase()}s`;
+    if (formattedType.includes("commercial")) {
+      formattedType = "commercial-properties";
+    } else if (formattedType.includes("pg")) {
+      formattedType = "paying-guests";
+    }
   }
-  
+
+  const isPayingGuests = formattedType === "paying-guests";
+
+  const getBreadcrumbLinks = () => {
+    const typeLink = {
+      label: isPayingGuests
+        ? "Paying Guests Accommodation"
+        : `${formattedType} For ${isForSale ? "Sale" : "Rent"}`,
+      path: isPayingGuests
+        ? "/list/paying-guests-accommodation"
+        : `/list/${formattedType}-for-${isForSale ? "sale" : "rent"}`,
+    };
+
+    return [
+      { label: "list", path: "/list" },
+      typeLink,
+      {
+        label: city,
+        path: `${typeLink.path}/${city?.toLowerCase()}`,
+      },
+    ];
+  };
+
   const importantInfo = [
-    { label: "", value: formattedType },
     { label: bedrooms?.length === 1 ? "Bedroom" : "Bedrooms", value: bedrooms },
     {
       label: bathrooms?.length === 1 ? "Bathroom" : "Bathrooms",
@@ -82,21 +108,7 @@ function PropertyProfile({ data }) {
 
   return (
     <Stack p={1} spacing={2}>
-      <Breadcrumbs
-        links={[
-          { label: "list", path: "/list" },
-          {
-            label: `${formattedType}s For ${isForSale ? "Sale" : "Rent"}`,
-            path: `/list/${formattedType}s-for-${isForSale ? "sale" : "rent"}`,
-          },
-          {
-            label: city,
-            path: `/list/${formattedType}s-for-${
-              isForSale ? "sale" : "rent"
-            }/${city?.toLowerCase()}`,
-          },
-        ]}
-      />
+      <Breadcrumbs links={getBreadcrumbLinks()} />
       <Box sx={{ display: { xs: "block", md: "none" } }}>
         <ImageSwiper images={images} />
       </Box>
