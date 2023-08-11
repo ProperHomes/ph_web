@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
@@ -64,8 +64,9 @@ const links = [
 
 function SecondSection({ lineView }) {
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   const isMobile = useMediaQuery(theme.breakpoints.up("xs"));
-  const router = useRouter();
+  const pathname = usePathname();
 
   const LineView = () => {
     return (
@@ -80,7 +81,7 @@ function SecondSection({ lineView }) {
         }}
       >
         {links.map(({ link, Icon, label }) => {
-          const isActive = link === router.asPath;
+          const isActive = link === pathname;
           return (
             <Link href={link} key={link}>
               <Stack spacing={1} direction="row" alignItems="center">
@@ -118,7 +119,7 @@ function SecondSection({ lineView }) {
         }}
       >
         {links.map(({ link, Icon, label }) => {
-          const isActive = link === router.asPath;
+          const isActive = link === pathname;
           return (
             <Link href={link} key={link}>
               <Stack
@@ -131,9 +132,12 @@ function SecondSection({ lineView }) {
                 sx={{
                   width: { xs: "100%", md: "100px" },
                   height: "100%",
-                  border: "0.5px",
+                  border: isActive
+                    ? `2px solid ${theme.palette.info.main}`
+                    : "none",
                   borderRadius: "0.5rem",
                   transition: "0.3s ease",
+                  backgroundColor: isDarkMode ? "#000" : "#fff",
                   "&: hover": {
                     boxShadow: theme.shadows[4],
                   },

@@ -68,10 +68,11 @@ function PropertyProfile({ data }) {
   const isPayingGuests = formattedType === "paying-guests";
 
   const getBreadcrumbLinks = () => {
+    const typeWithoutHypens = formattedType.split("-").join(" ");
     const typeLink = {
       label: isPayingGuests
         ? "Paying Guests Accommodation"
-        : `${formattedType} For ${isForSale ? "Sale" : "Rent"}`,
+        : `${typeWithoutHypens} For ${isForSale ? "Sale" : "Rent"}`,
       path: isPayingGuests
         ? "/list/paying-guests-accommodation"
         : `/list/${formattedType}-for-${isForSale ? "sale" : "rent"}`,

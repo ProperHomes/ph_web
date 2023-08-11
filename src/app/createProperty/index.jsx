@@ -43,7 +43,8 @@ const StyledForm = styled(Box)(({ theme }) => ({
   gap: "1rem",
   gridTemplateColumns: "1fr 0.6fr",
   [theme.breakpoints.down("md")]: {
-    gridTemplateColumns: "1fr",
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 

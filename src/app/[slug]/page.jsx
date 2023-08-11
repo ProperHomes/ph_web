@@ -89,6 +89,7 @@ const navlinks = [
     title: "Bungalows For Rent",
   },
   { link: "paying-guests-accomodation", title: "Paying Guest" },
+  { link: "hostel-accommodation", title: "Hostels" },
 ];
 
 export default async function Page({ params }) {

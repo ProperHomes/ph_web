@@ -12,7 +12,6 @@ import Tooltip from "@mui/material/Tooltip";
 import { useTheme } from "@mui/material";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import { PROPERTY_TYPE } from "@/utils/constants";
 import {
   DELETE_SAVED_PROPERTY,
@@ -22,11 +21,12 @@ import {
 import { useAppContext } from "src/appContext";
 import CustomTooltip from "src/components/CustomTooltip";
 
-function PropertyCard({ data, isPriority, togglePropertyEditor }) {
+function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
   const router = useRouter();
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const { state: appState } = useAppContext();
+  const isLoggedIn = !!appState.user?.id;
   const {
     id,
     number,
@@ -57,7 +57,6 @@ function PropertyCard({ data, isPriority, togglePropertyEditor }) {
   const [savedPropertyId, setSavedPropertyId] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showOwnerActions, setShowOwnerActions] = useState(false);
-  const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
 
   const formattedPrice = Number(price).toLocaleString("en-in", {
     style: "currency",
@@ -286,8 +285,6 @@ function PropertyCard({ data, isPriority, togglePropertyEditor }) {
           </Typography>
         </Stack>
       </Link>
-
-      {Auth}
     </Stack>
   );
 }

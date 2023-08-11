@@ -27,7 +27,7 @@ const tabSections = [
   },
   {
     label: "Manage",
-    href: "/dashboard/manage-properties",
+    href: "/dashboard/manage",
     Icon: PersonPinIcon,
   },
   {
@@ -52,7 +52,7 @@ const tabSections = [
   },
 ];
 
-function DashboardNavigation() {
+function DashboardSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const theme = useTheme();
@@ -70,37 +70,24 @@ function DashboardNavigation() {
   const index = list.findIndex((t) => t.href === pathname);
 
   return (
-    <Stack>
+    <>
       {!isMobile && (
-        <>
-          <Container maxWidth="lg">
-            <AppBar position="static" sx={{ borderRadius: "1em" }}>
-              <Tabs
-                centered
-                variant="fullWidth"
-                value={index}
-                indicatorColor="secondary"
-                textColor="inherit"
-                aria-label="dashboard tabs"
-              >
-                {list.map(({ label, href, Icon }) => (
-                  <Tab
-                    key={href}
-                    icon={<Icon />}
-                    iconPosition="start"
-                    label={label}
-                    component={Link}
-                    href={href}
-                  />
-                ))}
-              </Tabs>
-            </AppBar>
-          </Container>
-        </>
+        <Stack>
+          {list.map(({ label, href, Icon }) => (
+            <Tab
+              key={href}
+              icon={<Icon />}
+              iconPosition="start"
+              label={label}
+              component={Link}
+              href={href}
+            />
+          ))}
+        </Stack>
       )}
       {isMobile && <BottomNavbar />}
-    </Stack>
+    </>
   );
 }
 
-export default DashboardNavigation;
+export default DashboardSidebar;

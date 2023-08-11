@@ -57,7 +57,9 @@ function SearchBlock() {
         renderValue={(selected) => {
           if (!selected) {
             return (
-              <Typography>{isMobile ? "City" : "Select a City"}</Typography>
+              <Typography fontFamily={theme.typography.fontFamily.Manrope}>
+                {isMobile ? "City" : "Select a City"}
+              </Typography>
             );
           }
 

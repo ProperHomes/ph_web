@@ -19,6 +19,7 @@ export const PROPERTY_TYPE = {
   PROJECT: "PROJECT",
   COMMERCIAL: "COMMERCIAL",
   PG: "PG",
+  HOSTEL: "HOSTEL",
 };
 
 export const LISTING_TYPE = {

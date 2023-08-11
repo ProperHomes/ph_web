@@ -79,27 +79,41 @@ const navlinks = [
   // Others
   "pg",
   "paying-guests-accommodation",
+  "hostels",
+  "hostel-accomodation",
 ];
 
 export default async function Page({ params }) {
   const { slug } = params;
   let data = [];
+  const variables = { first: 20, offset: 0 };
+
   const link = slug[0];
   const city = slug[1];
   const listedFor = link.split("-").pop().toUpperCase();
   let propertyType = link.split("-for-")[0];
   propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
-  const variables = { listedFor, first: 20, offset: 0 };
+
+  const isPG = link.includes("pg") || link.includes("paying-guests");
+  const isHostel = link.includes("hostel");
+
   if (link !== "properties-for-sale" && link !== "properties-for-rent") {
     variables.type = propertyType;
   }
   if (link.includes("commercial")) {
     variables.type = PROPERTY_TYPE.COMMERCIAL;
   }
-  if (link.includes("pg") || link.includes("paying-guests")) {
+  if (isPG) {
     variables.type = PROPERTY_TYPE.PG;
-    variables.listedFor = null;
   }
+  if (isHostel) {
+    variables.type = PROPERTY_TYPE.HOSTEL;
+  }
+
+  if (!isPG && !isHostel) {
+    variables.listedFor = listedFor;
+  }
+
   if (city) {
     variables.city = decodeURIComponent(city.toUpperCase());
   }

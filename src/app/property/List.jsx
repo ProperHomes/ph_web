@@ -10,6 +10,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Card from "./Card";
 import CategoryBoxes from "src/components/CategoryBoxes";
 import CreatePropertySaleRentLease from "../createProperty";
+import useToggleAuth from "@/utils/hooks/useToggleAuth";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -30,6 +31,8 @@ function PropertyList({ data, title }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
+
+  const { Auth, toggleAuth } = useToggleAuth();
 
   const listToShow = data ?? [];
 
@@ -53,6 +56,7 @@ function PropertyList({ data, title }) {
       {title && (
         <Typography
           color={theme.palette.text.primary}
+          fontFamily={theme.typography.fontFamily.Manrope}
           variant="h4"
           textAlign="left"
           fontSize={{ xs: "1.2rem", sm: "1.5rem" }}
@@ -68,6 +72,7 @@ function PropertyList({ data, title }) {
                 <Card
                   data={l}
                   isPriority={i < 9}
+                  toggleAuth={toggleAuth}
                   togglePropertyEditor={toggleEditor(l.id)}
                 />
               </Box>
@@ -80,6 +85,7 @@ function PropertyList({ data, title }) {
           handleCancel={toggleEditor()}
         />
       )}
+      {Auth}
     </Stack>
   );
 }

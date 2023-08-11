@@ -16,7 +16,7 @@ function Breadcrumbs({ links }) {
     <div role="presentation" onClick={handleClick}>
       <BreadcrumbsMUI
         aria-label="breadcrumb"
-        separator={<NavigateNextIcon fontSize="small" />}
+        separator={<NavigateNextIcon fontSize="medium" />}
       >
         <Link color="inherit" href="/" style={{ display: "flex" }}>
           <Home fontSize="0.7px" />
@@ -29,7 +29,7 @@ function Breadcrumbs({ links }) {
               underline="hover"
               color={isActive ? theme.palette.info.main : "inherit"}
               href={path}
-              style={{ fontSize: "0.7rem", fontWeight: isActive ? 600 : 500 }}
+              style={{ fontSize: "0.8rem", fontWeight: isActive ? 600 : 500 }}
             >
               {label?.toUpperCase()}
             </Link>

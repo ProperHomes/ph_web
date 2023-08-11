@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
@@ -7,7 +7,12 @@ import { Typography } from "@mui/material";
 const links = [
   { title: "For Sale", path: "/properties-for-sale" },
   { title: "For Rent", path: "/properties-for-rent" },
-  { title: "List your Property For Free", path: "/list-your-property-for-sale-rent-lease" },
+  { title: "For Property Owners/Managers", path: "/property-management" },
+  {
+    title: "List your Property For Free",
+    path: "/list-your-property-for-sale-rent-lease",
+  },
+  { title: "Blog", path: "/blog" },
 ];
 
 function NavLinks() {
