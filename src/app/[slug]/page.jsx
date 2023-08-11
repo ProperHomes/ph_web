@@ -95,6 +95,8 @@ const navlinks = [
 export default async function Page({ params }) {
   const { slug = "" } = params;
   let data = [];
+  const variables = { first: 20, offset: 0 };
+
   const isRentalAgreementPage =
     slug === "rental-agreement" ||
     slug?.split("-").slice(0, 3).join("-") === "rental-agreement-in";
@@ -104,17 +106,27 @@ export default async function Page({ params }) {
     const listedFor = slug.split("-").pop().toUpperCase();
     let propertyType = slug.split("-for-")[0];
     propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
-    const variables = { listedFor, first: 20, offset: 0 };
+
+    const isPG = slug.includes("pg") || slug.includes("paying-guests");
+    const isHostel = slug.includes("hostel");
+
     if (slug !== "properties-for-sale" && slug !== "properties-for-rent") {
       variables.type = propertyType;
     }
-    if (slug.includes("commercial-properties")) {
+    if (slug.includes("commercial")) {
       variables.type = PROPERTY_TYPE.COMMERCIAL;
     }
-    if (slug.includes("paying-guests") || slug.includes("pg")) {
+    if (isPG) {
       variables.type = PROPERTY_TYPE.PG;
-      variables.listedFor = null;
     }
+    if (isHostel) {
+      variables.type = PROPERTY_TYPE.HOSTEL;
+    }
+
+    if (!isPG && !isHostel) {
+      variables.listedFor = listedFor;
+    }
+
     let res = await client.request(GET_PROPERTIES, variables);
     data = res?.properties?.nodes ?? [];
     if (data.length === 0) {

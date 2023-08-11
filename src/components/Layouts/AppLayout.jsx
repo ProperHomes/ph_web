@@ -1,5 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
@@ -9,10 +8,8 @@ import Navbar from "../Navbar";
 import BottomNavbar from "../BottomNavbar";
 
 function AppLayout({ children }) {
-  const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isDashboard = pathname.includes("dashboard");
   return (
     <Box
       sx={{
@@ -22,7 +19,7 @@ function AppLayout({ children }) {
       }}
     >
       <Navbar />
-      <Container maxWidth={isDashboard ? "lg" : "xl"}>
+      <Container maxWidth="xl">
         <Box pt={2} pb={4} sx={{ width: "100%", height: "100%" }}>
           {children}
         </Box>

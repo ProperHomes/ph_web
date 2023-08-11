@@ -11,21 +11,6 @@ import Breadcrumbs from "src/components/Breadcrumbs";
 import { LISTING_TYPE } from "@/utils/constants";
 import Sidebar from "./sidebar/index";
 import { Divider } from "@mui/material";
-import { Montserrat, Manrope } from "next/font/google";
-
-const monsterratFont = Montserrat({
-  weight: ["300", "400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-const manRopeFont = Manrope({
-  weight: ["300", "400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
 
 function PropertyProfile({ data }) {
   const {
@@ -129,7 +114,6 @@ function PropertyProfile({ data }) {
               variant="h1"
               fontSize={{ xs: "1.4rem !important", md: "2.5rem !important" }}
               fontWeight={600}
-              fontFamily={manRopeFont}
               textTransform="capitalize"
             >
               {title?.toLowerCase()}
@@ -143,7 +127,6 @@ function PropertyProfile({ data }) {
                 whiteSpace: "nowrap",
                 fontWeight: 600,
                 fontSize: "1rem",
-                fontFamily: monsterratFont,
                 borderRadius: "1rem",
               }}
             >
@@ -167,7 +150,6 @@ function PropertyProfile({ data }) {
                   sx={{
                     whiteSpace: "nowrap",
                     fontWeight: 600,
-                    fontFamily: monsterratFont,
                     borderRadius: "0.5rem",
                     fontSize: { xs: "0.8rem", sm: "1rem" },
                   }}
@@ -179,9 +161,7 @@ function PropertyProfile({ data }) {
             })}
           </Box>
           <Divider />
-          <Typography variant="body" fontFamily={manRopeFont}>
-            {description}
-          </Typography>
+          <Typography variant="body">{description}</Typography>
         </Stack>
 
         <StickyBox

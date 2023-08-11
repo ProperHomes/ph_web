@@ -1,10 +1,9 @@
 "use client";
-import { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
-import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useTheme } from "@mui/material/styles";
@@ -16,7 +15,6 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 
-import { useAppContext } from "src/appContext";
 import BottomNavbar from "src/components/BottomNavbar";
 
 const tabSections = [
@@ -52,42 +50,50 @@ const tabSections = [
   },
 ];
 
-function DashboardSidebar() {
-  const router = useRouter();
+function Dashboardnav() {
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const { isBuyer, state } = useAppContext();
-
-  useEffect(() => {
-    if (!state.user) {
-      router.push("/");
-    }
-  }, [state.user]);
 
   const list = tabSections;
   const index = list.findIndex((t) => t.href === pathname);
 
   return (
-    <>
-      {!isMobile && (
-        <Stack>
-          {list.map(({ label, href, Icon }) => (
-            <Tab
-              key={href}
-              icon={<Icon />}
-              iconPosition="start"
-              label={label}
-              component={Link}
-              href={href}
-            />
-          ))}
-        </Stack>
-      )}
+    <Container maxWidth="lg">
+      <AppBar position="static" sx={{ borderRadius: "1em", marign: "0 auto" }}>
+        {!isMobile && (
+          <Tabs
+            variant="fullWidth"
+            value={index}
+            textColor="inherit"
+            indicatorColor="inherit"
+            aria-label="dashboard tabs"
+          >
+            {list.map(({ label, href, Icon }) => {
+              const isActive = pathname.includes(href);
+              return (
+                <Tab
+                  key={href}
+                  icon={<Icon />}
+                  iconPosition="start"
+                  label={<Typography fontSize="large">{label}</Typography>}
+                  component={Link}
+                  href={href}
+                  sx={{
+                    fontFamily: theme.typography.fontFamily.Manrope,
+                    minHeight: "3.5em",
+                    maxHeight: "3.5em",
+                  }}
+                />
+              );
+            })}
+          </Tabs>
+        )}
+      </AppBar>
+
       {isMobile && <BottomNavbar />}
-    </>
+    </Container>
   );
 }
 
-export default DashboardSidebar;
+export default Dashboardnav;

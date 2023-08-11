@@ -245,6 +245,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
               sx={{
                 "& .MuiChip-label": {
                   fontWeight: 600,
+                  fontFamily: theme.typography.fontFamily.Manrope,
                 },
               }}
               color={isDarkMode ? "default" : "secondary"}
@@ -280,6 +281,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
             fontWeight="bold"
             color="primary.main"
             suppressHydrationWarning
+            fontFamily={theme.typography.fontFamily.Manrope}
           >
             {formattedPrice.slice(0, -3)}
           </Typography>

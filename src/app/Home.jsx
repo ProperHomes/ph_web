@@ -12,8 +12,9 @@ export default function Home({ data }) {
   const theme = useTheme();
   const { state } = useAppContext();
   const loggedInUserId = state.user?.id;
+
   const { data: propertiesData } = useQuery(GET_PROPERTIES_LOGGED_IN, {
-    variables: { userId: loggedInUserId, first: 20, offset: 0 },
+    variables: { userId: loggedInUserId, first: 10, offset: 0 },
     skip: !loggedInUserId,
     fetchPolicy: "network-only",
   });
@@ -24,10 +25,10 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Stack spacing={1} px={{ xs: 0, md: 4 }} pb={4} alignItems="center">
+      <Stack spacing={2} px={{ xs: 0, md: 4 }} py={4} alignItems="center">
         <Typography
           color={theme.palette.text.primary}
-          fontSize={{ xs: "1.25rem", sm: "1.5rem" }}
+          variant="h4"
           fontFamily={theme.typography.fontFamily.Manrope}
         >
           Find a home that{" "}
@@ -49,6 +50,7 @@ export default function Home({ data }) {
 
       <PropertyList
         data={list}
+        viewAllLink="/new-properties"
         title="New properties listed in the last 24 hours"
       />
     </>

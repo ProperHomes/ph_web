@@ -45,12 +45,12 @@ function Navbar() {
             justifyContent="space-between"
             alignItems="center"
             py={1}
+            pb={2}
             spacing={1}
           >
             <NavbarLeft />
             <NavbarRight />
           </Stack>
-          {!isMobile && <Divider />}
         </Stack>
       </Container>
       <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />

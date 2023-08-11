@@ -1,10 +1,12 @@
 "use client";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
+import MenuIcon from "@mui/icons-material/Menu";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 import { useState } from "react";
 import UserSlideDrawer from "../UserSlideDrawer";
@@ -15,13 +17,27 @@ function NavbarRight() {
   const { state: appState } = useAppContext();
   const loggedInUser = appState.user;
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const toggleDrawer = () => {
     setShowDrawer((prev) => !prev);
+    if (showNotifications) {
+      setShowNotifications(false);
+    }
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications((prev) => !prev);
+    toggleDrawer();
   };
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
+      {!!loggedInUser && (
+        <IconButton onClick={toggleNotifications}>
+          <NotificationsNoneIcon fontSize="medium" />
+        </IconButton>
+      )}
       <Button
         size="large"
         sx={{
@@ -62,7 +78,11 @@ function NavbarRight() {
           <MenuIcon htmlColor={theme.palette.text.secondary} />
         )}
       </Button>
-      <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
+      <UserSlideDrawer
+        showNotifications={showNotifications}
+        showDrawer={showDrawer}
+        toggleDrawer={toggleDrawer}
+      />
     </Stack>
   );
 }

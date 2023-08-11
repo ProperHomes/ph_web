@@ -34,7 +34,7 @@ const StyledBtn = styled(Button)(({ theme }) => ({
   },
 }));
 
-function UserSlideDrawer({ showDrawer, toggleDrawer }) {
+function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -75,7 +75,9 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
               ml={{ xs: "1rem", md: 0 }}
             >
               {isLoggedIn
-                ? `Hello, ${loggedInUser?.name}`
+                ? showNotifications
+                  ? "New Notifications"
+                  : `Hello, ${loggedInUser?.name}`
                 : "Welcome to ProperHomes"}
             </Typography>
 
@@ -93,7 +95,8 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
               />
             )}
           </Stack>
-          {isLoggedIn && (
+
+          {!showNotifications && isLoggedIn && (
             <>
               <StyledBtn
                 startIcon={<Dashboard />}
@@ -105,58 +108,65 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           )}
         </Stack>
 
-        <Stack
-          direction="column"
-          justifyContent="space-between"
-          spacing={2}
-          sx={{ margin: "0 auto", width: "100%" }}
-        >
-          <StyledBtn
-            fullWidth
-            startIcon={<HomeIcon />}
-            onClick={navigateTo("/")}
+        {!showNotifications && (
+          <Stack
+            direction="column"
+            justifyContent="space-between"
+            spacing={2}
+            sx={{ margin: "0 auto", width: "100%" }}
           >
-            Home
-          </StyledBtn>
-          <StyledBtn
-            fullWidth
-            startIcon={<CurrencyRupeeOutlined />}
-            onClick={navigateTo("/pay-rent-online")}
-          >
-            Pay Rent
-          </StyledBtn>
-          <StyledBtn
-            startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/homeloans/emi-calculator")}
-          >
-            EMI Calculator
-          </StyledBtn>
-          <StyledBtn
-            startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/rent-reciept-generator-online")}
-          >
-            Generate Rent Receipt
-          </StyledBtn>
-          <StyledBtn
-            startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/rental-agreement")}
-          >
-            Generate Rental Agreement
-          </StyledBtn>
-        </Stack>
+            <StyledBtn
+              fullWidth
+              startIcon={<HomeIcon />}
+              onClick={navigateTo("/")}
+            >
+              Home
+            </StyledBtn>
+            <StyledBtn
+              fullWidth
+              startIcon={<CurrencyRupeeOutlined />}
+              onClick={navigateTo("/pay-rent-online")}
+            >
+              Pay Rent
+            </StyledBtn>
+            <StyledBtn
+              startIcon={<CalculateOutlined />}
+              onClick={navigateTo("/homeloans/emi-calculator")}
+            >
+              EMI Calculator
+            </StyledBtn>
+            <StyledBtn
+              startIcon={<CalculateOutlined />}
+              onClick={navigateTo("/rent-reciept-generator-online")}
+            >
+              Generate Rent Receipt
+            </StyledBtn>
+            <StyledBtn
+              startIcon={<CalculateOutlined />}
+              onClick={navigateTo("/rental-agreement")}
+            >
+              Generate Rental Agreement
+            </StyledBtn>
+          </Stack>
+        )}
 
-        <Stack direction="row" alignItems="center" spacing={2}>
-          {!isLoggedIn ? (
-            <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
-              Login or Signup
-            </StyledBtn>
-          ) : (
-            <StyledBtn startIcon={<Logout />} fullWidth onClick={logout}>
-              Logout
-            </StyledBtn>
-          )}
-        </Stack>
+        {!showNotifications && (
+          <Stack direction="row" alignItems="center" spacing={2}>
+            {!isLoggedIn ? (
+              <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
+                Login or Signup
+              </StyledBtn>
+            ) : (
+              <StyledBtn startIcon={<Logout />} fullWidth onClick={logout}>
+                Logout
+              </StyledBtn>
+            )}
+          </Stack>
+        )}
+
+        {/* {showNotifications && <Typography>Hello</Typography>} */}
       </Stack>
+
       {Auth}
     </SlideDrawer>
   );
