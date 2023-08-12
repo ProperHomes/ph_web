@@ -1,20 +1,17 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { ALL_CITIES } from "@/utils/constants";
 import useKeyDown from "@/utils/hooks/useKeyDown";
 import { convertStringToSlug } from "@/utils/helper";
+import useFilters from "@/utils/hooks/useFilters";
 
 function SearchBlock() {
   const ref = useRef(null);
@@ -22,11 +19,14 @@ function SearchBlock() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [city, setCity] = useState("");
-
-  const handleChangeCity = (e) => {
-    setCity(e.target.value);
-  };
+  const { city, CityDropdown } = useFilters({
+    sx: {
+      "& fieldset": {
+        borderRadius: "8px 0 0 8px",
+        borderColor: theme.palette.grey[300],
+      },
+    },
+  });
 
   useEffect(() => {
     ref.current.focus();
@@ -52,52 +52,7 @@ function SearchBlock() {
       justifyContent="center"
       sx={{ width: "100%" }}
     >
-      <Select
-        displayEmpty
-        renderValue={(selected) => {
-          if (!selected) {
-            return (
-              <Typography fontFamily={theme.typography.fontFamily.Manrope}>
-                {isMobile ? "City" : "Select a City"}
-              </Typography>
-            );
-          }
-
-          return selected;
-        }}
-        sx={{
-          width: { xs: "100px", md: "150px" },
-          height: "55px",
-          fontWeight: 500,
-          fontSize: "0.8rem",
-          "& fieldset": {
-            borderRadius: "8px 0 0 8px",
-            borderColor: theme.palette.grey[300],
-          },
-        }}
-        value={city}
-        onChange={handleChangeCity}
-        MenuProps={{
-          PaperProps: {
-            style: {
-              maxHeight: 250,
-              width: 150,
-            },
-          },
-        }}
-      >
-        {ALL_CITIES.map((city) => {
-          return (
-            <MenuItem
-              key={city}
-              value={city}
-              style={{ fontWeight: 500, fontSize: "0.8rem" }}
-            >
-              {city}
-            </MenuItem>
-          );
-        })}
-      </Select>
+      <CityDropdown />
       <Stack
         direction="row"
         alignItems="center"

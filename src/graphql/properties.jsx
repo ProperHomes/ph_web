@@ -33,11 +33,17 @@ export const GET_PROPERTIES = gql`
     $listedFor: TypeOfListing
     $type: PropertyType
     $city: PropertyCity
+    $bedrooms: Int
     $first: Int!
     $offset: Int!
   ) {
     properties(
-      condition: { listedFor: $listedFor, type: $type, city: $city }
+      condition: {
+        listedFor: $listedFor
+        type: $type
+        city: $city
+        bedrooms: $bedrooms
+      }
       first: $first
       offset: $offset
       orderBy: CREATED_AT_DESC

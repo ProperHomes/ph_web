@@ -133,7 +133,16 @@ export default async function Page({ params }) {
       res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
       data = res?.properties?.nodes ?? [];
     }
-    return <PropertyList data={data} title={navLink.title} />;
+    return (
+      <PropertyList
+        data={data}
+        type={variables.type}
+        infiniteScroll
+        count={20}
+        title={navLink.title}
+        showFilters
+      />
+    );
   } else if (isRentalAgreementPage) {
     const rentalAgreementCity =
       slug === "rental-agreement" ? "" : slug.split("-").pop();

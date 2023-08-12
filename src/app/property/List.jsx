@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import { GET_PROPERTIES } from "@/graphql/properties";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
+import useFilters from "@/utils/hooks/useFilters";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -32,7 +33,15 @@ const Section = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
+function PropertyList({
+  data,
+  type,
+  title,
+  viewAllLink,
+  infiniteScroll,
+  count,
+  showFilters,
+}) {
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -41,13 +50,35 @@ function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
   const [properties, setProperties] = useState([]);
 
   const { Auth, toggleAuth } = useToggleAuth();
-
-  const { data: propertiesData } = useQuery(GET_PROPERTIES, {
-    variables: { first: count, offset: page * 20 },
-    skip: !infiniteScroll || !count,
-    fetchPolicy: "network-only",
+  const {
+    city,
+    bedrooms,
+    listedFor,
+    ResetButton,
+    CityDropdown,
+    BedroomsDropdown,
+    ListedForDropdown,
+  } = useFilters({
+    sx: {
+      "& fieldset": {
+        borderRadius: "8px",
+        borderColor: theme.palette.grey[300],
+      },
+    },
   });
 
+  const variables = { first: count, offset: page * 20 };
+  if (type) {
+    variables.type = type;
+  }
+
+  const [fethcProperties] = useLazyQuery(GET_PROPERTIES);
+
+  const { data: propertiesData } = useQuery(GET_PROPERTIES, {
+    variables,
+    skip: !infiniteScroll || !count || page === 0,
+    fetchPolicy: "network-only",
+  });
   useEffect(() => {
     const props = propertiesData?.properties?.nodes ?? [];
     if (props.length > 0) {
@@ -57,7 +88,25 @@ function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
     }
   }, [propertiesData]);
 
-  const listToShow = infiniteScroll && count ? properties : data ?? [];
+  useEffect(() => {
+    const vars = { ...variables };
+    if (city) {
+      vars.city = city;
+    }
+    if (bedrooms) {
+      vars.bedrooms = bedrooms;
+    }
+    if (listedFor) {
+      vars.listedFor = listedFor;
+    }
+    fethcProperties({ variables: vars })
+      .then((res) => {
+        setProperties(res?.data?.properties?.nodes ?? []);
+      })
+      .catch((err) => {
+        console.log("error fetching properties by filter changes");
+      });
+  }, [city, bedrooms, listedFor]);
 
   const toggleEditor = (id) => () => {
     setPropertyIdToEdit(id);
@@ -71,6 +120,11 @@ function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
   const showCategoryBoxes =
     (isHome || (!isHome && !isMobile)) && !pathname.includes("/dashboard");
 
+  let listToShow = infiniteScroll && count ? properties : data ?? [];
+  if (!city && !listedFor && !bedrooms) {
+    listToShow = data;
+  }
+
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
 
   return (
@@ -82,7 +136,7 @@ function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
       )}
       {title && (
         <Stack
-          direction="row"
+          direction={{ xs: "column", sm: "row" }}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -98,6 +152,14 @@ function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
             {title}
           </Typography>
 
+          {showFilters && (
+            <Stack spacing={2} direction="row" alignItems="center">
+              <CityDropdown />
+              <BedroomsDropdown />
+              <ListedForDropdown />
+              <ResetButton />
+            </Stack>
+          )}
           {viewAllLink && (
             <Button
               variant="contained"
@@ -118,7 +180,7 @@ function PropertyList({ data, title, viewAllLink, infiniteScroll, count }) {
       <Section>
         {!infiniteScroll &&
           !propertyIdToEdit &&
-          listToShow.map((l, i) => {
+          data.map((l, i) => {
             return (
               <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
                 <Card
