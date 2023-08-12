@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -65,48 +65,43 @@ function PropertyList({
         borderColor: theme.palette.grey[300],
       },
     },
+    onChangeCity: () => setPage(0),
+    onChangeBedrooms: () => setPage(0),
+    onChangeListedFor: () => setPage(0),
   });
 
-  const variables = { first: count, offset: page * 20 };
+  const variables = { first: count, offset: page * count };
   if (type) {
     variables.type = type;
   }
-
-  const [fethcProperties] = useLazyQuery(GET_PROPERTIES);
+  if (city) {
+    variables.city = city;
+  }
+  if (bedrooms) {
+    variables.bedrooms = bedrooms;
+  }
+  if (listedFor) {
+    variables.listedFor = listedFor;
+  }
 
   const { data: propertiesData } = useQuery(GET_PROPERTIES, {
     variables,
-    skip: !infiniteScroll || !count || page === 0,
+    skip: !infiniteScroll || !count,
     fetchPolicy: "network-only",
   });
+
   useEffect(() => {
     const props = propertiesData?.properties?.nodes ?? [];
     if (props.length > 0) {
-      setProperties((prev) => {
-        return removeDuplicateObjectsFromArray([...prev, ...props]);
-      });
+      if ((city || bedrooms || listedFor) && page === 0) {
+        setProperties(props);
+      } else {
+        setProperties((prev) => {
+          return removeDuplicateObjectsFromArray([...prev, ...props]);
+        });
+      }
     }
   }, [propertiesData]);
-
-  useEffect(() => {
-    const vars = { ...variables };
-    if (city) {
-      vars.city = city;
-    }
-    if (bedrooms) {
-      vars.bedrooms = bedrooms;
-    }
-    if (listedFor) {
-      vars.listedFor = listedFor;
-    }
-    fethcProperties({ variables: vars })
-      .then((res) => {
-        setProperties(res?.data?.properties?.nodes ?? []);
-      })
-      .catch((err) => {
-        console.log("error fetching properties by filter changes");
-      });
-  }, [city, bedrooms, listedFor]);
 
   const toggleEditor = (id) => () => {
     setPropertyIdToEdit(id);
@@ -120,15 +115,15 @@ function PropertyList({
   const showCategoryBoxes =
     (isHome || (!isHome && !isMobile)) && !pathname.includes("/dashboard");
 
-  let listToShow = infiniteScroll && count ? properties : data ?? [];
-  if (!city && !listedFor && !bedrooms) {
-    listToShow = data;
-  }
+  let listToShow =
+    (infiniteScroll && count && page > 0) || city || bedrooms || listedFor
+      ? properties
+      : data ?? [];
 
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} sx={{ height: "100%" }}>
       {showCategoryBoxes && (
         <Stack pt={2} pb={4}>
           <CategoryBoxes />
@@ -136,6 +131,7 @@ function PropertyList({
       )}
       {title && (
         <Stack
+          spacing={2}
           direction={{ xs: "column", sm: "row" }}
           justifyContent="space-between"
           alignItems="center"
@@ -147,18 +143,28 @@ function PropertyList({
             fontFamily={theme.typography.fontFamily.Manrope}
             variant="h4"
             textAlign="left"
-            fontSize={{ xs: "1.2rem", sm: "1.6rem" }}
+            fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
           >
             {title}
           </Typography>
 
           {showFilters && (
-            <Stack spacing={2} direction="row" alignItems="center">
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: "1em",
+                [theme.breakpoints.down("sm")]: {
+                  gridTemplateColumns: "1fr 1fr",
+                },
+                width: { xs: "100%", md: "auto" },
+              }}
+            >
               <CityDropdown />
               <BedroomsDropdown />
               <ListedForDropdown />
               <ResetButton />
-            </Stack>
+            </Box>
           )}
           {viewAllLink && (
             <Button
@@ -198,7 +204,11 @@ function PropertyList({
         <InfiniteScroll
           dataLength={listToShow.length}
           next={handleFetchNextPage}
-          hasMore={propertiesData?.properties?.totalCount > listToShow.length}
+          hasMore={
+            page === 0
+              ? true
+              : propertiesData?.properties?.totalCount > listToShow.length
+          }
           endMessage={<></>}
           loader={<></>}
         >

@@ -50,7 +50,7 @@ export default function Home({ data }) {
 
       <PropertyList
         data={list}
-        viewAllLink="/new-properties"
+        viewAllLink="/new-properties-for-sale-rent-lease"
         title="New properties listed in the last 24 hours"
       />
     </>

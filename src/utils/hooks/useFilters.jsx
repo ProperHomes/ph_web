@@ -19,7 +19,12 @@ const BEDROOMS = [
   { label: "6BHK", value: 6 },
 ];
 
-export default function useFilters({ sx }) {
+export default function useFilters({
+  sx,
+  onChangeCity,
+  onChangeBedrooms,
+  onChangeListedFor,
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -29,14 +34,23 @@ export default function useFilters({ sx }) {
 
   const handleChangeCity = (e) => {
     setCity(e.target.value);
+    if (onChangeCity) {
+      onChangeCity();
+    }
   };
 
   const handleChangeBedrooms = (e) => {
     setBedrooms(e.target.value);
+    if (onChangeBedrooms) {
+      onChangeBedrooms();
+    }
   };
 
   const handleChangeListedFor = (e) => {
     setListedFor(e.target.value);
+    if (onChangeListedFor) {
+      onChangeListedFor();
+    }
   };
 
   const handleReset = () => {
@@ -61,7 +75,7 @@ export default function useFilters({ sx }) {
           return selected;
         }}
         sx={{
-          width: { xs: "100px", md: "150px" },
+          width: { xs: "100%", md: "150px" },
           height: "55px",
           fontWeight: 500,
           fontSize: "0.8rem",
@@ -108,7 +122,7 @@ export default function useFilters({ sx }) {
           return BEDROOMS.find((b) => b.value === selected).label;
         }}
         sx={{
-          width: { xs: "100px", md: "150px" },
+          width: { xs: "100%", md: "150px" },
           height: "55px",
           fontWeight: 500,
           fontSize: "0.8rem",
@@ -155,7 +169,7 @@ export default function useFilters({ sx }) {
           return selected;
         }}
         sx={{
-          width: { xs: "100px", md: "150px" },
+          width: { xs: "100%", md: "150px" },
           height: "55px",
           fontWeight: 500,
           fontSize: "0.8rem",
@@ -194,7 +208,7 @@ export default function useFilters({ sx }) {
       onClick={handleReset}
       disabled={!city && !bedrooms && !listedFor}
       sx={{
-        width: { xs: "100px", md: "150px" },
+        width: { xs: "100%", md: "150px" },
         height: "55px",
         borderRadius: "8px",
       }}

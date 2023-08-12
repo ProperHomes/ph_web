@@ -21,6 +21,7 @@ function SearchBlock() {
 
   const { city, CityDropdown } = useFilters({
     sx: {
+      width: { xs: "100px", md: "150px" },
       "& fieldset": {
         borderRadius: "8px 0 0 8px",
         borderColor: theme.palette.grey[300],
@@ -52,7 +53,12 @@ function SearchBlock() {
       justifyContent="center"
       sx={{ width: "100%" }}
     >
-      <CityDropdown />
+      <CityDropdown
+        sx={{
+          width: { xs: "100px", md: "150px" },
+          borderRadius: "8px 0px 0px 8px !important",
+        }}
+      />
       <Stack
         direction="row"
         alignItems="center"

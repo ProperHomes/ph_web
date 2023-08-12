@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
@@ -14,6 +15,7 @@ import { useAppContext } from "src/appContext";
 
 function NavbarRight() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { state: appState } = useAppContext();
   const loggedInUser = appState.user;
   const [showDrawer, setShowDrawer] = useState(false);
@@ -33,7 +35,7 @@ function NavbarRight() {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      {!!loggedInUser && (
+      {!!loggedInUser && !isMobile && (
         <IconButton onClick={toggleNotifications}>
           <NotificationsNoneIcon fontSize="medium" />
         </IconButton>

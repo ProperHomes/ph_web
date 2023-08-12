@@ -14,5 +14,13 @@ export default function SearchMain() {
     results.length > 0
       ? `Properties for search "${searchText ?? ""}"`
       : `No properties found within that search`;
-  return <PropertyList data={results} title={title} />;
+  return (
+    <PropertyList
+      infiniteScroll
+      count={20}
+      showFilters
+      data={results}
+      title={title}
+    />
+  );
 }

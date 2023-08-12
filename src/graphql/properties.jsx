@@ -61,6 +61,7 @@ export const GET_PROPERTIES = gql`
           }
         }
       }
+      totalCount
     }
   }
 `;
