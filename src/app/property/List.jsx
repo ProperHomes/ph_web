@@ -6,13 +6,10 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import InfiniteScroll from "react-infinite-scroll-component";
-import PhoneDisabledIcon from "@mui/icons-material/PhoneDisabled";
-import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import ContentPasteOffIcon from "@mui/icons-material/ContentPasteOff";
 
 import Card from "./Card";
 import CategoryBoxes from "src/components/CategoryBoxes";
@@ -22,6 +19,7 @@ import { GET_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import useFilters from "@/utils/hooks/useFilters";
 import ZeroBoxes from "@/components/ZeroBoxes";
+import useSearch from "@/utils/hooks/useSearch";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -37,44 +35,18 @@ const Section = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
-const infoBoxes = [
-  {
-    title: "Zero Spam",
-    color: "#faf6ff",
-    Icon: PhoneDisabledIcon,
-    description: `No calls or spam messages without your explicit consent.`,
-  },
-  {
-    title: "Zero Brokerage",
-    color: "#eaf9f5",
-    Icon: MoneyOffIcon,
-    description: `  100% Real Owner Verified Properties. No brokers or middlemen
-    involved.`,
-  },
-  {
-    title: "Zero Paperwork",
-    color: "#f0f8ff",
-    Icon: ContentPasteOffIcon,
-    description: ` 100% Digital experience. Even if its Aadhar verification or Police
-    Verification.`,
-  },
-  {
-    title: "Zero Spam",
-    color: "#f9f7e7",
-    Icon: ContentPasteOffIcon,
-    description: `No spam calls or spam messages without your explicit consent.`,
-  },
-];
-
 function PropertyList({
   data,
   type,
   title,
+  listedFor: listedForProp,
   viewAllLink,
   infiniteScroll,
   count,
   showFilters,
+  isSearch,
 }) {
+  const params = useSearchParams();
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -98,6 +70,7 @@ function PropertyList({
         borderColor: theme.palette.grey[300],
       },
     },
+    onReset: () => setPage(0),
     onChangeCity: () => setPage(0),
     onChangeBedrooms: () => setPage(0),
     onChangeListedFor: () => setPage(0),
@@ -113,13 +86,26 @@ function PropertyList({
   if (bedrooms) {
     variables.bedrooms = bedrooms;
   }
-  if (listedFor) {
-    variables.listedFor = listedFor;
+  if (listedFor || listedForProp) {
+    variables.listedFor = listedForProp ?? listedFor;
   }
+
+  const searchText = params.get("searchText") ?? "";
+  const searchCity = params.get("city");
+  const searchLocality = params.get("locality");
+  const { results: searchResults, totalCount: searchResultsTotalCount } =
+    useSearch({
+      searchText,
+      enabled: isSearch,
+      currentPage: page,
+      city: city ?? searchCity,
+      locality: searchLocality,
+      filtered: !!city,
+    });
 
   const { data: propertiesData } = useQuery(GET_PROPERTIES, {
     variables,
-    skip: !infiniteScroll || !count,
+    skip: !infiniteScroll || !count || isSearch,
     fetchPolicy: "network-only",
   });
 
@@ -148,12 +134,28 @@ function PropertyList({
   const showCategoryBoxes =
     (isHome || (!isHome && !isMobile)) && !pathname.includes("/dashboard");
 
-  let listToShow =
-    (infiniteScroll && count && page > 0) || city || bedrooms || listedFor
-      ? properties
-      : data ?? [];
+  const listToShow = isSearch
+    ? searchResults
+    : (infiniteScroll && count && page > 0) || city || bedrooms || listedFor
+    ? properties
+    : data ?? [];
 
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
+
+  const hasMore =
+    page === 0
+      ? true
+      : (isSearch
+          ? searchResultsTotalCount
+          : propertiesData?.properties?.totalCount) > listToShow.length;
+
+  const headerTitle =
+    title ??
+    (isSearch
+      ? searchResults.length > 0
+        ? `Properties for search "${searchText ?? ""}"`
+        : `No properties found within that search`
+      : "");
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
@@ -165,7 +167,7 @@ function PropertyList({
 
       {isHome && <ZeroBoxes />}
 
-      {title && (
+      {headerTitle && (
         <Stack
           spacing={2}
           direction={{ xs: "column", sm: "row" }}
@@ -181,14 +183,16 @@ function PropertyList({
             textAlign="left"
             fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
           >
-            {title}
+            {headerTitle}
           </Typography>
 
           {showFilters && (
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
+                gridTemplateColumns: listedForProp
+                  ? "repeat(3, 1fr)"
+                  : "repeat(4, 1fr)",
                 gap: "1em",
                 [theme.breakpoints.down("sm")]: {
                   gridTemplateColumns: "1fr 1fr",
@@ -198,7 +202,7 @@ function PropertyList({
             >
               <CityDropdown />
               <BedroomsDropdown />
-              <ListedForDropdown />
+              {!listedForProp && <ListedForDropdown />}
               <ResetButton />
             </Box>
           )}
@@ -236,15 +240,11 @@ function PropertyList({
           })}
       </Section>
 
-      {infiniteScroll && !propertyIdToEdit && (
+      {(infiniteScroll || isSearch) && !propertyIdToEdit && (
         <InfiniteScroll
           dataLength={listToShow.length}
           next={handleFetchNextPage}
-          hasMore={
-            page === 0
-              ? true
-              : propertiesData?.properties?.totalCount > listToShow.length
-          }
+          hasMore={hasMore}
           endMessage={<></>}
           loader={<></>}
         >

@@ -88,6 +88,7 @@ export const GET_OWNER_PROPERTIES = gql`
           }
         }
       }
+      totalCount
     }
   }
 `;
@@ -128,6 +129,7 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
           }
         }
       }
+      totalCount
     }
   }
 `;
@@ -156,6 +158,7 @@ export const GET_USER_SAVED_PROPERTIES = gql`
           }
         }
       }
+      totalCount
     }
   }
 `;
@@ -208,6 +211,7 @@ export const SEARCH_PROPERTIES = gql`
           }
         }
       }
+      totalCount
     }
   }
 `;

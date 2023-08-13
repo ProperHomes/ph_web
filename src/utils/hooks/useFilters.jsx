@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,6 +20,7 @@ const BEDROOMS = [
 
 export default function useFilters({
   sx,
+  onReset,
   onChangeCity,
   onChangeBedrooms,
   onChangeListedFor,
@@ -57,6 +57,9 @@ export default function useFilters({
     setCity(null);
     setBedrooms(0);
     setListedFor(null);
+    if (onReset) {
+      onReset();
+    }
   };
 
   const CityDropdown = () => {

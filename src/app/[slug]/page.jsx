@@ -138,6 +138,7 @@ export default async function Page({ params }) {
         data={data}
         type={variables.type}
         infiniteScroll
+        listedFor={listedFor}
         count={20}
         title={navLink.title}
         showFilters

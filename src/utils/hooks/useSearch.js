@@ -3,10 +3,19 @@ import { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 
 import { SEARCH_PROPERTIES } from "@/graphql/properties";
+import { removeDuplicateObjectsFromArray } from "../helper";
 
-function useSearch({ searchText = "", enabled, city, locality }) {
+function useSearch({
+  searchText = "",
+  enabled,
+  city,
+  locality,
+  currentPage = 0,
+  count = 20,
+  filtered = false,
+}) {
   const [results, setResults] = useState([]);
-  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   let alteredText = searchText;
   if (searchText && city) {
@@ -30,14 +39,19 @@ function useSearch({ searchText = "", enabled, city, locality }) {
             searchText: alteredText,
             city,
             locality,
-            first: 20,
-            offset: page * 20,
+            first: count,
+            offset: currentPage * count,
           },
         });
-        setResults(() => {
-          return data?.searchProperties?.nodes ?? [];
-        });
-        setPage((p) => p + 1);
+        const newProperties = data?.searchProperties?.nodes ?? [];
+        setTotalCount(data?.searchProperties?.totalCount);
+        if (filtered) {
+          setResults(newProperties);
+        } else {
+          setResults((prev) => {
+            return removeDuplicateObjectsFromArray([...prev, ...newProperties]);
+          });
+        }
       } catch (err) {
         console.log(err);
       }
@@ -46,14 +60,13 @@ function useSearch({ searchText = "", enabled, city, locality }) {
     if (enabled) {
       if (alteredText.length === 0) {
         setResults([]);
-        setPage(0);
       } else {
         handleSearch();
       }
     }
-  }, [alteredText, enabled]);
+  }, [alteredText, enabled, filtered, currentPage]);
 
-  return { results };
+  return { results, totalCount };
 }
 
 export default useSearch;
