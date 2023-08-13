@@ -54,7 +54,7 @@ const GET_PROPERTIES = gql`
 `;
 
 export default async function Page() {
-  const res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
+  const res = await client.request(GET_PROPERTIES, { first: 10, offset: 0 });
   const data = res?.properties?.nodes ?? [];
   return <Home data={data} />;
 }

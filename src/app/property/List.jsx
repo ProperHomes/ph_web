@@ -9,15 +9,19 @@ import Typography from "@mui/material/Typography";
 import { usePathname } from "next/navigation";
 import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import InfiniteScroll from "react-infinite-scroll-component";
+import PhoneDisabledIcon from "@mui/icons-material/PhoneDisabled";
+import MoneyOffIcon from "@mui/icons-material/MoneyOff";
+import ContentPasteOffIcon from "@mui/icons-material/ContentPasteOff";
 
 import Card from "./Card";
 import CategoryBoxes from "src/components/CategoryBoxes";
 import CreatePropertySaleRentLease from "../createProperty";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
 import { GET_PROPERTIES } from "@/graphql/properties";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import useFilters from "@/utils/hooks/useFilters";
+import ZeroBoxes from "@/components/ZeroBoxes";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -32,6 +36,35 @@ const Section = styled(Box)(({ theme }) => ({
   },
   width: "100%",
 }));
+
+const infoBoxes = [
+  {
+    title: "Zero Spam",
+    color: "#faf6ff",
+    Icon: PhoneDisabledIcon,
+    description: `No calls or spam messages without your explicit consent.`,
+  },
+  {
+    title: "Zero Brokerage",
+    color: "#eaf9f5",
+    Icon: MoneyOffIcon,
+    description: `  100% Real Owner Verified Properties. No brokers or middlemen
+    involved.`,
+  },
+  {
+    title: "Zero Paperwork",
+    color: "#f0f8ff",
+    Icon: ContentPasteOffIcon,
+    description: ` 100% Digital experience. Even if its Aadhar verification or Police
+    Verification.`,
+  },
+  {
+    title: "Zero Spam",
+    color: "#f9f7e7",
+    Icon: ContentPasteOffIcon,
+    description: `No spam calls or spam messages without your explicit consent.`,
+  },
+];
 
 function PropertyList({
   data,
@@ -125,10 +158,13 @@ function PropertyList({
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
       {showCategoryBoxes && (
-        <Stack pt={2} pb={4}>
+        <Stack py={2}>
           <CategoryBoxes />
         </Stack>
       )}
+
+      {isHome && <ZeroBoxes />}
+
       {title && (
         <Stack
           spacing={2}

@@ -1,7 +1,9 @@
 "use client";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+
 import SearchBlock from "@/components/SearchBlock";
 import PropertyList from "src/app/property/List";
 import { useQuery } from "@apollo/client";
@@ -25,7 +27,7 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Stack spacing={2} px={{ xs: 0, md: 4 }} py={4} alignItems="center">
+      <Stack spacing={2} px={{ xs: 0, md: 4 }} py={2} alignItems="center">
         <Typography
           color={theme.palette.text.primary}
           variant="h4"
@@ -40,9 +42,8 @@ export default function Home({ data }) {
               color: theme.palette.info.main,
             }}
           >
-            loves
+            loves you
           </span>{" "}
-          you
         </Typography>
 
         <SearchBlock />

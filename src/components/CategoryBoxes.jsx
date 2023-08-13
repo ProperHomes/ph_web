@@ -149,7 +149,7 @@ function SecondSection({ lineView }) {
                   color={theme.palette.text[isActive ? "primary" : "secondary"]}
                   fontFamily={theme.typography.fontFamily.Monsterrat}
                   fontSize="0.8rem"
-                  fontWeight={isActive ? 600 : 500}
+                  fontWeight={600}
                   sx={{
                     transition: "all 0.3s ease",
                     "&:hover": {
