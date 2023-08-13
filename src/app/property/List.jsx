@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -15,11 +15,11 @@ import Card from "./Card";
 import CategoryBoxes from "src/components/CategoryBoxes";
 import CreatePropertySaleRentLease from "../createProperty";
 import useToggleAuth from "@/utils/hooks/useToggleAuth";
-import { GET_PROPERTIES } from "@/graphql/properties";
+import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import useFilters from "@/utils/hooks/useFilters";
 import ZeroBoxes from "@/components/ZeroBoxes";
-import useSearch from "@/utils/hooks/useSearch";
+import { Pagination } from "@mui/material";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -45,8 +45,9 @@ function PropertyList({
   count,
   showFilters,
   isSearch,
+  searchText,
+  searchResultsTotalCount,
 }) {
-  const params = useSearchParams();
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -90,18 +91,7 @@ function PropertyList({
     variables.listedFor = listedForProp ?? listedFor;
   }
 
-  const searchText = params.get("searchText") ?? "";
-  const searchCity = params.get("city");
-  const searchLocality = params.get("locality");
-  const { results: searchResults, totalCount: searchResultsTotalCount } =
-    useSearch({
-      searchText,
-      enabled: isSearch,
-      currentPage: page,
-      city: city ?? searchCity,
-      locality: searchLocality,
-      filtered: !!city,
-    });
+  const [searchProperties] = useLazyQuery(SEARCH_PROPERTIES);
 
   const { data: propertiesData } = useQuery(GET_PROPERTIES, {
     variables,
@@ -130,32 +120,42 @@ function PropertyList({
     setPage((prev) => prev + 1);
   };
 
+  const handleSearch = async (_e, searchPage) => {
+    setPage(searchPage - 1);
+    try {
+      const { data } = await searchProperties({
+        variables: {
+          searchText,
+          city,
+          first: count,
+          offset: (searchPage - 1) * count,
+        },
+      });
+      setProperties(data?.searchProperties?.nodes ?? []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const isHome = pathname === "/";
   const showCategoryBoxes =
     (isHome || (!isHome && !isMobile)) && !pathname.includes("/dashboard");
 
-  const listToShow = isSearch
-    ? searchResults
-    : (infiniteScroll && count && page > 0) || city || bedrooms || listedFor
-    ? properties
-    : data ?? [];
+  const listToShow =
+    isSearch ||
+    (infiniteScroll && count && page > 0) ||
+    city ||
+    bedrooms ||
+    listedFor
+      ? properties
+      : data ?? [];
 
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
 
   const hasMore =
     page === 0
       ? true
-      : (isSearch
-          ? searchResultsTotalCount
-          : propertiesData?.properties?.totalCount) > listToShow.length;
-
-  const headerTitle =
-    title ??
-    (isSearch
-      ? searchResults.length > 0
-        ? `Properties for search "${searchText ?? ""}"`
-        : `No properties found within that search`
-      : "");
+      : propertiesData?.properties?.totalCount > listToShow.length;
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
@@ -167,7 +167,7 @@ function PropertyList({
 
       {isHome && <ZeroBoxes />}
 
-      {headerTitle && (
+      {title && (
         <Stack
           spacing={2}
           direction={{ xs: "column", sm: "row" }}
@@ -183,7 +183,7 @@ function PropertyList({
             textAlign="left"
             fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
           >
-            {headerTitle}
+            {title}
           </Typography>
 
           {showFilters && (
@@ -225,6 +225,7 @@ function PropertyList({
 
       <Section>
         {!infiniteScroll &&
+          !isSearch &&
           !propertyIdToEdit &&
           data.map((l, i) => {
             return (
@@ -240,7 +241,33 @@ function PropertyList({
           })}
       </Section>
 
-      {(infiniteScroll || isSearch) && !propertyIdToEdit && (
+      {isSearch && (
+        <Section>
+          {(page === 0 ? data : listToShow).map((l, i) => {
+            return (
+              <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
+                <Card
+                  data={l}
+                  isPriority={i < 9}
+                  toggleAuth={toggleAuth}
+                  togglePropertyEditor={toggleEditor(l.id)}
+                />
+              </Box>
+            );
+          })}
+        </Section>
+      )}
+
+      {isSearch && (
+        <Stack alignItems="center" justifyContent="center">
+          <Pagination
+            page={page + 1}
+            onChange={handleSearch}
+            count={Math.floor(searchResultsTotalCount / 10)}
+          />
+        </Stack>
+      )}
+      {infiniteScroll && !isSearch && !propertyIdToEdit && (
         <InfiniteScroll
           dataLength={listToShow.length}
           next={handleFetchNextPage}

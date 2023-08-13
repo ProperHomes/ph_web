@@ -1,4 +1,11 @@
-import PropertyList from "../property/List";
+import { Suspense } from "react";
+import SearchMain from ".";
+import Loading from "@/components/Loading";
+
 export default function Page() {
-  return <PropertyList infiniteScroll isSearch count={20} showFilters />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <SearchMain />
+    </Suspense>
+  );
 }
