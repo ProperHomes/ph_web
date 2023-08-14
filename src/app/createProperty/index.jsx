@@ -70,6 +70,8 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   const [createProperty] = useMutation(CREATE_PROPERTY);
   const handleFileUpload = useUploadFile();
 
+  const isEditMode = !!data;
+
   const { control, handleSubmit, setValue, formState } = useForm({
     resolver: yupResolver(yup.object().shape(newPropertyResolver)),
     defaultValues: data || {},
@@ -374,13 +376,15 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                 Cancel
               </Button>
             )}
-            <Button
-              sx={{ whiteSpace: "nowrap" }}
-              onClick={onSubmitDraft}
-              variant="outlined"
-            >
-              Save as draft
-            </Button>
+            {!isEditMode && (
+              <Button
+                sx={{ whiteSpace: "nowrap" }}
+                onClick={onSubmitDraft}
+                variant="outlined"
+              >
+                Save as draft
+              </Button>
+            )}
             <Button
               sx={{ whiteSpace: "nowrap" }}
               onClick={onSubmit}

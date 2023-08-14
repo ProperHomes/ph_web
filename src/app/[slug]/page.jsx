@@ -1,4 +1,4 @@
-import { gql, client } from "@/graphql/index";
+import { gql, client } from "@/graphql/serverClient";
 import Home from "../Home";
 import RentalAgreement from "src/app/rentalAgreement";
 import RentRecieptGenerator from "src/app/rentRecieptGenerator";

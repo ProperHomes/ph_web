@@ -1,4 +1,4 @@
-import { gql, client } from "@/graphql/index";
+import { gql, client } from "@/graphql/serverClient";
 import PropertyList from "src/app/property/List";
 
 const GET_PROPERTIES = gql`

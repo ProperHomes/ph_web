@@ -12,7 +12,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import MessageIcon from "@mui/icons-material/Message";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
+import PersonIcon from "@mui/icons-material/Person2";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 
 import BottomNavbar from "src/components/BottomNavbar";
@@ -26,7 +26,7 @@ const tabSections = [
   {
     label: "Manage",
     href: "/dashboard/manage",
-    Icon: PersonPinIcon,
+    Icon: PersonIcon,
   },
   {
     label: "Messages",
@@ -56,7 +56,12 @@ function Dashboardnav() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const list = tabSections;
-  const index = list.findIndex((t) => t.href === pathname);
+  const index = list.findIndex((t) => {
+    if (t.label === "Manage") {
+      return pathname.includes(t.href);
+    }
+    return t.href === pathname;
+  });
 
   return (
     <Container maxWidth="lg">

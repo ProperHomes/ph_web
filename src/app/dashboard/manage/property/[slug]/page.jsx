@@ -1,5 +1,5 @@
 import { gql, client } from "@/graphql/serverClient";
-import Profile from "../profile";
+import ManageProperty from "./index";
 
 const GET_PROPERTY_BY_SLUG = gql`
   query PropertyBySlug($slug: String!) {
@@ -56,7 +56,7 @@ export default async function Page({ params }) {
   const data = res?.propertyBySlug;
   return (
     <>
-      <Profile data={data} />
+      <ManageProperty data={data} />
     </>
   );
 }

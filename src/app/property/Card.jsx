@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -22,7 +22,7 @@ import { useAppContext } from "src/appContext";
 import CustomTooltip from "src/components/CustomTooltip";
 
 function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
-  const router = useRouter();
+  const pathname = usePathname();
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const { state: appState } = useAppContext();
@@ -43,7 +43,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
     currentUserSavedProperties,
   } = data;
 
-  const isDashboardManage = router.pathname === "/dashboard/manage-properties";
+  const isDashboardManage = pathname.includes("/dashboard/manage");
 
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
@@ -120,6 +120,10 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
 
   const isOwner = ownerId === appState.user?.id;
 
+  const linkHref = isDashboardManage
+    ? `/dashboard/manage/property/${slug}`
+    : `/property/${slug}`;
+
   return (
     <Stack spacing={1}>
       <Box
@@ -134,7 +138,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
           borderRadius: "1em",
         }}
       >
-        <Link href={`/property/${slug}`}>
+        <Link href={linkHref}>
           <Box
             sx={{
               position: "relative",
@@ -221,6 +225,8 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
               right: 10,
               top: 10,
               zIndex: 1,
+              backgroundColor: "rgba(0,0,0, 0.6)",
+              borderRadius: "50%",
             }}
           >
             <CustomTooltip
