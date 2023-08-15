@@ -79,3 +79,57 @@ export const PRIVATE_ROUTES = [
   "/dashboard/settings",
   "/dashboard/subscriptions",
 ];
+
+export const navlinksSale = [
+  { link: "flats-for-sale", title: "Flats For Sale" },
+  { link: "villas-for-sale", title: "Villas For Sale" },
+  { link: "houses-for-sale", title: "Independent Houses For Sale" },
+  { link: "farm-houses-for-sale", title: "Farm Houses For Sale" },
+  {
+    link: "commercial-properties-for-sale",
+    title: "Commerical Properties For Sale",
+  },
+  {
+    link: "bungalows-for-sale",
+    title: "Bungalows For Sale",
+  },
+  { link: "pent-houses-for-sale", title: "Pent Houses For Sale" },
+  { link: "properties-for-sale", title: "Properties For Sale" },
+];
+
+export const navlinksRent = [
+  { link: "flats-for-rent", title: "Flats For Rent" },
+  { link: "villas-for-rent", title: "Villas For Rent" },
+  { link: "houses-for-rent", title: "Independent Houses For Rent" },
+  { link: "farm-houses-for-rent", title: "Farm Houses For Rent" },
+  {
+    link: "commercial-properties-for-rent",
+    title: "Commerical Properties For Rent",
+  },
+  {
+    link: "bungalows-for-rent",
+    title: "Bungalows For Rent",
+  },
+  { link: "pent-houses-for-rent", title: "Pent Houses For Rent" },
+  { link: "properties-for-rent", title: "Properties For Rent" },
+];
+
+export const navlinksOthers = [
+  { link: "paying-guests-accomodation", title: "Paying Guest" },
+  { link: "hostel-accommodation", title: "Hostels" },
+];
+
+export const navlinks = [...navlinksSale, ...navlinksRent, ...navlinksOthers];
+
+const navLinkWithCities = [];
+for (let link of navlinks) {
+  for (let city of ALL_CITIES) {
+    navLinkWithCities.push({
+      link: `${link.link}-in-${city.toLowerCase()}`,
+      title: `${link.title} in ${
+        city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()
+      }`,
+    });
+  }
+}
+export { navLinkWithCities };

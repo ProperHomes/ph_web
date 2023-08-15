@@ -88,8 +88,7 @@ export default async function Page({ params }) {
   let data = [];
   const variables = { first: 20, offset: 0 };
 
-  const link = slug[0];
-  const city = slug[1];
+  const [link, city] = slug[0].split("-in-");
   const listedFor = link.split("-").pop().toUpperCase();
   let propertyType = link.split("-for-")[0];
   propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
@@ -132,7 +131,7 @@ export async function generateStaticParams() {
   for (let link of navlinks) {
     for (let city of ALL_CITIES) {
       paths.push({
-        slug: [link, city.toLowerCase()],
+        slug: [`${link}-in-${city.toLowerCase()}`],
       });
     }
   }

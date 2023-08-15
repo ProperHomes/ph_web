@@ -1,6 +1,5 @@
 "use client";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
 export default function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -12,11 +11,7 @@ export default function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }

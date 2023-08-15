@@ -165,7 +165,7 @@ function PropertyList({
         </Stack>
       )}
 
-      {isHome && <ZeroBoxes />}
+      {isHome && !isMobile && <ZeroBoxes />}
 
       {title && (
         <Stack

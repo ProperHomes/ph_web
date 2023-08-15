@@ -75,7 +75,6 @@ function Dashboardnav() {
             aria-label="dashboard tabs"
           >
             {list.map(({ label, href, Icon }) => {
-              const isActive = pathname.includes(href);
               return (
                 <Tab
                   key={href}

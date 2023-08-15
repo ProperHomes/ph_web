@@ -43,14 +43,14 @@ const GET_PROPERTIES = gql`
 `;
 
 export default async function Page() {
-  const res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
+  const res = await client.request(GET_PROPERTIES, { first: 50, offset: 0 });
   const data = res?.properties?.nodes ?? [];
   return (
     <PropertyList
       showFilters
       data={data}
       infiniteScroll
-      count={20}
+      count={50}
       title="All Properties Listed in the last 24 hours"
     />
   );

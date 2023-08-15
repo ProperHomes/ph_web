@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
@@ -8,8 +7,6 @@ import NavLinks from "./NavLinks";
 
 function NavbarLeft() {
   const theme = useTheme();
-  const router = useRouter();
-
   return (
     <Stack direction="row">
       <Link href="/">

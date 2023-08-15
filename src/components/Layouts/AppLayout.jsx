@@ -1,20 +1,17 @@
-"use client";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Navbar from "../Navbar";
 import BottomNavbar from "../BottomNavbar";
+import Footer from "../Footer";
 
 function AppLayout({ children }) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Box
       sx={{
         width: "100%",
         minHeight: "100vh",
+        position: "relative",
         marginBottom: { xs: "4em", md: 0 },
       }}
     >
@@ -24,7 +21,18 @@ function AppLayout({ children }) {
           {children}
         </Box>
       </Container>
-      {isMobile && <BottomNavbar />}
+      <Box
+        sx={{
+          display: { xs: "none", md: "block" },
+          width: "100%",
+        }}
+      >
+        <Footer />
+      </Box>
+
+      <Box sx={{ display: { xs: "flex", sm: "none" } }}>
+        <BottomNavbar />
+      </Box>
     </Box>
   );
 }

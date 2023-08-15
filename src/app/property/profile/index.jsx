@@ -68,7 +68,7 @@ function PropertyProfile({ data }) {
       typeLink,
       {
         label: city,
-        path: `${typeLink.path}/${city?.toLowerCase()}`,
+        path: `${typeLink.path}-in-${city?.toLowerCase()}`,
       },
     ];
   };

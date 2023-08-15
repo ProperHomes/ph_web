@@ -3,7 +3,12 @@ import Home from "../Home";
 import RentalAgreement from "src/app/rentalAgreement";
 import RentRecieptGenerator from "src/app/rentRecieptGenerator";
 import PropertyList from "src/app/property/List";
-import { ALL_CITIES, PROPERTY_TYPE } from "@/utils/constants";
+import {
+  ALL_CITIES,
+  PROPERTY_TYPE,
+  navlinks,
+  navLinkWithCities,
+} from "@/utils/constants";
 import CreateProperty from "src/app/createProperty";
 
 const GET_PROPERTIES = gql`
@@ -58,40 +63,6 @@ const GET_PROPERTIES = gql`
   }
 `;
 
-const navlinks = [
-  { link: "flats-for-sale", title: "Flats For Sale" },
-  { link: "villas-for-sale", title: "Villas For Sale" },
-  { link: "houses-for-sale", title: "Independent Houses For Sale" },
-  { link: "farm-houses-for-sale", title: "Farm Houses For Sale" },
-  {
-    link: "commercial-properties-for-sale",
-    title: "Commerical Properties For Sale",
-  },
-  {
-    link: "bungalows-for-sale",
-    title: "Bungalows For Sale",
-  },
-  { link: "pent-houses-for-sale", title: "Pent Houses For Sale" },
-  { link: "properties-for-sale", title: "Properties For Sale" },
-  // RENTS FROM NOW
-  { link: "flats-for-rent", title: "Flats For Rent" },
-  { link: "villas-for-rent", title: "Villas For Rent" },
-  { link: "houses-for-rent", title: "Independent Houses For Rent" },
-  { link: "farm-houses-for-rent", title: "Farm Houses For Rent" },
-  {
-    link: "commercial-properties-for-rent",
-    title: "Commerical Properties For Rent",
-  },
-  { link: "pent-houses-for-rent", title: "Pent Houses For Rent" },
-  { link: "properties-for-rent", title: "Properties For Rent" },
-  {
-    link: "bungalows-for-rent",
-    title: "Bungalows For Rent",
-  },
-  { link: "paying-guests-accomodation", title: "Paying Guest" },
-  { link: "hostel-accommodation", title: "Hostels" },
-];
-
 export default async function Page({ params }) {
   const { slug = "" } = params;
   let data = [];
@@ -101,16 +72,29 @@ export default async function Page({ params }) {
     slug === "rental-agreement" ||
     slug?.split("-").slice(0, 3).join("-") === "rental-agreement-in";
   const isListPropertyPage = slug === "list-your-property-for-sale-rent-lease";
+
   const navLink = navlinks.find((l) => l.link === slug);
-  if (navLink?.link === slug) {
-    const listedFor = slug.split("-").pop().toUpperCase();
+  const navLinkWithCity = navLinkWithCities.find((l) => l.link === slug);
+  const isCityLink = navLinkWithCity?.link === slug;
+
+  if (navLink?.link === slug || isCityLink) {
+    let listedFor = null;
+    let city = null;
+    if (isCityLink) {
+      listedFor = slug.split("-in-")[0];
+      city = slug.split("-in-").pop().toUpperCase();
+    }
+    listedFor = (isCityLink ? listedFor : slug).split("-").pop().toUpperCase();
     let propertyType = slug.split("-for-")[0];
     propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
 
     const isPG = slug.includes("pg") || slug.includes("paying-guests");
     const isHostel = slug.includes("hostel");
 
-    if (slug !== "properties-for-sale" && slug !== "properties-for-rent") {
+    if (
+      !slug.includes("properties-for-sale") &&
+      !slug.includes("properties-for-rent")
+    ) {
       variables.type = propertyType;
     }
     if (slug.includes("commercial")) {
@@ -127,6 +111,10 @@ export default async function Page({ params }) {
       variables.listedFor = listedFor;
     }
 
+    if (city && isCityLink) {
+      variables.city = city;
+    }
+
     let res = await client.request(GET_PROPERTIES, variables);
     data = res?.properties?.nodes ?? [];
     if (data.length === 0) {
@@ -140,7 +128,7 @@ export default async function Page({ params }) {
         infiniteScroll
         listedFor={listedFor}
         count={20}
-        title={navLink.title}
+        title={isCityLink ? navLinkWithCity.title : navLink.title}
         showFilters
       />
     );
@@ -173,6 +161,11 @@ export function generateStaticParams() {
     });
   }
   for (let link of navlinks) {
+    paths.push({
+      slug: link.link,
+    });
+  }
+  for (let link of navLinkWithCities) {
     paths.push({
       slug: link.link,
     });
