@@ -21,7 +21,13 @@ import {
 import { useAppContext } from "src/appContext";
 import CustomTooltip from "src/components/CustomTooltip";
 
-function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
+function PropertyCard({
+  data,
+  isPriority,
+  togglePropertyEditor,
+  toggleAuth,
+  showFavorite = true,
+}) {
   const pathname = usePathname();
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
@@ -152,7 +158,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
               fill
               priority={isPriority}
               quality={100}
-              sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 10vw"
+              sizes="(max-width: 324px) 80vw, (max-width: 1200px) 280px, 280px"
               style={{
                 backgroundColor: "#000",
                 borderRadius: "1em",
@@ -197,7 +203,7 @@ function PropertyCard({ data, isPriority, togglePropertyEditor, toggleAuth }) {
           </Box>
         </Link>
 
-        {!isOwner && (
+        {!isOwner && showFavorite && (
           <Tooltip
             enterDelay={0}
             title={savedPropertyId ? "Remove Saved Property" : "Save Property"}

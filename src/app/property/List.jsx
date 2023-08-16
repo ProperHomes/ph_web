@@ -232,6 +232,7 @@ function PropertyList({
               <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
                 <Card
                   data={l}
+                  showFavorite
                   isPriority={i < 9}
                   toggleAuth={toggleAuth}
                   togglePropertyEditor={toggleEditor(l.id)}
@@ -248,6 +249,7 @@ function PropertyList({
               <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
                 <Card
                   data={l}
+                  showFavorite
                   isPriority={i < 9}
                   toggleAuth={toggleAuth}
                   togglePropertyEditor={toggleEditor(l.id)}
@@ -281,6 +283,7 @@ function PropertyList({
                 <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
                   <Card
                     data={l}
+                    showFavorite
                     isPriority={i < 9}
                     toggleAuth={toggleAuth}
                     togglePropertyEditor={toggleEditor(l.id)}

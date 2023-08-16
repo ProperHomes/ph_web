@@ -39,7 +39,7 @@ export function removeDuplicateObjectsFromArray(list = []) {
 
 export function capitalizeFirstLetter(text) {
   if (!text) return null;
-  return text.charAt(0).toUpperCase() + text.slice(1);
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 export function camelCase(text) {

@@ -48,7 +48,14 @@ export default function Footer() {
   return (
     <Box
       py={2}
-      sx={{ boxShadow: theme.shadows[2], borderRadius: "2em 2em 0 0" }}
+      sx={{
+        boxShadow: theme.shadows[2],
+        borderRadius: "2em 2em 0 0",
+        width: "100%",
+        position: "absolute",
+        bottom: 0,
+        transform: "translateY(100%)",
+      }}
     >
       <Container maxWidth="xl" sx={{ overflowX: "scroll" }}>
         <Stack>

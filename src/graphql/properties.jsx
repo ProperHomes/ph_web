@@ -216,6 +216,56 @@ export const SEARCH_PROPERTIES = gql`
   }
 `;
 
+export const GET_PROPERTY_BY_SLUG = gql`
+  query PropertyBySlug($slug: String!) {
+    propertyBySlug(slug: $slug) {
+      id
+      number
+      type
+      slug
+      title
+      city
+      price
+      listedFor
+      isFurnished
+      hasSwimmingPool
+      hasParking
+      hasBasement
+      description
+      country
+      condition
+      bedrooms
+      bathrooms
+      attributes
+      createdAt
+      area
+      ownerId
+      agentId
+      media: propertyMedias {
+        nodes {
+          id
+          mediaUrl
+          media {
+            signedUrl
+          }
+          isCoverImage
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
+  query getPropertiesForStaticPaths {
+    properties {
+      nodes {
+        number
+        slug
+      }
+    }
+  }
+`;
+
 export const CREATE_PROPERTY = gql`
   mutation createProperty($input: CreatePropertyInput!) {
     createProperty(input: $input) {

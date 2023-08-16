@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -96,11 +97,75 @@ function PropertyProfile({ data }) {
     <Stack p={1} spacing={2}>
       <Breadcrumbs links={getBreadcrumbLinks()} />
       <Box sx={{ display: { xs: "block", md: "none" } }}>
-        <ImageSwiper images={images} />
+        <ImageSwiper images={images}>
+          {images.map((url) => {
+            return (
+              <Box
+                key={url}
+                sx={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <Image
+                  src={url}
+                  alt=""
+                  priority
+                  quality={100}
+                  width={450}
+                  height={280}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                  }}
+                />
+              </Box>
+            );
+          })}
+        </ImageSwiper>
       </Box>
 
       <Box sx={{ display: { xs: "none", md: "block" } }}>
-        <ImageGrid images={images} />
+        <ImageGrid images={images}>
+          {images.map((url, i) => (
+            <Box
+              key={url}
+              sx={{
+                gridColumn: `${i === 0 ? "span 2 / span 2" : "auto"}`,
+                gridRow: `${i === 0 ? "span 2 / span 2" : "auto"}`,
+                cursor: "pointer",
+                objectFit: "cover",
+              }}
+            >
+              <Image
+                alt=""
+                src={url}
+                priority
+                width={i === 0 ? 560 : 400}
+                height={i === 0 ? 560 : 280}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "flex",
+                  borderRadius:
+                    i === 0
+                      ? "1em 0 0 1em"
+                      : i === 2
+                      ? "0 1em 0 0"
+                      : i === 4
+                      ? "0 0 1em 0"
+                      : 0,
+                }}
+              />
+            </Box>
+          ))}
+        </ImageGrid>
       </Box>
 
       <Content>

@@ -16,45 +16,14 @@ const Grid = styled(Box)(({ theme }) => ({
   gridAutoFlow: "row dense",
 }));
 
-function ImageGrid({ images }) {
+function ImageGrid({ children, images }) {
   const [showImageGallery, setShowImageGallery] = useState(false);
   const toggleGallery = () => {
     setShowImageGallery((prev) => !prev);
   };
   return (
     <>
-      <Grid>
-        {images.map((url, i) => (
-          <Box
-            key={url}
-            onClick={toggleGallery}
-            sx={{
-              gridColumn: `${i === 0 ? "span 2 / span 2" : "auto"}`,
-              gridRow: `${i === 0 ? "span 2 / span 2" : "auto"}`,
-              cursor: "pointer",
-              objectFit: "cover",
-            }}
-          >
-            <img
-              alt=""
-              src={url}
-              style={{
-                display: "flex",
-                width: "100%",
-                height: "100%",
-                borderRadius:
-                  i === 0
-                    ? "1em 0 0 1em"
-                    : i === 2
-                    ? "0 1em 0 0"
-                    : i === 4
-                    ? "0 0 1em 0"
-                    : 0,
-              }}
-            />
-          </Box>
-        ))}
-      </Grid>
+      <Grid>{children}</Grid>
       <ImageModal
         images={images}
         open={showImageGallery}

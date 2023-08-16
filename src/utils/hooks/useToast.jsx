@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 
 import Snackbar from "@mui/material/Snackbar";
@@ -17,7 +17,7 @@ function useToast() {
 
   return {
     toggleToast,
-    Toast: (
+    Toast: showToast ? (
       <Snackbar
         open={showToast}
         autoHideDuration={3000}
@@ -28,7 +28,7 @@ function useToast() {
           {title}
         </Alert>
       </Snackbar>
-    ),
+    ) : null,
   };
 }
 
