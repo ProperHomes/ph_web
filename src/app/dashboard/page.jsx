@@ -1,5 +1,5 @@
 "use client";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
@@ -16,7 +16,6 @@ export default function Page() {
           borderRadius: "1rem",
           maxWidth: "300px",
           color: theme.palette.primary.main,
-          fontFamily: theme.typography.fontFamily.Manrope,
         }}
       >
         <Typography variant="subtitle2">{category}</Typography>

@@ -1,17 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import PropertyList from "src/app/property/List";
 import Loading from "src/components/Loading";
 import { useAppContext } from "src/appContext";
 import { GET_USER_SAVED_PROPERTIES } from "@/graphql/properties";
 
+const PropertyList = lazy(() => import("src/app/property/List"));
+
 function SavedProperties() {
-    const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0);
   const { state } = useAppContext();
-  
+
   const { data, loading } = useQuery(GET_USER_SAVED_PROPERTIES, {
     variables: { first: 10, offset: page * 10, userId: state.user?.id },
     skip: !state.user?.id,
@@ -39,7 +40,9 @@ function SavedProperties() {
       loader={<></>}
       endMessage={<></>}
     >
-      <PropertyList data={savedProperties} />
+      <Suspense fallback={<Loading />}>
+        <PropertyList data={savedProperties} />
+      </Suspense>
     </InfiniteScroll>
   );
 }

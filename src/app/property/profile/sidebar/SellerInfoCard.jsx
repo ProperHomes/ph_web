@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
+import useToggleAuth from "src/hooks/useToggleAuth";
 import Phone from "@mui/icons-material/Phone";
 
 function SellerInfoCard({ createdAt }) {
@@ -27,14 +27,10 @@ function SellerInfoCard({ createdAt }) {
       sx={{
         boxShadow: 2,
         borderRadius: "1rem",
-        borderColor: 'error.main',
+        borderColor: "error.main",
       }}
     >
-      <Typography
-        fontSize="large"
-        color={theme.palette.text.secondary}
-        fontFamily={theme.typography.fontFamily.Manrope}
-      >
+      <Typography fontSize="large" color={theme.palette.text.secondary}>
         Interested in this property ?
       </Typography>
       <Button
@@ -43,7 +39,6 @@ function SellerInfoCard({ createdAt }) {
         onClick={handleCallOwner}
         startIcon={<Phone />}
         sx={{
-          fontFamily: theme.typography.fontFamily.Manrope,
           fontSize: "large",
         }}
       >

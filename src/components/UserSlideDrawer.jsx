@@ -5,8 +5,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTheme, styled } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
-import useDarkMode from "@/utils/hooks/useDarkMode";
+import useToggleAuth from "src/hooks/useToggleAuth";
+import useDarkMode from "src/hooks/useDarkMode";
 import SlideDrawer from "./Drawer";
 import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
 import Dashboard from "@mui/icons-material/Dashboard";
@@ -23,7 +23,6 @@ const StyledBtn = styled(Button)(({ theme }) => ({
   borderRadius: "1em",
   fontWeight: 600,
   color: theme.palette.text.primary,
-  fontFamily: theme.typography.fontFamily.Manrope,
   backgroundColor: theme.palette.background.default,
   borderColor: theme.palette.grey[200],
   transition: "0.3s ease",
@@ -67,7 +66,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
           <Stack direction="row" alignItems="center">
             <Typography
               color={theme.palette.text.primary}
-              fontFamily={theme.typography.fontFamily.Monsterrat}
               fontWeight={600}
               fontSize={20}
               textAlign={"center"}

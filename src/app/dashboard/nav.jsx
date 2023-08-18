@@ -84,7 +84,6 @@ function Dashboardnav() {
                   component={Link}
                   href={href}
                   sx={{
-                    fontFamily: theme.typography.fontFamily.Manrope,
                     minHeight: "3.5em",
                     maxHeight: "3.5em",
                   }}

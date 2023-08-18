@@ -53,12 +53,7 @@ function NotificationItem({ notification }) {
         )}
 
         <Stack spacing={1} sx={{ width: "100%" }}>
-          <Typography
-            fontFamily={theme.typography.fontFamily.Monsterrat}
-            fontWeight={500}
-          >
-            {actionText}
-          </Typography>
+          <Typography fontWeight={500}>{actionText}</Typography>
         </Stack>
       </Stack>
       <Stack
@@ -67,12 +62,7 @@ function NotificationItem({ notification }) {
         justifyContent="space-between"
         sx={{ width: "100%" }}
       >
-        <Typography
-          fontFamily={theme.typography.fontFamily.Monsterrat}
-          fontSize="0.7rem"
-          fontWeight={300}
-          sx={{ color: "#000" }}
-        >
+        <Typography fontSize="0.7rem" fontWeight={300} sx={{ color: "#000" }}>
           {dayjs(createdAt).fromNow()}
         </Typography>
       </Stack>

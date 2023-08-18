@@ -3,11 +3,11 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-import SearchBlock from "@/components/SearchBlock";
-import PropertyList from "src/app/property/List";
+import PropertyList from "./property/List";
 import { useQuery } from "@apollo/client";
 import { GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
+import SearchBlock from "@/components/SearchBlock";
 
 export default function Home({ data }) {
   const theme = useTheme();
@@ -27,11 +27,7 @@ export default function Home({ data }) {
   return (
     <>
       <Stack spacing={2} px={{ xs: 0, md: 4 }} py={2} alignItems="center">
-        <Typography
-          color={theme.palette.text.primary}
-          variant="h4"
-          fontFamily={theme.typography.fontFamily.Manrope}
-        >
+        <Typography color={theme.palette.text.primary} variant="h4">
           Find a home that{" "}
           <span
             style={{

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -186,7 +186,6 @@ function PropertyCard({
                   fontSize="1em"
                   color="#fff"
                   fontWeight="regular"
-                  fontFamily={theme.typography.fontFamily.Manrope}
                   mt="50%"
                   sx={{
                     overflow: "hidden",
@@ -257,7 +256,6 @@ function PropertyCard({
               sx={{
                 "& .MuiChip-label": {
                   fontWeight: 600,
-                  fontFamily: theme.typography.fontFamily.Manrope,
                 },
               }}
               color={isDarkMode ? "default" : "secondary"}
@@ -274,7 +272,6 @@ function PropertyCard({
             maxWidth: { xs: "100%", md: "280px" },
             color: theme.palette.text.primary,
             fontWeight: "medium",
-            fontFamily: theme.typography.fontFamily.Manrope,
             textTransform: "capitalize",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -293,7 +290,6 @@ function PropertyCard({
             fontWeight="bold"
             color="primary.main"
             suppressHydrationWarning
-            fontFamily={theme.typography.fontFamily.Manrope}
           >
             {formattedPrice.slice(0, -3)}
           </Typography>

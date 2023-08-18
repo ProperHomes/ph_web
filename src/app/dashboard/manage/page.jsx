@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useAppContext } from "src/appContext";
 import { GET_OWNER_PROPERTIES } from "@/graphql/properties";
-import PropertyList from "src/app/property/List";
 import Loading from "src/components/Loading";
+
+const PropertyList = lazy(() => import("src/app/property/List"));
 
 function ManageProperties() {
   const [page, setPage] = useState(0);
@@ -33,7 +34,9 @@ function ManageProperties() {
       loader={<></>}
       endMessage={<></>}
     >
-      <PropertyList data={properties} />
+      <Suspense fallback={<Loading />}>
+        <PropertyList data={properties} />
+      </Suspense>
     </InfiniteScroll>
   );
 }

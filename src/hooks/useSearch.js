@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 
 import { SEARCH_PROPERTIES } from "@/graphql/properties";
-import { removeDuplicateObjectsFromArray } from "../helper";
+import { removeDuplicateObjectsFromArray } from "../utils/helper";
 
 function useSearch({
   searchText = "",

@@ -6,11 +6,6 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { createUploadLink } from "apollo-upload-client";
 
-let SSRApolloClient;
-let nonSSRApolloClient;
-
-const isSSR = typeof window === "undefined";
-
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) =>
@@ -21,25 +16,17 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const wsLink =
-  typeof window !== "undefined"
-    ? new GraphQLWsLink(
-        createClient({
-          url: process.env.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS,
-        })
-      )
-    : null;
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: process.env.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS,
+  })
+);
 
-const splitLink = (ctx) => {
+const splitLink = () => {
   const httpLinkOptions = {
     uri: process.env.NEXT_PUBLIC_GRAPHQL_API,
-    credentials: isSSR || !!ctx ? "same-origin" : "include",
+    credentials: "include",
   };
-  if (isSSR) {
-    httpLinkOptions.headers = {
-      ...(ctx?.req?.headers ?? {}),
-    };
-  }
   if (wsLink != null) {
     return split(
       ({ query }) => {
@@ -57,24 +44,7 @@ const splitLink = (ctx) => {
   }
 };
 
-function createApolloClient(ctx) {
-  return new ApolloClient({
-    ssrMode: !!ctx || isSSR,
-    link: from([errorLink, splitLink(ctx)]),
-    cache: new InMemoryCache(),
-  });
-}
-
-export function initializeApollo(ctx) {
-  let _apolloClient = ctx ? SSRApolloClient : nonSSRApolloClient;
-  // For SSG and SSR always create a new Apollo Client
-  if (!_apolloClient) {
-    _apolloClient = createApolloClient(ctx);
-    if (ctx) {
-      SSRApolloClient = _apolloClient;
-    } else {
-      nonSSRApolloClient = _apolloClient;
-    }
-  }
-  return _apolloClient;
-}
+export default new ApolloClient({
+  link: from([errorLink, splitLink()]),
+  cache: new InMemoryCache(),
+});

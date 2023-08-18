@@ -49,8 +49,11 @@ export default function Footer() {
     <Box
       py={2}
       sx={{
+        display: { xs: "none", sm: "block" },
+        backgroundColor: theme.palette.background.paper,
+
         boxShadow: theme.shadows[2],
-        borderRadius: "2em 2em 0 0",
+        borderRadius: !isDark ? "2em 2em 0 0" : "0",
         width: "100%",
         position: "absolute",
         bottom: 0,
@@ -62,7 +65,6 @@ export default function Footer() {
           <Link href="/">
             <Typography
               color={theme.palette.primary.main}
-              fontFamily={theme.typography.fontFamily.Monsterrat}
               fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
               fontWeight={600}
               sx={{
@@ -107,7 +109,6 @@ export default function Footer() {
                   </Typography>
                 }
                 sx={{
-                  fontFamily: theme.typography.fontFamily.Manrope,
                   minHeight: "3.5em",
                   maxHeight: "3.5em",
                 }}
@@ -121,9 +122,9 @@ export default function Footer() {
           direction={{ xs: "column", md: "row" }}
           minHeight="350px"
         >
-          <CityLinks links={navlinksSale} city={city} />
-          <CityLinks links={navlinksRent} city={city} />
-          <CityLinks links={navlinksOthers} city={city} />
+          <CityLinks links={navlinksSale} city={city} prefetch={false} />
+          <CityLinks links={navlinksRent} city={city} prefetch={false} />
+          <CityLinks links={navlinksOthers} city={city} prefetch={false} />
         </Stack>
 
         <Typography

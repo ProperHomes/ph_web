@@ -14,11 +14,11 @@ import TextField from "@mui/material/TextField";
 import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-import useUploadFile from "@/utils/hooks/useUploadFile";
+import useUploadFile from "src/hooks/useUploadFile";
 import { CREATE_PROPERTY } from "@/graphql/properties";
 import MediaBlocks from "./MediaBlocks";
 import { ALL_CITIES, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
+import useToggleAuth from "src/hooks/useToggleAuth";
 
 const newPropertyResolver = {
   type: yup.string().required(),
@@ -49,7 +49,6 @@ const StyledForm = styled(Box)(({ theme }) => ({
 }));
 
 const Label = styled("label")(({ theme }) => ({
-  fontFamily: theme.typography.fontFamily.Manrope,
   fontWeight: 500,
   fontSize: "1rem",
   color: theme.palette.text.secondary,
@@ -122,7 +121,6 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
         variant="h1"
         textAlign="center"
         fontSize="2.5rem !important"
-        fontFamily={theme.typography.fontFamily.Manrope}
       >
         {!!data ? "Update Property" : "List your property"}
       </Typography>

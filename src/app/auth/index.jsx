@@ -38,7 +38,6 @@ const OtpInput = styled(MuiOtpInput)({
 });
 
 const LoginWithTypography = styled(Typography)(({ theme }) => ({
-  fontFamily: theme.typography.fontFamily.Manrope,
   fontWeight: "500",
   color: theme.palette.primary,
   textDecoration: "underline",
@@ -272,7 +271,6 @@ function AuthModal({ open, handleClose }) {
           </IconButton>
           <Typography
             variant="subtitle1"
-            fontFamily={theme.typography.fontFamily.Manrope}
             fontWeight={500}
             sx={{ margin: "0 auto" }}
           >
@@ -290,7 +288,6 @@ function AuthModal({ open, handleClose }) {
           {(submitting || isLoading) && <Loading />}
           <Typography
             variant="subtitle1"
-            fontFamily={theme.typography.fontFamily.Manrope}
             fontWeight="bold"
           >
             Welcome to Proper Homes

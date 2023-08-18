@@ -6,7 +6,7 @@ import InputBase from "@mui/material/InputBase";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import useKeyDown from "@/utils/hooks/useKeyDown";
+import useKeyDown from "src/hooks/useKeyDown";
 import { convertStringToSlug } from "@/utils/helper";
 
 function SearchInput() {
@@ -45,7 +45,6 @@ function SearchInput() {
           flex: 1,
           fontSize: "1.2rem",
           fontWeight: 600,
-          fontFamily: theme.typography.fontFamily.Manrope,
         }}
         inputRef={ref}
         placeholder="Eg: Flats for sale in Delhi..."

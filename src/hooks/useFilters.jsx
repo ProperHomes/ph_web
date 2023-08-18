@@ -69,7 +69,7 @@ export default function useFilters({
         renderValue={(selected) => {
           if (!selected) {
             return (
-              <Typography fontFamily={theme.typography.fontFamily.Manrope}>
+              <Typography>
                 {isMobile ? "City" : "Select a City"}
               </Typography>
             );
@@ -117,7 +117,7 @@ export default function useFilters({
         renderValue={(selected) => {
           if (!selected) {
             return (
-              <Typography fontFamily={theme.typography.fontFamily.Manrope}>
+              <Typography>
                 {isMobile ? "BHK" : "Select BHK"}
               </Typography>
             );
@@ -164,7 +164,7 @@ export default function useFilters({
         renderValue={(selected) => {
           if (!selected) {
             return (
-              <Typography fontFamily={theme.typography.fontFamily.Manrope}>
+              <Typography>
                 {isMobile ? "TYPE" : "Listing Type"}
               </Typography>
             );

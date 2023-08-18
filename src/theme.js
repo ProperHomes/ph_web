@@ -1,4 +1,4 @@
-import { Raleway, Montserrat, Manrope, Roboto } from "next/font/google";
+import { Raleway } from "next/font/google";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 export const ralewayFont = Raleway({
@@ -8,34 +8,11 @@ export const ralewayFont = Raleway({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
-export const monsterratFont = Montserrat({
-  weight: ["300", "400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-export const manRopeFont = Manrope({
-  weight: ["300", "400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-export const robotoFont = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
 const defaultThemeOptions = {
   typography: {
     fontFamily: {
       Raleway: ralewayFont.style.fontFamily,
-      Monsterrat: monsterratFont.style.fontFamily,
-      Manrope: manRopeFont.style.fontFamily,
-      Roboto: robotoFont.style.fontFamily,
+      // Manrope: manRopeFont.style.fontFamily, // manrope is default, check layout.js in app
     },
     button: {
       textTransform: "none",
@@ -94,7 +71,7 @@ const darkTheme = responsiveFontSizes(
     palette: {
       mode: "dark",
       background: {
-        default: "#0e0e0e",
+        default: "#0e0e0e !important",
       },
       primary: {
         main: "#f9fbfc",

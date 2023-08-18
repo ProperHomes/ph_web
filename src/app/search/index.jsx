@@ -1,8 +1,11 @@
 "use client";
+import { Suspense, lazy } from "react";
 import { useSearchParams } from "next/navigation";
 
-import PropertyList from "../property/List";
-import useSearch from "@/utils/hooks/useSearch";
+import useSearch from "src/hooks/useSearch";
+import Loading from "@/components/Loading";
+
+const PropertyList = lazy(() => import("../property/List"));
 
 export default function SearchMain() {
   const searchParams = useSearchParams();
@@ -20,14 +23,16 @@ export default function SearchMain() {
       ? `Properties for search "${searchText ?? ""}"`
       : `No properties found within that search`;
   return (
-    <PropertyList
-      showFilters
-      isSearch
-      count={20}
-      searchText={searchText}
-      searchResultsTotalCount={totalCount}
-      data={results}
-      title={title}
-    />
+    <Suspense fallback={<Loading />}>
+      <PropertyList
+        showFilters
+        isSearch
+        count={20}
+        searchText={searchText}
+        searchResultsTotalCount={totalCount}
+        data={results}
+        title={title}
+      />
+    </Suspense>
   );
 }

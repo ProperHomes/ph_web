@@ -24,7 +24,9 @@ function useToggleAuth() {
   };
 
   return {
-    Auth: <AuthModal open={openAuth} handleClose={toggleAuth} />,
+    Auth: openAuth ? (
+      <AuthModal open={openAuth} handleClose={toggleAuth} />
+    ) : null,
     toggleAuth,
     isLoggedIn,
     logout,

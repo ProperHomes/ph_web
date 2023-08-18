@@ -10,16 +10,16 @@ import { usePathname } from "next/navigation";
 import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Pagination from "@mui/material/Pagination";
 
 import Card from "./Card";
 import CategoryBoxes from "src/components/CategoryBoxes";
 import CreatePropertySaleRentLease from "../createProperty";
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
+import useToggleAuth from "src/hooks/useToggleAuth";
 import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
-import useFilters from "@/utils/hooks/useFilters";
+import useFilters from "src/hooks/useFilters";
 import ZeroBoxes from "@/components/ZeroBoxes";
-import { Pagination } from "@mui/material";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -178,7 +178,6 @@ function PropertyList({
             gutterBottom
             color={theme.palette.text.primary}
             fontWeight={theme.typography.fontWeightMedium}
-            fontFamily={theme.typography.fontFamily.Manrope}
             variant="h4"
             textAlign="left"
             fontSize={{ xs: "1.4rem", sm: "1.6rem" }}

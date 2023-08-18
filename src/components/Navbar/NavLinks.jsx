@@ -37,7 +37,6 @@ function NavLinks() {
               fontWeight={600}
               fontSize={theme.spacing(2)}
               color={theme.palette.text.secondary}
-              fontFamily={theme.typography.fontFamily.Manrope}
               sx={{
                 transition: "all 0.3s ease",
                 "&:hover": {

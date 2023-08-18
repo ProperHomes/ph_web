@@ -48,7 +48,6 @@ function NavbarRight() {
           borderRadius: "1em",
           fontWeight: 600,
           color: theme.palette.text.primary,
-          fontFamily: theme.typography.fontFamily.Manrope,
           backgroundColor: theme.palette.background.default,
           borderColor: theme.palette.grey[200],
           transition: "0.3s ease",
@@ -72,7 +71,6 @@ function NavbarRight() {
               overflow: "hidden",
             }}
             fontWeight={theme.typography.fontWeightMedium}
-            fontFamily={theme.typography.fontFamily.Manrope}
           >
             {loggedInUser?.name}
           </Typography>

@@ -60,7 +60,6 @@ function Notifications() {
           startIcon={<KeyboardBackspaceIcon />}
           sx={{
             color: "#000",
-            fontFamily: theme.typography.fontFamily.Monsterrat,
             textAlign: "left",
             background: "#F8F8FF",
             width: "30%",
@@ -92,7 +91,6 @@ function Notifications() {
               width: "30%",
               whiteSpace: "nowrap",
               color: "#000",
-              fontFamily: theme.typography.fontFamily.Monsterrat,
               textAlign: "left",
               marginLeft: 0,
             }}
@@ -103,7 +101,6 @@ function Notifications() {
 
         <Typography
           color="#1B2559"
-          fontFamily={theme.typography.fontFamily.Monsterrat}
           fontWeight={500}
           fontSize={"1.2rem"}
           textAlign={"center"}

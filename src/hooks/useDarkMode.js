@@ -2,7 +2,7 @@
 "use client";
 import { useEffect } from "react";
 
-import { useAppContext } from "../../appContext";
+import { useAppContext } from "../appContext";
 import useLocalStorage from "./useLocalStorage";
 
 function useDarkMode() {

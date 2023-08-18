@@ -36,13 +36,7 @@ function CustomTooltip({ open, toggleOptions, listItems }) {
                 },
               }}
             >
-              <ListItemText
-                sx={{
-                  fontFamily: theme.typography.fontFamily.Manrope,
-                }}
-              >
-                {item.title}
-              </ListItemText>
+              <ListItemText>{item.title}</ListItemText>
             </ListItemButton>
           ))}
         </List>

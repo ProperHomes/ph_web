@@ -15,7 +15,7 @@ import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import AddIcon from "@mui/icons-material/Add";
 
 import { usePathname, useRouter } from "next/navigation";
-import useToggleAuth from "@/utils/hooks/useToggleAuth";
+import useToggleAuth from "src/hooks/useToggleAuth";
 
 const dashboardTabList = [
   {
@@ -99,7 +99,6 @@ const homeListLoggedIn = [
 function BottomNavbar() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const router = useRouter();
   const pathname = usePathname();
   const { isLoggedIn } = useToggleAuth();
   const isDashboard = pathname.includes("dashboard");
@@ -123,6 +122,8 @@ function BottomNavbar() {
         left: 0,
         right: 0,
         borderRadius: "2rem 2rem 0 0",
+        display: { xs: "flex", sm: "none" },
+        backgroundColor: theme.palette.background.paper,
       }}
       elevation={8}
     >
@@ -130,7 +131,12 @@ function BottomNavbar() {
         showLabels
         value={value}
         onChange={handleChangeValue}
-        sx={{ borderRadius: "2rem", height: "4.5em" }}
+        sx={{
+          borderRadius: "2rem 2rem 0 0",
+          height: "4.5em",
+          width: "100%",
+          backgroundColor: theme.palette.background.paper,
+        }}
       >
         {list.map(({ label, Icon, href }) => {
           return (
@@ -142,7 +148,6 @@ function BottomNavbar() {
               component={Link}
               href={href}
               sx={{
-                fontFamily: theme.typography.fontFamily.Manrope,
                 fontWeight: 700,
                 "&.MuiButtonBase-root.Mui-selected": {
                   fontWeight: 800,

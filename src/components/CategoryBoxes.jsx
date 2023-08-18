@@ -88,7 +88,6 @@ function SecondSection({ lineView }) {
                 <Icon htmlColor={theme.palette.text.secondary} />
                 <Typography
                   color={theme.palette.text[isActive ? "primary" : "secondary"]}
-                  fontFamily={theme.typography.fontFamily.Monsterrat}
                   fontSize="0.9rem"
                   fontWeight={isActive ? 600 : 500}
                   sx={{
@@ -147,7 +146,6 @@ function SecondSection({ lineView }) {
                 <Typography
                   textAlign="center"
                   color={theme.palette.text[isActive ? "primary" : "secondary"]}
-                  fontFamily={theme.typography.fontFamily.Monsterrat}
                   fontSize="0.8rem"
                   fontWeight={600}
                   sx={{
