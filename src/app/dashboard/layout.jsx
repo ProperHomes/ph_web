@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Stack from "@mui/material/Stack";
-import Nav from "src/app/dashboard/nav";
 import { useAppContext } from "src/appContext";
 
 function DashboardLayout({ children }) {
@@ -21,12 +20,7 @@ function DashboardLayout({ children }) {
     };
   }, [isLoggedIn, router]);
 
-  return (
-    <Stack spacing={2} justifyContent="center" alignItems="center" width="100%">
-      <Nav />
-      <Stack width="100%">{children}</Stack>
-    </Stack>
-  );
+  return <Stack width="100%">{children}</Stack>;
 }
 
 export default DashboardLayout;

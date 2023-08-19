@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import SwipeableViews from "react-swipeable-views";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -14,7 +14,6 @@ import Close from "@mui/icons-material/Close";
 
 function useImagesModalGallery({ images }) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setIsOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -76,24 +75,25 @@ function useImagesModalGallery({ images }) {
                 key={url}
                 sx={{
                   position: "relative",
-                  width: "100%",
+                  width: "100vw",
                   height: "100vh",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <img
+                <Image
                   id="fullScreenModalImage"
                   src={url}
                   alt=""
+                  quality={100}
+                  width={500}
+                  height={500}
                   style={{
-                    width: isMobile ? "100%" : "60%",
-                    height: "auto",
+                    width: "80%",
+                    height: "80%",
                     objectFit: "contain",
-                    position: "absolute",
-                    top: "50%",
-                    transform: "translateY(-50%)",
+                    objectPosition: "center",
                     borderRadius: "10px",
                   }}
                 />

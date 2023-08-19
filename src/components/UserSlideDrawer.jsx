@@ -14,6 +14,7 @@ import Login from "@mui/icons-material/Login";
 import Logout from "@mui/icons-material/Logout";
 import DarkMode from "@mui/icons-material/DarkMode";
 import LightMode from "@mui/icons-material/LightMode";
+import SettingsIcon from "@mui/icons-material/Settings";
 import CurrencyRupeeOutlined from "@mui/icons-material/CurrencyRupeeOutlined";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 
@@ -101,6 +102,12 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
                 onClick={navigateTo("/dashboard")}
               >
                 Dashboard
+              </StyledBtn>
+              <StyledBtn
+                startIcon={<SettingsIcon />}
+                onClick={navigateTo("/settings")}
+              >
+                Settings
               </StyledBtn>
             </>
           )}

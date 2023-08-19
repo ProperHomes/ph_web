@@ -24,7 +24,7 @@ function NavLinks() {
       ml={4}
       mr="auto"
       sx={{
-        display: { xs: "none", sm: "flex" },
+        display: { xs: "none", md: "flex" },
       }}
       direction="row"
       spacing={3}

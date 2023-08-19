@@ -4,9 +4,17 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import NavLinks from "./NavLinks";
+import { usePathname } from "next/navigation";
+import { useMediaQuery } from "@mui/material";
+import Dashboardnav from "src/app/dashboard/nav";
 
 function NavbarLeft() {
+  const pathname = usePathname();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isDashboardOrSettings =
+    pathname.includes("/dashboard") || pathname.includes("/settings");
+
   return (
     <Stack direction="row">
       <Link href="/">
@@ -23,8 +31,7 @@ function NavbarLeft() {
           ProperHomes
         </Typography>
       </Link>
-
-      <NavLinks />
+      {isDashboardOrSettings && !isMobile ? <Dashboardnav /> : <NavLinks />}
     </Stack>
   );
 }

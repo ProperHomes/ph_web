@@ -64,6 +64,7 @@ function PropertyImages({ images }) {
                 onClick={toggleModal}
                 src={url}
                 priority
+                quality={100}
                 width={i === 0 ? 560 : 400}
                 height={i === 0 ? 560 : 280}
                 style={{

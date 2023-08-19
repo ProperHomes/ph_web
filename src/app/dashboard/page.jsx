@@ -30,7 +30,7 @@ export default function Page() {
   };
   return (
     <Box>
-      <Stack spacing={3} direction="row">
+      <Stack spacing={3} direction="row" flexWrap="wrap">
         <Card category="Total Number Of Properties" value={25} />
         <Card category="Occupancy Rate" value="92%" />
         <Card category="Rent Collected This Year" value={34000} />

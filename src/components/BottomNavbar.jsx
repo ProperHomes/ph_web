@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -13,8 +13,9 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import KeyIcon from "@mui/icons-material/Key";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import AddIcon from "@mui/icons-material/Add";
+import PersonIcon from "@mui/icons-material/Person2";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import useToggleAuth from "src/hooks/useToggleAuth";
 
 const dashboardTabList = [
@@ -29,9 +30,9 @@ const dashboardTabList = [
     Icon: DashboardIcon,
   },
   {
-    label: "Messages",
-    href: "/dashboard/messages",
-    Icon: MessageIcon,
+    label: "Manage",
+    href: "/dashboard/manage",
+    Icon: PersonIcon,
   },
   {
     label: "Saved",
@@ -40,7 +41,7 @@ const dashboardTabList = [
   },
   {
     label: "Settings",
-    href: "/dashboard/settings",
+    href: "/settings",
     Icon: SettingsIcon,
   },
 ];
@@ -85,14 +86,9 @@ const homeListLoggedIn = [
     Icon: AddIcon,
   },
   {
-    label: "For Sale",
-    href: "/properties-for-sale",
-    Icon: LoyaltyIcon,
-  },
-  {
-    label: "For Rent",
-    href: "/properties-for-rent",
-    Icon: KeyIcon,
+    label: "Settings",
+    href: "/settings",
+    Icon: SettingsIcon,
   },
 ];
 
@@ -101,13 +97,15 @@ function BottomNavbar() {
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
   const { isLoggedIn } = useToggleAuth();
-  const isDashboard = pathname.includes("dashboard");
+  const isDashboardOrSettings =
+    pathname.includes("/dashboard") || pathname.includes("/settings");
   const [value, setValue] = useState("/home");
-  const handleChangeValue = (_event, value) => {
-    setValue(value);
-  };
 
-  const list = isDashboard
+  useEffect(() => {
+    setValue(pathname);
+  }, [pathname]);
+
+  const list = isDashboardOrSettings
     ? dashboardTabList
     : isLoggedIn
     ? homeListLoggedIn
@@ -122,7 +120,7 @@ function BottomNavbar() {
         left: 0,
         right: 0,
         borderRadius: "2rem 2rem 0 0",
-        display: { xs: "flex", sm: "none" },
+        display: { xs: "flex", md: "none" },
         backgroundColor: theme.palette.background.paper,
       }}
       elevation={8}
@@ -130,7 +128,6 @@ function BottomNavbar() {
       <BottomNavigation
         showLabels
         value={value}
-        onChange={handleChangeValue}
         sx={{
           borderRadius: "2rem 2rem 0 0",
           height: "4.5em",

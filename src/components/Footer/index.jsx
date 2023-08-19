@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -36,6 +37,7 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
   const theme = useTheme();
   const isDark = theme.palette.mode == "dark";
   const [index, setIndex] = useState(0);
@@ -45,11 +47,13 @@ export default function Footer() {
   };
   const city = ALL_CITIES[index];
 
+  const isDashboard = pathname.includes("/dashboard");
+
   return (
     <Box
       py={2}
       sx={{
-        display: { xs: "none", sm: "block" },
+        display: { xs: "none", sm: isDashboard ? "none" : "block" },
         backgroundColor: theme.palette.background.paper,
 
         boxShadow: theme.shadows[2],

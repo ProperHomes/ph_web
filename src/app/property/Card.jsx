@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { usePathname } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
@@ -9,7 +9,7 @@ import Fade from "@mui/material/Fade";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import { useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { PROPERTY_TYPE } from "@/utils/constants";
@@ -30,6 +30,7 @@ function PropertyCard({
 }) {
   const pathname = usePathname();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isDarkMode = theme.palette.mode === "dark";
   const { state: appState } = useAppContext();
   const isLoggedIn = !!appState.user?.id;
@@ -86,7 +87,9 @@ function PropertyCard({
   }, [currentUserSavedPropertyId]);
 
   const toggleOnHover = () => {
-    setIsHovered((prev) => !prev);
+    if (!isMobile) {
+      setIsHovered((prev) => !prev);
+    }
   };
 
   const toggleOwnerActions = () => {
@@ -165,7 +168,7 @@ function PropertyCard({
                 objectFit: "cover",
                 objectPosition: "center",
                 transition: "0.4s ease",
-                transform: isHovered ? "scale(1.1)" : "scale(1)",
+                transform: isHovered && !isMobile ? "scale(1.1)" : "scale(1)",
               }}
               alt={`image of ${title}`}
             />
@@ -299,4 +302,4 @@ function PropertyCard({
   );
 }
 
-export default PropertyCard;
+export default memo(PropertyCard);
