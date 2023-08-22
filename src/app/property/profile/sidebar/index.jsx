@@ -11,7 +11,11 @@ function Sidebar({ data }) {
   return (
     <Suspense fallback={<></>}>
       <Stack spacing={2}>
-        <SellerInfoCard createdAt={data?.createdAt} />
+        <SellerInfoCard
+          createdAt={data?.createdAt}
+          listedFor={data?.listedFor}
+          propertyId={data?.id}
+        />
         <Stack
           direction="row"
           alignItems="center"

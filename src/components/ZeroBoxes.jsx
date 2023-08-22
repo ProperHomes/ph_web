@@ -26,8 +26,7 @@ const infoBoxes = [
     title: "Zero Paperwork",
     color: "#f0f8ff",
     Icon: ContentPasteOffIcon,
-    description: ` 100% Digital experience. Even if its Aadhar verification or Police
-    Verification.`,
+    description: ` 100% Digital experience. Even if its Aadhar or Police Verification.`,
   },
   {
     title: "Zero Issues",
@@ -72,6 +71,7 @@ export default function ZeroBoxes() {
             <Stack direction="row" alignItems="center" spacing={2}>
               <Icon fontSize="medium" />
               <Typography
+                variant="body2"
                 fontSize="1.4rem"
                 fontWeight={theme.typography.fontWeightBold}
                 gutterBottom
@@ -80,7 +80,7 @@ export default function ZeroBoxes() {
               </Typography>
             </Stack>
 
-            <Typography variant="subtitle2">{description}</Typography>
+            <Typography variant="body2">{description}</Typography>
           </Stack>
         );
       })}

@@ -5,5 +5,5 @@ import PropertyList from "src/app/property/List";
 export default async function Page() {
   const res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
   const data = res?.properties?.nodes ?? [];
-  return <PropertyList data={data} />;
+  return <PropertyList data={data} infiniteScroll count={20} />;
 }

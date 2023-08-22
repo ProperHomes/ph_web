@@ -24,21 +24,23 @@ function CustomTooltip({ open, toggleOptions, listItems }) {
       placement="bottom"
       title={
         <List dense disablePadding sx={{ background: "#121212" }}>
-          {listItems.map((item) => (
-            <ListItemButton
-              key={item.title}
-              onMouseDown={item.onClick}
-              onMouseUp={item.onClick}
-              onClick={item.onClick}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "#39393a",
-                },
-              }}
-            >
-              <ListItemText>{item.title}</ListItemText>
-            </ListItemButton>
-          ))}
+          {listItems.map((item) => {
+            return (
+              <ListItemButton
+                key={item.title}
+                onClick={item.onClick}
+                onMouseUp={item.onClick}
+                onMouseDown={item.onClick}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "#39393a",
+                  },
+                }}
+              >
+                <ListItemText>{item.title}</ListItemText>
+              </ListItemButton>
+            );
+          })}
         </List>
       }
     >

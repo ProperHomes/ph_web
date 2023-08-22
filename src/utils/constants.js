@@ -1,6 +1,7 @@
 export const USER_TYPE = {
   SELLER: "SELLER",
   BUYER: "BUYER",
+  BOTH: "BOTH",
 };
 
 export const PROPERTY_TYPE = {
@@ -43,6 +44,8 @@ export const PROPERTY_STATUS = {
   NOT_FOR_SALE: "NOT FOR SALE",
   NOT_FOR_RENT: "NOT FOR RENT",
   SOLD: "SOLD",
+  RENTED: "RENTED",
+  LEASED: "LEASED",
 };
 
 export const ALL_CITIES = [
@@ -115,8 +118,10 @@ export const navlinksRent = [
 ];
 
 export const navlinksOthers = [
+  { link: "pg", title: "Paying Guest" },
   { link: "paying-guests-accomodation", title: "Paying Guest" },
   { link: "hostel-accommodation", title: "Hostels" },
+  { link: "hostels", title: "Hostels" },
 ];
 
 export const navlinks = [...navlinksSale, ...navlinksRent, ...navlinksOthers];

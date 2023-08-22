@@ -47,7 +47,8 @@ function AppProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const { user } = state;
   const isBuyer = user?.type === USER_TYPE.BUYER;
-
+  const isSeller = user?.type === USER_TYPE.SELLER;
+  const isBuyerAndSeller = user?.type === USER_TYPE.BOTH;
   const isPrivateRoute = PRIVATE_ROUTES.includes(pathname);
 
   const [updateUser] = useMutation(UPDATE_USER);
@@ -151,6 +152,8 @@ function AppProvider({ children }) {
         state,
         dispatch,
         isBuyer,
+        isSeller,
+        isBuyerAndSeller,
         isPrivateRoute,
         handleLogout,
         handleFetchUser,

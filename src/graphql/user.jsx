@@ -14,6 +14,9 @@ export const USER_FIELDS = gql`
       signedUrl
     }
     email
+    memberships {
+      totalCount
+    }
   }
 `;
 

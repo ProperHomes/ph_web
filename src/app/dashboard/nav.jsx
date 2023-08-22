@@ -10,39 +10,44 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import SaveIcon from "@mui/icons-material/Save";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person2";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 
 import BottomNavbar from "src/components/BottomNavbar";
-
-const tabSections = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    Icon: DashboardIcon,
-  },
-  {
-    label: "Manage",
-    href: "/dashboard/manage",
-    Icon: PersonIcon,
-  },
-  {
-    label: "Saved",
-    href: "/dashboard/saved-properties",
-    Icon: SaveIcon,
-  },
-  {
-    label: "Subscriptions",
-    href: "/dashboard/subscriptions",
-    Icon: CreditCardIcon,
-  },
-];
+import { useAppContext } from "src/appContext";
 
 function Dashboardnav() {
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isBuyer, isSeller, isBuyerAndSeller } = useAppContext();
 
-  const list = tabSections;
+  let list = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      Icon: DashboardIcon,
+    },
+  ];
+
+  if (!isBuyer) {
+    list = [
+      ...list,
+      {
+        label: "Manage",
+        href: "/dashboard/manage",
+        Icon: PersonIcon,
+      },
+    ];
+  } else {
+    list = [
+      ...list,
+      {
+        label: "Saved",
+        href: "/dashboard/saved-properties",
+        Icon: SaveIcon,
+      },
+    ];
+  }
+
   const index = list.findIndex((t) => {
     if (t.label === "Manage") {
       return pathname.includes(t.href);

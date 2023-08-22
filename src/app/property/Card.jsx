@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, memo } from "react";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -28,6 +28,7 @@ function PropertyCard({
   toggleAuth,
   showFavorite = true,
 }) {
+  const router = useRouter();
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -74,10 +75,14 @@ function PropertyCard({
   const handleEditProperty = () => {
     togglePropertyEditor();
   };
+  const handleViewPropertyAsPublic = () => {
+    router.push(`/property/${slug}`);
+  };
 
   const ownerActionList = [
     { title: "Edit Property", onClick: handleEditProperty },
     { title: "Mark Property", onClick: handleChangePropertyStatus },
+    { title: "View Property as Public", onClick: handleViewPropertyAsPublic },
   ];
 
   useEffect(() => {

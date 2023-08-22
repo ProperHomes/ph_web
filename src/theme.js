@@ -56,6 +56,25 @@ const defaultThemeOptions = {
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        h1: ({ theme }) => ({
+          ...(theme.palette.mode === "dark" && {
+            color: "#f9f9f9",
+          }),
+        }),
+        h4: ({ theme }) => ({
+          ...(theme.palette.mode === "dark" && {
+            color: "#f9f9f9",
+          }),
+        }),
+        body1: ({ theme }) => ({
+          ...(theme.palette.mode === "dark" && {
+            color: "#f9f9f9",
+          }),
+        }),
+      },
+    },
   },
   overrides: {
     MuiCssBaseline: {
@@ -80,6 +99,7 @@ const darkTheme = responsiveFontSizes(
         main: "#b4b4b4",
       },
       text: {
+        main: "#f9fbfc",
         secondary: "rgba(255, 255, 255, 0.8)",
       },
       info: {

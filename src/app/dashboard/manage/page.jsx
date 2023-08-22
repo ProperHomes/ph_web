@@ -2,6 +2,7 @@
 import { useState, Suspense, lazy } from "react";
 import { useQuery } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Typography from "@mui/material/Typography";
 
 import { useAppContext } from "src/appContext";
 import { GET_OWNER_PROPERTIES } from "@/graphql/properties";
@@ -27,17 +28,23 @@ function ManageProperties() {
   return loading ? (
     <Loading />
   ) : (
-    <InfiniteScroll
-      dataLength={properties.length}
-      next={handleFetchNext}
-      hasMore={data?.properties?.totalCount > properties.length}
-      loader={<></>}
-      endMessage={<></>}
-    >
-      <Suspense fallback={<Loading />}>
-        <PropertyList data={properties} />
-      </Suspense>
-    </InfiniteScroll>
+    <>
+      <Typography fontWeight={600} gutterBottom fontSize="1.2rem">
+        Manage your properties
+      </Typography>
+      <br />
+      <InfiniteScroll
+        dataLength={properties.length}
+        next={handleFetchNext}
+        hasMore={data?.properties?.totalCount > properties.length}
+        loader={<></>}
+        endMessage={<></>}
+      >
+        <Suspense fallback={<Loading />}>
+          <PropertyList data={properties} />
+        </Suspense>
+      </InfiniteScroll>
+    </>
   );
 }
 

@@ -65,6 +65,7 @@ export default async function Page({ params }) {
     }
 
     let res = await client.request(GET_PROPERTIES, variables);
+    const initialResData = res?.properties?.nodes ?? [];
     data = res?.properties?.nodes ?? [];
     if (data.length === 0) {
       res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
@@ -76,6 +77,7 @@ export default async function Page({ params }) {
         type={variables.type}
         infiniteScroll
         listedFor={listedFor}
+        city={city}
         count={20}
         title={isCityLink ? navLinkWithCity.title : navLink.title}
         showFilters

@@ -39,6 +39,7 @@ function PropertyList({
   data,
   type,
   title,
+  city: cityProp,
   listedFor: listedForProp,
   viewAllLink,
   infiniteScroll,
@@ -81,8 +82,8 @@ function PropertyList({
   if (type) {
     variables.type = type;
   }
-  if (city) {
-    variables.city = city;
+  if (city || cityProp) {
+    variables.city = cityProp ?? city;
   }
   if (bedrooms) {
     variables.bedrooms = bedrooms;

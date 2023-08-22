@@ -1,24 +1,56 @@
 "use client";
+import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-
-import useToggleAuth from "src/hooks/useToggleAuth";
 import Phone from "@mui/icons-material/Phone";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-function SellerInfoCard({ createdAt }) {
+import { CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS } from "@/graphql/properties";
+import { LISTING_TYPE } from "@/utils/constants";
+import useToggleAuth from "src/hooks/useToggleAuth";
+
+function SellerInfoCard({ createdAt, listedFor, propertyId }) {
   const theme = useTheme();
-  const { isLoggedIn, toggleAuth, Auth } = useToggleAuth();
-  const handleCallOwner = () => {
+
+  const { Auth, isLoggedIn, loggedInUser, toggleAuth } = useToggleAuth();
+
+  const hasMembership = loggedInUser?.memberships?.totalCount > 0;
+
+  const { data } = useQuery(CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS, {
+    variables: { userId: loggedInUser?.id, propertyId },
+    skip: !isLoggedIn || !propertyId || hasMembership,
+  });
+
+  const hasPaidAlready =
+    !!data?.propertyPaymentByUserIdAndPropertyId?.id || hasMembership;
+
+  const isForSale = listedFor === LISTING_TYPE.SALE;
+  const isForLease = listedFor === LISTING_TYPE.LEASE;
+
+  const toggleContactDetails = () => {
+    // Todo: open a dialog that shows property contact details
+  };
+
+  const togglePaymentModal = () => {
+    // Todo: open a dialog that shows payment to make and membershoip plans
+  };
+
+  const handleClickContactView = () => {
     if (isLoggedIn) {
-      // Todo:
+      if (hasPaidAlready) {
+        toggleContactDetails();
+      } else {
+        togglePaymentModal();
+      }
     } else {
       toggleAuth();
     }
   };
+
   return (
     <Stack
       px={2}
@@ -31,18 +63,20 @@ function SellerInfoCard({ createdAt }) {
       }}
     >
       <Typography fontSize="large" color={theme.palette.text.secondary}>
-        Interested in this property ?
+        Interested in{" "}
+        {isForSale ? "buying" : isForLease ? "leasing" : "renting"} this
+        property ?
       </Typography>
       <Button
         variant="contained"
         color="info"
-        onClick={handleCallOwner}
-        startIcon={<Phone />}
+        onClick={handleClickContactView}
+        startIcon={hasPaidAlready ? <VisibilityIcon /> : <Phone />}
         sx={{
           fontSize: "large",
         }}
       >
-        Contact owner
+        {hasPaidAlready ? "View Contact Details" : "Get  Contact Details"}
       </Button>
 
       <Stack
@@ -52,8 +86,8 @@ function SellerInfoCard({ createdAt }) {
         alignItems="center"
         justifyContent="center"
       >
-        <DateRangeIcon />
-        <Typography>
+        <DateRangeIcon htmlColor={theme.palette.text.secondary} />
+        <Typography color={theme.palette.text.secondary}>
           Listed on: {dayjs(createdAt).format("MMMM D, YYYY")}
         </Typography>
       </Stack>

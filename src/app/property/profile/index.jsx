@@ -59,12 +59,12 @@ function PropertyProfile({ data }) {
         ? "Paying Guests Accommodation"
         : `${typeWithoutHypens} For ${isForSale ? "Sale" : "Rent"}`,
       path: isPayingGuests
-        ? "/list/paying-guests-accommodation"
-        : `/list/${formattedType}-for-${isForSale ? "sale" : "rent"}`,
+        ? "/paying-guests-accommodation"
+        : `/${formattedType}-for-${isForSale ? "sale" : "rent"}`,
     };
 
     return [
-      { label: "list", path: "/list" },
+      { label: "property", path: "/property" },
       typeLink,
       {
         label: city,
@@ -154,7 +154,7 @@ function PropertyProfile({ data }) {
             })}
           </Box>
           <Divider />
-          <Typography variant="body">{description}</Typography>
+          <Typography variant="body1">{description}</Typography>
         </Stack>
 
         <StickyBox

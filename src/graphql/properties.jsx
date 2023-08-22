@@ -24,6 +24,7 @@ export const PROPERTY_FIELDS = gql`
     area
     ownerId
     agentId
+    status
   }
 `;
 
@@ -217,30 +218,10 @@ export const SEARCH_PROPERTIES = gql`
 `;
 
 export const GET_PROPERTY_BY_SLUG = gql`
+  ${PROPERTY_FIELDS}
   query PropertyBySlug($slug: String!) {
     propertyBySlug(slug: $slug) {
-      id
-      number
-      type
-      slug
-      title
-      city
-      price
-      listedFor
-      isFurnished
-      hasSwimmingPool
-      hasParking
-      hasBasement
-      description
-      country
-      condition
-      bedrooms
-      bathrooms
-      attributes
-      createdAt
-      area
-      ownerId
-      agentId
+      ...PropertyFields
       media: propertyMedias {
         nodes {
           id
@@ -262,6 +243,61 @@ export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
         number
         slug
       }
+    }
+  }
+`;
+
+export const CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS = gql`
+  query propertyPaymentByUserIdAndPropertyId(
+    $userId: UUID!
+    $propertyId: UUID!
+  ) {
+    propertyPaymentByUserIdAndPropertyId(
+      userId: $userId
+      propertyId: $propertyId
+    ) {
+      id
+      amount
+      paymentFor
+      paymentMode
+    }
+  }
+`;
+
+export const GET_PROPERTY_PAYMENTS = gql`
+  query propertyPayments(
+    $propertyId: UUID!
+    $userId: UUID
+    $paymentFor: PaymentFor
+    $first: Int
+    $offset: Int
+  ) {
+    propertyPayments(
+      condition: {
+        propertyId: $propertyId
+        userId: $userId
+        paymentFor: $paymentFor
+      }
+      orderBy: CREATED_AT_DESC
+      first: $first
+      offset: $offset
+    ) {
+      nodes {
+        amount
+        id
+        ownerId
+        userId
+        paymentFor
+        paymentMode
+        createdAt
+        property {
+          id
+          title
+          number
+          slug
+        }
+      }
+      totalCount
     }
   }
 `;
