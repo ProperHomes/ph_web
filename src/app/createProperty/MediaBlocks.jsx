@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import Box from "@mui/material/Box";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Add from "@mui/icons-material/Add";
 import Close from "@mui/icons-material/Close";
 
@@ -10,7 +10,7 @@ const Container = styled(Box)(({ theme }) => ({
   gap: "1em",
   gridTemplateColumns: "repeat(4, 1fr)",
   [theme.breakpoints.down("md")]: {
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
   },
 }));
 
@@ -31,7 +31,6 @@ const AddPicture = styled(Box)(({ theme }) => ({
 }));
 
 function MediaBlocks({ handleUpdateMedia }) {
-  const theme = useTheme();
   const MAX_LIMIT = 10;
   const inputRef = useRef();
 
@@ -40,17 +39,17 @@ function MediaBlocks({ handleUpdateMedia }) {
   const handleClickChangePic = () => {
     inputRef?.current?.click();
   };
-  const handleInputImage = (e) => {
-    const img = e.target.files[0];
-    if (img) {
+  const handleInputImages = (e) => {
+    const images = e.target.files;
+    if (images && images.length > 0) {
       setImagesLoaded((prev) => {
-        const updatedImages = [
-          ...prev,
-          {
+        const updatedImages = [...prev];
+        for (const img of images) {
+          updatedImages.push({
             preview: URL.createObjectURL(img),
             file: img,
-          },
-        ];
+          });
+        }
         if (handleUpdateMedia) {
           handleUpdateMedia(updatedImages);
         }
@@ -117,8 +116,9 @@ function MediaBlocks({ handleUpdateMedia }) {
             ref={inputRef}
             type="file"
             hidden
+            multiple
             accept="image/*"
-            onChange={handleInputImage}
+            onChange={handleInputImages}
             style={{
               cursor: "pointer",
               position: "absolute",

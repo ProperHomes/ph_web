@@ -312,6 +312,16 @@ export const CREATE_PROPERTY = gql`
   }
 `;
 
+export const CREATE_PROPERTY_MEDIA = gql`
+  mutation createPropertyMedia($input: CreatePropertyMediaInput!) {
+    createPropertyMedia(input: $input) {
+      propertyMedia {
+        id
+      }
+    }
+  }
+`;
+
 export const UPDATE_PROPERTY = gql`
   mutation updateProperty($input: UpdatePropertyInput!) {
     updateProperty(input: $input) {

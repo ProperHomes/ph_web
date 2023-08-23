@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
 import "yup-phone-lite";
@@ -6,35 +8,45 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Stack from "@mui/material/Stack";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 import useUploadFile from "src/hooks/useUploadFile";
-import { CREATE_PROPERTY } from "@/graphql/properties";
+import { CREATE_PROPERTY, CREATE_PROPERTY_MEDIA } from "@/graphql/properties";
 import MediaBlocks from "./MediaBlocks";
-import { ALL_CITIES, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
+import {
+  ALL_CITIES,
+  LISTING_TYPE,
+  PROPERTY_STATUS,
+  PROPERTY_TYPE,
+} from "@/utils/constants";
 import useToggleAuth from "src/hooks/useToggleAuth";
+import Loading from "@/components/Loading";
+import { convertStringToSlug } from "@/utils/helper";
 
 const newPropertyResolver = {
-  type: yup.string().required(),
+  type: yup.string().oneOf(Object.keys(PROPERTY_TYPE)).required(),
   title: yup.string().required(),
+  price: yup.string().required(),
   bedrooms: yup.number().required().moreThan(0),
   bathrooms: yup.number().required().moreThan(0),
   area: yup.string().required(),
   description: yup.string(),
-  city: yup.string().required(),
-  listedFor: yup.string().required(),
+  city: yup.string().oneOf(ALL_CITIES).required(),
+  listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
   isFurnished: yup.string().required(),
   hasParking: yup.string().required(),
   media: yup
     .array()
-    .min(5, "atleast one image is required")
-    .max(10, "Only 5 max images can be added")
+    .min(5, "atleast fives images are required")
+    .max(10, "Only 10 max images can be added")
     .required(),
 };
 
@@ -63,42 +75,102 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
 }));
 
 function CreatePropertySaleRentLease({ data, handleCancel }) {
-  const theme = useTheme();
+  const router = useRouter();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
 
   const [createProperty] = useMutation(CREATE_PROPERTY);
+  const [createPropertyImage] = useMutation(CREATE_PROPERTY_MEDIA);
   const handleFileUpload = useUploadFile();
 
   const isEditMode = !!data;
 
   const { control, handleSubmit, setValue, formState } = useForm({
     resolver: yupResolver(yup.object().shape(newPropertyResolver)),
-    defaultValues: data || {},
+    defaultValues: data,
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateMedia = (media) => {
     setValue("media", media);
   };
 
-  const handleCreateProperty = async (data) => {
+  const handleUploadPropertyMedia = async (media, propertyId) => {
+    const files = media?.map((m) => m.file).filter((x) => x);
+    if (files.length === 0) {
+      return null;
+    }
     try {
+      await Promise.all(
+        files.map(async (f) => {
+          const newFile = await handleFileUpload({
+            file: {
+              key: f,
+              extension: f.type,
+              creatorId: loggedInUser?.id,
+            },
+          });
+          if (newFile?.id) {
+            await createPropertyImage({
+              variables: {
+                input: {
+                  propertyMedia: {
+                    propertyId,
+                    mediaId: newFile.id,
+                  },
+                },
+              },
+            });
+          }
+        })
+      );
+    } catch (err) {
+      console.log("checking error", err);
+    }
+  };
+
+  const handleCreateProperty = async (data) => {
+    setIsLoading(true);
+    try {
+      const dataNew = { ...data };
+      delete dataNew.media;
+      const slug = `${convertStringToSlug(data.title)}-${loggedInUser?.number}`;
       const res = await createProperty({
         variables: {
-          input: { property: { ...data, ownerId: loggedInUser?.id } },
+          input: {
+            property: {
+              ...dataNew,
+              slug,
+              ownerId: loggedInUser?.id,
+              country: "INDIA",
+              isFurnished: Boolean(data.isFurnished),
+              hasParking: Boolean(data.hasParking),
+            },
+          },
         },
       });
-      const newProperty = res?.data?.createNewProperty?.property;
+      const newProperty = res?.data?.createProperty?.property;
       if (newProperty?.id) {
-        // Todo: upload property images
+        await handleUploadPropertyMedia(data.media, newProperty.id);
+        router.push("/dashboard/manage");
       }
     } catch (err) {
       console.log(err);
     }
+    setIsLoading(false);
+  };
+
+  const handleCreateDraft = (data) => {
+    handleCreateDraft({ ...data, status: PROPERTY_STATUS.DRAFT });
+  };
+
+  const handleSubmitForReview = (data) => {
+    handleCreateProperty({ ...data, status: "IN_REVIEW" });
   };
 
   const onSubmitDraft = async () => {
     if (isLoggedIn) {
-      handleSubmit(handleCreateProperty)();
+      handleSubmit(handleCreateDraft)();
     } else {
       toggleAuth();
     }
@@ -106,16 +178,17 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
 
   const onSubmit = async () => {
     if (isLoggedIn) {
-      handleSubmit(handleCreateProperty)();
+      handleSubmit(handleSubmitForReview)();
     } else {
       toggleAuth();
     }
   };
 
-  const { submitting, isLoading, errors } = formState;
+  const { submitting, errors } = formState;
 
   return (
     <Container maxWidth="xl" spacing={2} sx={{ height: "100%" }}>
+      {isLoading && <Loading />}
       <Typography
         gutterBottom
         variant="h1"
@@ -143,18 +216,22 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                     }
                     return selected;
                   }}
-                  value={value}
+                  value={value ?? ""}
                   onChange={onChange}
                   error={!!error?.message}
                 >
-                  {Object.values(PROPERTY_TYPE).map((type) => {
+                  <MenuItem value="" disabled>
+                    Select one from below
+                  </MenuItem>
+
+                  {Object.keys(PROPERTY_TYPE).map((type) => {
                     return (
                       <MenuItem
                         key={type}
                         value={type}
                         style={{ fontWeight: 500, fontSize: "0.8rem" }}
                       >
-                        {type}
+                        {PROPERTY_TYPE[type]}
                       </MenuItem>
                     );
                   })}
@@ -180,10 +257,13 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                     }
                     return selected;
                   }}
-                  value={value}
+                  value={value ?? ""}
                   onChange={onChange}
                   error={!!error?.message}
                 >
+                  <MenuItem value="" disabled>
+                    Select one from below
+                  </MenuItem>
                   {ALL_CITIES.map((city) => {
                     return (
                       <MenuItem
@@ -222,10 +302,13 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                       }
                       return selected;
                     }}
-                    value={value}
+                    value={value ?? ""}
                     onChange={onChange}
                     error={!!error?.message}
                   >
+                    <MenuItem value="" disabled>
+                      Select one from below
+                    </MenuItem>
                     {Object.keys(LISTING_TYPE).map((listingFor) => {
                       return (
                         <MenuItem
@@ -308,6 +391,68 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
             </Stack>
           </Stack>
 
+          <Stack direction="row" spacing={2} alignItems="end">
+            <Stack>
+              <Label>Price*</Label>
+              <Controller
+                name="price"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Eg: 2"
+                    type="number"
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                  />
+                )}
+              />
+            </Stack>
+
+            <FormControlLabel
+              sx={{ "& span": { fontSize: "1rem" } }}
+              control={
+                <Controller
+                  name="isFurnished"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <Checkbox
+                      checked={value}
+                      onChange={onChange}
+                      sx={{
+                        "& .MuiSvgIcon-root": { fontSize: 30 },
+                      }}
+                    />
+                  )}
+                />
+              }
+              label="Is Furnished"
+            />
+            <FormControlLabel
+              sx={{ "& span": { fontSize: "1rem" } }}
+              control={
+                <Controller
+                  name="hasParking"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <Checkbox
+                      checked={value}
+                      onChange={onChange}
+                      size="medium"
+                      sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+                    />
+                  )}
+                />
+              }
+              label="Has Parking"
+            />
+          </Stack>
+
           <Stack>
             <Label>Property Title *</Label>
             <Controller
@@ -379,6 +524,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                 sx={{ whiteSpace: "nowrap" }}
                 onClick={onSubmitDraft}
                 variant="outlined"
+                disabled={submitting}
               >
                 Save as draft
               </Button>
@@ -388,6 +534,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               onClick={onSubmit}
               variant="contained"
               color="info"
+              disabled={submitting}
             >
               Submit Property For Review
             </Button>

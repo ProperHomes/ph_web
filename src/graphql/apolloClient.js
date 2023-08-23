@@ -25,7 +25,7 @@ const wsLink = new GraphQLWsLink(
 const splitLink = () => {
   const httpLinkOptions = {
     uri: process.env.NEXT_PUBLIC_GRAPHQL_API,
-    credentials: "include",
+    credentials: typeof window === "undefined" ? "same-origin" : "include",
   };
   if (wsLink != null) {
     return split(
@@ -45,6 +45,7 @@ const splitLink = () => {
 };
 
 export default new ApolloClient({
+  ssrMode: typeof window === "undefined",
   link: from([errorLink, splitLink()]),
   cache: new InMemoryCache(),
 });
