@@ -65,34 +65,73 @@ export default function Footer() {
       }}
     >
       <Container maxWidth="xl" sx={{ overflowX: "scroll" }}>
-        <Stack>
-          <Link href="/">
-            <Typography
-              color={theme.palette.primary.main}
-              fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
-              fontWeight={600}
-              sx={{
-                cursor: "pointer",
-                maxWidth: "280px",
-                height: "auto",
-              }}
-            >
-              ProperHomes
-            </Typography>
-          </Link>
-          {/* <Typography gutterBottom maxWidth="500px">
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          alignItems="center"
+          justifyContent={{ xs: "center", md: "space-between" }}
+        >
+          <Stack alignItems={{ xs: "center", md: "start" }}>
+            <Link href="/">
+              <Typography
+                color={theme.palette.primary.main}
+                fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
+                fontWeight={600}
+                sx={{
+                  cursor: "pointer",
+                  maxWidth: "280px",
+                  height: "auto",
+                }}
+              >
+                ProperHomes
+              </Typography>
+            </Link>
+            {/* <Typography gutterBottom maxWidth="500px">
             ProperHomes is the place where you can find a home that love you.
             Zero Spam, Zero Brokerage, Zero Paperwork and Zero Issues are our
             main advantages over other real estate listing websites/apps.
           </Typography> */}
-          <Stack my={1} ml={-1} direction="row" alignItems="center" spacing={1}>
-            {socialLinks.map(({ Icon, href }, i) => {
-              return (
-                <IconButton LinkComponent={Link} href={href} key={i}>
-                  <Icon />
-                </IconButton>
-              );
-            })}
+            <Stack
+              my={1}
+              ml={-1}
+              direction="row"
+              alignItems="center"
+              spacing={1}
+            >
+              {socialLinks.map(({ Icon, href }, i) => {
+                return (
+                  <IconButton LinkComponent={Link} href={href} key={i}>
+                    <Icon />
+                  </IconButton>
+                );
+              })}
+            </Stack>
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            <Link href="/pay-rent">
+              <Typography>Pay Rent</Typography>
+            </Link>
+            <Link href="/homeloans/emi-calculator">
+              <Typography>EMI Calculator</Typography>
+            </Link>
+            <Link href="/property-rental-management-for-owners-managers">
+              <Typography>Manage Rental Properties</Typography>
+            </Link>
+            <Link href="/affiliate-program">
+              <Typography>Becoma a ProperHomes Affiliate</Typography>
+            </Link>
+            <Link href="/about">
+              <Typography>About</Typography>
+            </Link>
+
+            <Link href="/faq">
+              <Typography>FAQ</Typography>
+            </Link>
+            <Link href="/privacypolicy">
+              <Typography>Privacy Policy</Typography>
+            </Link>
+            <Link href="/terms-and-conditions">
+              <Typography>Terms</Typography>
+            </Link>
           </Stack>
         </Stack>
 

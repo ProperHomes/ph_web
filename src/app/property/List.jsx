@@ -45,6 +45,7 @@ function PropertyList({
   infiniteScroll,
   count,
   showFilters,
+  showPagination,
   isSearch,
   searchText,
   searchResultsTotalCount,
@@ -56,7 +57,7 @@ function PropertyList({
   const [page, setPage] = useState(0);
   const [properties, setProperties] = useState([]);
 
-  const { Auth, toggleAuth } = useToggleAuth();
+  const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
   const {
     city,
     bedrooms,
@@ -96,7 +97,7 @@ function PropertyList({
 
   const { data: propertiesData } = useQuery(GET_PROPERTIES, {
     variables,
-    skip: !infiniteScroll || !count || isSearch,
+    skip: (!infiniteScroll && !showPagination) || !count || isSearch,
     fetchPolicy: "network-only",
   });
 
@@ -144,6 +145,7 @@ function PropertyList({
 
   const listToShow =
     isSearch ||
+    showPagination ||
     (infiniteScroll && count && page > 0) ||
     city ||
     bedrooms ||
@@ -158,6 +160,9 @@ function PropertyList({
       ? true
       : propertiesData?.properties?.totalCount > listToShow.length;
 
+  const paginationTotalCount =
+    searchResultsTotalCount ?? propertiesData?.properties?.totalCount;
+
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
       {showCategoryBoxes && (
@@ -166,7 +171,7 @@ function PropertyList({
         </Stack>
       )}
 
-      {isHome && !isMobile && <ZeroBoxes />}
+      {isHome && !isMobile && !isLoggedIn && <ZeroBoxes />}
 
       {title && (
         <Stack
@@ -208,6 +213,7 @@ function PropertyList({
           )}
           {viewAllLink && (
             <Button
+              aria-label="view all"
               variant="contained"
               LinkComponent={Link}
               href={viewAllLink}
@@ -226,6 +232,7 @@ function PropertyList({
       <Section>
         {!infiniteScroll &&
           !isSearch &&
+          !showPagination &&
           !propertyIdToEdit &&
           data.map((l, i) => {
             return (
@@ -242,7 +249,7 @@ function PropertyList({
           })}
       </Section>
 
-      {isSearch && (
+      {(isSearch || showPagination) && (
         <Section>
           {(page === 0 ? data : listToShow).map((l, i) => {
             return (
@@ -260,12 +267,12 @@ function PropertyList({
         </Section>
       )}
 
-      {isSearch && (
+      {(isSearch || showPagination) && listToShow > 10 && (
         <Stack alignItems="center" justifyContent="center">
           <Pagination
             page={page + 1}
             onChange={handleSearch}
-            count={Math.floor(searchResultsTotalCount / 10)}
+            count={Math.floor(paginationTotalCount / (count ?? 10))}
           />
         </Stack>
       )}

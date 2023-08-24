@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import InputBase from "@mui/material/InputBase";
+import Stack from "@mui/material/Stack";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -24,6 +24,7 @@ function SearchBlock() {
       width: { xs: "100px", md: "150px" },
       "& fieldset": {
         borderRadius: "8px 0 0 8px",
+        borderRight: "none",
         borderColor: theme.palette.grey[300],
       },
     },
@@ -56,6 +57,7 @@ function SearchBlock() {
       <CityDropdown
         sx={{
           width: { xs: "100px", md: "150px" },
+          borderRight: "none",
           borderRadius: "8px 0px 0px 8px !important",
         }}
       />

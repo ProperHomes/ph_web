@@ -41,6 +41,7 @@ function NavbarRight() {
         </IconButton>
       )}
       <Button
+        component="div"
         size="large"
         sx={{
           maxWidth: { xs: "150px", sm: "100%" },

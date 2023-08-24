@@ -9,6 +9,7 @@ import {
   PROPERTY_TYPE,
   navlinks,
   navLinkWithCities,
+  LISTING_TYPE,
 } from "@/utils/constants";
 import CreateProperty from "src/app/createProperty";
 
@@ -40,10 +41,11 @@ export default async function Page({ params }) {
     const isPG = slug.includes("pg") || slug.includes("paying-guests");
     const isHostel = slug.includes("hostel");
 
-    if (
-      !slug.includes("properties-for-sale") &&
-      !slug.includes("properties-for-rent")
-    ) {
+    const isProperties =
+      slug.includes("properties-for-sale") ||
+      slug.includes("properties-for-rent");
+
+    if (!isProperties) {
       variables.type = propertyType;
     }
     if (slug.includes("commercial")) {
@@ -56,7 +58,9 @@ export default async function Page({ params }) {
       variables.type = PROPERTY_TYPE.HOSTEL;
     }
 
-    if (!isPG && !isHostel) {
+    if (isPG || isHostel) {
+      variables.listedFor = LISTING_TYPE.RENT;
+    } else {
       variables.listedFor = listedFor;
     }
 
@@ -65,20 +69,23 @@ export default async function Page({ params }) {
     }
 
     let res = await client.request(GET_PROPERTIES, variables);
-    const initialResData = res?.properties?.nodes ?? [];
     data = res?.properties?.nodes ?? [];
     if (data.length === 0) {
-      res = await client.request(GET_PROPERTIES, { first: 20, offset: 0 });
+      res = await client.request(GET_PROPERTIES, {
+        first: isProperties ? 20 : 10,
+        offset: 0,
+      });
       data = res?.properties?.nodes ?? [];
     }
     return (
       <PropertyList
         data={data}
         type={variables.type}
-        infiniteScroll
+        infiniteScroll={isProperties}
+        showPagination={!isProperties}
         listedFor={listedFor}
         city={city}
-        count={20}
+        count={!isProperties ? 20 : 10}
         title={isCityLink ? navLinkWithCity.title : navLink.title}
         showFilters
       />

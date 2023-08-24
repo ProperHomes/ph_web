@@ -29,6 +29,7 @@ function PropertyProfile({ data }) {
     type,
   } = data ?? {};
 
+  const formattedTitle = title?.split("_").join(" ").toLowerCase();
   const formattedPrice = Number(price).toLocaleString("en-in", {
     style: "currency",
     currency: "INR",
@@ -109,12 +110,14 @@ function PropertyProfile({ data }) {
               fontWeight={600}
               textTransform="capitalize"
             >
-              {title?.toLowerCase()}
+              {formattedTitle}
             </Typography>
             <Button
+              aria-label="property price"
               size="large"
               variant="contained"
               disableRipple
+              component="p"
               sx={{
                 width: { xs: "100%", md: "200px" },
                 whiteSpace: "nowrap",
@@ -140,6 +143,8 @@ function PropertyProfile({ data }) {
                   key={label}
                   size="large"
                   disableRipple
+                  aria-label={`${value} ${label}`}
+                  component="p"
                   sx={{
                     whiteSpace: "nowrap",
                     fontWeight: 600,

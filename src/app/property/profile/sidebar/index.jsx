@@ -21,10 +21,20 @@ function Sidebar({ data }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Button startIcon={<Save />} fullWidth color="info">
+          <Button
+            aria-label="save property"
+            startIcon={<Save />}
+            fullWidth
+            color="info"
+          >
             Save Property
           </Button>
-          <Button startIcon={<Share />} fullWidth color="info">
+          <Button
+            aria-label="share property"
+            startIcon={<Share />}
+            fullWidth
+            color="info"
+          >
             Share Property
           </Button>
         </Stack>

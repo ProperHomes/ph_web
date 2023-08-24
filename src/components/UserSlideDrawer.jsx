@@ -72,7 +72,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
               fontWeight={600}
               fontSize={20}
               textAlign={"center"}
-              mt={1}
               ml={{ xs: "1rem", md: 0 }}
             >
               {isLoggedIn

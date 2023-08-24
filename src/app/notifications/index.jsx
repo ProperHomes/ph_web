@@ -56,6 +56,7 @@ function Notifications() {
     <Stack sx={{ background: "#F8F8FF" }}>
       {isMobileOrTablet && (
         <Button
+          aria-label="go back"
           onClick={handleClose}
           startIcon={<KeyboardBackspaceIcon />}
           sx={{
@@ -85,6 +86,7 @@ function Notifications() {
       >
         {!isMobileOrTablet && (
           <Button
+            aria-label="go back"
             onClick={handleClose}
             startIcon={<KeyboardBackspaceIcon />}
             sx={{

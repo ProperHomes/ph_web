@@ -8,11 +8,11 @@ const links = [
   { title: "For Sale", path: "/properties-for-sale" },
   { title: "For Rent", path: "/properties-for-rent" },
   {
-    title: "For Property Owners",
-    path: "/property-management-for-owners-managers",
+    title: "Manage Rentals",
+    path: "/property-rental-management-for-owners-managers",
   },
   {
-    title: "List your Property For Free",
+    title: "List your Property",
     path: "/list-your-property-for-sale-rent-lease",
   },
 ];

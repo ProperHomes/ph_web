@@ -215,6 +215,7 @@ export default function useFilters({
         height: "55px",
         borderRadius: "8px",
       }}
+      aria-label="reset"
     >
       RESET
     </Button>

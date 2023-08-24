@@ -5,7 +5,6 @@ import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Villa from "@mui/icons-material/VillaOutlined";
 import HouseOutlined from "@mui/icons-material/HouseOutlined";
 import LocationCityOutlined from "@mui/icons-material/LocationCityOutlined";
@@ -13,6 +12,32 @@ import WarehouseOutlined from "@mui/icons-material/WarehouseOutlined";
 import CabinOutlined from "@mui/icons-material/CabinOutlined";
 
 const links = [
+  {
+    label: "Paying Guests (PG)",
+    link: "/paying-guests-accommodation",
+    Icon: CabinOutlined,
+  },
+  {
+    label: "Flats For Rent",
+    link: "/flats-for-rent",
+    Icon: LocationCityOutlined,
+  },
+  { label: "Villas For Rent", link: "/villas-for-rent", Icon: Villa },
+  {
+    label: "Houses For Rent",
+    link: "/houses-for-rent",
+    Icon: HouseOutlined,
+  },
+  {
+    label: "Commercial For Rent",
+    link: "/commercial-properties-for-rent",
+    Icon: WarehouseOutlined,
+  },
+  {
+    label: "Pent Houses For Rent",
+    link: "/pent-houses-for-rent",
+    Icon: WarehouseOutlined,
+  },
   {
     label: "Flats For Sale",
     link: "/flats-for-sale",
@@ -34,38 +59,11 @@ const links = [
     link: "/commercial-properties-for-sale",
     Icon: WarehouseOutlined,
   },
-  {
-    label: "Flats For Rent",
-    link: "/flats-for-rent",
-    Icon: LocationCityOutlined,
-  },
-  { label: "Villas For Rent", link: "/villas-for-rent", Icon: Villa },
-  {
-    label: "Houses For Rent",
-    link: "/houses-for-rent",
-    Icon: HouseOutlined,
-  },
-  {
-    label: "FarmHouses For Rent",
-    link: "/farm-houses-for-rent",
-    Icon: CabinOutlined,
-  },
-  {
-    label: "Commercial For Rent",
-    link: "/commercial-properties-for-rent",
-    Icon: WarehouseOutlined,
-  },
-  {
-    label: "Pent Houses For Rent",
-    link: "/pent-houses-for-rent",
-    Icon: WarehouseOutlined,
-  },
 ];
 
 function SecondSection({ lineView }) {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
-  const isMobile = useMediaQuery(theme.breakpoints.up("xs"));
   const pathname = usePathname();
 
   const LineView = () => {
@@ -139,20 +137,32 @@ function SecondSection({ lineView }) {
                   backgroundColor: isDarkMode ? "#000" : "#fff",
                   "&: hover": {
                     boxShadow: theme.shadows[4],
+                    "& svg": {
+                      color: theme.palette.info.main,
+                    },
+                    "& p": {
+                      color: theme.palette.info.main,
+                    },
                   },
                 }}
               >
-                <Icon htmlColor={theme.palette.text.secondary} />
+                <Icon
+                  htmlColor={
+                    isActive
+                      ? theme.palette.info.main
+                      : theme.palette.primary.main
+                  }
+                />
                 <Typography
                   textAlign="center"
                   color={theme.palette.text[isActive ? "primary" : "secondary"]}
                   fontSize="0.8rem"
-                  fontWeight={600}
+                  fontWeight={isActive ? 800 : 700}
                   sx={{
                     transition: "all 0.3s ease",
-                    "&:hover": {
-                      color: theme.palette.text.primary,
-                    },
+                    color: isActive
+                      ? theme.palette.info.main
+                      : theme.palette.primary.main,
                   }}
                 >
                   {label}

@@ -105,7 +105,6 @@ export const navlinksRent = [
   { link: "flats-for-rent", title: "Flats For Rent" },
   { link: "villas-for-rent", title: "Villas For Rent" },
   { link: "houses-for-rent", title: "Independent Houses For Rent" },
-  { link: "farm-houses-for-rent", title: "Farm Houses For Rent" },
   {
     link: "commercial-properties-for-rent",
     title: "Commerical Properties For Rent",
@@ -120,7 +119,7 @@ export const navlinksRent = [
 
 export const navlinksOthers = [
   { link: "pg", title: "Paying Guest" },
-  { link: "paying-guests-accomodation", title: "Paying Guest" },
+  { link: "paying-guests-accommodation", title: "Paying Guest" },
   { link: "hostel-accommodation", title: "Hostels" },
   { link: "hostels", title: "Hostels" },
 ];

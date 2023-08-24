@@ -15,7 +15,7 @@ export default function Home({ data }) {
   const loggedInUserId = state.user?.id;
 
   const { data: propertiesData } = useQuery(GET_PROPERTIES_LOGGED_IN, {
-    variables: { userId: loggedInUserId, first: 20, offset: 0 },
+    variables: { userId: loggedInUserId, first: 10, offset: 0 },
     skip: !loggedInUserId,
     fetchPolicy: "network-only",
   });
@@ -26,7 +26,7 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Stack spacing={2} px={{ xs: 0, md: 4 }} py={2} alignItems="center">
+      <Stack spacing={1} px={{ xs: 0, md: 4 }} py={2} alignItems="center">
         <Typography color={theme.palette.text.primary} variant="h4">
           Find a home that{" "}
           <span

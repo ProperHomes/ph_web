@@ -515,7 +515,12 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
 
           <Stack direction="row" alignItems="center" spacing={4}>
             {!!data && (
-              <Button variant="contained" color="error" onClick={handleCancel}>
+              <Button
+                variant="contained"
+                color="error"
+                aria-label="cancel"
+                onClick={handleCancel}
+              >
                 Cancel
               </Button>
             )}
@@ -525,6 +530,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                 onClick={onSubmitDraft}
                 variant="outlined"
                 disabled={submitting}
+                aria-label="save as draft"
               >
                 Save as draft
               </Button>
@@ -535,6 +541,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               variant="contained"
               color="info"
               disabled={submitting}
+              aria-label="submit property for review"
             >
               Submit Property For Review
             </Button>

@@ -25,6 +25,7 @@ import ForgorPasswordForm from "./ForgotPassword";
 import Loading from "src/components/Loading";
 import { passwordRules } from "@/utils/helper";
 import { useAppContext } from "src/appContext";
+import { USER_TYPE } from "@/utils/constants";
 
 const OtpInput = styled(MuiOtpInput)({
   "& input": {
@@ -173,48 +174,47 @@ function AuthModal({ open, handleClose }) {
     }
   };
 
-  const handleSignup = (data) => {};
-
-  const handleForgotpassword = (data) => {};
-
-  const handleSendOtp = async (data) => {
-    let existsAlready = false;
+  const handleSignup = async (data) => {
     try {
-      const res = await getUserByPhone({
-        variables: {
+      const res = await axios({
+        method: "post",
+        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
+        data: {
+          ...data,
+          type: USER_TYPE.BUYER,
           phoneNumber: `91${data.phoneNumber}`,
         },
+        withCredentials: true,
       });
-      existsAlready = !!res?.data?.userByPhoneNumber?.id;
+      if (res?.data?.userId) {
+        await handleFetchUser(res.data.userId);
+        handleClose();
+      }
+    } catch (err) {
+      setError("password", {
+        type: "server",
+        message: "Incorrect credentials",
+      });
+    }
+  };
+
+  const handleSendOtp = async (data) => {
+    try {
+      await axios({
+        method: "post",
+        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/phonenumber/sendotp`,
+        data: {
+          phoneNumber: `91${data.phoneNumber}`,
+          isForgotPassword: showForgotPassword,
+          isSignup: showSignup,
+        },
+        withCredentials: true,
+      });
+      setOtpReqSuccesful(true);
     } catch (err) {
       setError("phoneNumber", {
         type: "server",
         message: err?.response?.data?.error ?? "",
-      });
-    }
-
-    if (existsAlready) {
-      try {
-        await axios({
-          method: "post",
-          url: `${process.env.NEXT_PUBLIC_API_URL}/auth/phonenumber/sendotp`,
-          data: {
-            phoneNumber: `91${data.phoneNumber}`,
-            isCandidate,
-          },
-          withCredentials: true,
-        });
-        setOtpReqSuccesful(true);
-      } catch (err) {
-        setError("phoneNumber", {
-          type: "server",
-          message: err?.response?.data?.error ?? "",
-        });
-      }
-    } else {
-      setError("phoneNumber", {
-        type: "server",
-        message: `Account doesn't exist. Please create an account first.`,
       });
     }
   };
@@ -233,7 +233,13 @@ function AuthModal({ open, handleClose }) {
         withCredentials: true,
       });
       if (res.status === 200 && !!res.data) {
-        await handleFetchUser(res.data.userId);
+        if (isLoginWithOtp) {
+          await handleFetchUser(res.data.userId);
+        } else if (showSignup) {
+          await handleSignup(getValues());
+        } else if (showForgotPassword) {
+          // Todo:
+        }
       } else {
         setOtpError(true);
       }
@@ -243,11 +249,13 @@ function AuthModal({ open, handleClose }) {
     setIsLoading(false);
   };
 
+  const handleForgotpassword = (data) => {};
+
   const onSubmit = (data) => {
     if (showForgotPassword) {
       handleForgotpassword(data);
     } else if (showSignup) {
-      handleSignup(data);
+      handleSendOtp(data);
     } else {
       handleLogin(data);
     }
@@ -286,10 +294,7 @@ function AuthModal({ open, handleClose }) {
           alignItems="center"
         >
           {(submitting || isLoading) && <Loading />}
-          <Typography
-            variant="subtitle1"
-            fontWeight="bold"
-          >
+          <Typography variant="subtitle1" fontWeight="bold">
             Welcome to Proper Homes
           </Typography>
           {showLogin && (
@@ -302,6 +307,7 @@ function AuthModal({ open, handleClose }) {
           {isLoginWithOtp &&
             (!otpReqSuccessful ? (
               <Button
+                aria-label="send otp button"
                 variant="contained"
                 fullWidth
                 onClick={handleSubmit(handleSendOtp)}
@@ -321,6 +327,9 @@ function AuthModal({ open, handleClose }) {
             ))}
           {!isLoginWithOtp && (
             <Button
+              aria-label={`Submit ${
+                showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"
+              } button`}
               variant="contained"
               fullWidth
               onClick={handleSubmit(onSubmit)}

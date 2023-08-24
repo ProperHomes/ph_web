@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
@@ -6,23 +7,14 @@ import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import { useEffect, useState } from "react";
 import { LISTING_TYPE, PROPERTY_STATUS } from "@/utils/constants";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import CurrencyRupee from "@mui/icons-material/CurrencyRupee";
 import MoneyOff from "@mui/icons-material/MoneyOff";
 import { DocumentScannerOutlined } from "@mui/icons-material";
-import CustomTabPanel from "@/components/CustomTabPanel";
 import PropertyPayments from "src/app/dashboard/PropertyPayments";
 
-const items = [
-  {
-    label: "Interested People",
-    id: "interests",
-    Icon: ContactsOutlinedIcon,
-  },
-];
+const items = [];
 
 export default function ManageProperty({ data }) {
   const router = useRouter();
@@ -94,9 +86,7 @@ export default function ManageProperty({ data }) {
             );
           })}
         </Tabs>
-        {activeTabId === "interests" && (
-          <PropertyPayments propertyId={data?.id} />
-        )}
+
         {activeTabId === "rentpayments" && (
           <PropertyPayments propertyId={data?.id} paymentFor="RENT" />
         )}
