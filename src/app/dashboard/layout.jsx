@@ -1,9 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+
 import { useAppContext } from "src/appContext";
 import Loading from "@/components/Loading";
+import Dashboardnav from "./nav";
+
+const GridBox = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "225px 1fr",
+  padding: "1em",
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "1fr",
+  },
+}));
 
 function DashboardLayout({ children }) {
   const router = useRouter();
@@ -11,6 +24,7 @@ function DashboardLayout({ children }) {
   const isLoggedIn = !!state?.user;
   const [isLoading, setIsLoading] = useState(true);
 
+  // Todo: use middleware ?
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!isLoggedIn) {
@@ -24,10 +38,13 @@ function DashboardLayout({ children }) {
   }, [isLoggedIn, router]);
 
   return (
-    <Stack width="100%">
+    <Paper sx={{ borderRadius: "1em", minHeight: "85vh" }}>
       {isLoading && <Loading />}
-      {children}
-    </Stack>
+      <GridBox>
+        <Dashboardnav />
+        {children}
+      </GridBox>
+    </Paper>
   );
 }
 

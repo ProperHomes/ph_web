@@ -23,6 +23,7 @@ export const PROPERTY_FIELDS = gql`
     createdAt
     area
     ownerId
+    tenantId
     agentId
     status
   }
@@ -72,6 +73,33 @@ export const GET_OWNER_PROPERTIES = gql`
   query getProperties($ownerId: UUID!, $first: Int!, $offset: Int!) {
     properties(
       condition: { ownerId: $ownerId }
+      first: $first
+      offset: $offset
+      orderBy: CREATED_AT_DESC
+    ) {
+      nodes {
+        ...PropertyFields
+        media: propertyMedias {
+          nodes {
+            id
+            mediaUrl
+            media {
+              signedUrl
+            }
+            isCoverImage
+          }
+        }
+      }
+      totalCount
+    }
+  }
+`;
+
+export const GET_TENANT_PROPERTY = gql`
+  ${PROPERTY_FIELDS}
+  query getProperties($tenantId: UUID!, $first: Int!, $offset: Int!) {
+    properties(
+      condition: { tenantId: $tenantId }
       first: $first
       offset: $offset
       orderBy: CREATED_AT_DESC

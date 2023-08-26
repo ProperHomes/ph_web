@@ -17,8 +17,6 @@ import LightMode from "@mui/icons-material/LightMode";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CurrencyRupeeOutlined from "@mui/icons-material/CurrencyRupeeOutlined";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import { Save } from "@mui/icons-material";
 
 const StyledBtn = styled(Button)(({ theme }) => ({
   maxWidth: { xs: "150px", sm: "100%" },
@@ -104,21 +102,10 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
               >
                 Dashboard
               </StyledBtn>
-              <StyledBtn
-                startIcon={<CreditCardIcon />}
-                onClick={navigateTo("/dashboard/membership")}
-              >
-                Membership
-              </StyledBtn>
-              <StyledBtn
-                startIcon={<Save />}
-                onClick={navigateTo("/dashboard/saved-properties")}
-              >
-                Saved Properties
-              </StyledBtn>
+
               <StyledBtn
                 startIcon={<SettingsIcon />}
-                onClick={navigateTo("/settings")}
+                onClick={navigateTo("/dashboard/settings")}
               >
                 Settings
               </StyledBtn>

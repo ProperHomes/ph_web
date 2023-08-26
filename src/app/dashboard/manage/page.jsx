@@ -1,11 +1,13 @@
 "use client";
 import { useState, Suspense, lazy } from "react";
 import { useQuery } from "@apollo/client";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
 
 import { useAppContext } from "src/appContext";
-import { GET_OWNER_PROPERTIES } from "@/graphql/properties";
+import {
+  GET_OWNER_PROPERTIES,
+  GET_TENANT_PROPERTY,
+} from "@/graphql/properties";
 import Loading from "src/components/Loading";
 
 const PropertyList = lazy(() => import("src/app/property/List"));
@@ -14,37 +16,43 @@ function ManageProperties() {
   const [page, setPage] = useState(0);
   const { state } = useAppContext();
 
-  const { data, loading } = useQuery(GET_OWNER_PROPERTIES, {
+  const { data: ownerProperties, loading } = useQuery(GET_OWNER_PROPERTIES, {
     variables: { first: 10, offset: page * 10, ownerId: state.user?.id },
     skip: !state.user?.id,
     fetchPolicy: "network-only",
   });
-  const properties = data?.properties?.nodes ?? [];
 
-  const handleFetchNext = () => {
-    setPage((prev) => prev + 1);
+  const { data } = useQuery(GET_TENANT_PROPERTY, {
+    variables: { first: 10, offset: page * 10, tenantId: state.user?.id },
+    skip: !state.user?.id,
+    fetchPolicy: "network-only",
+  });
+
+  let properties = ownerProperties?.properties?.nodes ?? [];
+  const tenantProperty = data?.properties?.nodes?.[0];
+  properties = [...properties, tenantProperty].filter((x) => x);
+
+  const handleFetchNext = (_e, newPage) => {
+    setPage(newPage);
   };
+
+  const totalCount = ownerProperties?.properties?.totalCount;
 
   return loading ? (
     <Loading />
   ) : (
-    <>
-      <Typography fontWeight={600} gutterBottom fontSize="1.2rem">
-        Manage your properties
-      </Typography>
-      <br />
-      <InfiniteScroll
-        dataLength={properties.length}
-        next={handleFetchNext}
-        hasMore={data?.properties?.totalCount > properties.length}
-        loader={<></>}
-        endMessage={<></>}
-      >
-        <Suspense fallback={<Loading />}>
-          <PropertyList data={properties} />
-        </Suspense>
-      </InfiniteScroll>
-    </>
+    <Suspense fallback={<Loading />}>
+      <PropertyList data={properties} />
+      {totalCount > 10 && (
+        <Stack alignItems="center" justifyContent="center">
+          <Pagination
+            page={page + 1}
+            onChange={handleFetchNext}
+            count={Math.floor(totalCount / 10)}
+          />
+        </Stack>
+      )}
+    </Suspense>
   );
 }
 

@@ -1,4 +1,7 @@
 "use client";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -9,11 +12,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
-import { useState } from "react";
 import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
 
 function NavbarRight() {
+  const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { state: appState } = useAppContext();
@@ -33,8 +36,15 @@ function NavbarRight() {
     toggleDrawer();
   };
 
+  const isDashboard = pathname.includes("/dashboard");
+
   return (
     <Stack direction="row" spacing={2} alignItems="center">
+      {!!loggedInUser && !isDashboard && (
+        <Button size="large" LinkComponent={Link} href="/dashboard">
+          Dashboard
+        </Button>
+      )}
       {!!loggedInUser && !isMobile && (
         <IconButton onClick={toggleNotifications}>
           <NotificationsNoneIcon fontSize="medium" />

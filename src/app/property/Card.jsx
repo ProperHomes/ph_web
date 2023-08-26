@@ -67,6 +67,7 @@ function PropertyCard({
     city,
     bedrooms,
     ownerId,
+    tenantId,
     currentUserSavedProperties,
   } = data;
 
@@ -233,7 +234,7 @@ function PropertyCard({
           </Box>
         </Link>
 
-        {!isOwner && showFavorite && (
+        {!isOwner && !tenantId && showFavorite && (
           <Tooltip
             enterDelay={0}
             title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
@@ -278,19 +279,44 @@ function PropertyCard({
             sx={{
               position: "absolute",
               left: 10,
-              top: 10,
+              top: 15,
               zIndex: 1,
               fontWeight: "medium",
             }}
           >
             <Chip
               sx={{
+                backgroundColor: "#00000050",
                 "& .MuiChip-label": {
-                  fontWeight: 600,
+                  fontWeight: 800,
                 },
               }}
               color={isDarkMode ? "default" : "secondary"}
               label={`${bedrooms} BHK`}
+            />
+          </Box>
+        )}
+
+        {!!tenantId && (
+          <Box
+            sx={{
+              position: "absolute",
+              right: bedrooms > 0 ? 60 : "unset",
+              left: bedrooms > 0 ? "unset" : 10,
+              top: 15,
+              zIndex: 1,
+              fontWeight: "medium",
+            }}
+          >
+            <Chip
+              sx={{
+                backgroundColor: "#00000050",
+                "& .MuiChip-label": {
+                  fontWeight: 800,
+                },
+              }}
+              color={isDarkMode ? "default" : "secondary"}
+              label="Occupied"
             />
           </Box>
         )}

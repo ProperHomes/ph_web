@@ -12,8 +12,6 @@ function NavbarLeft() {
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const isDashboardOrSettings =
-    pathname.includes("/dashboard") || pathname.includes("/settings");
 
   return (
     <Stack direction="row">
@@ -31,7 +29,7 @@ function NavbarLeft() {
           ProperHomes
         </Typography>
       </Link>
-      {isDashboardOrSettings && !isMobile ? <Dashboardnav /> : <NavLinks />}
+      <NavLinks />
     </Stack>
   );
 }
