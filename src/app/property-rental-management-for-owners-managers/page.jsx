@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { StyledContainer } from "./styles";
+import { InfoStack, StyledContainer } from "./styles";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -67,18 +67,7 @@ export default function PropertyManagement() {
         <Stack spacing={4} py={2} alignItems="center" justifyContent="center">
           {info.map(({ Icon, title, description }) => {
             return (
-              <Stack
-                key={title}
-                px={4}
-                py={2}
-                spacing={1}
-                sx={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: "1rem",
-                  border: "1px solid #3c27b012",
-                }}
-              >
+              <InfoStack key={title} px={4} py={2} spacing={1}>
                 <Stack direction="row" alignItems="center" spacing={2}>
                   <Icon fontSize="medium" />
                   <Typography fontSize="1.4rem" fontWeight="700" gutterBottom>
@@ -87,7 +76,7 @@ export default function PropertyManagement() {
                 </Stack>
 
                 <Typography variant="body1">{description}</Typography>
-              </Stack>
+              </InfoStack>
             );
           })}
           <Button
