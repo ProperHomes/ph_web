@@ -40,7 +40,7 @@ function NavbarRight() {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      {!!loggedInUser && !isDashboard && (
+      {!!loggedInUser && !isDashboard && !isMobile && (
         <Button size="large" LinkComponent={Link} href="/dashboard">
           Dashboard
         </Button>

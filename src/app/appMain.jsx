@@ -4,6 +4,7 @@ import { ApolloProvider } from "@apollo/client";
 import Box from "@mui/material/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { usePathname } from "next/navigation";
 
 import { NotificationsProvider } from "src/app/notifications/context";
 import useDarkMode from "src/hooks/useDarkMode";
@@ -16,14 +17,19 @@ import "../styles/globals.css";
 
 function Main({ children }) {
   const { isDarkModeActive } = useDarkMode();
+  const pathname = usePathname();
   const theme = isDarkModeActive ? darkTheme : lightTheme;
+  const isManageRentalsPage =
+    pathname === "/property-rental-management-for-owners-managers";
   return (
     <ThemeRegistry theme={theme} options={{ key: "mui" }}>
       <NotificationsProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Box
             sx={{
-              backgroundColor: theme.palette.background.default,
+              backgroundColor: isManageRentalsPage
+                ? theme.palette.background.secondary
+                : theme.palette.background.default,
               margin: "0 auto",
             }}
           >

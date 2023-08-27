@@ -139,7 +139,7 @@ export default function Footer() {
           value={index}
           onChange={handleChange}
           variant="scrollable"
-          scrollButtons="auto"
+          scrollButtons
           aria-label="footer city tabs"
         >
           {tabSections.map(({ label }) => {

@@ -41,7 +41,7 @@ const dashboardTabList = [
   },
   {
     label: "Settings",
-    href: "/settings",
+    href: "/dashboard/settings",
     Icon: SettingsIcon,
   },
 ];

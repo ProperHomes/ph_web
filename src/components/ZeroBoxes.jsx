@@ -1,8 +1,6 @@
-"use client";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
 import PhoneDisabledIcon from "@mui/icons-material/PhoneDisabled";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -19,7 +17,7 @@ const infoBoxes = [
     title: "Zero Brokerage",
     color: "#eaf9f5",
     Icon: MoneyOffIcon,
-    description: `  100% Real Owner Verified Properties. No brokers or middlemen
+    description: `100% Real Owner Verified Properties. No brokers or middlemen
     involved.`,
   },
   {
@@ -37,21 +35,14 @@ const infoBoxes = [
 ];
 
 export default function ZeroBoxes() {
-  const theme = useTheme();
   return (
     <Box
       py={2}
       px={{ xs: 2, md: 0 }}
       sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
         gap: "2em",
-        [theme.breakpoints.down("md")]: {
-          gridTemplateColumns: "1fr 1fr",
-        },
-        [theme.breakpoints.down("sm")]: {
-          gridTemplateColumns: "1fr",
-        },
       }}
     >
       {infoBoxes.map(({ color, Icon, title, description }) => {
@@ -73,7 +64,7 @@ export default function ZeroBoxes() {
               <Typography
                 variant="body2"
                 fontSize="1.4rem"
-                fontWeight={theme.typography.fontWeightBold}
+                fontWeight="700"
                 gutterBottom
               >
                 {title}

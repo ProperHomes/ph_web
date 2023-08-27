@@ -91,6 +91,7 @@ const darkTheme = responsiveFontSizes(
       mode: "dark",
       background: {
         default: "#0e0e0e !important",
+        secondary: "#0e0e0e",
       },
       primary: {
         main: "#f9fbfc",
@@ -116,6 +117,7 @@ const lightTheme = responsiveFontSizes(
       mode: "light",
       background: {
         default: "#ffffff",
+        secondary: "#3c27b012",
       },
       primary: {
         main: "#222",
