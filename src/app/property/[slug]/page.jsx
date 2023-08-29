@@ -15,11 +15,11 @@ export default async function Page({ params }) {
   const { city, type } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 4,
-    offset: 0,
     city,
     type,
   });
-  const properties = similarRes?.properties?.nodes ?? [];
+  const properties =
+    similarRes?.properties?.edges?.map((edge) => edge.node) ?? [];
   return (
     <Stack spacing={2} px={{ xs: 1, sm: 3, md: 4 }} py={2}>
       <Profile data={data} />

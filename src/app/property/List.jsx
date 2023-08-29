@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useState } from "react";
+import { useLazyQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import useToggleAuth from "src/hooks/useToggleAuth";
 import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import useFilters from "src/hooks/useFilters";
+import usePagination from "src/hooks/usePagination";
 import ZeroBoxes from "@/components/ZeroBoxes";
 
 const Section = styled(Box)(({ theme }) => ({
@@ -54,7 +55,6 @@ function PropertyList({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
-  const [page, setPage] = useState(0);
   const [properties, setProperties] = useState([]);
 
   const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
@@ -73,13 +73,13 @@ function PropertyList({
         borderColor: theme.palette.grey[300],
       },
     },
-    onReset: () => setPage(0),
-    onChangeCity: () => setPage(0),
-    onChangeBedrooms: () => setPage(0),
-    onChangeListedFor: () => setPage(0),
+    onReset: () => handleChangePage(0),
+    onChangeCity: () => handleChangePage(0),
+    onChangeBedrooms: () => handleChangePage(0),
+    onChangeListedFor: () => handleChangePage(0),
   });
 
-  const variables = { first: count, offset: page * count };
+  const variables = { first: count };
   if (type) {
     variables.type = type;
   }
@@ -95,47 +95,51 @@ function PropertyList({
 
   const [searchProperties] = useLazyQuery(SEARCH_PROPERTIES);
 
-  const { data: propertiesData } = useQuery(GET_PROPERTIES, {
+  const { paginationObj, handleChangePage } = usePagination({
+    key: "properties",
+    QUERY: GET_PROPERTIES,
+    querySkip: (!infiniteScroll && !showPagination) || !count || isSearch,
     variables,
-    skip: (!infiniteScroll && !showPagination) || !count || isSearch,
-    fetchPolicy: "network-only",
-  });
-
-  useEffect(() => {
-    const props = propertiesData?.properties?.nodes ?? [];
-    if (props.length > 0) {
+    initialPageNo: showPagination ? 0 : 1,
+    onNewData: (data, page) => {
       if ((city || bedrooms || listedFor) && page === 0) {
-        setProperties(props);
+        setProperties(data);
       } else {
         setProperties((prev) => {
-          return removeDuplicateObjectsFromArray([...prev, ...props]);
+          return removeDuplicateObjectsFromArray([...prev, ...data]);
         });
       }
-    }
-  }, [propertiesData]);
+    },
+  });
 
   const toggleEditor = (id) => () => {
     setPropertyIdToEdit(id);
   };
 
   const handleFetchNextPage = () => {
-    setPage((prev) => prev + 1);
+    handleChangePage(paginationObj.currentPage + 1);
   };
 
-  const handleSearch = async (_e, searchPage) => {
-    setPage(searchPage - 1);
+  const handleSearch = async () => {
     try {
       const { data } = await searchProperties({
         variables: {
           searchText,
           city,
           first: count,
-          offset: (searchPage - 1) * count,
         },
       });
       setProperties(data?.searchProperties?.nodes ?? []);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const handleChangePaginationPage = (_e, page) => {
+    if (isSearch) {
+      handleSearch();
+    } else {
+      handleChangePage(page);
     }
   };
 
@@ -146,7 +150,7 @@ function PropertyList({
   const listToShow =
     isSearch ||
     showPagination ||
-    (infiniteScroll && count && page > 0) ||
+    (infiniteScroll && count) ||
     city ||
     bedrooms ||
     listedFor
@@ -155,13 +159,7 @@ function PropertyList({
 
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
 
-  const hasMore =
-    page === 0
-      ? true
-      : propertiesData?.properties?.totalCount > listToShow.length;
-
-  const paginationTotalCount =
-    searchResultsTotalCount ?? propertiesData?.properties?.totalCount;
+  const hasMore = paginationObj.pageInfo?.hasNextPage;
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
@@ -250,32 +248,37 @@ function PropertyList({
       </Section>
 
       {(isSearch || showPagination) && (
-        <Section>
-          {(page === 0 ? data : listToShow).map((l, i) => {
-            return (
-              <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
-                <Card
-                  data={l}
-                  showFavorite
-                  isPriority={i < 9}
-                  toggleAuth={toggleAuth}
-                  togglePropertyEditor={toggleEditor(l.id)}
-                />
-              </Box>
-            );
-          })}
-        </Section>
+        <>
+          <Section>
+            {listToShow.map((l, i) => {
+              return (
+                <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
+                  <Card
+                    data={l}
+                    showFavorite
+                    isPriority={i < 9}
+                    toggleAuth={toggleAuth}
+                    togglePropertyEditor={toggleEditor(l.id)}
+                  />
+                </Box>
+              );
+            })}
+          </Section>
+          {paginationObj.totalCount > properties.length && (
+            <Stack alignItems="center" justifyContent="center">
+              <Pagination
+                page={paginationObj.currentPage}
+                onChange={handleChangePaginationPage}
+                count={
+                  searchResultsTotalCount ??
+                  paginationObj?.totalCount / (count ?? 10)
+                }
+              />
+            </Stack>
+          )}
+        </>
       )}
 
-      {(isSearch || showPagination) && listToShow > 10 && (
-        <Stack alignItems="center" justifyContent="center">
-          <Pagination
-            page={page + 1}
-            onChange={handleSearch}
-            count={Math.floor(paginationTotalCount / (count ?? 10))}
-          />
-        </Stack>
-      )}
       {infiniteScroll && !isSearch && !propertyIdToEdit && (
         <InfiniteScroll
           dataLength={listToShow.length}

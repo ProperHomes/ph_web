@@ -152,6 +152,14 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
             >
               Generate Rental Agreement
             </StyledBtn>
+            <StyledBtn
+              startIcon={<CalculateOutlined />}
+              onClick={navigateTo(
+                "/property-rental-management-for-owners-managers"
+              )}
+            >
+              Manage Rentals
+            </StyledBtn>
           </Stack>
         )}
 

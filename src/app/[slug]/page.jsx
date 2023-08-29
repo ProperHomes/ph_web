@@ -16,7 +16,6 @@ import CreateProperty from "src/app/createProperty";
 export default async function Page({ params }) {
   const { slug = "" } = params;
   let data = [];
-  const variables = { first: 20, offset: 0 };
 
   const isRentalAgreementPage =
     slug === "rental-agreement" ||
@@ -45,6 +44,8 @@ export default async function Page({ params }) {
       slug.includes("properties-for-sale") ||
       slug.includes("properties-for-rent");
 
+    const variables = { first: isProperties ? 20 : 10 };
+
     if (!isProperties) {
       variables.type = propertyType;
     }
@@ -58,24 +59,20 @@ export default async function Page({ params }) {
       variables.type = PROPERTY_TYPE.HOSTEL;
     }
 
-    if (isPG || isHostel) {
-      variables.listedFor = LISTING_TYPE.RENT;
-    } else {
-      variables.listedFor = listedFor;
-    }
+    listedFor = isPG || isHostel ? LISTING_TYPE.RENT : listedFor;
+    variables.listedFor = listedFor;
 
     if (city && isCityLink) {
       variables.city = city;
     }
 
     let res = await client.request(GET_PROPERTIES, variables);
-    data = res?.properties?.nodes ?? [];
+    data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
     if (data.length === 0) {
       res = await client.request(GET_PROPERTIES, {
         first: isProperties ? 20 : 10,
-        offset: 0,
       });
-      data = res?.properties?.nodes ?? [];
+      data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
     }
     return (
       <PropertyList

@@ -26,6 +26,16 @@ export const PROPERTY_FIELDS = gql`
     tenantId
     agentId
     status
+    media: propertyMedias {
+      nodes {
+        id
+        mediaUrl
+        media {
+          signedUrl
+        }
+        isCoverImage
+      }
+    }
   }
 `;
 
@@ -36,32 +46,31 @@ export const GET_PROPERTIES = gql`
     $type: PropertyType
     $city: PropertyCity
     $bedrooms: Int
-    $first: Int!
-    $offset: Int!
+    $first: Int
+    $after: Cursor
   ) {
     properties(
+      first: $first
+      after: $after
       condition: {
         listedFor: $listedFor
         type: $type
         city: $city
         bedrooms: $bedrooms
       }
-      first: $first
-      offset: $offset
       orderBy: CREATED_AT_DESC
     ) {
-      nodes {
-        ...PropertyFields
-        media: propertyMedias {
-          nodes {
-            id
-            mediaUrl
-            media {
-              signedUrl
-            }
-            isCoverImage
-          }
+      edges {
+        cursor
+        node {
+          ...PropertyFields
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
       totalCount
     }
@@ -79,16 +88,6 @@ export const GET_OWNER_PROPERTIES = gql`
     ) {
       nodes {
         ...PropertyFields
-        media: propertyMedias {
-          nodes {
-            id
-            mediaUrl
-            media {
-              signedUrl
-            }
-            isCoverImage
-          }
-        }
       }
       totalCount
     }
@@ -97,25 +96,14 @@ export const GET_OWNER_PROPERTIES = gql`
 
 export const GET_TENANT_PROPERTY = gql`
   ${PROPERTY_FIELDS}
-  query getProperties($tenantId: UUID!, $first: Int!, $offset: Int!) {
+  query getProperties($tenantId: UUID!, $first: Int!) {
     properties(
       condition: { tenantId: $tenantId }
       first: $first
-      offset: $offset
       orderBy: CREATED_AT_DESC
     ) {
       nodes {
         ...PropertyFields
-        media: propertyMedias {
-          nodes {
-            id
-            mediaUrl
-            media {
-              signedUrl
-            }
-            isCoverImage
-          }
-        }
       }
       totalCount
     }
@@ -129,13 +117,11 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
     $type: PropertyType
     $city: PropertyCity
     $first: Int!
-    $offset: Int!
     $userId: UUID!
   ) {
     properties(
       condition: { listedFor: $listedFor, type: $type, city: $city }
       first: $first
-      offset: $offset
       orderBy: CREATED_AT_DESC
     ) {
       nodes {
@@ -147,16 +133,6 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
             id
           }
         }
-        media: propertyMedias {
-          nodes {
-            id
-            mediaUrl
-            media {
-              signedUrl
-            }
-            isCoverImage
-          }
-        }
       }
       totalCount
     }
@@ -165,27 +141,27 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
 
 export const GET_USER_SAVED_PROPERTIES = gql`
   ${PROPERTY_FIELDS}
-  query getSavedProperties($first: Int!, $offset: Int!, $userId: UUID!) {
+  query getSavedProperties($first: Int!, $after: Cursor, $userId: UUID!) {
     savedProperties(
       condition: { userId: $userId }
       first: $first
-      offset: $offset # orderBy: CREATED_AT_DESC
-    ) {
-      nodes {
-        id
-        property {
-          ...PropertyFields
-          media: propertyMedias {
-            nodes {
-              id
-              mediaUrl
-              media {
-                signedUrl
-              }
-              isCoverImage
-            }
+      after: $after
+    ) # orderBy: CREATED_AT_DESC
+    {
+      edges {
+        cursor
+        node {
+          id
+          property {
+            ...PropertyFields
           }
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
       totalCount
     }
@@ -197,16 +173,6 @@ export const GET_PROPERTY_BY_NUMBER = gql`
   query getPropertyByNumber($number: Int!) {
     propertyByNumber(number: $number) {
       ...PropertyFields
-      media: propertyMedias {
-        nodes {
-          id
-          mediaUrl
-          media {
-            signedUrl
-          }
-          isCoverImage
-        }
-      }
     }
   }
 `;
@@ -215,30 +181,18 @@ export const SEARCH_PROPERTIES = gql`
   ${PROPERTY_FIELDS}
   query searchProperties(
     $first: Int
-    $offset: Int
     $city: String
     $locality: String
     $searchText: String
   ) {
     searchProperties(
       first: $first
-      offset: $offset
       city: $city
       locality: $locality
       searchText: $searchText
     ) {
       nodes {
         ...PropertyFields
-        media: propertyMedias {
-          nodes {
-            id
-            mediaUrl
-            media {
-              signedUrl
-            }
-            isCoverImage
-          }
-        }
       }
       totalCount
     }
@@ -250,16 +204,6 @@ export const GET_PROPERTY_BY_SLUG = gql`
   query PropertyBySlug($slug: String!) {
     propertyBySlug(slug: $slug) {
       ...PropertyFields
-      media: propertyMedias {
-        nodes {
-          id
-          mediaUrl
-          media {
-            signedUrl
-          }
-          isCoverImage
-        }
-      }
     }
   }
 `;

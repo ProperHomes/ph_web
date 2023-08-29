@@ -23,7 +23,7 @@ function ManageProperties() {
   });
 
   const { data } = useQuery(GET_TENANT_PROPERTY, {
-    variables: { first: 10, offset: page * 10, tenantId: state.user?.id },
+    variables: { first: 1, tenantId: state.user?.id },
     skip: !state.user?.id,
     fetchPolicy: "network-only",
   });
