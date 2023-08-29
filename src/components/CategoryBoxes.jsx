@@ -61,7 +61,7 @@ const links = [
   },
 ];
 
-function SecondSection({ lineView }) {
+function CategoryBoxes({ lineView }) {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const pathname = usePathname();
@@ -110,6 +110,7 @@ function SecondSection({ lineView }) {
     return (
       <Box
         sx={{
+          width: "100%",
           display: "grid",
           gap: "1em",
           gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
@@ -178,4 +179,4 @@ function SecondSection({ lineView }) {
   return lineView ? <LineView /> : <BoxView />;
 }
 
-export default SecondSection;
+export default CategoryBoxes;

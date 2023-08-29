@@ -13,14 +13,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Pagination from "@mui/material/Pagination";
 
 import Card from "./Card";
-import CategoryBoxes from "src/components/CategoryBoxes";
 import CreatePropertySaleRentLease from "../createProperty";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import useFilters from "src/hooks/useFilters";
 import usePagination from "src/hooks/usePagination";
-import ZeroBoxes from "@/components/ZeroBoxes";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -143,10 +141,6 @@ function PropertyList({
     }
   };
 
-  const isHome = pathname === "/";
-  const showCategoryBoxes =
-    (isHome || (!isHome && !isMobile)) && !pathname.includes("/dashboard");
-
   const listToShow =
     isSearch ||
     showPagination ||
@@ -163,14 +157,6 @@ function PropertyList({
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
-      {showCategoryBoxes && (
-        <Stack py={2}>
-          <CategoryBoxes />
-        </Stack>
-      )}
-
-      {isHome && !isMobile && !isLoggedIn && <ZeroBoxes />}
-
       {title && (
         <Stack
           spacing={2}

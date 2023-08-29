@@ -7,14 +7,13 @@ import {
 import { client } from "@/graphql/serverClient";
 
 import Profile from "../profile";
-import SimilarProperties from "../profile/SimilarProperties";
 
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
   const { city, type } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
-    first: 4,
+    first: 3,
     city,
     type,
   });
@@ -22,8 +21,7 @@ export default async function Page({ params }) {
     similarRes?.properties?.edges?.map((edge) => edge.node) ?? [];
   return (
     <Stack spacing={2} px={{ xs: 1, sm: 3, md: 4 }} py={2}>
-      <Profile data={data} />
-      <SimilarProperties city={city} properties={properties} />
+      <Profile data={data} similarProperties={properties} />
     </Stack>
   );
 }

@@ -1,3 +1,4 @@
+import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
 import Home from "../Home";
@@ -12,14 +13,13 @@ import {
   LISTING_TYPE,
 } from "@/utils/constants";
 import CreateProperty from "src/app/createProperty";
+import CategoryBoxes from "@/components/CategoryBoxes";
 
 export default async function Page({ params }) {
   const { slug = "" } = params;
   let data = [];
 
-  const isRentalAgreementPage =
-    slug === "rental-agreement" ||
-    slug?.split("-").slice(0, 3).join("-") === "rental-agreement-in";
+  const isRentalAgreementPage = slug.includes("create-rental-agreement");
   const isListPropertyPage = slug === "list-your-property-for-sale-rent-lease";
 
   const navLink = navlinks.find((l) => l.link === slug);
@@ -75,21 +75,24 @@ export default async function Page({ params }) {
       data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
     }
     return (
-      <PropertyList
-        data={data}
-        type={variables.type}
-        infiniteScroll={isProperties}
-        showPagination={!isProperties}
-        listedFor={listedFor}
-        city={city}
-        count={!isProperties ? 20 : 10}
-        title={isCityLink ? navLinkWithCity.title : navLink.title}
-        showFilters
-      />
+      <Stack spacing={4} py={2}>
+        <CategoryBoxes />
+        <PropertyList
+          data={data}
+          type={variables.type}
+          infiniteScroll={isProperties}
+          showPagination={!isProperties}
+          listedFor={listedFor}
+          city={city}
+          count={!isProperties ? 20 : 10}
+          title={isCityLink ? navLinkWithCity.title : navLink.title}
+          showFilters
+        />
+      </Stack>
     );
   } else if (isRentalAgreementPage) {
     const rentalAgreementCity =
-      slug === "rental-agreement" ? "" : slug.split("-").pop();
+      slug === "create-rental-agreement" ? "" : slug.split("-").pop();
     return <RentalAgreement city={rentalAgreementCity} />;
   } else if (
     slug === "online-rent-reciept-generator-free" ||
@@ -105,14 +108,14 @@ export default async function Page({ params }) {
 
 export function generateStaticParams() {
   let paths = [
-    { slug: "rental-agreement" },
+    { slug: "create-rental-agreement" },
     { slug: "online-rent-reciept-generator-free" },
     { slug: "rent-reciept-generator-online" },
     { slug: "list-your-property-for-sale-rent-lease" },
   ];
   for (let city of ALL_CITIES) {
     paths.push({
-      slug: `rental-agreement-in-${city.toLowerCase()}`,
+      slug: `create-rental-agreement-in-${city.toLowerCase()}`,
     });
   }
   for (let link of navlinks) {

@@ -148,7 +148,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
             </StyledBtn>
             <StyledBtn
               startIcon={<CalculateOutlined />}
-              onClick={navigateTo("/rental-agreement")}
+              onClick={navigateTo("/create-rental-agreement")}
             >
               Generate Rental Agreement
             </StyledBtn>

@@ -8,6 +8,8 @@ import { useQuery } from "@apollo/client";
 import { GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
 import SearchBlock from "@/components/SearchBlock";
+import CategoryBoxes from "@/components/CategoryBoxes";
+import ZeroBoxes from "@/components/ZeroBoxes";
 
 export default function Home({ data }) {
   const theme = useTheme();
@@ -26,22 +28,31 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Stack spacing={1} px={{ xs: 0, md: 4 }} py={2} alignItems="center">
-        <Typography color={theme.palette.text.primary} variant="h4">
-          Find a home that{" "}
-          <span
-            style={{
-              fontWeight: "700",
-              fontStyle: "italic",
-              fontFamily: theme.typography.fontFamily.Raleway,
-              color: theme.palette.info.main,
-            }}
-          >
-            loves you
-          </span>{" "}
-        </Typography>
+      <Stack spacing={4} py={2} alignItems="center">
+        <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
+          <Typography color={theme.palette.text.primary} variant="h4">
+            Find a home that{" "}
+            <span
+              style={{
+                fontWeight: "700",
+                fontStyle: "italic",
+                fontFamily: theme.typography.fontFamily.Raleway,
+                color: theme.palette.info.main,
+              }}
+            >
+              loves you
+            </span>{" "}
+          </Typography>
+          <SearchBlock />
+        </Stack>
 
-        <SearchBlock />
+        <CategoryBoxes />
+
+        {!loggedInUserId && (
+          <Stack display={{ xs: "none", md: "flex" }}>
+            <ZeroBoxes />
+          </Stack>
+        )}
       </Stack>
 
       <PropertyList

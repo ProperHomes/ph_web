@@ -9,9 +9,10 @@ import { Content } from "./styles";
 import Sidebar from "./sidebar/index";
 import PropertyImages from "./Images";
 import Breadcrumbs from "src/components/Breadcrumbs";
+import SimilarProperties from "./SimilarProperties";
 import { LISTING_TYPE } from "@/utils/constants";
 
-function PropertyProfile({ data }) {
+function PropertyProfile({ data, similarProperties }) {
   const {
     title,
     description,
@@ -160,6 +161,7 @@ function PropertyProfile({ data }) {
           </Box>
           <Divider />
           <Typography variant="body1">{description}</Typography>
+          <SimilarProperties city={city} properties={similarProperties} />
         </Stack>
 
         <StickyBox

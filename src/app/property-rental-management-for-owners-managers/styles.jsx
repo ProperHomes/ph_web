@@ -12,7 +12,7 @@ export const InfoStack = styled(Stack)(({ theme }) => ({
   width: "100%",
   height: "auto",
   borderRadius: "1rem",
-  border: "1px solid #3c27b012",
+  border: `1px solid ${theme.palette.background.secondary}`,
   color: theme.palette.text.secondary,
-  backgroundColor: theme.palette.mode === 'dark' ? "#0e0e0e" : "#fafafa2c"
+  backgroundColor: theme.palette.mode === "dark" ? "#0e0e0e" : "#fafafa2c",
 }));

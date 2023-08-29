@@ -147,7 +147,7 @@ export default function Footer() {
               <Tab
                 key={label}
                 label={
-                  <Typography fontSize="medium" textTransform="capitalize">
+                  <Typography fontSize="large" textTransform="capitalize">
                     {label.toLocaleLowerCase()}
                   </Typography>
                 }

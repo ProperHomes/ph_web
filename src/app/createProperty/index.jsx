@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -15,7 +16,7 @@ import Stack from "@mui/material/Stack";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 import useUploadFile from "src/hooks/useUploadFile";
@@ -52,11 +53,10 @@ const newPropertyResolver = {
 
 const StyledForm = styled(Box)(({ theme }) => ({
   display: "grid",
-  gap: "1rem",
-  gridTemplateColumns: "1fr 0.6fr",
+  gap: "4rem",
+  gridTemplateColumns: "1fr 0.4fr",
   [theme.breakpoints.down("md")]: {
-    display: "flex",
-    flexDirection: "column",
+    gridTemplateColumns: "1fr",
   },
 }));
 
@@ -75,6 +75,7 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
 }));
 
 function CreatePropertySaleRentLease({ data, handleCancel }) {
+  const theme = useTheme();
   const router = useRouter();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
 
@@ -187,17 +188,45 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   const { submitting, errors } = formState;
 
   return (
-    <Container maxWidth="xl" spacing={2} sx={{ height: "100%" }}>
+    <Container
+      maxWidth="xl"
+      sx={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: theme.palette.mode === "dark" ? "#000" : "#fff",
+        borderRadius: "1em",
+      }}
+    >
       {isLoading && <Loading />}
-      <Typography
-        gutterBottom
-        variant="h1"
-        textAlign="center"
-        fontSize="2.5rem !important"
-      >
-        {!!data ? "Update Property" : "List your property"}
-      </Typography>
-      <StyledForm>
+      <Stack py={2}>
+        <Typography
+          pt={2}
+          gutterBottom
+          variant="h1"
+          textAlign="center"
+          fontSize={{ xs: "1.5rem", md: "2.5rem" }}
+        >
+          {!!data ? "Update Property" : "List your property"}
+        </Typography>
+
+        <Typography fontSize="1.2rem" align="center" gutterBottom>
+          Add your property's basic details to get your property listed on
+          ProperHomes for free.
+        </Typography>
+
+        <Button
+          LinkComponent={Link}
+          href="/property-rental-management-for-owners-managers"
+          size="medium"
+          variant="contained"
+          color="info"
+          sx={{ display: { xs: "block", md: "none" } }}
+        >
+          Learn about Rental Properties Management
+        </Button>
+      </Stack>
+
+      <StyledForm p={{ xs: 2, md: 4 }}>
         <Stack spacing={4}>
           <Stack>
             <Label>Type of Property? *</Label>
@@ -391,7 +420,11 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
             </Stack>
           </Stack>
 
-          <Stack direction="row" spacing={2} alignItems="end">
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={2}
+            alignItems={{ xs: "start", md: "end" }}
+          >
             <Stack>
               <Label>Price*</Label>
               <Controller
@@ -526,6 +559,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
             )}
             {!isEditMode && (
               <Button
+                fullWidth
                 sx={{ whiteSpace: "nowrap" }}
                 onClick={onSubmitDraft}
                 variant="outlined"
@@ -536,6 +570,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               </Button>
             )}
             <Button
+              fullWidth
               sx={{ whiteSpace: "nowrap" }}
               onClick={onSubmit}
               variant="contained"
@@ -543,7 +578,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               disabled={submitting}
               aria-label="submit property for review"
             >
-              Submit Property For Review
+              Submit Property
             </Button>
           </Stack>
         </Stack>

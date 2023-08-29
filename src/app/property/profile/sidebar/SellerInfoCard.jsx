@@ -59,7 +59,7 @@ function SellerInfoCard({ createdAt, listedFor, propertyId }) {
       sx={{
         boxShadow: 2,
         borderRadius: "1rem",
-        borderColor: "error.main",
+        backgroundColor: theme.palette.mode === "dark" ? "#000" : "#fafafa2c",
       }}
     >
       <Typography fontSize="large" color={theme.palette.text.secondary}>

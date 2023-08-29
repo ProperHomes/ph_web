@@ -17,7 +17,7 @@ export default function CityLinks({ city, links, prefetch = true }) {
           >
             <Typography
               variant="body1"
-              fontSize="small"
+              fontSize="medium"
               color={theme.palette.primary.main}
               sx={{
                 cursor: "pointer",

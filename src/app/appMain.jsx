@@ -21,15 +21,18 @@ function Main({ children }) {
   const theme = isDarkModeActive ? darkTheme : lightTheme;
   const isManageRentalsPage =
     pathname === "/property-rental-management-for-owners-managers";
+  const isCreatePropertypage =
+    pathname === "/list-your-property-for-sale-rent-lease";
   return (
     <ThemeRegistry theme={theme} options={{ key: "mui" }}>
       <NotificationsProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Box
             sx={{
-              backgroundColor: isManageRentalsPage
-                ? theme.palette.background.secondary
-                : theme.palette.background.default,
+              backgroundColor:
+                isCreatePropertypage || isManageRentalsPage
+                  ? theme.palette.background.secondary
+                  : theme.palette.background.default,
               margin: "0 auto",
             }}
           >
