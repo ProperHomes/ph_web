@@ -15,24 +15,26 @@ import { AppProvider } from "src/appContext";
 
 import "../styles/globals.css";
 
+const links = [
+  "/create-rental-agreement",
+  "/list-your-property-for-sale-rent-lease",
+  "/property-rental-management-for-owners-managers",
+];
+
 function Main({ children }) {
   const { isDarkModeActive } = useDarkMode();
   const pathname = usePathname();
   const theme = isDarkModeActive ? darkTheme : lightTheme;
-  const isManageRentalsPage =
-    pathname === "/property-rental-management-for-owners-managers";
-  const isCreatePropertypage =
-    pathname === "/list-your-property-for-sale-rent-lease";
+
   return (
     <ThemeRegistry theme={theme} options={{ key: "mui" }}>
       <NotificationsProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Box
             sx={{
-              backgroundColor:
-                isCreatePropertypage || isManageRentalsPage
-                  ? theme.palette.background.secondary
-                  : theme.palette.background.default,
+              backgroundColor: links.includes(pathname)
+                ? theme.palette.background.secondary
+                : theme.palette.background.default,
               margin: "0 auto",
             }}
           >

@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
 import Home from "../Home";
-import RentalAgreement from "src/app/rentalAgreement";
+import RentalAgreement from "src/app/createRentalAgreement";
 import RentRecieptGenerator from "src/app/rentRecieptGenerator";
 import PropertyList from "src/app/property/List";
 import {

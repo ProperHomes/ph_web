@@ -43,9 +43,9 @@ const toBase64 = (str) =>
 function PropertyCard({
   data,
   isPriority,
-  togglePropertyEditor,
   toggleAuth,
   showFavorite = true,
+  togglePropertyEditor,
 }) {
   const router = useRouter();
   const pathname = usePathname();

@@ -145,9 +145,8 @@ export const GET_USER_SAVED_PROPERTIES = gql`
     savedProperties(
       condition: { userId: $userId }
       first: $first
-      after: $after
-    ) # orderBy: CREATED_AT_DESC
-    {
+      after: $after # orderBy: CREATED_AT_DESC
+    ) {
       edges {
         cursor
         node {
@@ -236,6 +235,34 @@ export const CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS = gql`
   }
 `;
 
+export const GET_PROPERTY_RENTAL_AGREEMENTS = gql`
+  query rentalAgreements($propertyId: UUID!, $ownerId: UUID, $tenantId: UUID) {
+    rentalAgreements(
+      condition: {
+        propertyId: $propertyId
+        ownerId: $ownerId
+        tenantId: $tenantId
+      }
+    ) # orderBy: CREATED_AT_DESC
+    {
+      nodes {
+        id
+        owner {
+          id
+          name
+        }
+        tenant {
+          id
+          name
+        }
+        signedUrl
+        createdAt
+      }
+      totalCount
+    }
+  }
+`;
+
 export const GET_PROPERTY_PAYMENTS = gql`
   query propertyPayments(
     $propertyId: UUID!
@@ -318,6 +345,16 @@ export const DELETE_SAVED_PROPERTY = gql`
   mutation deleteSavedProperty($input: DeleteSavedPropertyInput!) {
     deleteSavedProperty(input: $input) {
       savedProperty {
+        id
+      }
+    }
+  }
+`;
+
+export const CREATE_RENTAL_AGREEMENT = gql`
+  mutation createRentalAgreement($input: CreateRentalAgreementInput!) {
+    createRentalAgreement(input: $input) {
+      rentalAgreement {
         id
       }
     }

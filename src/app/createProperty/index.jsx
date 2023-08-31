@@ -4,13 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
-import "yup-phone-lite";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Stack from "@mui/material/Stack";
 import Select from "@mui/material/Select";
@@ -188,8 +186,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   const { submitting, errors } = formState;
 
   return (
-    <Container
-      maxWidth="xl"
+    <Box
       sx={{
         width: "100%",
         height: "100%",
@@ -584,7 +581,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
         </Stack>
       </StyledForm>
       {Auth}
-    </Container>
+    </Box>
   );
 }
 

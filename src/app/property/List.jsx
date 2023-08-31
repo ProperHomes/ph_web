@@ -52,8 +52,8 @@ function PropertyList({
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
   const [properties, setProperties] = useState([]);
+  const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
   const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
   const {

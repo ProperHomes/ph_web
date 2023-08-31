@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { GET_PROPERTY_PAYMENTS } from "@/graphql/properties";
 import { useState } from "react";
 import CollapsibleTable from "@/components/Table";
+import EmptyContainer from "@/components/EmptyContainer";
 
 const columns = [
   { name: "Payment Type" },
@@ -49,7 +50,12 @@ export default function PropertyPayments({ propertyId, userId, paymentFor }) {
 
   return (
     <Stack p={4}>
-      <CollapsibleTable columns={columns} rows={payments} />
+      {payments.length > 0 && (
+        <CollapsibleTable columns={columns} rows={payments} />
+      )}
+      {payments.length === 0 && (
+        <EmptyContainer title="No Payments Made So Far...!" />
+      )}
     </Stack>
   );
 }

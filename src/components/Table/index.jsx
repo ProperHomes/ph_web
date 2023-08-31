@@ -7,7 +7,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function CustomTable({ columns, rows }) {
-  console.log(rows, columns);
   return (
     <TableContainer sx={{ maxHeight: 440, maxWidth: "80vw" }} component={Paper}>
       <Table stickyHeader aria-label="collapsible table">
