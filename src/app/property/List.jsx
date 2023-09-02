@@ -6,9 +6,7 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { usePathname } from "next/navigation";
-import { styled, useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { styled } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Pagination from "@mui/material/Pagination";
 
@@ -49,13 +47,10 @@ function PropertyList({
   searchText,
   searchResultsTotalCount,
 }) {
-  const pathname = usePathname();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
-  const { Auth, isLoggedIn, toggleAuth } = useToggleAuth();
+  const { Auth, toggleAuth } = useToggleAuth();
   const {
     city,
     bedrooms,
@@ -68,7 +63,7 @@ function PropertyList({
     sx: {
       "& fieldset": {
         borderRadius: "8px",
-        borderColor: theme.palette.grey[300],
+        borderColor: "#00000020",
       },
     },
     onReset: () => handleChangePage(0),
@@ -166,8 +161,7 @@ function PropertyList({
         >
           <Typography
             gutterBottom
-            color={theme.palette.text.primary}
-            fontWeight={theme.typography.fontWeightMedium}
+            fontWeight={600}
             variant="h4"
             textAlign="left"
             fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
@@ -179,13 +173,12 @@ function PropertyList({
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: listedForProp
-                  ? "repeat(3, 1fr)"
-                  : "repeat(4, 1fr)",
-                gap: "1em",
-                [theme.breakpoints.down("sm")]: {
-                  gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: {
+                  xs: "1fr 1fr",
+                  md: listedForProp ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
                 },
+                gap: "1em",
+
                 width: { xs: "100%", md: "auto" },
               }}
             >

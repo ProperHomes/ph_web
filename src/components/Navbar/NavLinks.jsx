@@ -15,6 +15,10 @@ const links = [
     title: "List your Property",
     path: "/list-your-property-for-sale-rent-lease",
   },
+  {
+    title: "Create Rental Agreement",
+    path: "/create-rental-agreement",
+  },
 ];
 
 function NavLinks() {
@@ -32,15 +36,31 @@ function NavLinks() {
     >
       {links.map(({ title, path }) => {
         return (
-          <Link href={path} key={path}>
+          <Link href={path} key={path} style={{ position: "relative" }}>
             <Typography
               fontWeight={600}
               fontSize={theme.spacing(2)}
               color={theme.palette.text.secondary}
               sx={{
                 transition: "all 0.3s ease",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  width: "100%",
+                  transform: "scaleX(0)",
+                  height: "2px",
+                  bottom: 0,
+                  left: 0,
+                  backgroundColor: theme.palette.info.main,
+                  transformOrigin: "bottom right",
+                  transition: "transform 0.25s ease-out",
+                },
                 "&:hover": {
                   color: theme.palette.text.primary,
+                  ":after": {
+                    transform: " scaleX(1)",
+                    transformOrigin: "bottom left",
+                  },
                 },
               }}
             >

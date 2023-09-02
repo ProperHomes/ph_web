@@ -28,7 +28,7 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Stack spacing={4} py={4} mb={{xs: 0, md: 1}} alignItems="center">
+      <Stack spacing={4} py={4} mb={{ xs: 0, md: 1 }} alignItems="center">
         <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
           <Typography color={theme.palette.text.primary} variant="h4">
             Find a home that{" "}

@@ -327,7 +327,6 @@ function PropertyCard({
           sx={{
             width: "100%",
             maxWidth: { xs: "100%", md: "280px" },
-            color: theme.palette.text.primary,
             fontWeight: "medium",
             textTransform: "capitalize",
             overflow: "hidden",
