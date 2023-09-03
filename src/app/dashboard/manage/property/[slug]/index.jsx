@@ -6,13 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { LISTING_TYPE, PROPERTY_STATUS } from "@/utils/constants";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import CurrencyRupee from "@mui/icons-material/CurrencyRupee";
 import MoneyOff from "@mui/icons-material/MoneyOff";
 import { DocumentScannerOutlined } from "@mui/icons-material";
+
+import { LISTING_TYPE, PROPERTY_STATUS } from "@/utils/constants";
 import PropertyPayments from "src/app/dashboard/payments";
 import { useAppContext } from "src/appContext";
 import RentalAgreements from "src/app/dashboard/rentalAgreements";
@@ -73,6 +75,7 @@ function getItems(isRentalProperty, isRentalOccupied, isOwner) {
 export default function ManageProperty({ data }) {
   const router = useRouter();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { state } = useAppContext();
 
   const { ownerId, tenantId, listedFor, status } = data;
@@ -120,13 +123,19 @@ export default function ManageProperty({ data }) {
             )}
           </Stack>
 
-          <Stack>
+          <Stack sx={{ maxWidth: "100vw" }}>
             <Tabs
               value={activeTabId}
               onChange={handleChange}
               textColor="inherit"
               indicatorColor="secondary"
               aria-label="manage property tabs"
+              TabIndicatorProps={{ sx: { display: "none" } }}
+              sx={{
+                "& .MuiTabs-flexContainer": {
+                  flexWrap: "wrap",
+                },
+              }}
             >
               {list.map(({ label, id, Icon }) => {
                 return (

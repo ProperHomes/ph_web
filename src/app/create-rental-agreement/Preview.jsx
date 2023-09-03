@@ -41,7 +41,7 @@ export default function RentalAgreementPreview({
           maxWidth: "500px",
           borderRadius: "1rem",
           border: `1px solid ${theme.palette.background.secondary}`,
-          maxHeight: "650px",
+          maxHeight: { xs: "100%", md: "650px" },
           overflowY: "scroll",
         }}
       >

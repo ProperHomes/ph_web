@@ -142,7 +142,15 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
             </StyledBtn>
             <StyledBtn
               startIcon={<CalculateOutlined />}
-              onClick={navigateTo("/rent-reciept-generator-online")}
+              onClick={navigateTo(
+                "/property-rental-management-for-owners-managers"
+              )}
+            >
+              Manage Rentals
+            </StyledBtn>
+            <StyledBtn
+              startIcon={<CalculateOutlined />}
+              onClick={navigateTo("/free-rent-receipt-generator-online")}
             >
               Generate Rent Receipt
             </StyledBtn>
@@ -151,14 +159,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer, showNotifications }) {
               onClick={navigateTo("/create-rental-agreement")}
             >
               Generate Rental Agreement
-            </StyledBtn>
-            <StyledBtn
-              startIcon={<CalculateOutlined />}
-              onClick={navigateTo(
-                "/property-rental-management-for-owners-managers"
-              )}
-            >
-              Manage Rentals
             </StyledBtn>
           </Stack>
         )}

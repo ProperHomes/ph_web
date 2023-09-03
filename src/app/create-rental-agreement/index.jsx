@@ -15,7 +15,7 @@ function RentalAgreement({ city, handleGoBack }) {
   const pathname = usePathname();
   const theme = useTheme();
 
-  const isDashboard = pathname.includes("/dashboard");
+  const isDashboardManage = pathname.includes("/dashboard/manage");
 
   return (
     <Box
@@ -27,36 +27,34 @@ function RentalAgreement({ city, handleGoBack }) {
         position: "relative",
       }}
     >
-      {isDashboard && (
-        <Button
-          sx={{ position: "absolute", top: 10, left: 10 }}
-          startIcon={<ArrowBack />}
-          onClick={handleGoBack}
-        >
+      {isDashboardManage && (
+        <Button startIcon={<ArrowBack />} onClick={handleGoBack}>
           Go Back
         </Button>
       )}
-      <Stack py={2} alignItems="center">
-        <Typography
-          pt={2}
-          gutterBottom
-          variant="h1"
-          textAlign="center"
-          fontWeight={600}
-          fontSize={{ xs: "1.5rem", md: "2.5rem" }}
-        >
-          Create Rental Agreement {city ? `in ${city.toLowerCase()}` : ""}
-        </Typography>
-        <Typography
-          fontSize="1.2rem"
-          align="center"
-          maxWidth="800px"
-          gutterBottom
-        >
-          Generate a rental agreement for <b>11 months</b> between Owner and
-          Tenant.
-        </Typography>
-      </Stack>
+      {!isDashboardManage && (
+        <Stack py={2} alignItems="center">
+          <Typography
+            pt={2}
+            gutterBottom
+            variant="h1"
+            textAlign="center"
+            fontWeight={600}
+            fontSize={{ xs: "1.5rem", md: "2.5rem" }}
+          >
+            Create Rental Agreement {city ? `in ${city.toLowerCase()}` : ""}
+          </Typography>
+          <Typography
+            fontSize="1.2rem"
+            align="center"
+            maxWidth="800px"
+            gutterBottom
+          >
+            Generate a rental agreement for <b>11 months</b> between Owner and
+            Tenant.
+          </Typography>
+        </Stack>
+      )}
 
       <RentalAgreementCreator />
     </Box>

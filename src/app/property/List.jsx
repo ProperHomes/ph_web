@@ -38,7 +38,7 @@ function PropertyList({
   title,
   city: cityProp,
   listedFor: listedForProp,
-  viewAllLink,
+  viewMoreLink,
   infiniteScroll,
   count,
   showFilters,
@@ -188,19 +188,19 @@ function PropertyList({
               <ResetButton />
             </Box>
           )}
-          {viewAllLink && (
+          {viewMoreLink && (
             <Button
               aria-label="view all"
               variant="contained"
               LinkComponent={Link}
-              href={viewAllLink}
+              href={viewMoreLink}
               sx={{
                 display: { xs: "none", sm: "flex" },
                 borderRadius: "8px",
                 fontSize: "1rem",
               }}
             >
-              View All
+              View More
             </Button>
           )}
         </Stack>

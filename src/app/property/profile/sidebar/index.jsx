@@ -10,34 +10,32 @@ const SellerInfoCard = lazy(() => import("./SellerInfoCard"));
 function Sidebar({ data }) {
   return (
     <Suspense fallback={<></>}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Button
+          aria-label="save property"
+          startIcon={<Save />}
+          fullWidth
+          color="info"
+          size="large"
+        >
+          Save Property
+        </Button>
+        <Button
+          aria-label="share property"
+          startIcon={<Share />}
+          fullWidth
+          color="info"
+          size="large"
+        >
+          Share Property
+        </Button>
+      </Stack>
       <Stack spacing={2}>
         <SellerInfoCard
           createdAt={data?.createdAt}
           listedFor={data?.listedFor}
           propertyId={data?.id}
         />
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Button
-            aria-label="save property"
-            startIcon={<Save />}
-            fullWidth
-            color="info"
-          >
-            Save Property
-          </Button>
-          <Button
-            aria-label="share property"
-            startIcon={<Share />}
-            fullWidth
-            color="info"
-          >
-            Share Property
-          </Button>
-        </Stack>
       </Stack>
     </Suspense>
   );

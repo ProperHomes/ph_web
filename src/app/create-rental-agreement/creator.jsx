@@ -114,7 +114,11 @@ export default function RentalAgreementCreator() {
       alignItems="center"
       spacing={4}
     >
-      <Stack p={4} spacing={2} sx={{ width: { xs: "100%", md: "50%" } }}>
+      <Stack
+        p={{ xs: 2, md: 4 }}
+        spacing={2}
+        sx={{ width: { xs: "100%", md: "50%" } }}
+      >
         <Typography fontSize="1.2rem" gutterBottom>
           Step {isOwnerStep ? 1 : isTenantStep ? 2 : 3}: Enter{" "}
           {isOwnerStep ? "Owner" : isTenantStep ? "Tenant" : "Property"} details
@@ -311,7 +315,11 @@ export default function RentalAgreementCreator() {
             />
           </Stack>
         )}
-        <Stack direction="row" alignItems="center" spacing={2}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
           <Button
             variant="contained"
             color="info"
@@ -340,11 +348,23 @@ export default function RentalAgreementCreator() {
         <RentalAgreementPreview owner={owner} tenant={tenant} />
       </Box>
 
-      <Dialog open={showAgreement} onClose={togglePreviewAgreement}>
+      <Dialog
+        fullScreen={isMobile}
+        open={showAgreement}
+        onClose={togglePreviewAgreement}
+      >
         <DialogContent sx={{ padding: "20px 0 20px 0" }}>
           <IconButton
             onClick={togglePreviewAgreement}
-            sx={{ position: "absolute", top: 10, right: 10 }}
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              width: "1.2em",
+              height: "1.2em",
+              zIndex: 10,
+              backgroundColor: "#00000020",
+            }}
           >
             <Close />
           </IconButton>

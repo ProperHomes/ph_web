@@ -206,21 +206,12 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
           {!!data ? "Update Property" : "List your property"}
         </Typography>
 
-        <Typography fontSize="1.2rem" align="center" gutterBottom>
-          Add your property's basic details to get your property listed on
-          ProperHomes for free.
-        </Typography>
-
-        <Button
-          LinkComponent={Link}
-          href="/property-rental-management-for-owners-managers"
-          size="medium"
-          variant="contained"
-          color="info"
-          sx={{ display: { xs: "block", md: "none" } }}
-        >
-          Learn about Rental Properties Management
-        </Button>
+        {!data && (
+          <Typography fontSize="1.2rem" align="center" gutterBottom>
+            Add your property details to get your property listed on ProperHomes
+            for free.
+          </Typography>
+        )}
       </Stack>
 
       <StyledForm p={{ xs: 2, md: 4 }}>

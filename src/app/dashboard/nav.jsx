@@ -13,6 +13,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person2";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
+import AddIcon from "@mui/icons-material/Add";
 
 import BottomNavbar from "src/components/BottomNavbar";
 import { useAppContext } from "src/appContext";
@@ -88,6 +89,48 @@ function Dashboardnav() {
             </Button>
           );
         })}
+
+        <Stack
+          py={4}
+          spacing={1}
+          alignItems="flex-start"
+          display={{ xs: "none", md: "flex" }}
+        >
+          <Button
+            size="large"
+            startIcon={<AddIcon />}
+            component={Link}
+            href="/dashboard/list-property"
+            sx={{
+              color: isDark ? theme.palette.text.secondary : "#000",
+            }}
+          >
+            Add Your Property
+          </Button>
+          <Button
+            size="large"
+            startIcon={<AddIcon />}
+            component={Link}
+            href="/dashboard/create-rental-agreement"
+            sx={{
+              color: isDark ? theme.palette.text.secondary : "#000",
+            }}
+          >
+            Create Rental Agreement
+          </Button>
+
+          <Button
+            size="large"
+            startIcon={<AddIcon />}
+            component={Link}
+            href="/dashboard/create-rental-receipt"
+            sx={{
+              color: isDark ? theme.palette.text.secondary : "#000",
+            }}
+          >
+            Generate Rent Receipt
+          </Button>
+        </Stack>
       </Stack>
 
       <Stack sx={{ display: { xs: "block", md: "none" } }}>
