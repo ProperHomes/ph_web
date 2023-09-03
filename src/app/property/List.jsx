@@ -11,7 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Pagination from "@mui/material/Pagination";
 
 import Card from "./Card";
-import CreatePropertySaleRentLease from "../createProperty";
+import CreatePropertySaleRentLease from "../list-your-property-for-sale-rent-lease";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";

@@ -1,11 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useMutation } from "@apollo/client";
-import * as yup from "yup";
-import "yup-phone-lite";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -21,6 +15,10 @@ import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import Close from "@mui/icons-material/Close";
+import * as yup from "yup";
+import "yup-phone-lite";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
 
 import RentalAgreementPreview from "./Preview";
 
@@ -69,8 +67,8 @@ export default function RentalAgreementCreator() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [currentStep, setCurrentStep] = useState(STEP.OWNER);
-  const [owner, setOwner] = useState(null);
-  const [tenant, setTenant] = useState(null);
+  const [owner, setOwner] = useState({});
+  const [tenant, setTenant] = useState({});
   const [showAgreement, setShowAgreement] = useState(false);
 
   const togglePreviewAgreement = () => {
@@ -86,30 +84,26 @@ export default function RentalAgreementCreator() {
       yup.object().shape(isPropertyStep ? propertyResolver : personResolver)
     ),
   });
-  const { setError, getValues, control, handleSubmit, reset, formState } =
-    formValues;
-  const values = getValues();
-  const { submitting } = formState;
+  const { control, handleSubmit, reset } = formValues;
 
-  useEffect(() => {
+  const handleChange = (key, value, onChange) => (e) => {
     if (isOwnerStep) {
-      setOwner(values);
+      setOwner((prev) => ({ ...prev, [key]: value }));
     } else if (isTenantStep) {
-      setTenant(values);
+      setTenant((prev) => ({ ...prev, [key]: value }));
     }
-  }, [values, isOwnerStep, isTenantStep]);
+    onChange(e.target.value);
+  };
 
   const handleChangeToNextStep = (data) => {
     if (isOwnerStep) {
-      setOwner(data);
       setCurrentStep(STEP.TENANT);
       reset();
     } else if (isTenantStep) {
-      setTenant(data);
       setCurrentStep(STEP.PROPERTY);
       reset();
     } else {
-      setCurrentStep(STEP.OWNER);
+      // Todo
     }
   };
 
@@ -139,7 +133,7 @@ export default function RentalAgreementCreator() {
                     displayEmpty
                     renderValue={(selected) => selected}
                     value={value ?? SUFFIXES[0]}
-                    onChange={onChange}
+                    onChange={handleChange("suffix", value, onChange)}
                     error={!!error?.message}
                     sx={{ maxWidth: "100px" }}
                   >
@@ -173,7 +167,7 @@ export default function RentalAgreementCreator() {
                       isOwnerStep ? "Owner" : "Tenant"
                     }`}
                     value={value ?? ""}
-                    onChange={onChange}
+                    onChange={handleChange("name", value, onChange)}
                     error={!!error?.message}
                     helperText={error?.message ?? ""}
                   />
@@ -194,7 +188,7 @@ export default function RentalAgreementCreator() {
                   label="Mobile Number"
                   type="text"
                   value={value ?? ""}
-                  onChange={onChange}
+                  onChange={handleChange("phoneNumber", value, onChange)}
                   error={!!error?.message}
                   helperText={error?.message ?? ""}
                   InputProps={{
@@ -223,7 +217,7 @@ export default function RentalAgreementCreator() {
                     isOwnerStep ? "Owner" : "Tenant"
                   }`}
                   value={value ?? ""}
-                  onChange={onChange}
+                  onChange={handleChange("email", value, onChange)}
                   error={!!error?.message}
                   helperText={error?.message ?? ""}
                 />
@@ -245,7 +239,7 @@ export default function RentalAgreementCreator() {
                     isOwnerStep ? "Owner" : "Tenant"
                   }`}
                   value={value ?? ""}
-                  onChange={onChange}
+                  onChange={handleChange("address", value, onChange)}
                   error={!!error?.message}
                   helperText={error?.message ?? ""}
                 />
@@ -265,7 +259,7 @@ export default function RentalAgreementCreator() {
                   type="text"
                   placeholder="Enter Pin code"
                   value={value ?? ""}
-                  onChange={onChange}
+                  onChange={handleChange("pincode", value, onChange)}
                   error={!!error?.message}
                   helperText={error?.message ?? ""}
                 />
@@ -287,7 +281,7 @@ export default function RentalAgreementCreator() {
                     isOwnerStep ? "Owner" : "Tenant"
                   }`}
                   value={value ?? ""}
-                  onChange={onChange}
+                  onChange={handleChange("city", value, onChange)}
                   error={!!error?.message}
                   helperText={error?.message ?? ""}
                 />
@@ -309,7 +303,7 @@ export default function RentalAgreementCreator() {
                     isOwnerStep ? "Owner" : "Tenant"
                   }`}
                   value={value ?? ""}
-                  onChange={onChange}
+                  onChange={handleChange("state", value, onChange)}
                   error={!!error?.message}
                   helperText={error?.message ?? ""}
                 />

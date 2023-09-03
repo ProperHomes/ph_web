@@ -42,6 +42,7 @@ function RentalAgreement({ city, handleGoBack }) {
           gutterBottom
           variant="h1"
           textAlign="center"
+          fontWeight={600}
           fontSize={{ xs: "1.5rem", md: "2.5rem" }}
         >
           Create Rental Agreement {city ? `in ${city.toLowerCase()}` : ""}
@@ -52,8 +53,8 @@ function RentalAgreement({ city, handleGoBack }) {
           maxWidth="800px"
           gutterBottom
         >
-          Generate a rental agreement for <b>11 months</b> between you and your
-          tenant.
+          Generate a rental agreement for <b>11 months</b> between Owner and
+          Tenant.
         </Typography>
       </Stack>
 

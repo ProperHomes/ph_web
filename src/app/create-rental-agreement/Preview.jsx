@@ -15,7 +15,7 @@ export default function RentalAgreementPreview({
   const theme = useTheme();
 
   const { suffix, name, phoneNumber, address, state, city, pincode } =
-    owner ?? {};
+    owner ?? { suffix: "Mr" };
 
   const {
     suffix: tenantSuffix,
@@ -25,12 +25,12 @@ export default function RentalAgreementPreview({
     state: tenantState,
     city: tenantCity,
     pincode: tenantPin,
-  } = tenant ?? {};
+  } = tenant ?? { suffix: "Mr" };
 
   const date = new Date().toLocaleString("en-IN", { dateStyle: "full" });
   return (
     <Stack sx={{ justifySelf: "center" }}>
-      <Typography ml={2} fontSize="1.2rem" gutterBottom>
+      <Typography fontWeight={600} ml={2} fontSize="1.2rem" gutterBottom>
         Preview
       </Typography>
       <Stack
@@ -148,13 +148,14 @@ export default function RentalAgreementPreview({
             entitled to terminate the lease.
           </Typography>
           <Typography variant="body2" gutterBottom py={1}>
-            That the Lessee has paid to the Lessor a sum of ₹ <b>{deposit ?? "__________"}</b> as deposit, free
-            of interest. The said deposit shall be returned to the Lessee
-            simultaneously with the Lessee vacating the said premises. In the
-            event of failure on the part of the Lessor to refund the said
-            deposit amount to the Lessee as aforesaid, the Lessee shall be
-            entitled to continue to use and occupy the said premises without
-            payment of any rent until the Lessor refunds the said amount.
+            That the Lessee has paid to the Lessor a sum of ₹{" "}
+            <b>{deposit ?? "__________"}</b> as deposit, free of interest. The
+            said deposit shall be returned to the Lessee simultaneously with the
+            Lessee vacating the said premises. In the event of failure on the
+            part of the Lessor to refund the said deposit amount to the Lessee
+            as aforesaid, the Lessee shall be entitled to continue to use and
+            occupy the said premises without payment of any rent until the
+            Lessor refunds the said amount.
           </Typography>
           <Typography variant="body2" gutterBottom py={2}>
             That the Lessor shall be responsible for the payment of all taxes
@@ -188,19 +189,17 @@ export default function RentalAgreementPreview({
             </Typography>
           </Stack>
 
-          <Typography variant="body2" gutterBottom py={1}>
-            WITNESS
-            <br />
-            <ul>
-              {(witnesses ?? [null, null]).map((name, i) => {
-                return (
-                  <Typography key={i}>
-                    {i + 1}. {name ?? "_______________"}
-                  </Typography>
-                );
-              })}
-            </ul>
-          </Typography>
+          <Stack py={1}>
+            <Typography>WITNESS</Typography>
+
+            {(witnesses ?? [null, null]).map((name, i) => {
+              return (
+                <Typography key={i}>
+                  {i + 1}. {name ?? "_______________"}
+                </Typography>
+              );
+            })}
+          </Stack>
         </Box>
       </Stack>
     </Stack>

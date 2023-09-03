@@ -2,26 +2,18 @@ import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
 import Home from "../Home";
-import RentalAgreement from "src/app/createRentalAgreement";
-import RentRecieptGenerator from "src/app/rentRecieptGenerator";
 import PropertyList from "src/app/property/List";
 import {
-  ALL_CITIES,
   PROPERTY_TYPE,
   navlinks,
   navLinkWithCities,
   LISTING_TYPE,
 } from "@/utils/constants";
-import CreateProperty from "src/app/createProperty";
 import CategoryBoxes from "@/components/CategoryBoxes";
 
 export default async function Page({ params }) {
   const { slug = "" } = params;
   let data = [];
-
-  const isRentalAgreementPage = slug.includes("create-rental-agreement");
-  const isListPropertyPage = slug === "list-your-property-for-sale-rent-lease";
-
   const navLink = navlinks.find((l) => l.link === slug);
   const navLinkWithCity = navLinkWithCities.find((l) => l.link === slug);
   const isCityLink = navLinkWithCity?.link === slug;
@@ -90,34 +82,13 @@ export default async function Page({ params }) {
         />
       </Stack>
     );
-  } else if (isRentalAgreementPage) {
-    const rentalAgreementCity =
-      slug === "create-rental-agreement" ? "" : slug.split("-").pop();
-    return <RentalAgreement city={rentalAgreementCity} />;
-  } else if (
-    slug === "online-rent-reciept-generator-free" ||
-    slug === "rent-reciept-generator-online"
-  ) {
-    return <RentRecieptGenerator />;
-  } else if (isListPropertyPage) {
-    return <CreateProperty />;
   } else {
     return <Home data={data} />;
   }
 }
 
 export function generateStaticParams() {
-  let paths = [
-    { slug: "create-rental-agreement" },
-    { slug: "online-rent-reciept-generator-free" },
-    { slug: "rent-reciept-generator-online" },
-    { slug: "list-your-property-for-sale-rent-lease" },
-  ];
-  for (let city of ALL_CITIES) {
-    paths.push({
-      slug: `create-rental-agreement-in-${city.toLowerCase()}`,
-    });
-  }
+  let paths = [];
   for (let link of navlinks) {
     paths.push({
       slug: link.link,

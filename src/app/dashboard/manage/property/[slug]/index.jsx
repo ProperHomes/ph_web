@@ -16,7 +16,7 @@ import { DocumentScannerOutlined } from "@mui/icons-material";
 import PropertyPayments from "src/app/dashboard/payments";
 import { useAppContext } from "src/appContext";
 import RentalAgreements from "src/app/dashboard/rentalAgreements";
-import CreateRentalAgreement from "src/app/createRentalAgreement";
+import CreateRentalAgreement from "src/app/create-rental-agreement";
 
 function getItems(isRentalProperty, isRentalOccupied, isOwner) {
   let list = [];
