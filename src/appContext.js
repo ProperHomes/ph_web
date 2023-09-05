@@ -94,21 +94,6 @@ function AppProvider({ children }) {
     }
   };
 
-  const handleRevalidatePath = async (path) => {
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/revalidate`,
-        {
-          path,
-          userId: user?.id,
-        },
-        { withCredentials: true }
-      );
-    } catch (err) {
-      console.log("Error revalidating", err);
-    }
-  };
-
   const handleLogout = async () => {
     try {
       dispatch({ type: appActionTypes.RESET });
@@ -158,7 +143,6 @@ function AppProvider({ children }) {
         handleLogout,
         handleFetchUser,
         handleUpdateUser,
-        handleRevalidatePath,
       }}
     >
       {children}

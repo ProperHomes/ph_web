@@ -2,6 +2,7 @@
 //   CloudFrontClient,
 //   CreateInvalidationCommand,
 // } from "@aws-sdk/client-cloudfront";
+import { NextResponse } from "next/server";
 import { Config } from "sst/node/config";
 
 // const cloudFront = new CloudFrontClient();
@@ -22,26 +23,32 @@ import { Config } from "sst/node/config";
 // }
 
 export async function POST(req, res) {
-  console.log(
-    "cheking **********&&&&&&&&&&",
-    req.query,
-    Config.REVALIDATION_SECRET_KEY
-  );
-  const validSecret = req.query.secret === Config.REVALIDATION_SECRET_KEY;
-  if (!validSecret) {
-    return res.status(401).json({ message: "Invalid request. Not authorized" });
+  const body = await req.json();
+  console.log("checkin g*********88", body, Config.REVALIDATION_SECRET_KEY);
+  if (!body.path) {
+    return NextResponse.json(
+      { error: "Page path not provided" },
+      { status: 500 }
+    );
   }
-  if (!req.body.path) {
-    return res.status(500).json({ message: "Invalid page path provided" });
+  if (!body.secret) {
+    return NextResponse.json({ error: "secret not provided" }, { status: 500 });
+  }
+  const validSecret = body.secret === Config.REVALIDATION_SECRET_KEY;
+  if (!validSecret) {
+    return NextResponse.json(
+      { error: "Invalid request. Not authorized" },
+      { status: 401 }
+    );
   }
   try {
     process.env.__NEXT_PRIVATE_PREBUNDLED_REACT = "next";
     await res.revalidate(req.body.path);
     // invalidateCloudFrontPaths([req.body.path]);
-    return res.json({ revalidated: true });
+    return NextResponse.json({ revalidated: true });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ error: { validSecret, path: req.body.path, message: err } });
+    return NextResponse.json({
+      error: err,
+    });
   }
 }
