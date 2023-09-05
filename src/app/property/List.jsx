@@ -89,12 +89,13 @@ function PropertyList({
 
   const [searchProperties] = useLazyQuery(SEARCH_PROPERTIES);
 
+  //Todo: modify this to use this for search_properties lazy query too
   const { paginationObj, handleChangePage } = usePagination({
     key: "properties",
     QUERY: GET_PROPERTIES,
     querySkip: (!infiniteScroll && !showPagination) || !count || isSearch,
     variables,
-    initialPageNo: showPagination ? 0 : 1,
+    initialPageNo: showPagination || isSearch ? 0 : 1,
     onNewData: (data, page) => {
       if ((city || bedrooms || listedFor) && page === 0) {
         setProperties(data);
@@ -141,7 +142,7 @@ function PropertyList({
   };
 
   const listToShow =
-    isSearch ||
+    (isSearch && paginationObj.currentPage > 0) ||
     showPagination ||
     (infiniteScroll && count) ||
     city ||
@@ -153,6 +154,10 @@ function PropertyList({
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
 
   const hasMore = paginationObj.pageInfo?.hasNextPage;
+
+  const totalNoOfPages = Math.ceil(
+    (searchResultsTotalCount ?? paginationObj?.totalCount) / (count ?? 10)
+  );
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
@@ -247,15 +252,13 @@ function PropertyList({
               );
             })}
           </Section>
-          {paginationObj.totalCount > properties.length && (
+          {totalNoOfPages > 1 && (
             <Stack alignItems="center" justifyContent="center">
               <Pagination
+                defaultPage={0}
                 page={paginationObj.currentPage}
                 onChange={handleChangePaginationPage}
-                count={
-                  searchResultsTotalCount ??
-                  paginationObj?.totalCount / (count ?? 10)
-                }
+                count={totalNoOfPages}
               />
             </Stack>
           )}

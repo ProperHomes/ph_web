@@ -6,16 +6,12 @@ export default function useRevalidate() {
       return;
     }
     try {
-      await Promise.all(
-        paths.map(async (p) => {
-          await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/revalidate`,
-            {
-              path: p,
-            },
-            { withCredentials: true }
-          );
-        })
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/revalidate`,
+        {
+          paths,
+        },
+        { withCredentials: true }
       );
     } catch (error) {
       console.log(error);

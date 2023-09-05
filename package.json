@@ -56,6 +56,6 @@
     "constructs": "10.1.156",
     "encoding": "^0.1.13",
     "mini-css-extract-plugin": "^2.7.6",
-    "sst": "2.23.3"
+    "sst": "^2.24.24"
   }
 }

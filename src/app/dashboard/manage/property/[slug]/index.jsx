@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -19,6 +20,7 @@ import PropertyPayments from "src/app/dashboard/payments";
 import { useAppContext } from "src/appContext";
 import RentalAgreements from "src/app/dashboard/rentalAgreements";
 import CreateRentalAgreement from "src/app/create-rental-agreement";
+import { GET_PROPERTY_BY_SLUG } from "@/graphql/properties";
 
 function getItems(isRentalProperty, isRentalOccupied, isOwner) {
   let list = [];
@@ -72,12 +74,18 @@ function getItems(isRentalProperty, isRentalOccupied, isOwner) {
   return list;
 }
 
-export default function ManageProperty({ data }) {
+export default function ManageProperty({ slug }) {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { state } = useAppContext();
 
+  const { data: propertyData } = useQuery(GET_PROPERTY_BY_SLUG, {
+    variables: { slug },
+    fetchPolicy: "network-only",
+  });
+
+  const data = propertyData?.propertyBySlug ?? {};
   const { ownerId, tenantId, listedFor, status } = data;
   const isTenant = tenantId && tenantId === state?.user?.id;
   const isOwner = ownerId && ownerId === state?.user?.id;

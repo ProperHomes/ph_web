@@ -42,6 +42,7 @@ function useSearch({
             first: count,
             offset: currentPage * count,
           },
+          fetchPolicy: "network-only",
         });
         const newProperties = data?.searchProperties?.nodes ?? [];
         setTotalCount(data?.searchProperties?.totalCount);
@@ -56,13 +57,10 @@ function useSearch({
         console.log(err);
       }
     };
-
-    if (enabled) {
-      if (alteredText.length === 0) {
-        setResults([]);
-      } else {
-        handleSearch();
-      }
+    if (enabled && alteredText.length > 0) {
+      handleSearch();
+    } else {
+      setResults([]);
     }
   }, [alteredText, enabled, filtered, currentPage]);
 
