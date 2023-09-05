@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -17,8 +16,12 @@ import TextField from "@mui/material/TextField";
 import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-import useUploadFile from "src/hooks/useUploadFile";
-import { CREATE_PROPERTY, CREATE_PROPERTY_MEDIA } from "@/graphql/properties";
+import {
+  CREATE_PROPERTY,
+  UPDATE_PROPERTY,
+  CREATE_PROPERTY_MEDIA,
+  DELETE_PROPERTY_MEDIA,
+} from "@/graphql/properties";
 import MediaBlocks from "./MediaBlocks";
 import {
   ALL_CITIES,
@@ -27,10 +30,13 @@ import {
   PROPERTY_TYPE,
 } from "@/utils/constants";
 import useToggleAuth from "src/hooks/useToggleAuth";
-import Loading from "@/components/Loading";
+import useRevalidate from "src/hooks/useRevalidate";
+import useDeleteFile from "src/hooks/useDeleteFile";
+import useUploadFile from "src/hooks/useUploadFile";
 import { convertStringToSlug } from "@/utils/helper";
+import Loading from "@/components/Loading";
 
-const newPropertyResolver = {
+const propertyResolver = {
   type: yup.string().oneOf(Object.keys(PROPERTY_TYPE)).required(),
   title: yup.string().required(),
   price: yup.string().required(),
@@ -78,13 +84,18 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
 
   const [createProperty] = useMutation(CREATE_PROPERTY);
+  const [updateProperty] = useMutation(UPDATE_PROPERTY);
   const [createPropertyImage] = useMutation(CREATE_PROPERTY_MEDIA);
+  const [deletePropertyMedia] = useMutation(DELETE_PROPERTY_MEDIA);
+
   const handleFileUpload = useUploadFile();
+  const { handleDeleteMultipleFiles } = useDeleteFile();
+  const { handleRevalidate } = useRevalidate();
 
   const isEditMode = !!data;
 
   const { control, handleSubmit, setValue, formState } = useForm({
-    resolver: yupResolver(yup.object().shape(newPropertyResolver)),
+    resolver: yupResolver(yup.object().shape(propertyResolver)),
     defaultValues: data,
   });
 
@@ -92,6 +103,30 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
 
   const handleUpdateMedia = (media) => {
     setValue("media", media);
+  };
+
+  const handleDeletePropertyMedia = async (media) => {
+    const existingMedia = data?.media?.nodes ?? [];
+    const mediaToDelete = existingMedia.reduce((acc, curr) => {
+      const isRemoved = !media.map((m) => m.id).includes(curr?.id);
+      if (isRemoved) {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    if (mediaToDelete.length === 0) {
+      return null;
+    }
+    try {
+      await Promise.all(
+        mediaToDelete.map(async (m) => {
+          await deletePropertyMedia({ variables: { input: { id: m.id } } });
+        })
+      );
+      await handleDeleteMultipleFiles(mediaToDelete.map((m) => m.mediaId));
+    } catch (err) {
+      console.log("error deleting property media", err);
+    }
   };
 
   const handleUploadPropertyMedia = async (media, propertyId) => {
@@ -124,8 +159,53 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
         })
       );
     } catch (err) {
-      console.log("checking error", err);
+      console.log("error uploading property media", err);
     }
+  };
+
+  const handleUpdateProperty = async (data) => {
+    setIsLoading(true);
+    try {
+      const dataToUpdate = {};
+      const keysNotNeeded = [
+        "__typename",
+        "id",
+        "number",
+        "media",
+        "slug",
+        "ownerId",
+        "tenantId",
+        "createdAt",
+      ];
+      for (let key in data) {
+        if (!keysNotNeeded.includes(key)) {
+          const value = data[key];
+          if (value === "true" || value === "false") {
+            dataToUpdate[key] = Boolean(value);
+          } else {
+            dataToUpdate[key] = value;
+          }
+        }
+      }
+      const res = await updateProperty({
+        variables: {
+          input: {
+            id: data.id,
+            patch: dataToUpdate,
+          },
+        },
+      });
+      const updatedProperty = res?.data?.updateProperty?.property;
+      if (updatedProperty?.id) {
+        await handleUploadPropertyMedia(data.media, updatedProperty.id);
+        await handleDeletePropertyMedia(data.media);
+        handleRevalidate(`/property/${data.slug}`);
+        handleCancel();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
   };
 
   const handleCreateProperty = async (data) => {
@@ -160,7 +240,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   };
 
   const handleCreateDraft = (data) => {
-    handleCreateDraft({ ...data, status: PROPERTY_STATUS.DRAFT });
+    handleCreateProperty({ ...data, status: PROPERTY_STATUS.DRAFT });
   };
 
   const handleSubmitForReview = (data) => {
@@ -177,7 +257,11 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
 
   const onSubmit = async () => {
     if (isLoggedIn) {
-      handleSubmit(handleSubmitForReview)();
+      if (isEditMode) {
+        handleSubmit(handleUpdateProperty)();
+      } else {
+        handleSubmit(handleSubmitForReview)();
+      }
     } else {
       toggleAuth();
     }
@@ -203,10 +287,10 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
           textAlign="center"
           fontSize={{ xs: "1.5rem", md: "2.5rem" }}
         >
-          {!!data ? "Update Property" : "List your property"}
+          {isEditMode ? "Update Property" : "List your property"}
         </Typography>
 
-        {!data && (
+        {!isEditMode && (
           <Typography fontSize="1.2rem" align="center" gutterBottom>
             Add your property details to get your property listed on ProperHomes
             for free.
@@ -525,7 +609,10 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
             Add Property Media (images or videos)*
           </Typography>
           <Box my={8}>
-            <MediaBlocks handleUpdateMedia={handleUpdateMedia} />
+            <MediaBlocks
+              media={data?.media}
+              handleUpdateMedia={handleUpdateMedia}
+            />
           </Box>
 
           {!!errors.media && (
@@ -535,7 +622,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
           )}
 
           <Stack direction="row" alignItems="center" spacing={4}>
-            {!!data && (
+            {isEditMode && (
               <Button
                 variant="contained"
                 color="error"

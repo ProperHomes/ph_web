@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Add from "@mui/icons-material/Add";
@@ -30,11 +30,24 @@ const AddPicture = styled(Box)(({ theme }) => ({
       : theme.palette.common.black,
 }));
 
-function MediaBlocks({ handleUpdateMedia }) {
+function MediaBlocks({ handleUpdateMedia, media }) {
   const MAX_LIMIT = 10;
   const inputRef = useRef();
 
   const [imagesLoaded, setImagesLoaded] = useState([]);
+
+  const existingMedia = media?.nodes?.map((m) => ({
+    id: m?.id,
+    mediaId: m?.mediaId,
+    preview: m?.mediaUrl ?? m?.media?.signedUrl,
+  }));
+
+  useEffect(() => {
+    if (existingMedia?.length > 0) {
+      setImagesLoaded(existingMedia);
+      handleUpdateMedia(existingMedia);
+    }
+  }, [existingMedia?.length]);
 
   const handleClickChangePic = () => {
     inputRef?.current?.click();

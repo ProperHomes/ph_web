@@ -11,6 +11,8 @@ export const DELETE_FILE = gql`
   }
 `;
 
+// Todo: use sst/db trigger to delete files in s3 buckets too 
+
 function useDeleteFile() {
   const [deleteFile] = useMutation(DELETE_FILE);
 

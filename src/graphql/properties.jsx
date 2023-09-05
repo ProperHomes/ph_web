@@ -30,6 +30,7 @@ export const PROPERTY_FIELDS = gql`
       nodes {
         id
         mediaUrl
+        mediaId
         media {
           signedUrl
         }
@@ -242,9 +243,8 @@ export const GET_PROPERTY_RENTAL_AGREEMENTS = gql`
         propertyId: $propertyId
         ownerId: $ownerId
         tenantId: $tenantId
-      }
-    ) # orderBy: CREATED_AT_DESC
-    {
+      } # orderBy: CREATED_AT_DESC
+    ) {
       nodes {
         id
         owner {
@@ -311,6 +311,16 @@ export const CREATE_PROPERTY = gql`
   }
 `;
 
+export const UPDATE_PROPERTY = gql`
+  mutation updateProperty($input: UpdatePropertyInput!) {
+    updateProperty(input: $input) {
+      property {
+        id
+      }
+    }
+  }
+`;
+
 export const CREATE_PROPERTY_MEDIA = gql`
   mutation createPropertyMedia($input: CreatePropertyMediaInput!) {
     createPropertyMedia(input: $input) {
@@ -321,10 +331,10 @@ export const CREATE_PROPERTY_MEDIA = gql`
   }
 `;
 
-export const UPDATE_PROPERTY = gql`
-  mutation updateProperty($input: UpdatePropertyInput!) {
-    updateProperty(input: $input) {
-      property {
+export const DELETE_PROPERTY_MEDIA = gql`
+  mutation deletePropertyMedia($input: DeletePropertyMediaInput!) {
+    deletePropertyMedia(input: $input) {
+      media {
         id
       }
     }

@@ -46,6 +46,7 @@ function PropertyList({
   isSearch,
   searchText,
   searchResultsTotalCount,
+  onCloseEditor,
 }) {
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
@@ -107,6 +108,9 @@ function PropertyList({
 
   const toggleEditor = (id) => () => {
     setPropertyIdToEdit(id);
+    if (onCloseEditor) {
+      onCloseEditor();
+    }
   };
 
   const handleFetchNextPage = () => {

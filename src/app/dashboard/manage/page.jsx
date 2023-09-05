@@ -16,7 +16,11 @@ function ManageProperties() {
   const [page, setPage] = useState(0);
   const { state } = useAppContext();
 
-  const { data: ownerProperties, loading } = useQuery(GET_OWNER_PROPERTIES, {
+  const {
+    data: ownerProperties,
+    loading,
+    refetch,
+  } = useQuery(GET_OWNER_PROPERTIES, {
     variables: { first: 10, offset: page * 10, ownerId: state.user?.id },
     skip: !state.user?.id,
     fetchPolicy: "network-only",
@@ -42,7 +46,7 @@ function ManageProperties() {
     <Loading />
   ) : (
     <Suspense fallback={<Loading />}>
-      <PropertyList data={properties} />
+      <PropertyList data={properties} onCloseEditor={refetch} />
       {totalCount > 10 && (
         <Stack alignItems="center" justifyContent="center">
           <Pagination
