@@ -181,18 +181,28 @@ export const SEARCH_PROPERTIES = gql`
   ${PROPERTY_FIELDS}
   query searchProperties(
     $first: Int
+    $after: Cursor
     $city: String
     $locality: String
     $searchText: String
   ) {
     searchProperties(
       first: $first
+      after: $after
       city: $city
       locality: $locality
       searchText: $searchText
     ) {
-      nodes {
-        ...PropertyFields
+      edges {
+        node {
+          ...PropertyFields
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
       totalCount
     }

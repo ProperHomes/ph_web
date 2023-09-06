@@ -165,7 +165,7 @@ function PropertyCard({
         onMouseLeave={toggleOnHover}
         sx={{
           position: "relative",
-          width: { xs: "100%", md: "280px" },
+          width: "100%",
           height: "280px",
           cursor: "pointer",
           overflow: "hidden",
@@ -176,7 +176,7 @@ function PropertyCard({
           <Box
             sx={{
               position: "relative",
-              width: { xs: "100%", md: "280px" },
+              width: "100%",
               height: "280px",
               borderRadius: "1em",
             }}

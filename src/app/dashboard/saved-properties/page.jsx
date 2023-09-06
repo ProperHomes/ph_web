@@ -6,7 +6,7 @@ import { useAppContext } from "src/appContext";
 import usePagination from "src/hooks/usePagination";
 import { GET_USER_SAVED_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
-import Loading from "src/components/Loading";
+import ListSkeleton from "@/components/ListSkeleton";
 
 const PropertyList = lazy(() => import("src/app/property/List"));
 
@@ -15,7 +15,7 @@ function SavedProperties() {
 
   const [savedProperties, setSavedProperties] = useState([]);
 
-  const { paginationObj, handleChangePage, loading } = usePagination({
+  const { paginationObj, handleChangePage } = usePagination({
     key: "savedProperties",
     QUERY: GET_USER_SAVED_PROPERTIES,
     querySkip: !state.user?.id,
@@ -39,17 +39,15 @@ function SavedProperties() {
     handleChangePage(paginationObj.currentPage + 1);
   };
 
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <InfiniteScroll
       dataLength={savedProperties.length}
       next={handleFetchNext}
       hasMore={paginationObj.pageInfo?.hasNextPage}
-      loader={<></>}
+      loader={<ListSkeleton n={8} />}
       endMessage={<></>}
     >
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<></>}>
         <PropertyList data={savedProperties} />
       </Suspense>
     </InfiniteScroll>

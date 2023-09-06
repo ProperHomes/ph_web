@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { ALL_CITIES } from "@/utils/constants";
+import { ALL_CITIES, LISTING_TYPE } from "@/utils/constants";
 
 const BEDROOMS = [
   { label: "1BHK", value: 1 },
@@ -21,42 +22,67 @@ const BEDROOMS = [
 export default function useFilters({
   sx,
   onReset,
+  isSearch,
+  searchVariables,
   onChangeCity,
   onChangeBedrooms,
   onChangeListedFor,
 }) {
+  const router = useRouter();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [city, setCity] = useState(null);
-  const [bedrooms, setBedrooms] = useState(0);
-  const [listedFor, setListedFor] = useState(null);
+  const {
+    searchText,
+    city: searchCity,
+    bedrooms: searchBedrooms,
+    listedFor: searchListedFor,
+  } = searchVariables ?? {};
+
+  const [city, setCity] = useState(searchCity);
+  const [bedrooms, setBedrooms] = useState(searchBedrooms);
+  const [listedFor, setListedFor] = useState(searchListedFor);
+
+  const navigateToSearch = (key, value) => {
+    if (isSearch && searchText.length > 0) {
+      const url = new URL(window.location.href);
+      url.searchParams.set(key, value);
+      router.push(url.toString());
+    }
+  };
 
   const handleChangeCity = (e) => {
+    navigateToSearch("city", e.target.value);
     setCity(e.target.value);
-    if (onChangeCity) {
+    if (!isSearch && onChangeCity) {
       onChangeCity();
     }
   };
 
   const handleChangeBedrooms = (e) => {
+    navigateToSearch("bedrooms", e.target.value);
     setBedrooms(e.target.value);
-    if (onChangeBedrooms) {
+    if (!isSearch && onChangeBedrooms) {
       onChangeBedrooms();
     }
   };
 
   const handleChangeListedFor = (e) => {
+    navigateToSearch("listedFor", e.target.value);
     setListedFor(e.target.value);
-    if (onChangeListedFor) {
+    if (!isSearch && onChangeListedFor) {
       onChangeListedFor();
     }
   };
 
   const handleReset = () => {
     setCity(null);
-    setBedrooms(0);
+    setBedrooms(null);
     setListedFor(null);
+    if (isSearch) {
+      router.replace(`search?searchText=${searchText}`);
+    }
     if (onReset) {
       onReset();
     }
@@ -69,9 +95,7 @@ export default function useFilters({
         renderValue={(selected) => {
           if (!selected) {
             return (
-              <Typography>
-                {isMobile ? "City" : "Select a City"}
-              </Typography>
+              <Typography>{isMobile ? "City" : "Select a City"}</Typography>
             );
           }
 
@@ -84,7 +108,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={city ?? ""}
+        value={city ?? searchCity ?? ""}
         onChange={handleChangeCity}
         MenuProps={{
           PaperProps: {
@@ -116,13 +140,9 @@ export default function useFilters({
         displayEmpty
         renderValue={(selected) => {
           if (!selected) {
-            return (
-              <Typography>
-                {isMobile ? "BHK" : "Select BHK"}
-              </Typography>
-            );
+            return <Typography>{isMobile ? "BHK" : "Select BHK"}</Typography>;
           }
-          return BEDROOMS.find((b) => b.value === selected).label;
+          return BEDROOMS.find((b) => b.value == selected).label;
         }}
         sx={{
           width: { xs: "100%", md: "150px" },
@@ -131,7 +151,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={bedrooms ?? ""}
+        value={bedrooms ?? searchBedrooms ?? ""}
         onChange={handleChangeBedrooms}
         MenuProps={{
           PaperProps: {
@@ -164,9 +184,7 @@ export default function useFilters({
         renderValue={(selected) => {
           if (!selected) {
             return (
-              <Typography>
-                {isMobile ? "TYPE" : "Listing Type"}
-              </Typography>
+              <Typography>{isMobile ? "TYPE" : "Listing Type"}</Typography>
             );
           }
           return selected;
@@ -178,7 +196,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={listedFor ?? ""}
+        value={listedFor ?? searchListedFor ?? ""}
         onChange={handleChangeListedFor}
         MenuProps={{
           PaperProps: {
@@ -189,7 +207,7 @@ export default function useFilters({
           },
         }}
       >
-        {["SALE", "RENT", "LEASE"].map((l) => {
+        {Object.keys(LISTING_TYPE).map((l) => {
           return (
             <MenuItem
               key={l}

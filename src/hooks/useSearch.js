@@ -40,7 +40,6 @@ function useSearch({
             city,
             locality,
             first: count,
-            offset: currentPage * count,
           },
           fetchPolicy: "network-only",
         });

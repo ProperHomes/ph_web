@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { useLazyQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -11,16 +10,18 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Pagination from "@mui/material/Pagination";
 
 import Card from "./Card";
+import ListSkeleton from "../../components/ListSkeleton";
 import CreatePropertySaleRentLease from "../list-your-property-for-sale-rent-lease";
-import useToggleAuth from "src/hooks/useToggleAuth";
-import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
-import { removeDuplicateObjectsFromArray } from "@/utils/helper";
+
 import useFilters from "src/hooks/useFilters";
+import useToggleAuth from "src/hooks/useToggleAuth";
 import usePagination from "src/hooks/usePagination";
+import { removeDuplicateObjectsFromArray } from "@/utils/helper";
+import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
   gap: "1.2rem",
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -44,8 +45,7 @@ function PropertyList({
   showFilters,
   showPagination,
   isSearch,
-  searchText,
-  searchResultsTotalCount,
+  searchVariables,
   onCloseEditor,
 }) {
   const [properties, setProperties] = useState([]);
@@ -67,13 +67,15 @@ function PropertyList({
         borderColor: "#00000020",
       },
     },
+    isSearch,
+    searchVariables,
     onReset: () => handleChangePage(0),
     onChangeCity: () => handleChangePage(0),
     onChangeBedrooms: () => handleChangePage(0),
     onChangeListedFor: () => handleChangePage(0),
   });
 
-  const variables = { first: count };
+  let variables = { first: count };
   if (type) {
     variables.type = type;
   }
@@ -87,13 +89,14 @@ function PropertyList({
     variables.listedFor = listedForProp ?? listedFor;
   }
 
-  const [searchProperties] = useLazyQuery(SEARCH_PROPERTIES);
+  if (isSearch) {
+    variables = { ...variables, ...searchVariables };
+  }
 
-  //Todo: modify this to use this for search_properties lazy query too
   const { paginationObj, handleChangePage } = usePagination({
-    key: "properties",
-    QUERY: GET_PROPERTIES,
-    querySkip: (!infiniteScroll && !showPagination) || !count || isSearch,
+    key: isSearch ? "searchProperties" : "properties",
+    QUERY: isSearch ? SEARCH_PROPERTIES : GET_PROPERTIES,
+    querySkip: (!infiniteScroll && !showPagination && !isSearch) || !count,
     variables,
     initialPageNo: showPagination || isSearch ? 0 : 1,
     onNewData: (data, page) => {
@@ -118,31 +121,12 @@ function PropertyList({
     handleChangePage(paginationObj.currentPage + 1);
   };
 
-  const handleSearch = async () => {
-    try {
-      const { data } = await searchProperties({
-        variables: {
-          searchText,
-          city,
-          first: count,
-        },
-      });
-      setProperties(data?.searchProperties?.nodes ?? []);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleChangePaginationPage = (_e, page) => {
-    if (isSearch) {
-      handleSearch();
-    } else {
-      handleChangePage(page);
-    }
+    handleChangePage(page);
   };
 
   const listToShow =
-    (isSearch && paginationObj.currentPage > 0) ||
+    isSearch ||
     showPagination ||
     (infiniteScroll && count) ||
     city ||
@@ -155,9 +139,7 @@ function PropertyList({
 
   const hasMore = paginationObj.pageInfo?.hasNextPage;
 
-  const totalNoOfPages = Math.ceil(
-    (searchResultsTotalCount ?? paginationObj?.totalCount) / (count ?? 10)
-  );
+  const totalNoOfPages = Math.floor(paginationObj?.totalCount / (count ?? 10));
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
@@ -235,7 +217,7 @@ function PropertyList({
           })}
       </Section>
 
-      {(isSearch || showPagination) && (
+      {showPagination && (
         <>
           <Section>
             {listToShow.map((l, i) => {
@@ -265,13 +247,13 @@ function PropertyList({
         </>
       )}
 
-      {infiniteScroll && !isSearch && !propertyIdToEdit && (
+      {infiniteScroll && !propertyIdToEdit && (
         <InfiniteScroll
           dataLength={listToShow.length}
           next={handleFetchNextPage}
           hasMore={hasMore}
           endMessage={<></>}
-          loader={<></>}
+          loader={<ListSkeleton />}
         >
           <Section>
             {listToShow.map((l, i) => {
