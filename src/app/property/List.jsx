@@ -216,7 +216,7 @@ function PropertyList({
           next={handleFetchNextPage}
           hasMore={hasMore}
           endMessage={<></>}
-          loader={<ListSkeleton />}
+          loader={<></>}
         >
           <Section>
             {listToShow.map((l, i) => {

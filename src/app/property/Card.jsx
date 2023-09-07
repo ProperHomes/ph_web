@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useTransition } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Fade from "@mui/material/Fade";
+import Skeleton from "@mui/material/Skeleton";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -13,32 +14,9 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { PROPERTY_TYPE } from "@/utils/constants";
-import {
-  DELETE_SAVED_PROPERTY,
-  SAVE_PROPERTY,
-  UPDATE_PROPERTY,
-} from "@/graphql/properties";
+import { DELETE_SAVED_PROPERTY, SAVE_PROPERTY } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
 import CustomTooltip from "src/components/CustomTooltip";
-
-const shimmer = (w, h) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#333" offset="20%" />
-      <stop stop-color="#222" offset="50%" />
-      <stop stop-color="#333" offset="70%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#333" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
-
-const toBase64 = (str) =>
-  typeof window === "undefined"
-    ? Buffer.from(str).toString("base64")
-    : window.btoa(str);
 
 function PropertyCard({
   data,
@@ -81,11 +59,15 @@ function PropertyCard({
 
   const [createSavedProperty] = useMutation(SAVE_PROPERTY);
   const [deleteSavedProperty] = useMutation(DELETE_SAVED_PROPERTY);
-  const [updateProperty] = useMutation(UPDATE_PROPERTY);
 
   const [savedPropertyId, setSavedPropertyId] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showOwnerActions, setShowOwnerActions] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  const onImageLoadComplete = () => {
+    setIsImageLoaded(true);
+  };
 
   const formattedPrice = Number(price).toLocaleString("en-in", {
     style: "currency",
@@ -182,22 +164,33 @@ function PropertyCard({
               borderRadius: "1em",
             }}
           >
+            <Skeleton
+              variant="rounded"
+              sx={{
+                "&.MuiSkeleton-root": {
+                  borderRadius: "1em",
+                  transition: "1s ease",
+                  opacity: !isImageLoaded ? 1 : 0,
+                },
+              }}
+              width={"100%"}
+              height={280}
+            />
+
             <Image
               src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
               fill
               priority={isPriority}
-              placeholder="blur"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                shimmer(280, 280)
-              )}`}
               quality={100}
+              onLoadingComplete={onImageLoadComplete}
               sizes="(max-width: 324px) 80vw, (max-width: 1200px) 280px, 280px"
               style={{
+                opacity: isImageLoaded ? 1 : 0,
                 backgroundColor: "#000",
                 borderRadius: "1em",
                 objectFit: "cover",
                 objectPosition: "center",
-                transition: "0.4s ease",
+                transition: "0.4s ease-out",
                 transform: isHovered && !isMobile ? "scale(1.1)" : "scale(1)",
               }}
               alt={`image of ${title}`}

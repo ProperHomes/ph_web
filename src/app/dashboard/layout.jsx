@@ -28,7 +28,7 @@ function DashboardLayout({ children }) {
       if (!isLoggedIn) {
         router.push("/");
       }
-    }, 100);
+    }, 1000);
     return () => {
       clearTimeout(timeout);
     };

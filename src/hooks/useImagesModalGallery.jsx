@@ -1,13 +1,9 @@
 "use client";
 import { Suspense, lazy, useEffect, useState } from "react";
-import { useTheme } from "@mui/material/styles";
-
-import Loading from "@/components/Loading";
 
 const ImageGallery = lazy(() => import("../components/ImageGallery"));
 
 function useImagesModalGallery({ images }) {
-  const theme = useTheme();
   const [open, setIsOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -47,7 +43,7 @@ function useImagesModalGallery({ images }) {
   return {
     toggleModal,
     ImageGallery: (
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<></>}>
         <ImageGallery
           open={open}
           activeStep={activeStep}
