@@ -7,7 +7,6 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Pagination from "@mui/material/Pagination";
 
 import Card from "./Card";
 import ListSkeleton from "../../components/ListSkeleton";
@@ -21,7 +20,7 @@ import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
   gap: "1.2rem",
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -43,7 +42,6 @@ function PropertyList({
   infiniteScroll,
   count,
   showFilters,
-  showPagination,
   isSearch,
   searchVariables,
   onCloseEditor,
@@ -96,12 +94,18 @@ function PropertyList({
   const { paginationObj, handleChangePage } = usePagination({
     key: isSearch ? "searchProperties" : "properties",
     QUERY: isSearch ? SEARCH_PROPERTIES : GET_PROPERTIES,
-    querySkip: (!infiniteScroll && !showPagination && !isSearch) || !count,
+    querySkip: (!infiniteScroll && !isSearch) || !count,
     variables,
-    initialPageNo: showPagination || isSearch ? 0 : 1,
+    initialPageNo: isSearch ? 0 : 1,
     onNewData: (data, page) => {
-      if ((city || bedrooms || listedFor) && page === 0) {
-        setProperties(data);
+      if (city || bedrooms || listedFor) {
+        if (page === 0 || data.length === 0) {
+          setProperties(data);
+        } else {
+          setProperties((prev) => {
+            return removeDuplicateObjectsFromArray([...prev, ...data]);
+          });
+        }
       } else {
         setProperties((prev) => {
           return removeDuplicateObjectsFromArray([...prev, ...data]);
@@ -121,25 +125,14 @@ function PropertyList({
     handleChangePage(paginationObj.currentPage + 1);
   };
 
-  const handleChangePaginationPage = (_e, page) => {
-    handleChangePage(page);
-  };
-
   const listToShow =
-    isSearch ||
-    showPagination ||
-    (infiniteScroll && count) ||
-    city ||
-    bedrooms ||
-    listedFor
+    isSearch || (infiniteScroll && count) || city || bedrooms || listedFor
       ? properties
       : data ?? [];
 
   const propertyToEdit = listToShow.find((l) => l.id === propertyIdToEdit);
 
   const hasMore = paginationObj.pageInfo?.hasNextPage;
-
-  const totalNoOfPages = Math.floor(paginationObj?.totalCount / (count ?? 10));
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
@@ -200,7 +193,6 @@ function PropertyList({
       <Section>
         {!infiniteScroll &&
           !isSearch &&
-          !showPagination &&
           !propertyIdToEdit &&
           data.map((l, i) => {
             return (
@@ -209,6 +201,7 @@ function PropertyList({
                   data={l}
                   showFavorite
                   isPriority={i < 9}
+                  isFullWidth={listToShow.length > 3}
                   toggleAuth={toggleAuth}
                   togglePropertyEditor={toggleEditor(l.id)}
                 />
@@ -216,36 +209,6 @@ function PropertyList({
             );
           })}
       </Section>
-
-      {showPagination && (
-        <>
-          <Section>
-            {listToShow.map((l, i) => {
-              return (
-                <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
-                  <Card
-                    data={l}
-                    showFavorite
-                    isPriority={i < 9}
-                    toggleAuth={toggleAuth}
-                    togglePropertyEditor={toggleEditor(l.id)}
-                  />
-                </Box>
-              );
-            })}
-          </Section>
-          {totalNoOfPages > 1 && (
-            <Stack alignItems="center" justifyContent="center">
-              <Pagination
-                defaultPage={0}
-                page={paginationObj.currentPage}
-                onChange={handleChangePaginationPage}
-                count={totalNoOfPages}
-              />
-            </Stack>
-          )}
-        </>
-      )}
 
       {infiniteScroll && !propertyIdToEdit && (
         <InfiniteScroll
@@ -263,6 +226,7 @@ function PropertyList({
                     data={l}
                     showFavorite
                     isPriority={i < 9}
+                    isFullWidth={listToShow.length > 3}
                     toggleAuth={toggleAuth}
                     togglePropertyEditor={toggleEditor(l.id)}
                   />

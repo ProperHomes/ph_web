@@ -72,8 +72,7 @@ export default async function Page({ params }) {
         <PropertyList
           data={data}
           type={variables.type}
-          infiniteScroll={isProperties}
-          showPagination={!isProperties}
+          infiniteScroll
           listedFor={listedFor}
           city={city}
           count={!isProperties ? 20 : 10}

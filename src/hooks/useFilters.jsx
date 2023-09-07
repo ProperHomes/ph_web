@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
@@ -41,7 +41,9 @@ export default function useFilters({
   } = searchVariables ?? {};
 
   const [city, setCity] = useState(searchCity);
-  const [bedrooms, setBedrooms] = useState(searchBedrooms);
+  const [bedrooms, setBedrooms] = useState(
+    searchBedrooms > 0 ? Number(searchBedrooms) : null
+  );
   const [listedFor, setListedFor] = useState(searchListedFor);
 
   const navigateToSearch = (key, value) => {
@@ -62,7 +64,7 @@ export default function useFilters({
 
   const handleChangeBedrooms = (e) => {
     navigateToSearch("bedrooms", e.target.value);
-    setBedrooms(e.target.value);
+    setBedrooms(Number(e.target.value));
     if (!isSearch && onChangeBedrooms) {
       onChangeBedrooms();
     }
@@ -244,7 +246,7 @@ export default function useFilters({
     BedroomsDropdown,
     ListedForDropdown,
     ResetButton,
-    bedrooms,
+    bedrooms: Number(bedrooms),
     city,
     listedFor,
   };

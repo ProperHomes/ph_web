@@ -43,6 +43,7 @@ const toBase64 = (str) =>
 function PropertyCard({
   data,
   isPriority,
+  isFullWidth,
   toggleAuth,
   showFavorite = true,
   togglePropertyEditor,
@@ -165,7 +166,7 @@ function PropertyCard({
         onMouseLeave={toggleOnHover}
         sx={{
           position: "relative",
-          width: "100%",
+          width: isFullWidth ? "100%" : "280px",
           height: "280px",
           cursor: "pointer",
           overflow: "hidden",
@@ -176,7 +177,7 @@ function PropertyCard({
           <Box
             sx={{
               position: "relative",
-              width: "100%",
+              width: isFullWidth ? "100%" : "280px",
               height: "280px",
               borderRadius: "1em",
             }}

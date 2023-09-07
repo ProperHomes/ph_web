@@ -185,13 +185,17 @@ export const SEARCH_PROPERTIES = gql`
     $city: String
     $locality: String
     $searchText: String
+    $bedrooms: Int
+    $listedFor: String
   ) {
     searchProperties(
       first: $first
       after: $after
-      city: $city
-      locality: $locality
+      cityName: $city
+      localityName: $locality
+      bedroomsCount: $bedrooms
       searchText: $searchText
+      listingType: $listedFor
     ) {
       edges {
         node {

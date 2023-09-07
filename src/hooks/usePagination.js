@@ -47,14 +47,14 @@ function usePagination({
         first: null,
         last: pageSize,
         after: null,
-        before: pageInfo.startCursor,
+        before: page === 0 ? null : pageInfo.startCursor,
       };
     } else {
       reqVariables = {
         first: pageSize,
         last: null,
         before: null,
-        after: pageInfo.endCursor,
+        after: pageNo === 0 ? null : pageInfo.endCursor,
       };
     }
     const newData = await fetchMore({
@@ -67,7 +67,7 @@ function usePagination({
       currentPage: pageNo,
     });
     const list = newData?.data?.[key]?.edges?.map((edge) => edge.node) ?? [];
-    onNewData(list);
+    onNewData(list, pageNo);
   };
 
   const handleChangePageSize = (newPageSize) => {
@@ -87,9 +87,7 @@ function usePagination({
   useEffect(() => {
     const list = queryData?.[key]?.edges?.map((edge) => edge.node) ?? [];
     const pageInfo = queryData?.[key]?.pageInfo;
-    if (list.length > 0) {
-      onNewData(list, paginationRef?.current?.currentPage);
-    }
+    onNewData(list, paginationRef?.current?.currentPage);
     handleChangePaginationObj({
       pageInfo,
       totalCount: queryData?.[key]?.totalCount ?? 10,
