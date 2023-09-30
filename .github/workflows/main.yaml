@@ -7,10 +7,6 @@ on:
 # concurrency group name ensures concurrent workflow runs wait for any in-progress job to finish
 concurrency: merge-${{ github.ref }}
 
-# env:
-#   AWS_DEFAULT_REGION: ap-south-1
-#   AWS_DEFAULT_OUTPUT: json
-
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout
@@ -38,4 +34,5 @@ jobs:
           role-session-name: GithubActionsDeploy
       - name: Deploy app
         run: |
+          pnpm install sst
           pnpm sst deploy
