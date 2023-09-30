@@ -20,11 +20,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        with:
-          version: 8
-          run_install: true
+      - name: Install Yarn
+        run: |
+          yarn
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -33,4 +31,9 @@ jobs:
           role-session-name: GithubActionsDeploy
       - name: Deploy app
         run: |
-          pnpm sst deploy --stage=prod
+          touch .env.local
+          echo NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} >> .env.local
+          echo NEXT_PUBLIC_GRAPHQL_API=${{ secrets.NEXT_PUBLIC_GRAPHQL_API }} >> .env.local
+          echo NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS=${{ secrets.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS }} >> .env.local
+          echo NEXT_PUBLIC_CLOUDFRONT_URL=${{ secrets.NEXT_PUBLIC_CLOUDFRONT_URL }} >> .env.local
+          yarn sst deploy --stage=prod
