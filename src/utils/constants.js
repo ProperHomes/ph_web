@@ -12,15 +12,11 @@ export const PROPERTY_TYPE = {
   APARTMENT: "APARTMENT",
   BUNGALOW: "BUNGALOW",
   FARM_HOUSE: "FARM HOUSE",
-  PENT_HOUSE: "PENT HOUSE",
-  COUNTRY_HOME: "COUNTRY HOME",
-  INDEPENDENT_HOUSE: "HOUSE",
-  CHATEAU: "CHATEAU",
-  CABIN: "CABIN",
   PROJECT: "PROJECT",
   COMMERCIAL: "COMMERCIAL",
   PG: "PG",
   HOSTEL: "HOSTEL",
+  ROOM: "ROOM",
 };
 
 export const LISTING_TYPE = {
@@ -97,7 +93,6 @@ export const navlinksSale = [
     link: "bungalows-for-sale",
     title: "Bungalows For Sale",
   },
-  { link: "pent-houses-for-sale", title: "Pent Houses For Sale" },
   { link: "properties-for-sale", title: "Properties For Sale" },
 ];
 
@@ -113,7 +108,6 @@ export const navlinksRent = [
     link: "bungalows-for-rent",
     title: "Bungalows For Rent",
   },
-  { link: "pent-houses-for-rent", title: "Pent Houses For Rent" },
   { link: "properties-for-rent", title: "Properties For Rent" },
 ];
 
