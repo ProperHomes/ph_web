@@ -1,22 +1,27 @@
-name: SST workflow
-on: push
+name: SST deploy workflow
+on:
+  push:
+    branches:
+      - main
 
 # concurrency group name ensures concurrent workflow runs wait for any in-progress job to finish
 concurrency: merge-${{ github.ref }}
 
-# permission can be added at job level or workflow level
-permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read # This is required for actions/checkout
+env:
+  AWS_DEFAULT_REGION: ap-south-1
+  AWS_DEFAULT_OUTPUT: json
 
 jobs:
   DeployApp:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHub
           aws-region: ap-south-1
