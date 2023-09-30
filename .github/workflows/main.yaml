@@ -24,8 +24,7 @@ jobs:
         name: Install pnpm
         with:
           version: 8
-          run_install: false
-    
+          run_install: true
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -34,5 +33,4 @@ jobs:
           role-session-name: GithubActionsDeploy
       - name: Deploy app
         run: |
-          pnpm install sst
-          pnpm sst deploy
+          pnpm sst deploy --stage=prod
