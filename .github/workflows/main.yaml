@@ -21,6 +21,15 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+    
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
