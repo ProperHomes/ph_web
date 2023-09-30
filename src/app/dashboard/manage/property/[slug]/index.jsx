@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -93,6 +93,7 @@ export default function ManageProperty({ slug }) {
     listedFor === LISTING_TYPE.RENT && status === PROPERTY_STATUS.RENTED;
   const isRentalOccupied = !!tenantId;
 
+  // Todo: why Set is used here ?
   const list = [
     ...(new Set(getItems(isRentalProperty, isRentalOccupied, isOwner)) ?? []),
   ];

@@ -146,7 +146,7 @@ function PropertyList({
           <Typography
             gutterBottom
             fontWeight={600}
-            variant="h4"
+            variant="h2"
             textAlign="left"
             fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
           >

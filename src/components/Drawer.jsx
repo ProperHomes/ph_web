@@ -1,14 +1,9 @@
-'use client';
+"use client";
 import Drawer from "@mui/material/Drawer";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-function SlideDrawer({
-  open,
-  handleClose,
-  position = "right",
-  children,
-}) {
+function SlideDrawer({ open, handleClose, position = "right", children }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
@@ -29,7 +24,7 @@ function SlideDrawer({
           width: isMobile ? "100%" : "350px",
           height: isMobile ? "70%" : "100%",
           padding: "0.5em 1em",
-          borderRadius: isMobile ? "1em 1em 0 0" : '1em 0 0 1em',
+          borderRadius: isMobile ? "1em 1em 0 0" : "1em 0 0 1em",
           background: theme.palette.background.paper,
         },
       }}

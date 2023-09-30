@@ -47,7 +47,7 @@ function usePagination({
         first: null,
         last: pageSize,
         after: null,
-        before: page === 0 ? null : pageInfo.startCursor,
+        before: pageNo === 0 ? null : pageInfo.startCursor,
       };
     } else {
       reqVariables = {

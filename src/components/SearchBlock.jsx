@@ -1,6 +1,6 @@
 "use client";
 import Stack from "@mui/material/Stack";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 
 import useFilters from "src/hooks/useFilters";
 import SearchInput from "./SearchInput";

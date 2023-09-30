@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import Villa from "@mui/icons-material/VillaOutlined";
 import HouseOutlined from "@mui/icons-material/HouseOutlined";
 import LocationCityOutlined from "@mui/icons-material/LocationCityOutlined";

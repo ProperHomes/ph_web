@@ -1,5 +1,5 @@
-'use client';
-import { useTheme } from "@mui/material/styles";
+"use client";
+import useTheme from "@mui/material/styles/useTheme";
 import BreadcrumbsMUI from "@mui/material/Breadcrumbs";
 import Link from "next/link";
 import Home from "@mui/icons-material/Home";

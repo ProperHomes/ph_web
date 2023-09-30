@@ -11,8 +11,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { UPDATE_NOTIFICATION } from "./graphql";
 import NotificationItem from "./NotificationItem";
 import { NotificationsContext, notificationActionTypes } from "./context";
-import { useMediaQuery } from "@mui/material";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 function Notifications() {
   const theme = useTheme();
   const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));

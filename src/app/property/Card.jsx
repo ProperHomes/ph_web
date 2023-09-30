@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, memo, useTransition } from "react";
+import { useEffect, useState, memo } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
@@ -10,7 +10,8 @@ import Skeleton from "@mui/material/Skeleton";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import { useMediaQuery, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { PROPERTY_TYPE } from "@/utils/constants";

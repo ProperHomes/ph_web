@@ -1,5 +1,5 @@
-'use client';
-import { useTheme } from "@mui/material/styles";
+"use client";
+import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 
 function RentReceiptGenerator({ city }) {

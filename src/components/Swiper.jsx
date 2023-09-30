@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 
 function Swiper({ children }) {
   const theme = useTheme();

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 

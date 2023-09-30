@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 import NavLinks from "./NavLinks";
 import { usePathname } from "next/navigation";
-import { useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Dashboardnav from "src/app/dashboard/nav";
 
 function NavbarLeft() {

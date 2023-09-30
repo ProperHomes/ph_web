@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import InputBase from "@mui/material/InputBase";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchIcon from "@mui/icons-material/Search";
 

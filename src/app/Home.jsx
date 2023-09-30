@@ -1,6 +1,6 @@
 "use client";
 import Stack from "@mui/material/Stack";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 
 import PropertyList from "./property/List";

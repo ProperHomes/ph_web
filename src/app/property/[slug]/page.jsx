@@ -8,6 +8,8 @@ import { client } from "@/graphql/serverClient";
 
 import Profile from "../profile";
 
+export const dynamicParams = true;
+
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;

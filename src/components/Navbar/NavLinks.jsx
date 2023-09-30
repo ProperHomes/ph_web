@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import { Typography } from "@mui/material";
 
 const links = [
