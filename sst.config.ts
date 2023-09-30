@@ -18,8 +18,10 @@ export default {
         stack,
         "CLOUDFRONT_DISTRIBUTION_ID"
       );
+      const API_SECRET = new Config.Secret(stack, "API_SECRET");
+
       const site = new NextjsSite(stack, "site", {
-        bind: [REVALIDATION_SECRET_KEY, CLOUDFRONT_DISTRIBUTION_ID],
+        bind: [REVALIDATION_SECRET_KEY, CLOUDFRONT_DISTRIBUTION_ID, API_SECRET],
         customDomain: {
           domainName: "properhomes.in",
           domainAlias: "www.properhomes.in",

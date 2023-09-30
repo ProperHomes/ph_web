@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "AWS_PROFILE=properhomes_admin_veera sst bind next dev",
-    "sst:deploy:prod": "AWS_PROFILE=properhomes_admin_veera npx sst deploy --stage=prod",
+    "deploy:prod": "AWS_PROFILE=properhomes_admin_veera npx sst deploy --stage=prod",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -53,9 +53,9 @@
   },
   "devDependencies": {
     "aws-cdk-lib": "2.84.0",
-    "constructs": "10.1.156",
+    "constructs": "^10.2.70",
     "encoding": "^0.1.13",
     "mini-css-extract-plugin": "^2.7.6",
-    "sst": "^2.24.24"
+    "sst": "^2.26.9"
   }
 }
