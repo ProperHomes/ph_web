@@ -30,6 +30,9 @@ export default function Home({ data }) {
     <>
       <Stack spacing={4} py={4} mb={{ xs: 0, md: 1 }} alignItems="center">
         <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
+          <Typography color="error" gutterBottom>
+            We are still under development. Thank you.
+          </Typography>
           <Typography color={theme.palette.text.primary} variant="h4">
             Find a home that{" "}
             <span
