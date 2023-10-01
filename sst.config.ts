@@ -22,10 +22,13 @@ export default {
 
       const site = new NextjsSite(stack, "site", {
         bind: [REVALIDATION_SECRET_KEY, CLOUDFRONT_DISTRIBUTION_ID, API_SECRET],
-        customDomain: {
-          domainName: "properhomes.in",
-          domainAlias: "www.properhomes.in",
-        },
+        customDomain:
+          app.stage === "prod"
+            ? {
+                domainName: "properhomes.in",
+                domainAlias: "www.properhomes.in",
+              }
+            : undefined,
       });
       stack.addOutputs({
         SiteUrl: site.url,

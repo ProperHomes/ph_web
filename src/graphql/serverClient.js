@@ -5,7 +5,8 @@ console.log(Config);
 const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_API, {
   fetch, // Need to pass fetch here because of Next.js cache
   headers: {
-    authorization: `Bearer ${Config.API_SECRET}`,
+    // This secret will only help us get access to the ph_server's graphql api. 
+    authorization: Config.API_SECRET,
   },
   // cache: 'force-cache',
 });
