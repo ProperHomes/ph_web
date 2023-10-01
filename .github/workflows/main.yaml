@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize, closed, reopened]
 
 env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -47,7 +47,7 @@ jobs:
       - name: Remove Preview SST Environment
         if: github.event_name == 'pull_request' && (github.event.action == 'closed' || github.event.pull_request.merged == true)
         run: |
-          pnpm sst remove --stage ${{ github.event.pull_request.number }}
+          pnpm sst remove --stage ${{ env.BRANCH_NAME }}
 
       - name: Preview Deploy
         if: ${{ env.BRANCH_NAME }} != 'main' && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
