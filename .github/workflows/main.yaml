@@ -45,16 +45,16 @@ jobs:
           echo NEXT_PUBLIC_CLOUDFRONT_URL=${{ secrets.NEXT_PUBLIC_CLOUDFRONT_URL }} >> .env.local
 
       - name: Remove Preview SST Environment
-        if: github.event_name == 'pull_request' && (github.event.action == 'closed' || github.event.pull_request.merged == true)
+        if: ${{ github.event_name == 'pull_request' && (github.event.action == 'closed' || github.event.pull_request.merged == true) }}
         run: |
           pnpm sst remove --stage ${{ env.BRANCH_NAME }}
 
       - name: Preview Deploy
-        if: ${{ env.BRANCH_NAME }} != 'main' && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
+        if: ${{ env.BRANCH_NAME != 'main' && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize') }}
         run: |
           pnpm sst deploy --stage ${{ env.BRANCH_NAME }}
 
       - name: Production Deploy
-        if: ${{ env.BRANCH_NAME }} == 'main'
+        if: ${{ github.event_name != 'pull_request' && github.event_name == 'push' &&  env.BRANCH_NAME == 'main' }}
         run: |
           pnpm sst deploy --stage=prod
