@@ -2,7 +2,7 @@ name: SST deploy workflow
 on:
   push:
     branches: [main]
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, closed]
 
 env:
@@ -45,7 +45,7 @@ jobs:
           echo NEXT_PUBLIC_CLOUDFRONT_URL=${{ secrets.NEXT_PUBLIC_CLOUDFRONT_URL }} >> .env.local
 
       - name: Remove Preview SST Environment
-        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        if: github.event_name == 'pull_request' && (github.event.action == 'closed' || github.event.pull_request.merged == true)
         run: |
           pnpm sst remove --stage ${{ github.event.pull_request.number }}
 
