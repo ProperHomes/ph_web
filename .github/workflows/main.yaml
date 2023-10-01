@@ -50,11 +50,11 @@ jobs:
           pnpm sst remove --stage ${{ github.event.pull_request.number }}
 
       - name: Preview Deploy
-        if: $BRANCH_NAME != 'main' && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
+        if: ${{ env.BRANCH_NAME }} != 'main' && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
         run: |
-          pnpm sst deploy --stage $BRANCH_NAME
+          pnpm sst deploy --stage ${{ env.BRANCH_NAME }}
 
       - name: Production Deploy
-        if: $BRANCH_NAME == 'main'
+        if: ${{ env.BRANCH_NAME }} == 'main'
         run: |
           pnpm sst deploy --stage=prod
