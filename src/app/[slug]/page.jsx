@@ -66,7 +66,7 @@ export default async function Page({ params }) {
     if (data.length === 0) {
       res = await client.request(GET_PROPERTIES, {
         first: isProperties ? 20 : 10,
-        orderBy: [CREATED_AT_DESC],
+        orderBy: ["CREATED_AT_DESC"],
       });
       data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
     }
