@@ -5,18 +5,17 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Card from "./Card";
-import ListSkeleton from "../../components/ListSkeleton";
 import CreatePropertySaleRentLease from "../list-your-property-for-sale-rent-lease";
 
 import useFilters from "src/hooks/useFilters";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import usePagination from "src/hooks/usePagination";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
-import { GET_PROPERTIES, SEARCH_PROPERTIES } from "@/graphql/properties";
+import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -46,18 +45,23 @@ function PropertyList({
   searchVariables,
   onCloseEditor,
 }) {
+  const theme = useTheme();
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
-  const { Auth, toggleAuth } = useToggleAuth();
+  const { Auth, toggleAuth, loggedInUser, isLoggedIn } = useToggleAuth();
   const {
     city,
     bedrooms,
     listedFor,
+    propertyType,
+    selectedPriceSort,
     ResetButton,
     CityDropdown,
     BedroomsDropdown,
     ListedForDropdown,
+    SortPriceDropdown,
+    PropertyTypeDropdown,
   } = useFilters({
     sx: {
       "& fieldset": {
@@ -71,11 +75,13 @@ function PropertyList({
     onChangeCity: () => handleChangePage(0),
     onChangeBedrooms: () => handleChangePage(0),
     onChangeListedFor: () => handleChangePage(0),
+    onChangePriceSort: () => handleChangePage(0),
+    onChangePropertyType: () => handleChangePage(0),
   });
 
-  let variables = { first: count };
-  if (type) {
-    variables.type = type;
+  let variables = { first: count, orderBy: ["CREATED_AT_DESC"] };
+  if (type || propertyType) {
+    variables.type = type ?? propertyType;
   }
   if (city || cityProp) {
     variables.city = cityProp ?? city;
@@ -87,18 +93,29 @@ function PropertyList({
     variables.listedFor = listedForProp ?? listedFor;
   }
 
+  if (isLoggedIn) {
+    variables.userId = loggedInUser.id;
+  }
+
   if (isSearch) {
     variables = { ...variables, ...searchVariables };
   }
 
+  if (selectedPriceSort) {
+    variables.orderBy = [
+      selectedPriceSort === "asc" ? "PRICE_ASC" : "PRICE_DESC",
+      "CREATED_AT_DESC",
+    ];
+  }
+
   const { paginationObj, handleChangePage } = usePagination({
-    key: isSearch ? "searchProperties" : "properties",
-    QUERY: isSearch ? SEARCH_PROPERTIES : GET_PROPERTIES,
+    key: "properties",
+    QUERY: isLoggedIn ? GET_PROPERTIES_LOGGED_IN : GET_PROPERTIES,
     querySkip: (!infiniteScroll && !isSearch) || !count,
     variables,
     initialPageNo: isSearch ? 0 : 1,
     onNewData: (data, page) => {
-      if (city || bedrooms || listedFor) {
+      if (city || bedrooms || listedFor || selectedPriceSort || propertyType) {
         if (page === 0 || data.length === 0) {
           setProperties(data);
         } else {
@@ -156,19 +173,24 @@ function PropertyList({
           {showFilters && (
             <Box
               sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr 1fr",
-                  md: listedForProp ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
+                display: "flex",
+                flexFlow: "row wrap",
+                [theme.breakpoints.down("md")]: {
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr 1fr",
+                    md: "repeat(6, 1fr)",
+                  },
                 },
                 gap: "1em",
-
                 width: { xs: "100%", md: "auto" },
               }}
             >
               <CityDropdown />
+              {!type && <PropertyTypeDropdown label="Property Type" />}
               <BedroomsDropdown />
               {!listedForProp && <ListedForDropdown />}
+              <SortPriceDropdown />
               <ResetButton />
             </Box>
           )}

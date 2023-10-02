@@ -45,6 +45,8 @@ function PropertyCard({
     type,
     price,
     city,
+    area,
+    areaUnit,
     bedrooms,
     ownerId,
     tenantId,
@@ -345,6 +347,9 @@ function PropertyCard({
             {formattedPrice.slice(0, -3)}
           </Typography>
         </Stack>
+        <Typography fontWeight={500} fontSize="0.9rem" color="primary.main">
+          {area} {areaUnit.toLowerCase()}
+        </Typography>
       </Link>
     </Stack>
   );

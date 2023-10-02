@@ -22,6 +22,7 @@ export const PROPERTY_FIELDS = gql`
     attributes
     createdAt
     area
+    areaUnit
     ownerId
     tenantId
     status
@@ -48,6 +49,8 @@ export const GET_PROPERTIES = gql`
     $bedrooms: Int
     $first: Int
     $after: Cursor
+    $propertyId: UUID
+    $orderBy: [PropertiesOrderBy!]!
   ) {
     properties(
       first: $first
@@ -58,7 +61,8 @@ export const GET_PROPERTIES = gql`
         city: $city
         bedrooms: $bedrooms
       }
-      orderBy: CREATED_AT_DESC
+      filter: { id: { ne: $propertyId } }
+      orderBy: $orderBy
     ) {
       edges {
         cursor
@@ -116,13 +120,20 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
     $listedFor: TypeOfListing
     $type: PropertyType
     $city: PropertyCity
+    $bedrooms: Int
     $first: Int!
     $userId: UUID!
+    $orderBy: [PropertiesOrderBy!]!
   ) {
     properties(
-      condition: { listedFor: $listedFor, type: $type, city: $city }
+      condition: {
+        listedFor: $listedFor
+        type: $type
+        city: $city
+        bedrooms: $bedrooms
+      }
       first: $first
-      orderBy: CREATED_AT_DESC
+      orderBy: $orderBy
     ) {
       nodes {
         ...PropertyFields

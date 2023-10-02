@@ -19,6 +19,7 @@ function PropertyProfile({ data, similarProperties }) {
     bedrooms,
     bathrooms,
     area,
+    areaUnit,
     price,
     facing,
     isFurnished,
@@ -81,7 +82,7 @@ function PropertyProfile({ data, similarProperties }) {
       label: bathrooms?.length === 1 ? "Bathroom" : "Bathrooms",
       value: bathrooms,
     },
-    { label: "Area", value: area },
+    { label: "Area", value: `${area} ${areaUnit}` },
     { label: "Facing", value: facing },
     { label: isFurnished ? "Furnished" : "Not Furnished", value: "" },
     {
@@ -154,7 +155,7 @@ function PropertyProfile({ data, similarProperties }) {
                   }}
                   variant="outlined"
                 >
-                  {value} {label}
+                  {value} {label !== "Area" ? label : ""}
                 </Button>
               );
             })}

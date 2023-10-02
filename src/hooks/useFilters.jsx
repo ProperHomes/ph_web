@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { ALL_CITIES, LISTING_TYPE } from "@/utils/constants";
+import { ALL_CITIES, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
 
 const BEDROOMS = [
   { label: "1BHK", value: 1 },
@@ -19,6 +19,11 @@ const BEDROOMS = [
   { label: "6BHK", value: 6 },
 ];
 
+const priceSortOptions = [
+  { label: "Low To High", sort: "asc" },
+  { label: "High To Low", sort: "desc" },
+];
+
 export default function useFilters({
   sx,
   onReset,
@@ -27,6 +32,8 @@ export default function useFilters({
   onChangeCity,
   onChangeBedrooms,
   onChangeListedFor,
+  onChangePriceSort,
+  onChangePropertyType,
 }) {
   const router = useRouter();
 
@@ -38,6 +45,8 @@ export default function useFilters({
     city: searchCity,
     bedrooms: searchBedrooms,
     listedFor: searchListedFor,
+    priceSort,
+    type,
   } = searchVariables ?? {};
 
   const [city, setCity] = useState(searchCity);
@@ -45,9 +54,11 @@ export default function useFilters({
     searchBedrooms > 0 ? Number(searchBedrooms) : null
   );
   const [listedFor, setListedFor] = useState(searchListedFor);
+  const [selectedPriceSort, setSelectedPriceSort] = useState(priceSort);
+  const [propertyType, setPropertyType] = useState(type);
 
   const navigateToSearch = (key, value) => {
-    if (isSearch && searchText.length > 0) {
+    if (isSearch && searchText?.length > 0) {
       const url = new URL(window.location.href);
       url.searchParams.set(key, value);
       router.push(url.toString());
@@ -78,16 +89,74 @@ export default function useFilters({
     }
   };
 
+  const handleChangePropertyType = (e) => {
+    navigateToSearch("type", e.target.value);
+    setPropertyType(e.target.value);
+    if (!isSearch && onChangePropertyType) {
+      onChangePropertyType();
+    }
+  };
+
+  const handlePriceSort = (e) => {
+    const sortOption = e.target.value;
+    navigateToSearch("priceSort", sortOption);
+    setSelectedPriceSort(sortOption);
+    if (!isSearch && onChangePriceSort) {
+      onChangePriceSort();
+    }
+  };
+
   const handleReset = () => {
     setCity(null);
     setBedrooms(null);
     setListedFor(null);
-    if (isSearch) {
-      router.replace(`search?searchText=${searchText}`);
-    }
+    setSelectedPriceSort(null);
     if (onReset) {
       onReset();
     }
+  };
+
+  const SortPriceDropdown = () => {
+    return (
+      <Select
+        displayEmpty
+        renderValue={(selected) => {
+          if (!selected) {
+            return <Typography>Sort By Price</Typography>;
+          }
+          return `Price: ${selected === "asc" ? "Low To High" : "High To Low"}`;
+        }}
+        sx={{
+          width: { xs: "100%", md: "150px" },
+          height: "55px",
+          fontWeight: 500,
+          fontSize: "0.8rem",
+          ...(sx ?? {}),
+        }}
+        value={selectedPriceSort ?? priceSort ?? ""}
+        onChange={handlePriceSort}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: 250,
+              width: 150,
+            },
+          },
+        }}
+      >
+        {priceSortOptions.map((o) => {
+          return (
+            <MenuItem
+              key={o.label}
+              value={o.sort}
+              style={{ fontWeight: 500, fontSize: "0.8rem" }}
+            >
+              {o.label}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    );
   };
 
   const CityDropdown = () => {
@@ -96,9 +165,7 @@ export default function useFilters({
         displayEmpty
         renderValue={(selected) => {
           if (!selected) {
-            return (
-              <Typography>{isMobile ? "City" : "Select a City"}</Typography>
-            );
+            return <Typography>{isMobile ? "City" : "Select City"}</Typography>;
           }
 
           return selected;
@@ -129,6 +196,54 @@ export default function useFilters({
               style={{ fontWeight: 500, fontSize: "0.8rem" }}
             >
               {city}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    );
+  };
+
+  const PropertyTypeDropdown = ({ label }) => {
+    return (
+      <Select
+        displayEmpty
+        renderValue={(selected) => {
+          if (!selected) {
+            return (
+              <Typography>
+                {label ?? (isMobile ? "Type" : "Select Property Type")}
+              </Typography>
+            );
+          }
+
+          return PROPERTY_TYPE[selected];
+        }}
+        sx={{
+          width: { xs: "100%", md: "150px" },
+          height: "55px",
+          fontWeight: 500,
+          fontSize: "0.8rem",
+          ...(sx ?? {}),
+        }}
+        value={propertyType ?? type ?? ""}
+        onChange={handleChangePropertyType}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: 250,
+              width: 150,
+            },
+          },
+        }}
+      >
+        {Object.keys(PROPERTY_TYPE).map((t) => {
+          return (
+            <MenuItem
+              key={t}
+              value={t}
+              style={{ fontWeight: 500, fontSize: "0.8rem" }}
+            >
+              {PROPERTY_TYPE[t]}
             </MenuItem>
           );
         })}
@@ -179,15 +294,13 @@ export default function useFilters({
     );
   };
 
-  const ListedForDropdown = () => {
+  const ListedForDropdown = ({ label }) => {
     return (
       <Select
         displayEmpty
         renderValue={(selected) => {
           if (!selected) {
-            return (
-              <Typography>{isMobile ? "TYPE" : "Listing Type"}</Typography>
-            );
+            return <Typography>{label ?? "Listed For"}</Typography>;
           }
           return selected;
         }}
@@ -245,9 +358,13 @@ export default function useFilters({
     CityDropdown,
     BedroomsDropdown,
     ListedForDropdown,
+    SortPriceDropdown,
+    PropertyTypeDropdown,
     ResetButton,
     bedrooms: Number(bedrooms),
     city,
     listedFor,
+    propertyType,
+    selectedPriceSort,
   };
 }

@@ -8,20 +8,39 @@ const PropertyList = lazy(() => import("../property/List"));
 
 export default function SearchMain() {
   const searchParams = useSearchParams();
-  const searchText = searchParams.get("searchText");
   const city = searchParams.get("city");
-  const locality = searchParams.get("locality");
+  // const locality = searchParams.get("locality");
   const bedrooms = searchParams.get("bedrooms");
   const listedFor = searchParams.get("listedFor");
+  const priceSort = searchParams.get("priceSort");
+  const type = searchParams.get("type");
 
-  const searchVariables = {
-    city,
-    locality,
-    searchText,
-    bedrooms: bedrooms > 0 ? Number(bedrooms) : null,
-    listedFor,
-  };
-  const title = `Properties returned for search: "${searchText ?? ""}"`;
+  const searchVariables = {};
+  if (city) {
+    searchVariables.city = city;
+  }
+
+  if (bedrooms) {
+    searchVariables.bedrooms = bedrooms;
+  }
+  if (listedFor) {
+    searchVariables.listedFor = listedFor;
+  }
+
+  if (type) {
+    searchVariables.type = type;
+  }
+
+  if (priceSort) {
+    searchVariables.orderBy = [
+      priceSort === "asc" ? "PRICE_ASC" : "PRICE_DESC",
+      "CREATED_AT_DESC",
+    ];
+  } else {
+    searchVariables.orderBy = ["CREATED_AT_DESC"];
+  }
+
+  const title = `Properties Returned`;
 
   return (
     <Suspense fallback={<ListSkeleton />}>

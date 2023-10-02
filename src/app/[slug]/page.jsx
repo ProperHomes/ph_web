@@ -36,7 +36,10 @@ export default async function Page({ params }) {
       slug.includes("properties-for-sale") ||
       slug.includes("properties-for-rent");
 
-    const variables = { first: isProperties ? 20 : 10 };
+    const variables = {
+      first: isProperties ? 20 : 10,
+      orderBy: ["CREATED_AT_DESC"],
+    };
 
     if (!isProperties) {
       variables.type = propertyType;
@@ -63,6 +66,7 @@ export default async function Page({ params }) {
     if (data.length === 0) {
       res = await client.request(GET_PROPERTIES, {
         first: isProperties ? 20 : 10,
+        orderBy: [CREATED_AT_DESC],
       });
       data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
     }

@@ -13,11 +13,13 @@ export const dynamicParams = true;
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
-  const { city, type } = data;
+  const { id, city, type } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 3,
     city,
     type,
+    propertyId: id,
+    orderBy: ["CREATED_AT_DESC"],
   });
   const properties =
     similarRes?.properties?.edges?.map((edge) => edge.node) ?? [];
