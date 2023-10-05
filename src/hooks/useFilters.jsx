@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -27,8 +26,6 @@ const priceSortOptions = [
 export default function useFilters({
   sx,
   onReset,
-  isSearch,
-  searchVariables,
   onChangeCity,
   onChangeBedrooms,
   onChangeListedFor,
@@ -40,80 +37,91 @@ export default function useFilters({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const {
-    searchText,
-    city: searchCity,
-    bedrooms: searchBedrooms,
-    listedFor: searchListedFor,
-    priceSort,
-    type,
-  } = searchVariables ?? {};
+  const searchParams = useSearchParams();
+  const city = searchParams.get("city");
+  // const locality = searchParams.get("locality");
+  const bedrooms = searchParams.get("bedrooms");
+  const listedFor = searchParams.get("listedFor");
+  const priceSort = searchParams.get("priceSort");
+  const type = searchParams.get("type");
 
-  const [city, setCity] = useState(searchCity);
-  const [bedrooms, setBedrooms] = useState(
-    searchBedrooms > 0 ? Number(searchBedrooms) : null
-  );
-  const [listedFor, setListedFor] = useState(searchListedFor);
-  const [selectedPriceSort, setSelectedPriceSort] = useState(priceSort);
-  const [propertyType, setPropertyType] = useState(type);
+  const searchVariables = {};
+  if (city) {
+    searchVariables.city = city;
+  }
+  if (bedrooms && Number(bedrooms) !== NaN) {
+    searchVariables.bedrooms = Number(bedrooms);
+  }
+  if (listedFor) {
+    searchVariables.listedFor = listedFor;
+  }
+  if (type) {
+    searchVariables.type = type;
+  }
+  if (priceSort) {
+    searchVariables.orderBy = [
+      priceSort === "asc" ? "PRICE_ASC" : "PRICE_DESC",
+      "CREATED_AT_DESC",
+    ];
+  } else {
+    searchVariables.orderBy = ["CREATED_AT_DESC"];
+  }
 
-  const navigateToSearch = (key, value) => {
-    if (isSearch && searchText?.length > 0) {
+  const addUrlParam = (key, value) => {
+    if (key && value) {
       const url = new URL(window.location.href);
-      url.searchParams.set(key, value);
-      router.push(url.toString());
+      const currentVal = url.searchParams.get(key);
+      if (currentVal !== value) {
+        url.searchParams.set(key, value);
+        router.push(url.toString());
+      }
     }
   };
 
   const handleChangeCity = (e) => {
-    navigateToSearch("city", e.target.value);
-    setCity(e.target.value);
-    if (!isSearch && onChangeCity) {
+    addUrlParam("city", e.target.value);
+    if (onChangeCity) {
       onChangeCity();
     }
   };
 
   const handleChangeBedrooms = (e) => {
-    navigateToSearch("bedrooms", e.target.value);
-    setBedrooms(Number(e.target.value));
-    if (!isSearch && onChangeBedrooms) {
+    addUrlParam("bedrooms", e.target.value);
+    if (onChangeBedrooms) {
       onChangeBedrooms();
     }
   };
 
   const handleChangeListedFor = (e) => {
-    navigateToSearch("listedFor", e.target.value);
-    setListedFor(e.target.value);
-    if (!isSearch && onChangeListedFor) {
+    addUrlParam("listedFor", e.target.value);
+    if (onChangeListedFor) {
       onChangeListedFor();
     }
   };
 
   const handleChangePropertyType = (e) => {
-    navigateToSearch("type", e.target.value);
-    setPropertyType(e.target.value);
-    if (!isSearch && onChangePropertyType) {
+    addUrlParam("type", e.target.value);
+    if (onChangePropertyType) {
       onChangePropertyType();
     }
   };
 
   const handlePriceSort = (e) => {
-    const sortOption = e.target.value;
-    navigateToSearch("priceSort", sortOption);
-    setSelectedPriceSort(sortOption);
-    if (!isSearch && onChangePriceSort) {
+    addUrlParam("priceSort", e.target.value);
+    if (onChangePriceSort) {
       onChangePriceSort();
     }
   };
 
   const handleReset = () => {
-    setCity(null);
-    setBedrooms(null);
-    setListedFor(null);
-    setSelectedPriceSort(null);
-    if (onReset) {
-      onReset();
-    }
+    const url = new URL(window.location.href);
+    url.searchParams.delete("city");
+    url.searchParams.delete("bedrooms");
+    url.searchParams.delete("listedFor");
+    url.searchParams.delete("type");
+    url.searchParams.delete("priceSort");
+    router.push(url.toString());
+    onReset();
   };
 
   const SortPriceDropdown = () => {
@@ -133,7 +141,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={selectedPriceSort ?? priceSort ?? ""}
+        value={priceSort ?? ""}
         onChange={handlePriceSort}
         MenuProps={{
           PaperProps: {
@@ -177,7 +185,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={city ?? searchCity ?? ""}
+        value={city ?? ""}
         onChange={handleChangeCity}
         MenuProps={{
           PaperProps: {
@@ -225,7 +233,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={propertyType ?? type ?? ""}
+        value={type ?? ""}
         onChange={handleChangePropertyType}
         MenuProps={{
           PaperProps: {
@@ -268,7 +276,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={bedrooms ?? searchBedrooms ?? ""}
+        value={bedrooms ?? ""}
         onChange={handleChangeBedrooms}
         MenuProps={{
           PaperProps: {
@@ -311,7 +319,7 @@ export default function useFilters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        value={listedFor ?? searchListedFor ?? ""}
+        value={listedFor ?? ""}
         onChange={handleChangeListedFor}
         MenuProps={{
           PaperProps: {
@@ -342,7 +350,7 @@ export default function useFilters({
       variant="outlined"
       size="large"
       onClick={handleReset}
-      disabled={!city && !bedrooms && !listedFor}
+      disabled={!city && !bedrooms && !listedFor && !priceSort && !type}
       sx={{
         width: { xs: "100%", md: "150px" },
         height: "55px",
@@ -361,10 +369,7 @@ export default function useFilters({
     SortPriceDropdown,
     PropertyTypeDropdown,
     ResetButton,
-    bedrooms: Number(bedrooms),
-    city,
-    listedFor,
-    propertyType,
-    selectedPriceSort,
+    priceSort,
+    searchVariables,
   };
 }

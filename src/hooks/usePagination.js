@@ -25,6 +25,7 @@ function usePagination({
     data: queryData,
     fetchMore,
     loading,
+    refetch,
   } = useQuery(QUERY, {
     variables,
     skip: querySkip,
@@ -38,36 +39,23 @@ function usePagination({
     setPaginationObj({ ...paginationRef.current, ...data });
   };
 
-  const handleChangePage = async (pageNo) => {
-    const { pageInfo, currentPage, pageSize } = paginationRef.current;
-    const isAccesingPrevPage = pageNo < currentPage;
-    let reqVariables = {};
-    if (isAccesingPrevPage) {
-      reqVariables = {
-        first: null,
-        last: pageSize,
-        after: null,
-        before: pageNo === 0 ? null : pageInfo.startCursor,
-      };
-    } else {
-      reqVariables = {
-        first: pageSize,
-        last: null,
-        before: null,
-        after: pageNo === 0 ? null : pageInfo.endCursor,
-      };
-    }
+  const handleLoadNext = async (pageNo) => {
+    const { pageInfo, pageSize } = paginationRef.current;
+    const reqVariables = {
+      first: pageSize,
+      last: null,
+      before: null,
+      after: pageNo === 0 ? null : pageInfo.endCursor,
+    };
     const newData = await fetchMore({
       variables: { ...reqVariables, ...variables },
     });
-
     setPaginationObj({
       ...paginationRef.current,
       pageInfo: newData?.data?.[key]?.pageInfo,
-      currentPage: pageNo,
     });
     const list = newData?.data?.[key]?.edges?.map((edge) => edge.node) ?? [];
-    onNewData(list, pageNo);
+    onNewData(list, true);
   };
 
   const handleChangePageSize = (newPageSize) => {
@@ -81,7 +69,7 @@ function usePagination({
         startCursor: null,
       },
     });
-    handleChangePage(0);
+    handleLoadNext(0);
   };
 
   useEffect(() => {
@@ -92,12 +80,16 @@ function usePagination({
       pageInfo,
       totalCount: queryData?.[key]?.totalCount ?? 10,
     });
+    return () => {
+      paginationRef.current = null;
+    };
   }, [queryData, key]);
 
   return {
     loading,
     paginationObj,
-    handleChangePage,
+    refetch,
+    handleLoadNext,
     handleChangePageSize,
     handleChangePaginationObj,
   };

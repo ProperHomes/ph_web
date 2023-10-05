@@ -14,7 +14,7 @@ export default async function Page() {
       data={data}
       infiniteScroll
       count={20}
-      title="All Properties Listed in the last 24 hours"
+      title="Properties Listed Recently"
     />
   );
 }

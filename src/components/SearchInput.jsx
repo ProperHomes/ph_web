@@ -18,9 +18,7 @@ function SearchInput({ showSearchBtn }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const {
-    city,
-    listedFor,
-    propertyType,
+    searchVariables,
     CityDropdown,
     PropertyTypeDropdown,
     ListedForDropdown,
@@ -36,15 +34,17 @@ function SearchInput({ showSearchBtn }) {
     },
   });
 
+  const { city, type, listedFor } = searchVariables;
+
   const handleSubmit = () => {
-    if (!city && !propertyType && !listedFor) {
+    if (!city && !type && !listedFor) {
       router.push("/search");
     } else {
       let path = "/search?";
       const filters = {};
       if (city) filters.city = city;
       if (listedFor) filters.listedFor = listedFor;
-      if (propertyType) filters.type = propertyType;
+      if (type) filters.type = type;
       let count = 0;
       Object.keys(filters).forEach((k) => {
         if (filters[k]) {

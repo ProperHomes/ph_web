@@ -15,7 +15,7 @@ function SavedProperties() {
 
   const [savedProperties, setSavedProperties] = useState([]);
 
-  const { paginationObj, handleChangePage } = usePagination({
+  const { paginationObj, handleLoadNext } = usePagination({
     key: "savedProperties",
     QUERY: GET_USER_SAVED_PROPERTIES,
     querySkip: !state.user?.id,
@@ -35,14 +35,10 @@ function SavedProperties() {
     },
   });
 
-  const handleFetchNext = () => {
-    handleChangePage(paginationObj.currentPage + 1);
-  };
-
   return (
     <InfiniteScroll
       dataLength={savedProperties.length}
-      next={handleFetchNext}
+      next={handleLoadNext}
       hasMore={paginationObj.pageInfo?.hasNextPage}
       loader={<ListSkeleton n={8} />}
       endMessage={<></>}

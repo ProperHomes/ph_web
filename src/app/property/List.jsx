@@ -33,16 +33,15 @@ const Section = styled(Box)(({ theme }) => ({
 
 function PropertyList({
   data,
-  type,
   title,
   city: cityProp,
   listedFor: listedForProp,
+  type: typeProp,
   viewMoreLink,
   infiniteScroll,
   count,
-  showFilters,
   isSearch,
-  searchVariables,
+  showFilters,
   onCloseEditor,
 }) {
   const theme = useTheme();
@@ -50,12 +49,9 @@ function PropertyList({
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
   const { Auth, toggleAuth, loggedInUser, isLoggedIn } = useToggleAuth();
+
   const {
-    city,
-    bedrooms,
-    listedFor,
-    propertyType,
-    selectedPriceSort,
+    searchVariables,
     ResetButton,
     CityDropdown,
     BedroomsDropdown,
@@ -70,59 +66,48 @@ function PropertyList({
       },
     },
     isSearch,
-    searchVariables,
-    onReset: () => handleChangePage(0),
-    onChangeCity: () => handleChangePage(0),
-    onChangeBedrooms: () => handleChangePage(0),
-    onChangeListedFor: () => handleChangePage(0),
-    onChangePriceSort: () => handleChangePage(0),
-    onChangePropertyType: () => handleChangePage(0),
+    onReset: () => handleLoadNext(false),
+    onChangeCity: () => handleLoadNext(false),
+    onChangeBedrooms: () => handleLoadNext(false),
+    onChangeListedFor: () => handleLoadNext(false),
+    onChangePriceSort: () => handleLoadNext(false),
+    onChangePropertyType: () => handleLoadNext(false),
   });
 
-  let variables = { first: count, orderBy: ["CREATED_AT_DESC"] };
-  if (type || propertyType) {
-    variables.type = type ?? propertyType;
+  const { city, listedFor, bedrooms, type } = searchVariables;
+
+  let variables = {
+    first: count,
+    orderBy: ["CREATED_AT_DESC"],
+  };
+
+  if (cityProp) {
+    variables.city = cityProp;
   }
-  if (city || cityProp) {
-    variables.city = cityProp ?? city;
+
+  if (typeProp) {
+    variables.type = typeProp;
   }
-  if (bedrooms) {
-    variables.bedrooms = bedrooms;
+
+  if (listedForProp) {
+    variables.listedFor = listedForProp;
   }
-  if (listedFor || listedForProp) {
-    variables.listedFor = listedForProp ?? listedFor;
-  }
+
+  variables = { ...variables, ...searchVariables };
 
   if (isLoggedIn) {
     variables.userId = loggedInUser.id;
   }
 
-  if (isSearch) {
-    variables = { ...variables, ...searchVariables };
-  }
-
-  if (selectedPriceSort) {
-    variables.orderBy = [
-      selectedPriceSort === "asc" ? "PRICE_ASC" : "PRICE_DESC",
-      "CREATED_AT_DESC",
-    ];
-  }
-
-  const { paginationObj, handleChangePage } = usePagination({
+  const { paginationObj, handleLoadNext } = usePagination({
     key: "properties",
     QUERY: isLoggedIn ? GET_PROPERTIES_LOGGED_IN : GET_PROPERTIES,
     querySkip: (!infiniteScroll && !isSearch) || !count,
     variables,
     initialPageNo: isSearch ? 0 : 1,
-    onNewData: (data, page) => {
-      if (city || bedrooms || listedFor || selectedPriceSort || propertyType) {
-        if (page === 0 || data.length === 0) {
-          setProperties(data);
-        } else {
-          setProperties((prev) => {
-            return removeDuplicateObjectsFromArray([...prev, ...data]);
-          });
-        }
+    onNewData: (data, append) => {
+      if (!append) {
+        setProperties(data);
       } else {
         setProperties((prev) => {
           return removeDuplicateObjectsFromArray([...prev, ...data]);
@@ -138,12 +123,13 @@ function PropertyList({
     }
   };
 
-  const handleFetchNextPage = () => {
-    handleChangePage(paginationObj.currentPage + 1);
-  };
-
   const listToShow =
-    isSearch || (infiniteScroll && count) || city || bedrooms || listedFor
+    isSearch ||
+    (infiniteScroll && count) ||
+    city ||
+    bedrooms ||
+    listedFor ||
+    type
       ? properties
       : data ?? [];
 
@@ -186,8 +172,8 @@ function PropertyList({
                 width: { xs: "100%", md: "auto" },
               }}
             >
-              <CityDropdown />
-              {!type && <PropertyTypeDropdown label="Property Type" />}
+              {!cityProp && <CityDropdown />}
+              {!typeProp && <PropertyTypeDropdown label="Property Type" />}
               <BedroomsDropdown />
               {!listedForProp && <ListedForDropdown />}
               <SortPriceDropdown />
@@ -235,7 +221,7 @@ function PropertyList({
       {infiniteScroll && !propertyIdToEdit && (
         <InfiniteScroll
           dataLength={listToShow.length}
-          next={handleFetchNextPage}
+          next={handleLoadNext}
           hasMore={hasMore}
           endMessage={<></>}
           loader={<></>}
