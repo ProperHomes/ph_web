@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -11,11 +11,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "./Card";
 import CreatePropertySaleRentLease from "../list-your-property-for-sale-rent-lease";
 
-import useFilters from "src/hooks/useFilters";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import usePagination from "src/hooks/usePagination";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
+import Filters from "@/components/Filters";
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -43,6 +43,7 @@ function PropertyList({
   isSearch,
   showFilters,
   onCloseEditor,
+  searchParams = {},
 }) {
   const theme = useTheme();
   const [properties, setProperties] = useState([]);
@@ -50,31 +51,7 @@ function PropertyList({
 
   const { Auth, toggleAuth, loggedInUser, isLoggedIn } = useToggleAuth();
 
-  const {
-    searchVariables,
-    ResetButton,
-    CityDropdown,
-    BedroomsDropdown,
-    ListedForDropdown,
-    SortPriceDropdown,
-    PropertyTypeDropdown,
-  } = useFilters({
-    sx: {
-      "& fieldset": {
-        borderRadius: "8px",
-        borderColor: "#00000020",
-      },
-    },
-    isSearch,
-    onReset: () => handleLoadNext(false),
-    onChangeCity: () => handleLoadNext(false),
-    onChangeBedrooms: () => handleLoadNext(false),
-    onChangeListedFor: () => handleLoadNext(false),
-    onChangePriceSort: () => handleLoadNext(false),
-    onChangePropertyType: () => handleLoadNext(false),
-  });
-
-  const { city, listedFor, bedrooms, type } = searchVariables;
+  const { city, listedFor, bedrooms, type, priceSort } = searchParams ?? {};
 
   let variables = {
     first: count,
@@ -93,7 +70,19 @@ function PropertyList({
     variables.listedFor = listedForProp;
   }
 
-  variables = { ...variables, ...searchVariables };
+  variables = { ...variables, ...searchParams };
+
+  if (bedrooms && Number(bedrooms) !== NaN) {
+    variables.bedrooms = Number(bedrooms);
+  }
+  if (priceSort) {
+    variables.orderBy = [
+      priceSort === "asc" ? "PRICE_ASC" : "PRICE_DESC",
+      "CREATED_AT_DESC",
+    ];
+  } else {
+    variables.orderBy = ["CREATED_AT_DESC"];
+  }
 
   if (isLoggedIn) {
     variables.userId = loggedInUser.id;
@@ -121,6 +110,10 @@ function PropertyList({
     if (onCloseEditor) {
       onCloseEditor();
     }
+  };
+
+  const onChangeFilters = () => {
+    handleLoadNext(false);
   };
 
   const listToShow =
@@ -157,28 +150,42 @@ function PropertyList({
           </Typography>
 
           {showFilters && (
-            <Box
-              sx={{
-                display: "flex",
-                flexFlow: "row wrap",
-                [theme.breakpoints.down("md")]: {
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr 1fr",
-                    md: "repeat(6, 1fr)",
+            <Suspense fallback={<></>}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexFlow: "row wrap",
+                  [theme.breakpoints.down("md")]: {
+                    display: "grid",
+                    gridTemplateColumns: {
+                      xs: "1fr 1fr",
+                      md: "repeat(6, 1fr)",
+                    },
                   },
-                },
-                gap: "1em",
-                width: { xs: "100%", md: "auto" },
-              }}
-            >
-              {!cityProp && <CityDropdown />}
-              {!typeProp && <PropertyTypeDropdown label="Property Type" />}
-              <BedroomsDropdown />
-              {!listedForProp && <ListedForDropdown />}
-              <SortPriceDropdown />
-              <ResetButton />
-            </Box>
+                  gap: "1em",
+                  width: { xs: "100%", md: "auto" },
+                }}
+              >
+                <Filters
+                  typeLabel="Property Type"
+                  hideCity={!!cityProp}
+                  hideType={!!typeProp}
+                  hideListedFor={!!listedForProp}
+                  onChangeCity={onChangeFilters}
+                  onChangeBedrooms={onChangeFilters}
+                  onChangeListedFor={onChangeFilters}
+                  onChangePriceSort={onChangeFilters}
+                  onChangePropertyType={onChangeFilters}
+                  onReset={onChangeFilters}
+                  sx={{
+                    "& fieldset": {
+                      borderRadius: "8px",
+                      borderColor: "#00000020",
+                    },
+                  }}
+                />
+              </Box>
+            </Suspense>
           )}
           {viewMoreLink && (
             <Button

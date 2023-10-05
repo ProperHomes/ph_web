@@ -1,6 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
@@ -23,8 +24,18 @@ const priceSortOptions = [
   { label: "High To Low", sort: "desc" },
 ];
 
-export default function useFilters({
+export default function Filters({
   sx,
+  typeLabel,
+  listedForLabel,
+  hideCity,
+  hideType,
+  hideBedrooms,
+  hideListedFor,
+  hidePriceSort,
+  hideReset,
+  hasCityDivider,
+  hasTypeDivider,
   onReset,
   onChangeCity,
   onChangeBedrooms,
@@ -39,33 +50,10 @@ export default function useFilters({
 
   const searchParams = useSearchParams();
   const city = searchParams.get("city");
-  // const locality = searchParams.get("locality");
   const bedrooms = searchParams.get("bedrooms");
   const listedFor = searchParams.get("listedFor");
   const priceSort = searchParams.get("priceSort");
   const type = searchParams.get("type");
-
-  const searchVariables = {};
-  if (city) {
-    searchVariables.city = city;
-  }
-  if (bedrooms && Number(bedrooms) !== NaN) {
-    searchVariables.bedrooms = Number(bedrooms);
-  }
-  if (listedFor) {
-    searchVariables.listedFor = listedFor;
-  }
-  if (type) {
-    searchVariables.type = type;
-  }
-  if (priceSort) {
-    searchVariables.orderBy = [
-      priceSort === "asc" ? "PRICE_ASC" : "PRICE_DESC",
-      "CREATED_AT_DESC",
-    ];
-  } else {
-    searchVariables.orderBy = ["CREATED_AT_DESC"];
-  }
 
   const addUrlParam = (key, value) => {
     if (key && value) {
@@ -362,14 +350,16 @@ export default function useFilters({
     </Button>
   );
 
-  return {
-    CityDropdown,
-    BedroomsDropdown,
-    ListedForDropdown,
-    SortPriceDropdown,
-    PropertyTypeDropdown,
-    ResetButton,
-    priceSort,
-    searchVariables,
-  };
+  return (
+    <>
+      {!hideCity && <CityDropdown />}
+      {hasCityDivider && <Divider orientation="vertical" />}
+      {!hideType && <PropertyTypeDropdown label={typeLabel} />}
+      {hasTypeDivider && <Divider orientation="vertical" />}
+      {!hideBedrooms && <BedroomsDropdown />}
+      {!hideListedFor && <ListedForDropdown label={listedForLabel} />}
+      {!hidePriceSort && <SortPriceDropdown />}
+      {!hideReset && <ResetButton />}
+    </>
+  );
 }

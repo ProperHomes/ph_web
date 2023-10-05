@@ -1,15 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchIcon from "@mui/icons-material/Search";
 import Place from "@mui/icons-material/Place";
 
 import useKeyDown from "src/hooks/useKeyDown";
-import useFilters from "src/hooks/useFilters";
-import { Divider, IconButton, Typography } from "@mui/material";
+import Filters from "./Filters";
 
 function SearchInput({ showSearchBtn }) {
   const router = useRouter();
@@ -17,24 +18,10 @@ function SearchInput({ showSearchBtn }) {
   const isDark = theme.palette.mode === "dark";
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const {
-    searchVariables,
-    CityDropdown,
-    PropertyTypeDropdown,
-    ListedForDropdown,
-  } = useFilters({
-    sx: {
-      width: { xs: "100px", md: "100%" },
-      height: "60px",
-      "& fieldset": {
-        borderRadius: "16px",
-        border: 0,
-        borderColor: "transparent !important",
-      },
-    },
-  });
-
-  const { city, type, listedFor } = searchVariables;
+  const searchParams = useSearchParams();
+  const city = searchParams.get("city");
+  const listedFor = searchParams.get("listedFor");
+  const type = searchParams.get("type");
 
   const handleSubmit = () => {
     if (!city && !type && !listedFor) {
@@ -85,14 +72,23 @@ function SearchInput({ showSearchBtn }) {
       }}
     >
       {!isMobile && (
-        <>
-          <CityDropdown />
-          <Divider orientation="vertical" flexItem />
-          <PropertyTypeDropdown />
-          <Divider orientation="vertical" flexItem />
-          <ListedForDropdown label="Sale/Rent" />
-          <Divider orientation="vertical" flexItem />
-        </>
+        <Filters
+          hideBedrooms
+          hidePriceSort
+          hideReset
+          hasCityDivider
+          hasTypeDivider
+          listedForLabel="Sale/Rent"
+          sx={{
+            width: { xs: "100px", md: "100%" },
+            height: "60px",
+            "& fieldset": {
+              borderRadius: "16px",
+              border: 0,
+              borderColor: "transparent !important",
+            },
+          }}
+        />
       )}
 
       {isMobile && (

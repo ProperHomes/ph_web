@@ -11,7 +11,7 @@ import {
 } from "@/utils/constants";
 import CategoryBoxes from "@/components/CategoryBoxes";
 
-export default async function Page({ params }) {
+export default async function Page({ params, searchParams }) {
   const { slug = "" } = params;
   let data = [];
   const navLink = navlinks.find((l) => l.link === slug);
@@ -79,6 +79,7 @@ export default async function Page({ params }) {
           infiniteScroll
           listedFor={listedFor}
           city={city}
+          searchParams={searchParams}
           count={!isProperties ? 20 : 10}
           title={isCityLink ? navLinkWithCity.title : navLink.title}
           showFilters

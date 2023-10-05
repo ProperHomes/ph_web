@@ -1,11 +1,15 @@
-import { Suspense } from "react";
-import SearchMain from ".";
-import Loading from "@/components/Loading";
+import PropertyList from "../property/List";
 
-export default function Page() {
+export default function Page({ searchParams }) {
+  const title = `Properties Returned`;
   return (
-    <Suspense fallback={<Loading />}>
-      <SearchMain />
-    </Suspense>
+    <PropertyList
+      showFilters
+      isSearch
+      searchParams={searchParams}
+      infiniteScroll
+      count={20}
+      title={title}
+    />
   );
 }

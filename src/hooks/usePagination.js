@@ -45,7 +45,7 @@ function usePagination({
       first: pageSize,
       last: null,
       before: null,
-      after: pageNo === 0 ? null : pageInfo.endCursor,
+      after: pageNo === 0 ? null : pageInfo?.endCursor,
     };
     const newData = await fetchMore({
       variables: { ...reqVariables, ...variables },
