@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 import { useQuery } from "@apollo/client";
 
 function usePagination({
@@ -39,13 +39,13 @@ function usePagination({
     setPaginationObj({ ...paginationRef.current, ...data });
   };
 
-  const handleLoadNext = async (pageNo) => {
+  const handleLoadNext = async (append = true) => {
     const { pageInfo, pageSize } = paginationRef.current;
     const reqVariables = {
       first: pageSize,
       last: null,
       before: null,
-      after: pageNo === 0 ? null : pageInfo?.endCursor,
+      after: !append ? null : pageInfo?.endCursor,
     };
     const newData = await fetchMore({
       variables: { ...reqVariables, ...variables },
@@ -55,7 +55,7 @@ function usePagination({
       pageInfo: newData?.data?.[key]?.pageInfo,
     });
     const list = newData?.data?.[key]?.edges?.map((edge) => edge.node) ?? [];
-    onNewData(list, true);
+    onNewData(list, append);
   };
 
   const handleChangePageSize = (newPageSize) => {
@@ -69,13 +69,13 @@ function usePagination({
         startCursor: null,
       },
     });
-    handleLoadNext(0);
+    handleLoadNext(false);
   };
 
   useEffect(() => {
     const list = queryData?.[key]?.edges?.map((edge) => edge.node) ?? [];
     const pageInfo = queryData?.[key]?.pageInfo;
-    onNewData(list, paginationRef?.current?.currentPage);
+    onNewData(list, false);
     handleChangePaginationObj({
       pageInfo,
       totalCount: queryData?.[key]?.totalCount ?? 10,
@@ -86,6 +86,7 @@ function usePagination({
   }, [queryData, key]);
 
   return {
+    queryData,
     loading,
     paginationObj,
     refetch,

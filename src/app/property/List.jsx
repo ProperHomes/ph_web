@@ -49,7 +49,7 @@ function PropertyList({
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
-  const { Auth, toggleAuth, loggedInUser, isLoggedIn } = useToggleAuth();
+  const { Auth, toggleAuth, isLoggedIn, loggedInUser } = useToggleAuth();
 
   const { city, listedFor, bedrooms, type, priceSort } = searchParams ?? {};
 
@@ -85,7 +85,7 @@ function PropertyList({
   }
 
   if (isLoggedIn) {
-    variables.userId = loggedInUser.id;
+    variables.userId = loggedInUser?.id;
   }
 
   const { paginationObj, handleLoadNext } = usePagination({
@@ -93,7 +93,6 @@ function PropertyList({
     QUERY: isLoggedIn ? GET_PROPERTIES_LOGGED_IN : GET_PROPERTIES,
     querySkip: (!infiniteScroll && !isSearch) || !count,
     variables,
-    initialPageNo: isSearch ? 0 : 1,
     onNewData: (data, append) => {
       if (!append) {
         setProperties(data);

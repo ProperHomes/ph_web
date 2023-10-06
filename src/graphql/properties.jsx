@@ -122,6 +122,7 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
     $city: PropertyCity
     $bedrooms: Int
     $first: Int!
+    $after: Cursor
     $userId: UUID!
     $orderBy: [PropertiesOrderBy!]!
   ) {
@@ -133,17 +134,27 @@ export const GET_PROPERTIES_LOGGED_IN = gql`
         bedrooms: $bedrooms
       }
       first: $first
+      after: $after
       orderBy: $orderBy
     ) {
-      nodes {
-        ...PropertyFields
-        currentUserSavedProperties: savedProperties(
-          condition: { userId: $userId }
-        ) {
-          nodes {
-            id
+      edges {
+        cursor
+        node {
+          ...PropertyFields
+          currentUserSavedProperties: savedProperties(
+            condition: { userId: $userId }
+          ) {
+            nodes {
+              id
+            }
           }
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
       totalCount
     }

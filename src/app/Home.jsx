@@ -4,8 +4,8 @@ import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 
 import PropertyList from "./property/List";
-import { useQuery } from "@apollo/client";
 import { GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
+import usePagination from "src/hooks/usePagination";
 import { useAppContext } from "src/appContext";
 import SearchBlock from "@/components/SearchBlock";
 import CategoryBoxes from "@/components/CategoryBoxes";
@@ -16,18 +16,20 @@ export default function Home({ data }) {
   const { state } = useAppContext();
   const loggedInUserId = state.user?.id;
 
-  const { data: propertiesData } = useQuery(GET_PROPERTIES_LOGGED_IN, {
+  const { queryData } = usePagination({
+    key: "properties",
+    QUERY: GET_PROPERTIES_LOGGED_IN,
+    querySkip: !loggedInUserId,
     variables: {
       userId: loggedInUserId,
       first: 10,
       orderBy: ["CREATED_AT_DESC"],
     },
-    skip: !loggedInUserId,
-    fetchPolicy: "network-only",
+    onNewData: () => null,
   });
 
   const list = !!loggedInUserId
-    ? propertiesData?.properties?.nodes ?? []
+    ? queryData?.properties?.edges?.map((edge) => edge.node) ?? []
     : data;
 
   return (

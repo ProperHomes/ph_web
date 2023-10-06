@@ -80,7 +80,7 @@ export default async function Page({ params, searchParams }) {
           listedFor={listedFor}
           city={city}
           searchParams={searchParams}
-          count={!isProperties ? 20 : 10}
+          count={isProperties ? 20 : 10}
           title={isCityLink ? navLinkWithCity.title : navLink.title}
           showFilters
         />

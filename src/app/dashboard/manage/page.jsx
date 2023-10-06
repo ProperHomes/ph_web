@@ -1,6 +1,7 @@
 "use client";
 import { useState, Suspense, lazy } from "react";
 import { useQuery } from "@apollo/client";
+import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 
 import { useAppContext } from "src/appContext";
@@ -37,19 +38,22 @@ function ManageProperties() {
   };
 
   const totalCount = ownerProperties?.properties?.totalCount;
+  const totalPages = Math.floor(totalCount / 10);
 
   return (
     <Suspense fallback={<ListSkeleton n={8} />}>
-      <PropertyList data={properties} onCloseEditor={refetch} />
-      {totalCount > 10 && (
-        <Stack alignItems="center" justifyContent="center">
-          <Pagination
-            page={page + 1}
-            onChange={handleFetchNext}
-            count={Math.floor(totalCount / 10)}
-          />
-        </Stack>
-      )}
+      <Stack spacing={4}>
+        <PropertyList data={properties} onCloseEditor={refetch} />
+        {totalPages > 1 && (
+          <Stack alignItems="center" justifyContent="center">
+            <Pagination
+              page={page + 1}
+              onChange={handleFetchNext}
+              count={totalPages}
+            />
+          </Stack>
+        )}
+      </Stack>
     </Suspense>
   );
 }
