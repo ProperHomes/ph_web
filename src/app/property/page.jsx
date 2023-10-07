@@ -14,6 +14,7 @@ export default async function Page({ searchParams }) {
       infiniteScroll
       count={20}
       showFilters
+      title="Properties"
       searchParams={searchParams}
     />
   );

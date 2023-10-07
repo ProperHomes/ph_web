@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useState, memo } from "react";
+import { useState, memo } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useMutation } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -15,9 +14,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { PROPERTY_TYPE } from "@/utils/constants";
-import { DELETE_SAVED_PROPERTY, SAVE_PROPERTY } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
 import CustomTooltip from "src/components/CustomTooltip";
+import useToggleFavoriteProperty from "src/hooks/useToggleFavoriteProperty";
 
 function PropertyCard({
   data,
@@ -33,7 +32,6 @@ function PropertyCard({
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isDarkMode = theme.palette.mode === "dark";
   const { state: appState } = useAppContext();
-  const isLoggedIn = !!appState.user?.id;
   const {
     id,
     number,
@@ -60,10 +58,12 @@ function PropertyCard({
 
   const currentUserSavedPropertyId = currentUserSavedProperties?.nodes[0]?.id;
 
-  const [createSavedProperty] = useMutation(SAVE_PROPERTY);
-  const [deleteSavedProperty] = useMutation(DELETE_SAVED_PROPERTY);
+  const { handleToggleFavorite, isSaved } = useToggleFavoriteProperty({
+    propertyId: id,
+    currentUserSavedPropertyId,
+    toggleAuth,
+  });
 
-  const [savedPropertyId, setSavedPropertyId] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showOwnerActions, setShowOwnerActions] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -91,12 +91,6 @@ function PropertyCard({
     { title: "View Property as Public", onClick: handleViewPropertyAsPublic },
   ];
 
-  useEffect(() => {
-    if (currentUserSavedPropertyId) {
-      setSavedPropertyId(currentUserSavedPropertyId);
-    }
-  }, [currentUserSavedPropertyId]);
-
   const toggleOnHover = () => {
     if (!isMobile) {
       setIsHovered((prev) => !prev);
@@ -105,37 +99,6 @@ function PropertyCard({
 
   const toggleOwnerActions = () => {
     setShowOwnerActions((prev) => !prev);
-  };
-
-  const toggleSaveProperty = async () => {
-    try {
-      if (savedPropertyId) {
-        await deleteSavedProperty({
-          variables: { input: { id: savedPropertyId } },
-        });
-        setSavedPropertyId(null);
-      } else {
-        const { data } = await createSavedProperty({
-          variables: {
-            input: {
-              savedProperty: { propertyId: id, userId: appState.user?.id },
-            },
-          },
-        });
-        setSavedPropertyId(data?.createSavedProperty?.savedProperty?.id);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleToggleFavorite = (e) => {
-    e.stopPropagation();
-    if (!isLoggedIn) {
-      toggleAuth();
-    } else {
-      toggleSaveProperty();
-    }
   };
 
   const isOwner = ownerId === appState.user?.id;
@@ -234,7 +197,7 @@ function PropertyCard({
         {!isOwner && !tenantId && showFavorite && (
           <Tooltip
             enterDelay={0}
-            title={savedPropertyId ? "Remove Saved Property" : "Save Property"}
+            title={isSaved ? "Remove Saved Property" : "Save Property"}
           >
             <FavoriteIcon
               onClick={handleToggleFavorite}
@@ -246,7 +209,7 @@ function PropertyCard({
                 right: 10,
                 top: 10,
                 zIndex: 1,
-                fill: savedPropertyId ? "red" : "rgba(0, 0, 0, 0.5)",
+                fill: isSaved ? "red" : "rgba(0, 0, 0, 0.5)",
               }}
             />
           </Tooltip>

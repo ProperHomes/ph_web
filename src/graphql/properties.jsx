@@ -336,6 +336,17 @@ export const GET_PROPERTY_PAYMENTS = gql`
   }
 `;
 
+export const CHECK_IF_USER_SAVED_PROPERTY = gql`
+  query savedProperties($userId: UUID!, $propertyId: UUID!) {
+    savedProperties(condition: { userId: $userId, propertyId: $propertyId }) {
+      nodes {
+        id
+      }
+    }
+  }
+`;
+
+
 export const CREATE_PROPERTY = gql`
   mutation createProperty($input: CreatePropertyInput!) {
     createProperty(input: $input) {

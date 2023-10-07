@@ -1,36 +1,73 @@
 "use client";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Save from "@mui/icons-material/Save";
 import Share from "@mui/icons-material/Share";
 
+import useToggleFavoriteProperty from "src/hooks/useToggleFavoriteProperty";
+import ShareModal from "@/components/ShareModal";
+
 const SellerInfoCard = lazy(() => import("./SellerInfoCard"));
 
 function Sidebar({ data }) {
+  const { id, title, media, slug } = data;
+
+  const images = media?.nodes ?? [];
+  const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
+
+  const [showShareModal, setShowShareModal] = useState(false);
+  const toggleShareModal = () => {
+    setShowShareModal((prev) => !prev);
+  };
+
+  const { isSaved, handleToggleFavorite } = useToggleFavoriteProperty({
+    canCheckWithApi: true,
+    propertyId: id,
+  });
+
+  const url = `https://properhomes.in/property/${slug}`;
+
   return (
     <Suspense fallback={<></>}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+      {showShareModal && (
+        <ShareModal
+          url={url}
+          title="Share Property"
+          urlTitle={title}
+          media={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
+          open={showShareModal}
+          handleClose={toggleShareModal}
+        />
+      )}
+      <Stack
+        spacing={1}
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Button
           aria-label="save property"
           startIcon={<Save />}
-          fullWidth
           color="info"
           size="large"
+          sx={{ whiteSpace: "nowrap" }}
+          onClick={handleToggleFavorite}
         >
-          Save Property
+          {isSaved ? "Property Saved " : "Save Property"}
         </Button>
         <Button
           aria-label="share property"
           startIcon={<Share />}
-          fullWidth
           color="info"
           size="large"
+          sx={{ whiteSpace: "nowrap" }}
+          onClick={toggleShareModal}
         >
           Share Property
         </Button>
       </Stack>
-      <Stack spacing={2}>
+      <Stack spacing={2} my={2}>
         <SellerInfoCard
           createdAt={data?.createdAt}
           listedFor={data?.listedFor}

@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import NextTopLoader from "nextjs-toploader";
@@ -8,7 +9,6 @@ import Box from "@mui/material/Box";
 import AppMain from "./appMain";
 import Navbar from "@/components/Navbar";
 import BottomNavbar from "@/components/BottomNavbar";
-import Footer from "@/components/Footer";
 
 import "../styles/globals.css";
 
@@ -20,6 +20,8 @@ export const manRope = Manrope({
   display: "swap",
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
+
+const Footer = lazy(() => import("@/components/Footer"));
 
 function RootLayout({ children }) {
   return (
@@ -124,7 +126,10 @@ function RootLayout({ children }) {
             >
               {children}
             </Container>
-            <Footer />
+            <Suspense fallback={<></>}>
+              <Footer />
+            </Suspense>
+
             <BottomNavbar />
           </Box>
         </AppMain>

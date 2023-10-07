@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -9,8 +10,9 @@ import { Content } from "./styles";
 import Sidebar from "./sidebar/index";
 import PropertyImages from "./Images";
 import Breadcrumbs from "src/components/Breadcrumbs";
-import SimilarProperties from "./SimilarProperties";
 import { LISTING_TYPE } from "@/utils/constants";
+
+const SimilarProperties = lazy(() => import("./SimilarProperties"));
 
 function PropertyProfile({ data, similarProperties }) {
   const {
@@ -36,7 +38,6 @@ function PropertyProfile({ data, similarProperties }) {
     style: "currency",
     currency: "INR",
   });
-
   const images = (media?.nodes ?? []).map((m) => {
     return m.media?.signedUrl ?? m.mediaUrl;
   });
@@ -162,7 +163,9 @@ function PropertyProfile({ data, similarProperties }) {
           </Box>
           <Divider />
           <Typography variant="body1">{description}</Typography>
-          <SimilarProperties city={city} properties={similarProperties} />
+          <Suspense fallback={<></>}>
+            <SimilarProperties city={city} properties={similarProperties} />
+          </Suspense>
         </Stack>
 
         <StickyBox
