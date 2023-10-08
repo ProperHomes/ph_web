@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -20,7 +20,7 @@ import "yup-phone-lite";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 
-import RentalAgreementPreview from "./Preview";
+const RentalAgreementPreview = lazy(() => import("./Preview"));
 
 const STEP = {
   OWNER: "owner",
@@ -344,34 +344,36 @@ export default function RentalAgreementCreator() {
         </Stack>
       </Stack>
 
-      <Box sx={{ display: { xs: "none", md: "flex" } }}>
-        <RentalAgreementPreview owner={owner} tenant={tenant} />
-      </Box>
-
-      <Dialog
-        fullScreen={isMobile}
-        open={showAgreement}
-        onClose={togglePreviewAgreement}
-      >
-        <DialogContent sx={{ padding: "20px 0 20px 0" }}>
-          <IconButton
-            onClick={togglePreviewAgreement}
-            sx={{
-              position: "absolute",
-              top: 10,
-              right: 10,
-              width: "1.2em",
-              height: "1.2em",
-              zIndex: 10,
-              backgroundColor: "#00000020",
-            }}
-          >
-            <Close />
-          </IconButton>
-
+      <Suspense fallback={<></>}>
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <RentalAgreementPreview owner={owner} tenant={tenant} />
-        </DialogContent>
-      </Dialog>
+        </Box>
+
+        <Dialog
+          fullScreen={isMobile}
+          open={showAgreement}
+          onClose={togglePreviewAgreement}
+        >
+          <DialogContent sx={{ padding: "20px 0 20px 0" }}>
+            <IconButton
+              onClick={togglePreviewAgreement}
+              sx={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                width: "1.2em",
+                height: "1.2em",
+                zIndex: 10,
+                backgroundColor: "#00000020",
+              }}
+            >
+              <Close />
+            </IconButton>
+
+            <RentalAgreementPreview owner={owner} tenant={tenant} />
+          </DialogContent>
+        </Dialog>
+      </Suspense>
     </Stack>
   );
 }

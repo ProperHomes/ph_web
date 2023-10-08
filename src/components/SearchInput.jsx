@@ -1,5 +1,7 @@
 "use client";
+import { useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
@@ -23,7 +25,7 @@ function SearchInput({ showSearchBtn }) {
   const listedFor = searchParams.get("listedFor");
   const type = searchParams.get("type");
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (!city && !type && !listedFor) {
       router.push("/search");
     } else {
@@ -43,7 +45,7 @@ function SearchInput({ showSearchBtn }) {
       });
       router.push(path);
     }
-  };
+  }, [city, type, listedFor]);
 
   const handleClick = () => {
     if (isMobile) {
@@ -62,16 +64,18 @@ function SearchInput({ showSearchBtn }) {
       spacing={2}
       onClick={handleClick}
       sx={{
-        width: "100%",
-        minWidth: { xs: "100%", md: "600px" },
+        width: { xs: "100%", md: "600px" },
         height: "60px",
-        border: isMobile ? "0.5px solid" : "1px solid",
-        borderColor: theme.palette.grey[300],
+        border: { xs: "0.5px solid", md: "1px solid" },
+        borderColor: {
+          xs: theme.palette.grey[300],
+          md: theme.palette.grey[300],
+        },
         borderRadius: "2rem",
         transition: "0.3s ease",
       }}
     >
-      {!isMobile && (
+      <Box sx={{ display: { xs: "none", md: "flex" } }}>
         <Filters
           hideBedrooms
           hidePriceSort
@@ -89,23 +93,24 @@ function SearchInput({ showSearchBtn }) {
             },
           }}
         />
-      )}
+      </Box>
 
-      {isMobile && (
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Place
-            sx={{ fontSize: "28px" }}
-            htmlColor={isDark ? "#fff" : "#000"}
-          />
-          <Typography>Search By City, Type, Price...</Typography>
-        </Stack>
-      )}
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        sx={{ display: { xs: "flex", md: "none" } }}
+      >
+        <Place sx={{ fontSize: "28px" }} htmlColor={isDark ? "#fff" : "#000"} />
+        <Typography>Search By City, Type, Price...</Typography>
+      </Stack>
 
-      {showSearchBtn && !isMobile && (
+      {showSearchBtn && (
         <Button
           variant="contained"
           onClick={handleSubmit}
           sx={{
+            display: { xs: "none", md: "flex" },
             borderRadius: "2rem",
             fontSize: "1rem",
             width: "100%",
@@ -116,20 +121,20 @@ function SearchInput({ showSearchBtn }) {
           Search
         </Button>
       )}
-      {isMobile && (
-        <IconButton
-          onClick={handleSubmit}
-          sx={{
-            fontSize: "1rem",
-            backgroundColor: isDark ? "#fff" : "#000",
-          }}
-        >
-          <SearchIcon
-            sx={{ fontSize: "28px" }}
-            htmlColor={isDark ? "#000" : "#fff"}
-          />
-        </IconButton>
-      )}
+
+      <IconButton
+        onClick={handleSubmit}
+        sx={{
+          display: { xs: "flex", md: "none" },
+          fontSize: "1rem",
+          backgroundColor: isDark ? "#fff" : "#000",
+        }}
+      >
+        <SearchIcon
+          sx={{ fontSize: "28px" }}
+          htmlColor={isDark ? "#000" : "#fff"}
+        />
+      </IconButton>
     </Stack>
   );
 }

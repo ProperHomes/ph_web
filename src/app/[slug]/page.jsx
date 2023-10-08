@@ -1,7 +1,7 @@
 import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
-import Home from "../Home";
+import Home from "../Home/index";
 import PropertyList from "src/app/property/List";
 import {
   PROPERTY_TYPE,

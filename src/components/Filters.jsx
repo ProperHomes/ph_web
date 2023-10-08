@@ -353,9 +353,17 @@ export default function Filters({
   return (
     <>
       {!hideCity && <CityDropdown />}
-      {hasCityDivider && <Divider orientation="vertical" />}
+      {hasCityDivider && (
+        <Divider
+          orientation="vertical"
+          flexItem
+          sx={{ marginTop: "8px", marginBottom: "8px" }}
+        />
+      )}
       {!hideType && <PropertyTypeDropdown label={typeLabel} />}
-      {hasTypeDivider && <Divider orientation="vertical" />}
+      {hasTypeDivider && (
+        <Divider orientation="vertical" flexItem sx={{ margin: "8px" }} />
+      )}
       {!hideBedrooms && <BedroomsDropdown />}
       {!hideListedFor && <ListedForDropdown label={listedForLabel} />}
       {!hidePriceSort && <SortPriceDropdown />}

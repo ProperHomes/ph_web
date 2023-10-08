@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import useTheme from "@mui/material/styles/useTheme";
@@ -12,7 +12,8 @@ import { useAppContext } from "src/appContext";
 import SearchBlock from "@/components/SearchBlock";
 import CategoryBoxes from "@/components/CategoryBoxes";
 import ZeroBoxes from "@/components/ZeroBoxes";
-import GetNotifiedFormModal from "./GetNotifedForm";
+
+const GetNotifiedFormModal = lazy(() => import("./GetNotifedForm"));
 
 export default function Home({ data }) {
   const theme = useTheme();
@@ -43,14 +44,13 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Stack spacing={4} py={4} mb={{ xs: 0, md: 1 }} alignItems="center">
+      <Stack spacing={4} py={4} alignItems="center">
         <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
           <Stack spacing={1} direction="row" alignItems="center">
             <Button onClick={toggleForm} mt={4} color="error">
               We are launching soon. Get Notified.
             </Button>
           </Stack>
-
           <Typography color={theme.palette.text.primary} variant="h4">
             Find a home that{" "}
             <span
@@ -69,20 +69,20 @@ export default function Home({ data }) {
 
         <CategoryBoxes />
 
-        {!loggedInUserId && (
-          <Stack display={{ xs: "none", md: "flex" }}>
-            <ZeroBoxes />
-          </Stack>
-        )}
+        <Stack display={{ xs: "none", md: "flex" }}>
+          <ZeroBoxes />
+        </Stack>
       </Stack>
 
-      {showForm && (
-        <GetNotifiedFormModal open={showForm} handleClose={toggleForm} />
-      )}
+      <Suspense fallback={<></>}>
+        {showForm && (
+          <GetNotifiedFormModal open={showForm} handleClose={toggleForm} />
+        )}
+      </Suspense>
       <PropertyList
         data={list}
         viewMoreLink="/new-properties-for-sale-rent-lease"
-        title="New properties listed in the last 24 hours"
+        title="Recently Added Properties"
       />
     </>
   );

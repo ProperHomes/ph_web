@@ -7,8 +7,6 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
 import AppMain from "./appMain";
-import Navbar from "@/components/Navbar";
-import BottomNavbar from "@/components/BottomNavbar";
 
 import "../styles/globals.css";
 
@@ -21,6 +19,8 @@ export const manRope = Manrope({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
+const Navbar = lazy(() => import("@/components/Navbar"));
+const BottomNavbar = lazy(() => import("@/components/BottomNavbar"));
 const Footer = lazy(() => import("@/components/Footer"));
 
 function RootLayout({ children }) {
@@ -114,23 +114,22 @@ function RootLayout({ children }) {
               marginBottom: { xs: "4em", md: 0 },
             }}
           >
-            <Navbar />
-            <Container
-              maxWidth="xl"
-              sx={{
-                width: "100%",
-                height: "100%",
-                paddingTop: "1em",
-                paddingBottom: "2em",
-              }}
-            >
-              {children}
-            </Container>
             <Suspense fallback={<></>}>
+              <Navbar />
+              <Container
+                maxWidth="xl"
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  paddingTop: "1em",
+                  paddingBottom: "2em",
+                }}
+              >
+                {children}
+              </Container>
               <Footer />
+              <BottomNavbar />
             </Suspense>
-
-            <BottomNavbar />
           </Box>
         </AppMain>
       </body>

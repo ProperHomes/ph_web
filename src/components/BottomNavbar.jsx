@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import Link from "next/link";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -165,4 +165,4 @@ function BottomNavbar() {
   );
 }
 
-export default BottomNavbar;
+export default memo(BottomNavbar);

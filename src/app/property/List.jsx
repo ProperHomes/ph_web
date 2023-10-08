@@ -1,5 +1,5 @@
 "use client";
-import { useState, Suspense } from "react";
+import { useState, memo, Suspense, lazy } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -9,13 +9,16 @@ import { styled, useTheme } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Card from "./Card";
-import CreatePropertySaleRentLease from "../list-your-property-for-sale-rent-lease";
 
 import useToggleAuth from "src/hooks/useToggleAuth";
 import usePagination from "src/hooks/usePagination";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
-import Filters from "@/components/Filters";
+
+const CreatePropertySaleRentLease = lazy(() =>
+  import("../list-your-property-for-sale-rent-lease")
+);
+const Filters = lazy(() => import("@/components/Filters"));
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -131,84 +134,80 @@ function PropertyList({
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
-      {title && (
-        <Stack
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent="space-between"
-          alignItems="center"
+      <Stack
+        spacing={2}
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography
+          gutterBottom
+          fontWeight={600}
+          variant="h3"
+          textAlign="left"
+          fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
         >
-          <Typography
-            gutterBottom
-            fontWeight={600}
-            variant="h2"
-            textAlign="left"
-            fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
-          >
-            {title}
-          </Typography>
+          {title ?? ""}
+        </Typography>
 
+        <Suspense fallback={<></>}>
           {showFilters && (
-            <Suspense fallback={<></>}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexFlow: "row wrap",
-                  [theme.breakpoints.down("md")]: {
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr 1fr",
-                      md: "repeat(6, 1fr)",
-                    },
-                  },
-                  gap: "1em",
-                  width: { xs: "100%", md: "auto" },
-                }}
-              >
-                <Filters
-                  typeLabel="Property Type"
-                  hideCity={!!cityProp}
-                  hideType={!!typeProp}
-                  hideListedFor={!!listedForProp}
-                  onChangeCity={onChangeFilters}
-                  onChangeBedrooms={onChangeFilters}
-                  onChangeListedFor={onChangeFilters}
-                  onChangePriceSort={onChangeFilters}
-                  onChangePropertyType={onChangeFilters}
-                  onReset={onChangeFilters}
-                  sx={{
-                    "& fieldset": {
-                      borderRadius: "8px",
-                      borderColor: "#00000020",
-                    },
-                  }}
-                />
-              </Box>
-            </Suspense>
-          )}
-          {viewMoreLink && (
-            <Button
-              aria-label="view all"
-              variant="contained"
-              LinkComponent={Link}
-              href={viewMoreLink}
+            <Box
               sx={{
-                display: { xs: "none", sm: "flex" },
-                borderRadius: "8px",
-                fontSize: "1rem",
+                display: "flex",
+                flexFlow: "row wrap",
+                [theme.breakpoints.down("md")]: {
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr 1fr",
+                    md: "repeat(6, 1fr)",
+                  },
+                },
+                gap: "1em",
+                width: { xs: "100%", md: "auto" },
               }}
             >
-              View More
-            </Button>
+              <Filters
+                typeLabel="Property Type"
+                hideCity={!!cityProp}
+                hideType={!!typeProp}
+                hideListedFor={!!listedForProp}
+                onChangeCity={onChangeFilters}
+                onChangeBedrooms={onChangeFilters}
+                onChangeListedFor={onChangeFilters}
+                onChangePriceSort={onChangeFilters}
+                onChangePropertyType={onChangeFilters}
+                onReset={onChangeFilters}
+                sx={{
+                  "& fieldset": {
+                    borderRadius: "8px",
+                    borderColor: "#00000020",
+                  },
+                }}
+              />
+            </Box>
           )}
-        </Stack>
-      )}
+        </Suspense>
+        {viewMoreLink && (
+          <Button
+            aria-label="view all"
+            variant="contained"
+            LinkComponent={Link}
+            href={viewMoreLink}
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              borderRadius: "8px",
+              fontSize: "1rem",
+            }}
+          >
+            View More
+          </Button>
+        )}
+      </Stack>
 
-      <Section>
-        {!infiniteScroll &&
-          !isSearch &&
-          !propertyIdToEdit &&
-          data.map((l, i) => {
+      {!infiniteScroll && !isSearch && !propertyIdToEdit && (
+        <Section>
+          {data.map((l, i) => {
             return (
               <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
                 <Card
@@ -222,7 +221,8 @@ function PropertyList({
               </Box>
             );
           })}
-      </Section>
+        </Section>
+      )}
 
       {infiniteScroll && !propertyIdToEdit && (
         <InfiniteScroll
@@ -251,15 +251,17 @@ function PropertyList({
         </InfiniteScroll>
       )}
 
-      {!!propertyIdToEdit && (
-        <CreatePropertySaleRentLease
-          data={propertyToEdit}
-          handleCancel={toggleEditor()}
-        />
-      )}
-      {Auth}
+      <Suspense fallback={<></>}>
+        {!!propertyIdToEdit && (
+          <CreatePropertySaleRentLease
+            data={propertyToEdit}
+            handleCancel={toggleEditor()}
+          />
+        )}
+        {Auth}
+      </Suspense>
     </Stack>
   );
 }
 
-export default PropertyList;
+export default memo(PropertyList);
