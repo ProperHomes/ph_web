@@ -34,7 +34,8 @@ export default async function Page({ params, searchParams }) {
 
     const isProperties =
       slug.includes("properties-for-sale") ||
-      slug.includes("properties-for-rent");
+      slug.includes("properties-for-rent") ||
+      slug.includes("properties-for-lease");
 
     const variables = {
       first: isProperties ? 20 : 10,
@@ -92,7 +93,7 @@ export default async function Page({ params, searchParams }) {
 }
 
 export function generateStaticParams() {
-  let paths = [];
+  const paths = [];
   for (let link of navlinks) {
     paths.push({
       slug: link.link,

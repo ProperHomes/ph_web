@@ -1,36 +1,40 @@
 "use client";
 import Link from "next/link";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import useTheme from "@mui/material/styles/useTheme";
+import Box from "@mui/material/Box";
+import TypographyUnderline from "../TypographyUnderline";
 
 export default function CityLinks({ city, links, prefetch = true }) {
-  const theme = useTheme();
   return (
-    <Stack spacing={1} py={2}>
+    <Box
+      py={2}
+      sx={{
+        display: "grid",
+        gap: "0.2rem",
+        gridTemplateColumns: "repeat(auto-fill, minmax(180px, 380px))",
+        gridAutoFlow: "dense",
+        width: "100%",
+        alignItems: "center",
+      }}
+    >
       {links.map(({ link, title }) => {
         return (
           <Link
             key={link}
             href={`${link}-in-${city.toLocaleLowerCase()}`}
             prefetch={prefetch}
+            style={{
+              width: "fit-content",
+              maxHeight: "40px",
+              position: "relative",
+            }}
           >
-            <Typography
-              variant="body1"
-              fontSize="medium"
-              color={theme.palette.primary.main}
-              sx={{
-                cursor: "pointer",
-                maxWidth: "280px",
-                height: "auto",
-              }}
-            >
+            <TypographyUnderline>
               {title} in{" "}
               {city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()}
-            </Typography>
+            </TypographyUnderline>
           </Link>
         );
       })}
-    </Stack>
+    </Box>
   );
 }

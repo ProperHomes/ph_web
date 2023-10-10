@@ -82,12 +82,10 @@ export default function PropertyManagement() {
           <Button
             size="large"
             variant="contained"
-            endIcon={<ArrowForward />}
-            LinkComponent={Link}
-            href="/owner-membership"
+            disabled
             sx={{ backgroundColor: "#0080ff" }}
           >
-            Manage Your Property Now
+            Manage Your Rental Properties. (coming soon)
           </Button>
         </Stack>
       </Container>

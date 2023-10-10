@@ -109,6 +109,7 @@ export const navlinksRent = [
     title: "Bungalows For Rent",
   },
   { link: "properties-for-rent", title: "Properties For Rent" },
+  { link: "properties-for-lease", title: "Properties For Lease" },
 ];
 
 export const navlinksOthers = [

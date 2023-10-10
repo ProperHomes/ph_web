@@ -13,9 +13,9 @@ import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { PROPERTY_TYPE } from "@/utils/constants";
+import { LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
 import { useAppContext } from "src/appContext";
-import CustomTooltip from "src/components/CustomTooltip";
+import CardOptionsTooltip from "./CardOptions";
 import useToggleFavoriteProperty from "src/hooks/useToggleFavoriteProperty";
 
 function PropertyCard({
@@ -77,7 +77,8 @@ function PropertyCard({
     currency: "INR",
   });
 
-  const handleChangePropertyStatus = () => {};
+  const handleChangePropertyStatus = () => { };
+  
   const handleEditProperty = () => {
     togglePropertyEditor();
   };
@@ -87,7 +88,7 @@ function PropertyCard({
 
   const ownerActionList = [
     { title: "Edit Property", onClick: handleEditProperty },
-    { title: "Mark Property", onClick: handleChangePropertyStatus },
+    { title: "Change Status", onClick: handleChangePropertyStatus },
     { title: "View Property as Public", onClick: handleViewPropertyAsPublic },
   ];
 
@@ -226,7 +227,7 @@ function PropertyCard({
               borderRadius: "50%",
             }}
           >
-            <CustomTooltip
+            <CardOptionsTooltip
               open={showOwnerActions}
               toggleOptions={toggleOwnerActions}
               listItems={ownerActionList}
@@ -307,7 +308,8 @@ function PropertyCard({
             color="primary.main"
             suppressHydrationWarning
           >
-            {formattedPrice.slice(0, -3)}
+            {formattedPrice.slice(0, -3)}{" "}
+            {listedFor === LISTING_TYPE.RENT ? " monthly " : ""}
           </Typography>
         </Stack>
         <Typography fontWeight={500} fontSize="0.9rem" color="primary.main">

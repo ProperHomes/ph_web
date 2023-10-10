@@ -1,12 +1,19 @@
 "use client";
 import Link from "next/link";
+import Zoom from "@mui/material/Zoom";
 import Stack from "@mui/material/Stack";
 import useTheme from "@mui/material/styles/useTheme";
-import { Typography } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import TypographyUnderline from "../TypographyUnderline";
 
 const links = [
-  { title: "For Sale", path: "/properties-for-sale" },
-  { title: "For Rent", path: "/properties-for-rent" },
+  {
+    title: "Explore Properties",
+    path: "/explore-properties",
+    showDropdownMenu: true,
+  },
   {
     title: "Manage Rentals",
     path: "/property-rental-management-for-owners-managers",
@@ -15,9 +22,21 @@ const links = [
     title: "List your Property",
     path: "/list-your-property-for-sale-rent-lease",
   },
+];
+
+const tooltipLinks = [
   {
-    title: "Create Rental Agreement",
-    path: "/create-rental-agreement",
+    title: "Properties For Sale",
+    path: "/properties-for-sale",
+    showDropdownMenu: true,
+  },
+  {
+    title: "Properties For Rent",
+    path: "/properties-for-rent",
+  },
+  {
+    title: "Properties For Lease",
+    path: "/properties-for-lease",
   },
 ];
 
@@ -34,38 +53,75 @@ function NavLinks() {
       spacing={3}
       alignItems="center"
     >
-      {links.map(({ title, path }) => {
-        return (
-          <Link href={path} key={path} style={{ position: "relative" }}>
-            <Typography
-              fontWeight={600}
-              fontSize={theme.spacing(2)}
-              color={theme.palette.text.secondary}
-              sx={{
-                transition: "all 0.3s ease",
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  width: "100%",
-                  transform: "scaleX(0)",
-                  height: "2px",
-                  bottom: 0,
-                  left: 0,
-                  backgroundColor: theme.palette.info.main,
-                  transformOrigin: "bottom right",
-                  transition: "transform 0.25s ease-out",
+      {links.map(({ title, path, showDropdownMenu }) => {
+        if (showDropdownMenu) {
+          return (
+            <Tooltip
+              arrow
+              disableFocusListener
+              TransitionComponent={Zoom}
+              TransitionProps={{ timeout: 250 }}
+              title={
+                <Stack
+                  p={2}
+                  spacing={1}
+                  divider={<Divider orientation="vertical" />}
+                  sx={{
+                    width: "200px",
+                    height: "100%",
+                  }}
+                >
+                  {tooltipLinks.map((l) => {
+                    return (
+                      <Link
+                        href={l.path}
+                        key={l.path}
+                        style={{ position: "relative", width: "fit-content" }}
+                      >
+                        <Typography
+                          sx={{ "&:hover": { color: theme.palette.info.main } }}
+                        >
+                          {l.title}
+                        </Typography>
+                      </Link>
+                    );
+                  })}
+                </Stack>
+              }
+              componentsProps={{
+                arrow: {
+                  sx: {
+                    color: theme.palette.common.black,
+                  },
                 },
-                "&:hover": {
-                  color: theme.palette.text.primary,
-                  ":after": {
-                    transform: " scaleX(1)",
-                    transformOrigin: "bottom left",
+                tooltip: {
+                  sx: {
+                    backgroundColor: theme.palette.common.black,
                   },
                 },
               }}
             >
+              <Link href={path} key={path} style={{ position: "relative" }}>
+                <TypographyUnderline
+                  fontWeight={600}
+                  fontSize={theme.spacing(2)}
+                  color={theme.palette.text.secondary}
+                >
+                  {title}
+                </TypographyUnderline>
+              </Link>
+            </Tooltip>
+          );
+        }
+        return (
+          <Link href={path} key={path} style={{ position: "relative" }}>
+            <TypographyUnderline
+              fontWeight={600}
+              fontSize={theme.spacing(2)}
+              color={theme.palette.text.secondary}
+            >
               {title}
-            </Typography>
+            </TypographyUnderline>
           </Link>
         );
       })}

@@ -18,12 +18,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import RedditIcon from "@mui/icons-material/Reddit";
 
 import CityLinks from "./CityLinks";
-import {
-  ALL_CITIES,
-  navlinksSale,
-  navlinksRent,
-  navlinksOthers,
-} from "@/utils/constants";
+import { ALL_CITIES, navlinksSale, navlinksRent } from "@/utils/constants";
+import TypographyUnderline from "../TypographyUnderline";
 
 const tabSections = ALL_CITIES.map((c) => ({ label: c }));
 
@@ -34,6 +30,30 @@ const socialLinks = [
   { Icon: PinterestIcon, href: "/" },
   { Icon: RedditIcon, href: "/" },
   { Icon: TwitterIcon, href: "/" },
+];
+
+const subLinks = [
+  { title: "Pay Rent", path: "/pay-rent" },
+  {
+    title: "EMI Calculator",
+    path: "/homeloans/emi-calculator",
+  },
+  {
+    title: "About Us",
+    path: "/about",
+  },
+  {
+    title: "FAQ",
+    path: "/faq",
+  },
+  {
+    title: "Privacy Policy",
+    path: "/privacypolicy",
+  },
+  {
+    title: "Terms",
+    path: "/terms-and-conditions",
+  },
 ];
 
 export default function Footer() {
@@ -49,13 +69,18 @@ export default function Footer() {
 
   const isDashboard = pathname.includes("/dashboard");
 
+  const allNavLinks = [
+    { link: "paying-guests-accommodation", title: "Paying Guest" },
+    { link: "hostel-accommodation", title: "Hostels" },
+    ...navlinksSale,
+    ...navlinksRent,
+  ];
+
   return (
     <Box
       py={2}
       sx={{
-        display: { xs: "none", sm: isDashboard ? "none" : "block" },
         backgroundColor: theme.palette.background.paper,
-
         boxShadow: theme.shadows[2],
         borderRadius: !isDark ? "2em 2em 0 0" : "0",
         width: "100%",
@@ -85,11 +110,7 @@ export default function Footer() {
                 ProperHomes
               </Typography>
             </Link>
-            {/* <Typography gutterBottom maxWidth="500px">
-            ProperHomes is the place where you can find a home that love you.
-            Zero Spam, Zero Brokerage, Zero Paperwork and Zero Issues are our
-            main advantages over other real estate listing websites/apps.
-          </Typography> */}
+
             <Stack
               my={1}
               ml={-1}
@@ -106,77 +127,60 @@ export default function Footer() {
               })}
             </Stack>
           </Stack>
-          <Stack direction="row" spacing={2}>
-            <Link href="/pay-rent">
-              <Typography>Pay Rent</Typography>
-            </Link>
-            <Link href="/homeloans/emi-calculator">
-              <Typography>EMI Calculator</Typography>
-            </Link>
-            <Link href="/property-rental-management-for-owners-managers">
-              <Typography>Manage Rental Properties</Typography>
-            </Link>
-            <Link href="/affiliate-program">
-              <Typography>Becoma a ProperHomes Affiliate</Typography>
-            </Link>
-            <Link href="/about">
-              <Typography>About</Typography>
-            </Link>
-
-            <Link href="/faq">
-              <Typography>FAQ</Typography>
-            </Link>
-            <Link href="/privacypolicy">
-              <Typography>Privacy Policy</Typography>
-            </Link>
-            <Link href="/terms-and-conditions">
-              <Typography>Terms</Typography>
-            </Link>
+          <Stack direction="row" spacing={3}>
+            {subLinks.map((l) => {
+              return (
+                <Link
+                  key={l.path}
+                  href={l.path}
+                  style={{ position: "relative" }}
+                >
+                  <TypographyUnderline>{l.title}</TypographyUnderline>
+                </Link>
+              );
+            })}
           </Stack>
         </Stack>
 
-        <Tabs
-          value={index}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons
-          aria-label="footer city tabs"
-        >
-          {tabSections.map(({ label }) => {
-            return (
-              <Tab
-                key={label}
-                label={
-                  <Typography fontSize="large" textTransform="capitalize">
-                    {label.toLocaleLowerCase()}
-                  </Typography>
-                }
-                sx={{
-                  minHeight: "3.5em",
-                  maxHeight: "3.5em",
-                }}
-              />
-            );
-          })}
-        </Tabs>
+        <Box pb={4}>
+          <Tabs
+            value={index}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons
+            aria-label="footer city tabs"
+          >
+            {tabSections.map(({ label }) => {
+              return (
+                <Tab
+                  key={label}
+                  label={
+                    <Typography fontSize="large" textTransform="capitalize">
+                      {label.toLocaleLowerCase()}
+                    </Typography>
+                  }
+                  sx={{
+                    minHeight: "3.5em",
+                    maxHeight: "3.5em",
+                  }}
+                />
+              );
+            })}
+          </Tabs>
 
-        <Stack
-          spacing={2}
-          direction={{ xs: "column", md: "row" }}
-          minHeight="350px"
-        >
-          <CityLinks links={navlinksSale} city={city} prefetch={false} />
-          <CityLinks links={navlinksRent} city={city} prefetch={false} />
-          <CityLinks links={navlinksOthers} city={city} prefetch={false} />
-        </Stack>
+          <Box>
+            <CityLinks links={allNavLinks} city={city} prefetch={false} />
+          </Box>
+        </Box>
 
         <Typography
           color={theme.palette.getContrastText(theme.palette.background.paper)}
           variant="caption"
         >
           All trademarks, logos and names are properties of their respective
-          owners. All Rights Reserved. © Copyright {new Date().getFullYear()}{" "}
-          Properhomes Realty Pvt Limited.
+          owners. All Rights Reserved. &nbsp; © Copyright{" "}
+          {new Date().getFullYear()}&nbsp; Proper Eleven Techonologies Private
+          Limited.
         </Typography>
       </Container>
     </Box>

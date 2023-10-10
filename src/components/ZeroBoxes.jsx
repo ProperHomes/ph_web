@@ -14,7 +14,7 @@ const infoBoxes = [
     description: `No calls or spam messages without your explicit consent.`,
   },
   {
-    title: "Zero Brokerage",
+    title: "Zero Brokers",
     color: "#eaf9f5",
     Icon: MoneyOffIcon,
     description: `100% Real Owner Verified Properties. No brokers or middlemen

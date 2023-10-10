@@ -1,5 +1,4 @@
 "use client";
-import useTheme from "@mui/material/styles/useTheme";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -7,8 +6,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import MoreVert from "@mui/icons-material/MoreVert";
 
-function CustomTooltip({ open, toggleOptions, listItems }) {
-  const theme = useTheme();
+export default function CardOptionsTooltip({ open, toggleOptions, listItems }) {
   return (
     <Tooltip
       arrow
@@ -50,5 +48,3 @@ function CustomTooltip({ open, toggleOptions, listItems }) {
     </Tooltip>
   );
 }
-
-export default CustomTooltip;

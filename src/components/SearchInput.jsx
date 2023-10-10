@@ -64,7 +64,8 @@ function SearchInput({ showSearchBtn }) {
       spacing={2}
       onClick={handleClick}
       sx={{
-        width: { xs: "100%", md: "600px" },
+        width: "100%",
+        maxWidth: "650px",
         height: "60px",
         border: { xs: "0.5px solid", md: "1px solid" },
         borderColor: {
@@ -114,6 +115,7 @@ function SearchInput({ showSearchBtn }) {
             borderRadius: "2rem",
             fontSize: "1rem",
             width: "100%",
+            maxWidth: "120px",
             height: "40px",
           }}
           startIcon={<SearchIcon sx={{ fontSize: "28px" }} />}

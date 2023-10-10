@@ -129,7 +129,8 @@ function PropertyProfile({ data, similarProperties }) {
                 borderRadius: "1rem",
               }}
             >
-              {formattedPrice.slice(0, -3)}
+              {formattedPrice.slice(0, -3)}{" "}
+              {listedFor === LISTING_TYPE.RENT ? " monthly" : ""}
             </Button>
           </Stack>
           <Divider />
