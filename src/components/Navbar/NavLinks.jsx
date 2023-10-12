@@ -58,6 +58,7 @@ function NavLinks() {
           return (
             <Tooltip
               arrow
+              key={path}
               disableFocusListener
               TransitionComponent={Zoom}
               TransitionProps={{ timeout: 250 }}

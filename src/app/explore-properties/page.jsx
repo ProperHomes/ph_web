@@ -1,6 +1,8 @@
+import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
 import PropertyList from "src/app/property/List";
+import CategoryBoxes from "@/components/CategoryBoxes";
 
 export default async function Page({ searchParams }) {
   const res = await client.request(GET_PROPERTIES, {
@@ -9,13 +11,16 @@ export default async function Page({ searchParams }) {
   });
   const data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
   return (
-    <PropertyList
-      data={data}
-      infiniteScroll
-      count={20}
-      showFilters
-      title="Explore Properties"
-      searchParams={searchParams}
-    />
+    <Stack py={2} spacing={4}>
+      <CategoryBoxes />
+      <PropertyList
+        data={data}
+        infiniteScroll
+        count={20}
+        showFilters
+        title="Explore Properties"
+        searchParams={searchParams}
+      />
+    </Stack>
   );
 }

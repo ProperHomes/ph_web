@@ -34,16 +34,37 @@ export const PROPERTY_CONDITION = {
 };
 
 export const PROPERTY_STATUS = {
-  IN_REVIEW: "IN REVIEW",
-  DRAFT: "DRAFT",
-  REJECTED: "REJECTED",
-  APPROVED: "APPROVED",
+  UNDER_CONSTRUCTION: "UNDER CONSTRUCTION",
   NOT_FOR_SALE: "NOT FOR SALE",
   NOT_FOR_RENT: "NOT FOR RENT",
   SOLD: "SOLD",
   RENTED: "RENTED",
   LEASED: "LEASED",
 };
+
+export const LISTING_STATUS = {
+  IN_REVIEW: "IN REVIEW",
+  DRAFT: "DRAFT",
+  REJECTED: "REJECTED",
+  APPROVED: "APPROVED",
+};
+
+export const PROPERTY_FACING = {
+  EAST: "EAST",
+  WEST: "WEST",
+  NORTH: "NORTH",
+  SOUTH: "SOUTH",
+};
+
+export const AREA_UNITS = [
+  "cents",
+  "sq.ft",
+  "sq.mt",
+  "sq.yards",
+  "acres",
+  "hectares",
+  "guntha",
+];
 
 export const ALL_CITIES = [
   "AMALAPURAM",

@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
 
 import {
   CREATE_PROPERTY,
@@ -25,7 +26,10 @@ import {
 import MediaBlocks from "./MediaBlocks";
 import {
   ALL_CITIES,
+  AREA_UNITS,
+  LISTING_STATUS,
   LISTING_TYPE,
+  PROPERTY_FACING,
   PROPERTY_STATUS,
   PROPERTY_TYPE,
 } from "@/utils/constants";
@@ -42,9 +46,14 @@ const propertyResolver = {
   price: yup.string().required(),
   bedrooms: yup.number().required().moreThan(0),
   bathrooms: yup.number().required().moreThan(0),
-  area: yup.string().required(),
+  area: yup.number().required("Size of the property must be specified"),
+  areaUnit: yup.string().required().oneOf(AREA_UNITS),
   description: yup.string(),
   city: yup.string().oneOf(ALL_CITIES).required(),
+  pincode: yup
+    .number()
+    .required("Must be only digits")
+    .test("len", "Must be exactly 6 characters", (val) => val.length === 6),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
   isFurnished: yup.string().required(),
   hasParking: yup.string().required(),
@@ -59,7 +68,16 @@ const StyledForm = styled(Box)(({ theme }) => ({
   display: "grid",
   gap: "4rem",
   gridTemplateColumns: "1fr 0.4fr",
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: "1fr",
+  },
+}));
+
+const StyledGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gap: "2rem",
+  gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+  [theme.breakpoints.down("lg")]: {
     gridTemplateColumns: "1fr",
   },
 }));
@@ -247,7 +265,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   };
 
   const handleSubmitForReview = (data) => {
-    handleCreateProperty({ ...data, status: "IN_REVIEW" });
+    handleCreateProperty({ ...data, listingStatus: LISTING_STATUS.IN_REVIEW });
   };
 
   const onSubmitDraft = async () => {
@@ -301,94 +319,49 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
         )}
       </Stack>
 
-      <StyledForm p={{ xs: 2, md: 4 }}>
+      <StyledForm p={{ xs: 2, md: 6 }}>
         <Stack spacing={4}>
-          <Stack>
-            <Label>Type of Property? *</Label>
-            <Controller
-              name="type"
-              control={control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <StyledSelect
-                  displayEmpty
-                  renderValue={(selected) => {
-                    if (!selected) {
-                      return <Typography>Eg: FLAT</Typography>;
-                    }
-                    return selected;
-                  }}
-                  value={value ?? ""}
-                  onChange={onChange}
-                  error={!!error?.message}
-                >
-                  <MenuItem value="" disabled>
-                    Select one from below
-                  </MenuItem>
+          <StyledGrid>
+            <Stack>
+              <Label>Type of Property? *</Label>
+              <Controller
+                name="type"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <StyledSelect
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (!selected) {
+                        return <Typography>Eg: FLAT</Typography>;
+                      }
+                      return selected;
+                    }}
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                  >
+                    <MenuItem value="" disabled>
+                      Select one from below
+                    </MenuItem>
 
-                  {Object.keys(PROPERTY_TYPE).map((type) => {
-                    return (
-                      <MenuItem
-                        key={type}
-                        value={type}
-                        style={{ fontWeight: 500, fontSize: "0.8rem" }}
-                      >
-                        {PROPERTY_TYPE[type]}
-                      </MenuItem>
-                    );
-                  })}
-                </StyledSelect>
-              )}
-            />
-          </Stack>
-
-          <Stack>
-            <Label>Where is the property located ?*</Label>
-            <Controller
-              name="city"
-              control={control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <StyledSelect
-                  displayEmpty
-                  renderValue={(selected) => {
-                    if (!selected) {
-                      return <Typography>Select a City</Typography>;
-                    }
-                    return selected;
-                  }}
-                  value={value ?? ""}
-                  onChange={onChange}
-                  error={!!error?.message}
-                >
-                  <MenuItem value="" disabled>
-                    Select one from below
-                  </MenuItem>
-                  {ALL_CITIES.map((city) => {
-                    return (
-                      <MenuItem
-                        key={city}
-                        value={city}
-                        style={{ fontWeight: 500, fontSize: "0.8rem" }}
-                      >
-                        {city}
-                      </MenuItem>
-                    );
-                  })}
-                </StyledSelect>
-              )}
-            />
-          </Stack>
-
-          <Stack
-            spacing={4}
-            direction={{ xs: "column", md: "row" }}
-            justifyContent="space-between"
-          >
+                    {Object.keys(PROPERTY_TYPE).map((type) => {
+                      return (
+                        <MenuItem
+                          key={type}
+                          value={type}
+                          style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                        >
+                          {PROPERTY_TYPE[type]}
+                        </MenuItem>
+                      );
+                    })}
+                  </StyledSelect>
+                )}
+              />
+            </Stack>
             <Stack>
               <Label>Sale or Rent?*</Label>
               <Controller
@@ -428,32 +401,49 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                 )}
               />
             </Stack>
-
             <Stack>
-              <Label>Enter the size of the property*</Label>
+              <Label>Property City ?*</Label>
               <Controller
-                name="area"
+                name="city"
                 control={control}
                 render={({
                   field: { onChange, value },
                   fieldState: { error },
                 }) => (
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    type="text"
-                    placeholder="Eg: 2500 sq.ft"
+                  <StyledSelect
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (!selected) {
+                        return <Typography>Select a City</Typography>;
+                      }
+                      return selected;
+                    }}
                     value={value ?? ""}
                     onChange={onChange}
                     error={!!error?.message}
-                  />
+                  >
+                    <MenuItem value="" disabled>
+                      Select one from below
+                    </MenuItem>
+                    {ALL_CITIES.map((city) => {
+                      return (
+                        <MenuItem
+                          key={city}
+                          value={city}
+                          style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                        >
+                          {city}
+                        </MenuItem>
+                      );
+                    })}
+                  </StyledSelect>
                 )}
               />
             </Stack>
             <Stack>
-              <Label>Number of bedrooms*</Label>
+              <Label>Pincode*</Label>
               <Controller
-                name="bedrooms"
+                name="pincode"
                 control={control}
                 render={({
                   field: { onChange, value },
@@ -462,7 +452,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                   <TextField
                     fullWidth
                     variant="outlined"
-                    placeholder="Eg: 2"
+                    placeholder="Eg: 500123"
                     type="number"
                     value={value ?? ""}
                     onChange={onChange}
@@ -471,35 +461,9 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                 )}
               />
             </Stack>
+          </StyledGrid>
 
-            <Stack>
-              <Label>Number of bathrooms*</Label>
-              <Controller
-                name="bathrooms"
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    placeholder="Eg: 2"
-                    type="number"
-                    value={value ?? ""}
-                    onChange={onChange}
-                    error={!!error?.message}
-                  />
-                )}
-              />
-            </Stack>
-          </Stack>
-
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            spacing={2}
-            alignItems={{ xs: "start", md: "end" }}
-          >
+          <StyledGrid>
             <Stack>
               <Label>Price*</Label>
               <Controller
@@ -522,6 +486,167 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               />
             </Stack>
 
+            <Stack>
+              <Label>Enter the size*</Label>
+              <Controller
+                name="area"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    type="number"
+                    placeholder="Eg: 2500 sq.ft"
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        paddingRight: "0",
+                      },
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          <Controller
+                            name="areaUnit"
+                            control={control}
+                            render={({
+                              field: { onChange, value },
+                              fieldState: { error },
+                            }) => (
+                              <Select
+                                displayEmpty
+                                renderValue={(selected) => {
+                                  if (!selected) {
+                                    return <Typography>unit</Typography>;
+                                  }
+                                  return selected;
+                                }}
+                                value={value ?? ""}
+                                onChange={onChange}
+                                error={!!error?.message}
+                                sx={{
+                                  "& fieldset": {
+                                    border: "none",
+                                  },
+                                }}
+                              >
+                                <MenuItem value="" disabled>
+                                  Select one from below
+                                </MenuItem>
+                                {AREA_UNITS.map((listingFor) => {
+                                  return (
+                                    <MenuItem
+                                      key={listingFor}
+                                      value={listingFor}
+                                      style={{
+                                        fontWeight: 500,
+                                        fontSize: "0.8rem",
+                                      }}
+                                    >
+                                      {listingFor}
+                                    </MenuItem>
+                                  );
+                                })}
+                              </Select>
+                            )}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </Stack>
+            <Stack>
+              <Label>Bedrooms*</Label>
+              <Controller
+                name="bedrooms"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Eg: 2"
+                    type="number"
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                  />
+                )}
+              />
+            </Stack>
+
+            <Stack>
+              <Label>Bathrooms*</Label>
+              <Controller
+                name="bathrooms"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Eg: 2"
+                    type="number"
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                  />
+                )}
+              />
+            </Stack>
+          </StyledGrid>
+
+          <StyledGrid>
+            <Stack>
+              <Label>Facing *</Label>
+              <Controller
+                name="listedFor"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <StyledSelect
+                    displayEmpty
+                    renderValue={(selected) => {
+                      if (!selected) {
+                        return <Typography>Select one</Typography>;
+                      }
+                      return selected;
+                    }}
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                  >
+                    <MenuItem value="" disabled>
+                      Select one from below
+                    </MenuItem>
+                    {Object.keys(PROPERTY_FACING).map((listingFor) => {
+                      return (
+                        <MenuItem
+                          key={listingFor}
+                          value={listingFor}
+                          style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                        >
+                          {listingFor}
+                        </MenuItem>
+                      );
+                    })}
+                  </StyledSelect>
+                )}
+              />
+            </Stack>
             <FormControlLabel
               sx={{ "& span": { fontSize: "1rem" } }}
               control={
@@ -559,7 +684,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               }
               label="Has Parking"
             />
-          </Stack>
+          </StyledGrid>
 
           <Stack>
             <Label>Property Title *</Label>
@@ -609,7 +734,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
         </Stack>
         <Stack spacing={2} sx={{ height: "100%" }}>
           <Typography fontSize="1.5rem">
-            Add Property Media (images or videos)*
+            Add Property Media (minimum of 5 images or videos)*
           </Typography>
           <Box my={8}>
             <MediaBlocks
