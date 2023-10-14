@@ -186,3 +186,11 @@ export function numWords(input) {
 
   return str.trim();
 }
+
+export function getRupees(price) {
+  return Number(price).toLocaleString("en-in", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 0,
+  });
+}

@@ -1,5 +1,4 @@
 "use client";
-
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -23,8 +22,9 @@ import {
   FacebookShareButton,
   FacebookIcon,
 } from "react-share";
-
 import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
+import useToast from "src/hooks/useToast";
 
 export default function ShareModal({
   open,
@@ -36,7 +36,11 @@ export default function ShareModal({
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const { Toast, toggleToast } = useToast();
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toggleToast("Copied link successfully.");
+  };
   return (
     <Dialog
       fullScreen={isMobile}
@@ -65,32 +69,52 @@ export default function ShareModal({
       </DialogTitle>
       <Divider />
       <DialogContent sx={{ minWidth: { xs: "100%", md: "380px" } }}>
-        <Stack
-          direction="row"
-          sx={{ position: "relative", borderRadius: "1em" }}
-          spacing={2}
-          alignItems="center"
-        >
-          <FacebookShareButton url={url} quote={urlTitle}>
-            <FacebookIcon round />
-          </FacebookShareButton>
-          <TwitterShareButton url={url} title={urlTitle}>
-            <TwitterIcon round />
-          </TwitterShareButton>
-          <PinterestShareButton url={url} media={media}>
-            <PinterestIcon round />
-          </PinterestShareButton>
-          <WhatsappShareButton url={url} title={urlTitle}>
-            <WhatsappIcon round />
-          </WhatsappShareButton>
-          <LinkedinShareButton url={url} title={urlTitle}>
-            <LinkedinIcon round />
-          </LinkedinShareButton>
-          <RedditShareButton url={url} title={urlTitle}>
-            <RedditIcon round />
-          </RedditShareButton>
+        <Stack spacing={2} alignItems="center">
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            sx={{ position: "relative" }}
+            spacing={2}
+            alignItems="center"
+          >
+            <FacebookShareButton url={url} quote={urlTitle}>
+              <FacebookIcon round />
+            </FacebookShareButton>
+            <TwitterShareButton url={url} title={urlTitle}>
+              <TwitterIcon round />
+            </TwitterShareButton>
+            <PinterestShareButton url={url} media={media}>
+              <PinterestIcon round />
+            </PinterestShareButton>
+            <WhatsappShareButton url={url} title={urlTitle}>
+              <WhatsappIcon round />
+            </WhatsappShareButton>
+            <LinkedinShareButton url={url} title={urlTitle}>
+              <LinkedinIcon round />
+            </LinkedinShareButton>
+            <RedditShareButton url={url} title={urlTitle}>
+              <RedditIcon round />
+            </RedditShareButton>
+          </Stack>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={1}
+            alignItems="center"
+          >
+            <Typography ml={4} noWrap maxWidth="80%">
+              {window.location.href}
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{ whiteSpace: "nowrap" }}
+              onClick={copyToClipboard}
+            >
+              Copy Link
+            </Button>
+          </Stack>
         </Stack>
       </DialogContent>
+      {Toast}
     </Dialog>
   );
 }

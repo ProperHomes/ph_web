@@ -33,6 +33,7 @@ const socialLinks = [
 ];
 
 const subLinks = [
+  { title: "Pricing", path: "/pricing" },
   { title: "Pay Rent", path: "/pay-rent" },
   {
     title: "EMI Calculator",
@@ -79,6 +80,7 @@ export default function Footer() {
   return (
     <Box
       py={2}
+      pb={{ xs: 10, md: 2 }}
       sx={{
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[2],
@@ -89,7 +91,7 @@ export default function Footer() {
         transform: "translateY(100%)",
       }}
     >
-      <Container maxWidth="xl" sx={{ overflowX: "scroll" }}>
+      <Container maxWidth="xl">
         <Stack
           direction={{ xs: "column", md: "row" }}
           alignItems="center"
@@ -127,7 +129,13 @@ export default function Footer() {
               })}
             </Stack>
           </Stack>
-          <Stack direction="row" spacing={3}>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            alignItems="center"
+            justifyContent="center"
+            spacing={3}
+          >
             {subLinks.map((l) => {
               return (
                 <Link
@@ -168,14 +176,12 @@ export default function Footer() {
             })}
           </Tabs>
 
-          <Box>
-            <CityLinks links={allNavLinks} city={city} prefetch={false} />
-          </Box>
+          <CityLinks links={allNavLinks} city={city} prefetch={false} />
         </Box>
 
         <Typography
           color={theme.palette.getContrastText(theme.palette.background.paper)}
-          variant="caption"
+          fontSize="12px"
         >
           All trademarks, logos and names are properties of their respective
           owners. All Rights Reserved. &nbsp; © Copyright{" "}
