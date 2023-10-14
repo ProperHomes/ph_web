@@ -1,5 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import { Divider } from "@mui/material";
-import Link from "next/link";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getRupees } from "src/utils/helper";
 import CustomTabPanel from "@/components/CustomTabPanel";
@@ -140,7 +144,12 @@ export default function Pricing() {
           <Typography textAlign="center" fontSize="1.2rem">
             All Paid plans come with a <b>10% Annual Discount</b> ..!
           </Typography>
-          <Stack direction="row" justifyContent="space-between" spacing={4}>
+          <Stack
+            display={{ xs: "none", md: "flex" }}
+            direction="row"
+            justifyContent="space-between"
+            spacing={4}
+          >
             {sellerPricing.map(({ name, price, features }) => {
               return (
                 <ListBox
@@ -150,18 +159,20 @@ export default function Pricing() {
                   }}
                 >
                   <Stack
+                    spacing={2}
+                    direction="row"
+                    alignItems="center"
+                    px={1}
+                    py={2}
                     sx={{
                       backgroundColor: theme.palette.background.default,
-                      padding: "1rem",
                     }}
                   >
                     <Typography fontSize="1.5rem" fontWeight={800}>
                       {name}
                     </Typography>
-                    <Typography fontSize="1.2rem" fontWeight={800}>
-                      {name !== "Free"
-                        ? `${getRupees(price)} /month`
-                        : "Free Forever. No Limits."}
+                    <Typography fontSize="1rem" fontWeight={800}>
+                      {name !== "Free" && `${getRupees(price)} /month`}
                     </Typography>
                   </Stack>
                   <Divider />
@@ -188,6 +199,66 @@ export default function Pricing() {
                     Signup Now
                   </Button>
                 </ListBox>
+              );
+            })}
+          </Stack>
+
+          <Stack
+            display={{ xs: "flex", md: "none" }}
+            direction="column"
+            justifyContent="space-between"
+            spacing={2}
+          >
+            {sellerPricing.map(({ name, price, features }) => {
+              return (
+                <Accordion key={name} defaultExpanded>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Stack
+                      spacing={2}
+                      direction="row"
+                      alignItems="center"
+                      p={1}
+                      sx={{
+                        backgroundColor: theme.palette.background.default,
+                      }}
+                    >
+                      <Typography
+                        fontSize={{ xs: "1.2rem", md: "1.5rem" }}
+                        fontWeight={800}
+                      >
+                        {name}
+                      </Typography>
+                      <Typography fontSize="1rem" fontWeight={800}>
+                        {name !== "Free" && `${getRupees(price)} /month`}
+                      </Typography>
+                    </Stack>
+                  </AccordionSummary>
+                  <Divider />
+                  <AccordionDetails>
+                    <Stack>
+                      {features.map((f) => {
+                        return (
+                          <ListItem key={f}>
+                            <ListItemText>{f}</ListItemText>
+                          </ListItem>
+                        );
+                      })}
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          marginTop: "auto",
+                          borderRadius: "0.8rem",
+                          borderColor: theme.palette.info.main,
+                          color: theme.palette.info.main,
+                          fontWeight: 800,
+                          fontSize: "1rem",
+                        }}
+                      >
+                        Signup Now
+                      </Button>
+                    </Stack>
+                  </AccordionDetails>
+                </Accordion>
               );
             })}
           </Stack>
