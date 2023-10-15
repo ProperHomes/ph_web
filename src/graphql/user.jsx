@@ -14,8 +14,14 @@ export const USER_FIELDS = gql`
       signedUrl
     }
     email
-    memberships {
-      totalCount
+    credits
+    subscriptionPurchases {
+      nodes {
+        id
+        type
+        amount
+        createdAt
+      }
     }
   }
 `;

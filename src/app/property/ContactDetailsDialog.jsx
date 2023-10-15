@@ -1,7 +1,4 @@
 "use client";
-import { useState } from "react";
-import axios from "axios";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,18 +9,28 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
+import { useQuery } from "@apollo/client";
 
-import Loading from "src/components/Loading";
-import { useAppContext } from "src/appContext";
-import { USER_TYPE } from "@/utils/constants";
+import { FETCH_PROPERTY_OWNER_DETAILS } from "@/graphql/properties";
 
-export default function PaymentRequestModal() {
+export default function ContactDetailDialog({
+  open,
+  city,
+  pincode,
+  propertyId,
+  handleClose,
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [isLoading, setIsLoading] = useState(false);
-  const { state, handleFetchUser } = useAppContext();
 
-  const handleClickPayNow = () => {};
+  const { data } = useQuery(FETCH_PROPERTY_OWNER_DETAILS, {
+    variables: { propertyId },
+  });
+
+  const contactDetails = { city, pincode, ...(data?.property?.owner ?? {}) };
+  delete contactDetails.id;
+  delete contactDetails?.["__typename"];
+
   return (
     <Dialog
       fullScreen={isMobile}
@@ -45,30 +52,23 @@ export default function PaymentRequestModal() {
             fontWeight={500}
             sx={{ margin: "0 auto" }}
           >
-            Log in or sign up
+            Property Contact Details
           </Typography>
         </Stack>
       </DialogTitle>
       <Divider />
       <DialogContent sx={{ minWidth: { xs: "100%", md: "380px" } }}>
-        <Stack
-          sx={{ position: "relative", borderRadius: "1em" }}
-          spacing={2}
-          alignItems="center"
-        >
-          {(submitting || isLoading) && <Loading />}
-          <Typography variant="subtitle1" fontWeight="bold">
-            Welcome to Proper Homes
-          </Typography>
-
-          <Button
-            aria-label={`start payment button `}
-            variant="contained"
-            fullWidth
-            onClick={handleClickPayNow}
-          >
-            Pay Now
-          </Button>
+        <Stack sx={{ position: "relative", borderRadius: "1em" }} spacing={2}>
+          {Object.keys(contactDetails).map((key) => {
+            return (
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Typography key={key} fontWeight="bold">
+                  {key}:
+                </Typography>{" "}
+                <Typography key={key}>{contactDetails[key]}</Typography>
+              </Stack>
+            );
+          })}
         </Stack>
       </DialogContent>
     </Dialog>

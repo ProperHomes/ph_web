@@ -68,11 +68,7 @@ function Sidebar({ data }) {
         </Button>
       </Stack>
       <Stack spacing={2} my={2}>
-        <SellerInfoCard
-          createdAt={data?.createdAt}
-          listedFor={data?.listedFor}
-          propertyId={data?.id}
-        />
+        <SellerInfoCard {...data} />
       </Stack>
     </Suspense>
   );

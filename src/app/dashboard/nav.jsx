@@ -35,8 +35,8 @@ let list = [
     Icon: SaveIcon,
   },
   {
-    label: "Membership",
-    href: "/dashboard/membership",
+    label: "Subscription/Payments",
+    href: "/dashboard/susbcription",
     Icon: CreditCardIcon,
   },
   {

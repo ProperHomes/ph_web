@@ -14,7 +14,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
-import { Divider } from "@mui/material";
+import { Divider } from "@mui/material/Divider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getRupees } from "src/utils/helper";

@@ -16,6 +16,7 @@ export const PROPERTY_FIELDS = gql`
     hasBasement
     description
     country
+    pincode
     condition
     bedrooms
     bathrooms
@@ -254,19 +255,13 @@ export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
   }
 `;
 
-export const CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS = gql`
-  query propertyPaymentByUserIdAndPropertyId(
-    $userId: UUID!
-    $propertyId: UUID!
-  ) {
-    propertyPaymentByUserIdAndPropertyId(
+export const GET_PROPERTY_CREDIT_EXPENSE_OF_USER = gql`
+  query getPropertyCreditExpenseOfUser($userId: UUID!, $propertyId: UUID!) {
+    propertyCreditExpenseByUserIdAndPropertyId(
       userId: $userId
       propertyId: $propertyId
     ) {
       id
-      amount
-      paymentFor
-      paymentMode
     }
   }
 `;
@@ -346,6 +341,17 @@ export const CHECK_IF_USER_SAVED_PROPERTY = gql`
   }
 `;
 
+export const FETCH_PROPERTY_OWNER_DETAILS = gql`
+  query fetchPropertyOwnerDetails($propertyId: UUID!) {
+    property(id: $propertyId) {
+      owner {
+        id
+        name
+        phoneNumber
+      }
+    }
+  }
+`;
 
 export const CREATE_PROPERTY = gql`
   mutation createProperty($input: CreatePropertyInput!) {
@@ -411,6 +417,18 @@ export const CREATE_RENTAL_AGREEMENT = gql`
   mutation createRentalAgreement($input: CreateRentalAgreementInput!) {
     createRentalAgreement(input: $input) {
       rentalAgreement {
+        id
+      }
+    }
+  }
+`;
+
+export const CREATE_PROPERTY_CREDIT_EXPENSE = gql`
+  mutation createPropertyCreditExpense(
+    $input: CreatePropertyCreditExpenseInput!
+  ) {
+    createPropertyCreditExpense(input: $input) {
+      propertyCreditExpense {
         id
       }
     }

@@ -1,5 +1,6 @@
 "use client";
-import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -9,46 +10,87 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import Phone from "@mui/icons-material/Phone";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-import { CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS } from "@/graphql/properties";
+import {
+  CREATE_PROPERTY_CREDIT_EXPENSE,
+  GET_PROPERTY_CREDIT_EXPENSE_OF_USER,
+} from "@/graphql/properties";
 import { LISTING_TYPE } from "@/utils/constants";
 import useToggleAuth from "src/hooks/useToggleAuth";
+import { UPDATE_USER } from "@/graphql/user";
+import { appActionTypes, useAppContext } from "src/appContext";
+import ContactDetailDialog from "../../ContactDetailsDialog";
 
-function SellerInfoCard({ createdAt, listedFor, propertyId }) {
+function SellerInfoCard(props) {
   const theme = useTheme();
-
+  const { createdAt, listedFor, id: propertyId, city, pincode } = props;
+  const { state, dispatch } = useAppContext();
+  const { user } = state;
   const { Auth, isLoggedIn, loggedInUser, toggleAuth } = useToggleAuth();
 
-  const hasMembership = loggedInUser?.memberships?.totalCount > 0;
+  const userCredits = user?.credits ?? 0;
+  const hasCredits = userCredits > 0;
 
-  const { data } = useQuery(CHECK_IF_PAID_TO_VIEW_PROPERTY_CONTACT_DETAILS, {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showContactDetails, setShowContactDetails] = useState(false);
+  const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+
+  const { data, refetch } = useQuery(GET_PROPERTY_CREDIT_EXPENSE_OF_USER, {
     variables: { userId: loggedInUser?.id, propertyId },
-    skip: !isLoggedIn || !propertyId || hasMembership,
+    skip: !isLoggedIn || !propertyId,
+    fetchPolicy: "network-only",
   });
 
-  const hasPaidAlready =
-    !!data?.propertyPaymentByUserIdAndPropertyId?.id || hasMembership;
+  const [addPropertyCreditExpense] = useMutation(
+    CREATE_PROPERTY_CREDIT_EXPENSE
+  );
+  const [updateUser] = useMutation(UPDATE_USER);
+
+  const hasPaidAlready = !!data?.propertyCreditExpenseByUserIdAndPropertyId?.id;
 
   const isForSale = listedFor === LISTING_TYPE.SALE;
   const isForLease = listedFor === LISTING_TYPE.LEASE;
 
   const toggleContactDetails = () => {
-    // Todo: open a dialog that shows property contact details
+    setShowContactDetails((prev) => !prev);
   };
 
   const togglePaymentModal = () => {
-    // Todo: open a dialog that shows payment to make and membershoip plans
+    setShowPaymentDialog((prev) => !prev);
   };
 
-  const handleClickContactView = () => {
-    if (isLoggedIn) {
-      if (hasPaidAlready) {
-        toggleContactDetails();
-      } else {
-        togglePaymentModal();
-      }
-    } else {
-      toggleAuth();
+  const handleClickContactView = async () => {
+    if (!isLoggedIn) {
+      return toggleAuth();
     }
+    if (hasPaidAlready) {
+      return toggleContactDetails();
+    }
+    if (hasCredits) {
+      setIsSubmitting(true);
+      toggleContactDetails();
+      await addPropertyCreditExpense({
+        variables: {
+          input: {
+            propertyCreditExpense: { userId: loggedInUser?.id, propertyId },
+          },
+        },
+      });
+      refetch();
+      await updateUser({
+        variables: {
+          input: {
+            id: loggedInUser?.id,
+            patch: { credits: userCredits - 1 },
+          },
+        },
+      });
+      dispatch({
+        type: appActionTypes.UPDATE_LOGGED_IN_USER,
+        user: { ...state.user, credits: userCredits - 1 },
+      });
+      setIsSubmitting(false);
+    }
+    togglePaymentModal();
   };
 
   return (
@@ -67,9 +109,17 @@ function SellerInfoCard({ createdAt, listedFor, propertyId }) {
         {isForSale ? "buying" : isForLease ? "leasing" : "renting"} this
         property ?
       </Typography>
+
+      {isLoggedIn && !hasPaidAlready && (
+        <Typography fontSize="1rem">
+          You have {userCredits} {userCredits === 1 ? "credit" : "credits"}{" "}
+          {userCredits !== 0 ? "remaining" : ""}
+        </Typography>
+      )}
       <Button
         variant="contained"
         color="info"
+        disabled={isSubmitting}
         onClick={handleClickContactView}
         startIcon={hasPaidAlready ? <VisibilityIcon /> : <Phone />}
         sx={{
@@ -78,7 +128,6 @@ function SellerInfoCard({ createdAt, listedFor, propertyId }) {
       >
         {hasPaidAlready ? "View Contact Details" : "Get  Contact Details"}
       </Button>
-
       <Stack
         spacing={1}
         mt={2}
@@ -92,6 +141,15 @@ function SellerInfoCard({ createdAt, listedFor, propertyId }) {
         </Typography>
       </Stack>
       {Auth}
+      {showContactDetails && (
+        <ContactDetailDialog
+          propertyId={propertyId}
+          open={showContactDetails}
+          handleClose={toggleContactDetails}
+          city={city}
+          pincode={pincode}
+        />
+      )}
     </Stack>
   );
 }
