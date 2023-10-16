@@ -67,18 +67,13 @@ export const AREA_UNITS = [
 ];
 
 export const ALL_CITIES = [
-  "AMALAPURAM",
   "BANGALORE",
-  "BHIMAVARAM",
-  "PALAKOLLU",
   "CHENNAI",
   "DELHI",
   "GURGAON",
   "HYDERABAD",
-  "KAKINADA",
   "MUMBAI",
   "PUNE",
-  "RAJAHMUNDRY",
   "VIJAYAWADA",
   "VISHAKAPATNAM",
 ];

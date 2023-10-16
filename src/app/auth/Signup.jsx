@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
@@ -76,6 +76,22 @@ function SignupForm({ control }) {
                 </IconButton>
               ),
             }}
+          />
+        )}
+      />
+
+      <Controller
+        name="city"
+        control={control}
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <TextField
+            fullWidth
+            label="City"
+            type="text"
+            value={value ?? ""}
+            onChange={onChange}
+            error={!!error?.message}
+            helperText={error?.message ?? ""}
           />
         )}
       />

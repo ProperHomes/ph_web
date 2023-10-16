@@ -9,7 +9,7 @@ export default function CityLinks({ city, links, prefetch = true }) {
       py={2}
       sx={{
         display: "grid",
-        gap: "0.2rem",
+        gap: "1rem",
         gridTemplateColumns: "repeat(auto-fill, minmax(180px, 380px))",
         gridAutoFlow: "dense",
         width: "100%",

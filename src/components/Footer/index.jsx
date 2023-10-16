@@ -34,7 +34,6 @@ const socialLinks = [
 
 const subLinks = [
   { title: "Pricing", path: "/pricing" },
-  { title: "Pay Rent", path: "/pay-rent" },
   {
     title: "EMI Calculator",
     path: "/homeloans/emi-calculator",
@@ -67,8 +66,6 @@ export default function Footer() {
     setIndex(newIndex);
   };
   const city = ALL_CITIES[index];
-
-  const isDashboard = pathname.includes("/dashboard");
 
   const allNavLinks = [
     { link: "paying-guests-accommodation", title: "Paying Guest" },
@@ -154,8 +151,6 @@ export default function Footer() {
           <Tabs
             value={index}
             onChange={handleChange}
-            variant="scrollable"
-            scrollButtons
             aria-label="footer city tabs"
           >
             {tabSections.map(({ label }) => {

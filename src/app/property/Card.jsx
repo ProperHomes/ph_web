@@ -59,7 +59,7 @@ function PropertyCard({
   const currentUserSavedPropertyId = currentUserSavedProperties?.nodes[0]?.id;
 
   const { handleToggleFavorite, isSaved } = useToggleFavoriteProperty({
-    propertyId: id,
+    data: { id, ownerId },
     currentUserSavedPropertyId,
     toggleAuth,
   });
@@ -77,8 +77,8 @@ function PropertyCard({
     currency: "INR",
   });
 
-  const handleChangePropertyStatus = () => { };
-  
+  const handleChangePropertyStatus = () => {};
+
   const handleEditProperty = () => {
     togglePropertyEditor();
   };

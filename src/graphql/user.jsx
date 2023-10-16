@@ -5,6 +5,7 @@ export const USER_FIELDS = gql`
     id
     name
     type
+    city
     username
     number
     phoneNumber

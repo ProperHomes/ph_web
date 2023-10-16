@@ -7,13 +7,16 @@ import {
   SAVE_PROPERTY,
 } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
+import useNotification from "./useNotification";
 
 export default function useToggleFavoriteProperty({
-  propertyId,
+  data,
   toggleAuth,
   currentUserSavedPropertyId,
   canCheckWithApi = false,
 }) {
+  const { id: propertyId, ownerId } = data;
+
   const { state } = useAppContext();
 
   const loggedInUserId = state?.user?.id;
@@ -24,6 +27,8 @@ export default function useToggleFavoriteProperty({
   const [deleteSavedProperty] = useMutation(DELETE_SAVED_PROPERTY);
 
   const [checkIfUserSavedProperty] = useLazyQuery(CHECK_IF_USER_SAVED_PROPERTY);
+
+  const { sendNotification } = useNotification();
 
   useEffect(() => {
     const handleCheckIfUserSavedProperty = async () => {
@@ -62,16 +67,19 @@ export default function useToggleFavoriteProperty({
           },
         });
         setSavedPropertyId(data?.createSavedProperty?.savedProperty?.id);
+        sendNotification({
+          toUserId: ownerId,
+          byUserId: loggedInUserId,
+          propertyId,
+          actionText: `A user from ${state?.user?.city} shortlisted your property just now..!`,
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleToggleFavorite = (e) => {
-    if (e) {
-      e.stopPropagation();
-    }
+  const handleToggleFavorite = () => {
     if (!state?.user?.id) {
       toggleAuth();
     } else {

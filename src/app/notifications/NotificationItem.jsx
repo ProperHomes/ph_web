@@ -4,17 +4,22 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import useTheme from "@mui/material/styles/useTheme";
 import dayjs from "dayjs";
-import { useRouter } from "next/router";
-import { useNotificationsContext } from "./context";
-import { convertStringToSlug } from "@/utils/helper";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useRouter } from "next/navigation";
+
+dayjs.extend(relativeTime);
 
 function NotificationItem({ notification }) {
-  const theme = useTheme();
   const router = useRouter();
-  const { toggleNotifications } = useNotificationsContext();
-  const { byUser, job, actionText, broadcastInfo, createdAt } = notification;
+  const theme = useTheme();
+  const { byUser, actionText, createdAt, property } = notification;
 
-  const handleClick = () => {};
+  console.log(notification);
+  const handleClick = () => {
+    if (property?.slug) {
+      router.push(`/property/${property.slug}`);
+    }
+  };
 
   return (
     <Stack
@@ -24,13 +29,16 @@ function NotificationItem({ notification }) {
       alignItems="center"
       justifyContent="space-between"
       p={2}
+      onClick={handleClick}
       sx={{
         color: "#000",
         cursor: "pointer",
         transition: "0.3s ease",
-        background: "#fff",
+        background: "#fafafa",
+        boxShadow: theme.shadows[1],
         "&:hover": {
           backgroundColor: "#f1f1f1",
+          boxShadow: theme.shadows[2],
         },
       }}
     >
@@ -40,10 +48,10 @@ function NotificationItem({ notification }) {
         spacing={1}
         sx={{ width: "100%" }}
       >
-        {(byUser || broadcastInfo?.avatarUrl) && (
+        {byUser && (
           <Avatar
             alt=""
-            src={byUser?.avatar?.signedUrl ?? broadcastInfo?.avatarUrl}
+            src={byUser?.avatar?.signedUrl}
             sx={{
               width: "50px",
               height: "50px",

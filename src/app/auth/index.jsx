@@ -17,7 +17,7 @@ import "yup-phone-lite";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { useLazyQuery, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 
 import SignupForm from "./Signup";
 import LoginForm from "./Login";
@@ -58,7 +58,12 @@ const FETCH_USER_BY_PHONE = gql`
 const authResolvers = {
   signup: {
     name: yup.string().required("Name is required"),
+    phoneNumber: yup
+      .string()
+      .phone("IN", "Must be a valid phone number")
+      .required("Phone number is required"),
     password: passwordRules,
+    city: yup.string().required("City is required"),
   },
   forgotPassword: {
     phoneNumber: yup
@@ -92,8 +97,6 @@ function AuthModal({ open, handleClose }) {
   const [showLogin, setShowLogin] = useState(true);
   const [showSignup, setShowSignup] = useState(false);
   const [showForgotPassword, setForgotPassword] = useState(false);
-
-  const [getUserByPhone] = useLazyQuery(FETCH_USER_BY_PHONE);
 
   const { handleFetchUser } = useAppContext();
 

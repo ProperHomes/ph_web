@@ -23,6 +23,10 @@ export const FETCH_NOTIFICATIONS = gql`
         toUserId
         readAt
         createdAt
+        property {
+          id
+          slug
+        }
       }
       totalCount
     }
@@ -64,6 +68,10 @@ export const SUBSCRIBE_TO_NEW_NOTIFICATIONS = gql`
           avatar {
             signedUrl
           }
+        }
+        property {
+          id
+          slug
         }
         readAt
         createdAt

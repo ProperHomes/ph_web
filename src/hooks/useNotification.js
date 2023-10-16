@@ -10,9 +10,10 @@ function useNotification() {
   const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
 
   const sendNotification = async ({
-    forUserId,
+    toUserId,
     byUserId,
     actionText,
+    propertyId,
     jobId,
   }) => {
     try {
@@ -20,9 +21,10 @@ function useNotification() {
         variables: {
           input: {
             notification: {
-              forUserId,
+              toUserId,
               byUserId,
               jobId,
+              propertyId,
               actionText,
             },
           },

@@ -6,6 +6,34 @@ import { Manrope } from "next/font/google";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
+export const metadata = {
+  title:
+    "ProperHomes: Find Properties | Buy/Sell/Rent Properties in India | Manage Rentals",
+  description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
+  List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+  keywords: ["Homes for sale in India", "Rent ", "Real Estate India"],
+  metadataBase: new URL("https://properhomes.in"),
+  openGraph: {
+    title:
+      "ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals",
+    description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
+    List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+    url: "https://properhomes.in",
+    siteName: "ProperHomes",
+    type: "website",
+    images: "/assets/images/Logo.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals",
+    description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
+    List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+    creator: "@ProperHomes",
+    images: ["/assets/images/Logo.png"],
+  },
+};
+
 import AppMain from "./appMain";
 
 import "../styles/globals.css";
@@ -27,17 +55,12 @@ function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* <meta name="theme-color" content={theme.palette.primary.main} /> */}
-        <meta
-          name="description"
-          content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream space!`}
-        />
         <meta name="application-name" content="ProperHomes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content="ProperHomes: Find Your Dream Space!"
+          content="ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals"
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -77,31 +100,6 @@ function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/assets/images/Logo.png" color="#5bbad5" />
         <link rel="shortcut icon" href="/favicon.ico" />
-
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://properhomes.in" />
-        <meta
-          name="twitter:title"
-          content="ProperHomes: Find Your Dream Space!"
-        />
-        <meta
-          name="twitter:description"
-          content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream space!`}
-        />
-        <meta name="twitter:image" content="/assets/images/Logo.png" />
-        <meta name="twitter:creator" content="@ProperHomes" />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:title"
-          content="ProperHomes: Find Your Dream Space!"
-        />
-        <meta
-          property="og:description"
-          content={`ProperHomes - Discover an extensive range of homes and properties for sale, rent, or lease, all carefully reviewed for authenticity and quality. Say goodbye to spam calls and hello to a stress-free search for your dream space!`}
-        />
-        <meta property="og:site_name" content="ProperHomes" />
-        <meta property="og:url" content="https://properhomes.in" />
-        <meta property="og:image" content="/assets/images/Logo.png" />
       </head>
       <body className={manRope.className}>
         <NextTopLoader showSpinner={false} />

@@ -14,21 +14,17 @@ const initialState = {
   notificationsPage: 0,
   hasUnread: false,
   totalNotificationsCount: 0,
-  showNotifications: false,
 };
 
 const notificationActionTypes = {
   LOAD_NOTIFICATIONS: "LOAD_NOTIFICATIONS",
   UPDATE_NOTIFICATIONS_PAGE: "UPDATE_NOTIFICATIONS_PAGE",
-  TOGGLE_NOTIFICATIONS: "TOGGLE_NOTIFICATIONS",
   HAS_UNREAD: "HAS_UNREAD_NOTIFS",
   RESET: "RESET",
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case notificationActionTypes.TOGGLE_NOTIFICATIONS:
-      return { ...state, showNotifications: !state.showNotifications };
     case notificationActionTypes.LOAD_NOTIFICATIONS:
       return {
         ...state,
@@ -78,25 +74,22 @@ function NotificationsProvider({ children }) {
     skip: !appState.user?.id,
   });
 
+  console.log(notifData);
   useEffect(() => {
     const allNotifs = notifData?.notifications?.nodes ?? [];
     const totalCount = notifData?.notifications?.totalCount ?? 0;
-    allNotifs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     if (allNotifs.length > 0) {
       dispatch({
         type: notificationActionTypes.LOAD_NOTIFICATIONS,
         payload: allNotifs,
         count: totalCount ?? 0,
       });
+      const firstNotif = allNotifs[0];
+      if (firstNotif && firstNotif.readAt == null) {
+        dispatch({ type: notificationActionTypes.HAS_UNREAD, hasUnread: true });
+      }
     }
   }, [notifData]);
-
-  useEffect(() => {
-    const firstNotif = state.notifications[0];
-    if (firstNotif && firstNotif.readAt == null) {
-      dispatch({ type: notificationActionTypes.HAS_UNREAD, hasUnread: true });
-    }
-  }, [state.notifications.length]);
 
   const { data: newNotif } = useSubscription(SUBSCRIBE_TO_NEW_NOTIFICATIONS, {
     variables: { userId: appState.user?.id },
@@ -107,27 +100,20 @@ function NotificationsProvider({ children }) {
     const notif = newNotif?.newNotificationAdded?.notification;
     if (notif && notif.readAt == null) {
       dispatch({
-        type: notificationActionTypes.HAS_UNREAD,
-        hasUnread: true,
-      });
-      // Todo: Also if the browser tab is not in focus display a native notification
-      dispatch({
         type: notificationActionTypes.LOAD_NOTIFICATIONS,
         payload: [notif],
         addFirst: true,
         count: 1,
       });
+      dispatch({
+        type: notificationActionTypes.HAS_UNREAD,
+        hasUnread: true,
+      });
     }
   }, [newNotif]);
 
-  const toggleNotifications = () => {
-    dispatch({ type: notificationActionTypes.TOGGLE_NOTIFICATIONS });
-  };
-
   return (
-    <NotificationsContext.Provider
-      value={{ state, dispatch, toggleNotifications }}
-    >
+    <NotificationsContext.Provider value={{ state, dispatch }}>
       {children}
     </NotificationsContext.Provider>
   );

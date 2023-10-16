@@ -11,7 +11,7 @@ import ShareModal from "@/components/ShareModal";
 const SellerInfoCard = lazy(() => import("./SellerInfoCard"));
 
 function Sidebar({ data }) {
-  const { id, title, media, slug } = data;
+  const { title, media, slug } = data;
 
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
@@ -23,7 +23,7 @@ function Sidebar({ data }) {
 
   const { isSaved, handleToggleFavorite } = useToggleFavoriteProperty({
     canCheckWithApi: true,
-    propertyId: id,
+    data,
   });
 
   const url = `https://properhomes.in/property/${slug}`;

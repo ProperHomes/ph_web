@@ -14,6 +14,9 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
+import Notifications from "src/app/notifications";
+import { useNotificationsContext } from "src/app/notifications/context";
+import { Badge } from "@mui/material";
 
 function NavbarRight() {
   const pathname = usePathname();
@@ -24,16 +27,14 @@ function NavbarRight() {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
+  const { state: notifState } = useNotificationsContext();
+
   const toggleDrawer = () => {
     setShowDrawer((prev) => !prev);
-    if (showNotifications) {
-      setShowNotifications(false);
-    }
   };
 
   const toggleNotifications = () => {
     setShowNotifications((prev) => !prev);
-    toggleDrawer();
   };
 
   const isDashboard = pathname.includes("/dashboard");
@@ -47,7 +48,9 @@ function NavbarRight() {
       )}
       {!!loggedInUser && !isMobile && (
         <IconButton onClick={toggleNotifications}>
-          <NotificationsNoneIcon fontSize="medium" />
+          <Badge invisible={!notifState.hasUnread} variant="dot" color="error">
+            <NotificationsNoneIcon fontSize="medium" />
+          </Badge>
         </IconButton>
       )}
       <Button
@@ -89,11 +92,8 @@ function NavbarRight() {
           <MenuIcon htmlColor={theme.palette.text.secondary} />
         )}
       </Button>
-      <UserSlideDrawer
-        showNotifications={showNotifications}
-        showDrawer={showDrawer}
-        toggleDrawer={toggleDrawer}
-      />
+      <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
+      <Notifications open={showNotifications} toggle={toggleNotifications} />
     </Stack>
   );
 }

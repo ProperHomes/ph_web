@@ -1,4 +1,3 @@
-// app/ThemeRegistry.tsx
 "use client";
 import { useState } from "react";
 import createCache from "@emotion/cache";

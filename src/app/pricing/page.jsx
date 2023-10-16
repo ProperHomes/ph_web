@@ -37,9 +37,6 @@ const CustomTabs = styled(Tabs)(({ theme }) => ({
     "&.Mui-selected": {
       color:
         theme.palette.mode === "dark" ? theme.palette.primary.main : "#000",
-      p: {
-        fontWeight: 800,
-      },
     },
   },
 }));
@@ -275,7 +272,7 @@ export default function Pricing() {
         >
           <Typography sx={{ fontSize: "1.2rem" }}>
             a&#41; Every property listed on <Link href="/">ProperHomes</Link> is
-            <b>manually verified by us.</b>
+            <b> manually verified by us.</b>
           </Typography>
           <Typography sx={{ fontSize: "1.2rem" }}>
             b&#41; As a buyer or tenant, you can{" "}

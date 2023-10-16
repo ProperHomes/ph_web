@@ -3,9 +3,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 
 import SaveIcon from "@mui/icons-material/Save";
@@ -36,7 +33,7 @@ let list = [
   },
   {
     label: "Subscription/Payments",
-    href: "/dashboard/susbcription",
+    href: "/dashboard/subscription",
     Icon: CreditCardIcon,
   },
   {

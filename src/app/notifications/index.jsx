@@ -1,25 +1,24 @@
 "use client";
-import { Fragment, useContext, useEffect } from "react";
+import { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import Drawer from "@mui/material/Drawer";
-import { Typography, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
 import { useMutation } from "@apollo/client";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 import { UPDATE_NOTIFICATION } from "./graphql";
 import NotificationItem from "./NotificationItem";
-import { NotificationsContext, notificationActionTypes } from "./context";
-import useMediaQuery from "@mui/material/useMediaQuery";
-function Notifications() {
+import SlideDrawer from "@/components/Drawer";
+import { notificationActionTypes, useNotificationsContext } from "./context";
+
+function Notifications({ toggle, open }) {
   const theme = useTheme();
   const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const { state, dispatch } = useContext(NotificationsContext);
+  const { state, dispatch } = useNotificationsContext();
 
   const allNotifications = state.notifications;
-
-  const Container = isMobileOrTablet ? Stack : Drawer;
 
   const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
 
@@ -30,86 +29,50 @@ function Notifications() {
     });
   };
 
-  const handleClose = () => {
-    dispatch({ type: notificationActionTypes.TOGGLE_NOTIFICATIONS });
-  };
-
   useEffect(() => {
-    const firstNotif = allNotifications.filter((n) => !n.isBroadcast)[0];
-    if (firstNotif && firstNotif.readAt == null) {
-      updateNotification({
-        variables: {
-          input: { id: firstNotif.id, patch: { readAt: new Date() } },
-        },
-      });
+    if (open) {
+      const firstNotif = allNotifications[0];
+      if (firstNotif && firstNotif.readAt == null) {
+        dispatch({
+          type: notificationActionTypes.HAS_UNREAD,
+          hasUnread: false,
+        });
+        updateNotification({
+          variables: {
+            input: { id: firstNotif.id, patch: { readAt: new Date() } },
+          },
+        });
+      }
     }
-    dispatch({
-      type: notificationActionTypes.HAS_UNREAD,
-      hasUnread: false,
-    });
-  }, [allNotifications.length]);
+  }, [open]);
 
   const hasMore = state.totalNotificationsCount > allNotifications.length;
 
   return (
-    <Stack sx={{ background: "#F8F8FF" }}>
-      {isMobileOrTablet && (
-        <Button
-          aria-label="go back"
-          onClick={handleClose}
-          startIcon={<KeyboardBackspaceIcon />}
-          sx={{
-            color: "#000",
-            textAlign: "left",
-            background: "#F8F8FF",
-            width: "30%",
-            whiteSpace: "nowrap",
-          }}
-        >
-          Go Back
-        </Button>
-      )}
-      <Container
-        anchor={"right"}
-        open={state.showNotifications}
-        onClose={handleClose}
-        p={1}
-        sx={{ background: { xs: "#F8F8FF", minHeight: "80vh", md: "initial" } }}
-        PaperProps={{
-          style: {
-            width: "350px",
-            padding: "0.5em 1em",
-            background: "#F8F8FF",
-          },
-        }}
+    <SlideDrawer
+      open={open}
+      handleClose={toggle}
+      title="Notifications"
+      position={isMobileOrTablet ? "bottom" : "right"}
+    >
+      <Button
+        aria-label="go back"
+        onClick={toggle}
+        variant="text"
+        size="large"
+        fullWidth={false}
+        sx={{ maxWidth: "50%", fontSize: "1.2rem", fontWeight: 600 }}
+        startIcon={<KeyboardBackspaceIcon />}
       >
-        {!isMobileOrTablet && (
-          <Button
-            aria-label="go back"
-            onClick={handleClose}
-            startIcon={<KeyboardBackspaceIcon />}
-            sx={{
-              width: "30%",
-              whiteSpace: "nowrap",
-              color: "#000",
-              textAlign: "left",
-              marginLeft: 0,
-            }}
-          >
-            Go Back
-          </Button>
-        )}
-
-        <Typography
-          color="#1B2559"
-          fontWeight={500}
-          fontSize={"1.2rem"}
-          textAlign={"center"}
-          sx={{ marginTop: 1, marginLeft: { xs: "1rem", md: 0 } }}
-        >
-          Notifications
-        </Typography>
-
+        Notifications
+      </Button>
+      <Stack
+        p={2}
+        direction="column"
+        justifyContent="space-between"
+        id="notificationsContainer"
+        style={{ height: "100%" }}
+      >
         <InfiniteScroll
           dataLength={allNotifications.length}
           next={handleFetchNextPage}
@@ -117,15 +80,18 @@ function Notifications() {
           scrollableTarget="notificationsContainer"
           loader={<></>}
           endMessage={<></>}
+          style={{ minHeight: "800px" }}
         >
           {allNotifications.map((n) => (
-            <Fragment key={n.id}>
-              <NotificationItem notification={n} handleClose={handleClose} />
-            </Fragment>
+            <NotificationItem
+              key={n.id}
+              notification={n}
+              handleClose={toggle}
+            />
           ))}
         </InfiniteScroll>
-      </Container>
-    </Stack>
+      </Stack>
+    </SlideDrawer>
   );
 }
 
