@@ -17,7 +17,6 @@ import "yup-phone-lite";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { gql } from "@apollo/client";
 
 import SignupForm from "./Signup";
 import LoginForm from "./Login";
@@ -45,15 +44,6 @@ const LoginWithTypography = styled(Typography)(({ theme }) => ({
   cursor: "pointer",
   fontSize: "0.9rem",
 }));
-
-const FETCH_USER_BY_PHONE = gql`
-  query user($phoneNumber: String!) {
-    userByPhoneNumber(phoneNumber: $phoneNumber) {
-      id
-      phoneNumber
-    }
-  }
-`;
 
 const authResolvers = {
   signup: {
@@ -185,12 +175,13 @@ function AuthModal({ open, handleClose }) {
         data: {
           ...data,
           type: USER_TYPE.BUYER,
+          country: "INDIA",
           phoneNumber: `91${data.phoneNumber}`,
         },
         withCredentials: true,
       });
-      if (res?.data?.userId) {
-        await handleFetchUser(res.data.userId);
+      if (res?.data?.id) {
+        await handleFetchUser(res.data.id);
         handleClose();
       }
     } catch (err) {
@@ -207,7 +198,7 @@ function AuthModal({ open, handleClose }) {
         method: "post",
         url: `${process.env.NEXT_PUBLIC_API_URL}/auth/phonenumber/sendotp`,
         data: {
-          phoneNumber: `91${data.phoneNumber}`,
+          phoneNumber: `+91${data.phoneNumber}`,
           isForgotPassword: showForgotPassword,
           isSignup: showSignup,
         },
@@ -223,14 +214,17 @@ function AuthModal({ open, handleClose }) {
   };
 
   const handleSubmitOtp = async (otpVal) => {
+    const verifyUrlPath = showSignup
+      ? `/auth/phonenumber/verifyotp`
+      : `/auth/phonenumber/verifyotplogin`;
     setIsLoading(true);
     const inputData = getValues();
     try {
       const res = await axios({
         method: "post",
-        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/phonenumber/verifyotplogin`,
+        url: `${process.env.NEXT_PUBLIC_API_URL}${verifyUrlPath}`,
         data: {
-          phoneNumber: `91${inputData.phoneNumber}`,
+          phoneNumber: `+91${inputData.phoneNumber}`,
           otp: otpVal,
         },
         withCredentials: true,
@@ -238,6 +232,7 @@ function AuthModal({ open, handleClose }) {
       if (res.status === 200 && !!res.data) {
         if (isLoginWithOtp) {
           await handleFetchUser(res.data.userId);
+          handleClose();
         } else if (showSignup) {
           await handleSignup(getValues());
         } else if (showForgotPassword) {
@@ -254,6 +249,12 @@ function AuthModal({ open, handleClose }) {
 
   const handleForgotpassword = (data) => {};
 
+  const handleModalClose = () => {
+    if (!otpReqSuccessful) {
+      handleClose();
+    }
+  };
+
   const onSubmit = (data) => {
     if (showForgotPassword) {
       handleForgotpassword(data);
@@ -268,8 +269,13 @@ function AuthModal({ open, handleClose }) {
     <Dialog
       fullScreen={isMobile}
       open={open}
-      onClose={handleClose}
-      PaperProps={{ sx: { borderRadius: isMobile ? 0 : "1em" } }}
+      onClose={handleModalClose}
+      PaperProps={{
+        sx: {
+          borderRadius: isMobile ? 0 : "1em",
+          maxWidth: { xs: "100%", md: "380px" },
+        },
+      }}
     >
       <DialogTitle>
         <Stack
@@ -303,32 +309,23 @@ function AuthModal({ open, handleClose }) {
           {showLogin && (
             <LoginForm control={control} isLoginWithOtp={isLoginWithOtp} />
           )}
-          {showSignup && !showForgotPassword && (
+          {showSignup && !showForgotPassword && !otpReqSuccessful && (
             <SignupForm control={control} />
           )}
           {showForgotPassword && <ForgorPasswordForm control={control} />}
-          {isLoginWithOtp &&
-            (!otpReqSuccessful ? (
-              <Button
-                aria-label="send otp button"
-                variant="contained"
-                fullWidth
-                onClick={handleSubmit(handleSendOtp)}
-              >
-                Send otp
-              </Button>
-            ) : (
-              <OtpInput
-                value={otp}
-                length={4}
-                onChange={handleChangeOtp}
-                onComplete={handleSubmitOtp}
-                TextFieldsProps={{
-                  error: otpError,
-                }}
-              />
-            ))}
-          {!isLoginWithOtp && (
+
+          {isLoginWithOtp && !otpReqSuccessful && (
+            <Button
+              aria-label="send otp button"
+              variant="contained"
+              fullWidth
+              onClick={handleSubmit(handleSendOtp)}
+            >
+              Send otp
+            </Button>
+          )}
+
+          {!isLoginWithOtp && !otpReqSuccessful && (
             <Button
               aria-label={`Submit ${
                 showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"
@@ -340,6 +337,24 @@ function AuthModal({ open, handleClose }) {
               {showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"}
             </Button>
           )}
+
+          {otpReqSuccessful && (
+            <>
+              <OtpInput
+                value={otp}
+                length={4}
+                onChange={handleChangeOtp}
+                onComplete={handleSubmitOtp}
+                TextFieldsProps={{
+                  error: otpError,
+                }}
+              />
+              <Typography variant="subtitle1" pt={2} gutterBottom>
+                Please enter the otp received to your mobile number.
+              </Typography>
+            </>
+          )}
+
           {!showForgotPassword && !showSignup && (
             <Stack
               spacing={2}
@@ -350,21 +365,24 @@ function AuthModal({ open, handleClose }) {
               <LoginWithTypography onClick={toggleIsLoginWithOtp}>
                 Login with {isLoginWithOtp ? "Password" : "OTP"}
               </LoginWithTypography>
-              <LoginWithTypography onClick={toggleForgotPassword}>
+              {/* <LoginWithTypography onClick={toggleForgotPassword}>
                 Forgot Password?
-              </LoginWithTypography>
+              </LoginWithTypography> */}
             </Stack>
           )}
-          <Typography
-            sx={{ cursor: "pointer" }}
-            onClick={showLogin ? toggleSignup : toggleLogin}
-          >
-            {showLogin
-              ? "Don't have an account yet ? "
-              : showForgotPassword
-              ? "Back"
-              : "Already have an account ?"}
-          </Typography>
+          {!otpReqSuccessful && !otpError && (
+            <Typography
+              variant="button"
+              sx={{ cursor: "pointer", fontWeight: 800 }}
+              onClick={showLogin ? toggleSignup : toggleLogin}
+            >
+              {showLogin
+                ? "Don't have an account yet ? "
+                : showForgotPassword
+                ? "Back"
+                : "Already have an account ?"}
+            </Typography>
+          )}
         </Stack>
       </DialogContent>
     </Dialog>

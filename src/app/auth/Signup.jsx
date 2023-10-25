@@ -7,6 +7,18 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import styled from "@mui/material/styles/styled";
+import { ALL_CITIES } from "@/utils/constants";
+
+const StyledSelect = styled(Select)(({ theme, error }) => ({
+  fontWeight: 500,
+  fontSize: "0.8rem",
+  "& fieldset": {
+    borderColor: error ? "red" : theme.palette.grey[300],
+  },
+}));
 
 function SignupForm({ control }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,25 +47,28 @@ function SignupForm({ control }) {
       <Controller
         name="phoneNumber"
         control={control}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Mobile Number"
-            type="text"
-            value={value ?? ""}
-            onChange={onChange}
-            error={!!error?.message}
-            helperText={error?.message ?? ""}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Typography fontSize={"1.2rem"}>+91</Typography>
-                </InputAdornment>
-              ),
-            }}
-          />
-        )}
+        render={({ field: { onChange, value }, fieldState: { error } }) => {
+          console.log(error, error?.message);
+          return (
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Mobile Number"
+              type="text"
+              value={value ?? ""}
+              onChange={onChange}
+              error={!!error?.message}
+              helperText={error?.message ?? ""}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Typography fontSize={"1.2rem"}>+91</Typography>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          );
+        }}
       />
       <Controller
         name="password"
@@ -84,15 +99,35 @@ function SignupForm({ control }) {
         name="city"
         control={control}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <TextField
+          <StyledSelect
+            displayEmpty
             fullWidth
-            label="City"
-            type="text"
+            renderValue={(selected) => {
+              if (!selected) {
+                return <Typography>Select Your City</Typography>;
+              }
+              return selected;
+            }}
             value={value ?? ""}
             onChange={onChange}
             error={!!error?.message}
-            helperText={error?.message ?? ""}
-          />
+          >
+            <MenuItem value="" disabled>
+              Select one from below
+            </MenuItem>
+
+            {ALL_CITIES.map((city) => {
+              return (
+                <MenuItem
+                  key={city}
+                  value={city}
+                  style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                >
+                  {city}
+                </MenuItem>
+              );
+            })}
+          </StyledSelect>
         )}
       />
     </>
