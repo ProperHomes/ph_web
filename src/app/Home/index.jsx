@@ -46,11 +46,6 @@ export default function Home({ data }) {
     <>
       <Stack spacing={4} py={4} alignItems="center">
         <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
-          <Stack spacing={1} direction="row" alignItems="center">
-            <Button onClick={toggleForm} mt={4} color="error">
-              We are launching soon. Get Notified.
-            </Button>
-          </Stack>
           <Typography color={theme.palette.text.primary} variant="h4">
             Find a home that{" "}
             <span

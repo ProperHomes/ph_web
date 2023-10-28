@@ -10,6 +10,25 @@ import Profile from "../profile";
 
 export const dynamicParams = true;
 
+export async function generateMetadata({ params }, parent) {
+  let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
+  const { title, description, media } = res?.propertyBySlug;
+  const images = (media?.nodes ?? []).map((m) => {
+    return m.media?.signedUrl ?? m.mediaUrl;
+  });
+  const coverImage = images?.[0];
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title,
+    description,
+    openGraph: {
+      images: [coverImage, ...previousImages].filter((x) => x),
+    },
+  };
+}
+
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;

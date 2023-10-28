@@ -11,13 +11,21 @@ export const metadata = {
     "ProperHomes: Find Properties | Buy/Sell/Rent Properties in India | Manage Rentals",
   description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
   List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
-  keywords: ["Homes for sale in India", "Rent ", "Real Estate India"],
+  keywords: [
+    "Properties for Sale",
+    "Properties for Rent",
+    "Properties for Lease",
+    "Homes for sale",
+    "Homes for rent",
+    "Homes for lease",
+    "Real Estate India",
+  ],
   metadataBase: new URL("https://properhomes.in"),
   openGraph: {
     title:
       "ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals",
-    description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
-    List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+    description: `Find homes and properties for sale, rent, or lease. 
+    List your property for sale, rent or lease. No more spam calls, no more scams and no more brokers.`,
     url: "https://properhomes.in",
     siteName: "ProperHomes",
     type: "website",
@@ -68,7 +76,7 @@ function RootLayout({ children }) {
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#000000" />
 
-        <link rel="apple-touch-icon" href="/assets/images/Logo.png" />
+        <link rel="apple-touch-icon" href="/assets/images/LogoIcon.png" />
         <link
           rel="apple-touch-icon"
           sizes="152x152"
@@ -89,16 +97,11 @@ function RootLayout({ children }) {
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/assets/images/PWA/ios/32.png"
+          href="/assets/images/LogoIcon.png"
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/assets/images/PWA/ios/16.png"
-        />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="mask-icon" href="/assets/images/Logo.png" color="#5bbad5" />
+        <link rel="mask-icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </head>
       <body className={manRope.className}>

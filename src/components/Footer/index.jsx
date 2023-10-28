@@ -16,6 +16,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import RedditIcon from "@mui/icons-material/Reddit";
+import Image from "next/image";
 
 import CityLinks from "./CityLinks";
 import { ALL_CITIES, navlinksSale, navlinksRent } from "@/utils/constants";
@@ -96,18 +97,26 @@ export default function Footer() {
         >
           <Stack alignItems={{ xs: "center", md: "start" }}>
             <Link href="/">
-              <Typography
-                color={theme.palette.primary.main}
-                fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
-                fontWeight={600}
-                sx={{
-                  cursor: "pointer",
-                  maxWidth: "280px",
-                  height: "auto",
-                }}
-              >
-                ProperHomes
-              </Typography>
+              <Stack direction="row" alignItems="center">
+                <Image
+                  src="/assets/images/LogoIcon.png"
+                  width={35}
+                  height={30}
+                />
+                <Typography
+                  color={theme.palette.primary.main}
+                  fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
+                  fontWeight={600}
+                  fontFamily={theme.typography.fontFamily.Raleway}
+                  sx={{
+                    cursor: "pointer",
+                    maxWidth: "280px",
+                    height: "auto",
+                  }}
+                >
+                  ProperHomes
+                </Typography>
+              </Stack>
             </Link>
 
             <Stack
