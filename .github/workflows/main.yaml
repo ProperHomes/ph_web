@@ -53,7 +53,7 @@ jobs:
           echo NEXT_PUBLIC_GRAPHQL_API=${{ secrets.NEXT_PUBLIC_GRAPHQL_API_DEV }} >> .env.local
           echo NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS=${{ secrets.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS_DEV }} >> .env.local
           echo NEXT_PUBLIC_CLOUDFRONT_URL=${{ secrets.NEXT_PUBLIC_CLOUDFRONT_URL_DEV }} >> .env.local
-          
+
       - name: Remove Preview SST Environment
         if: ${{ github.event_name == 'pull_request' && (github.event.action == 'closed' || github.event.pull_request.merged == true) }}
         run: |
@@ -64,7 +64,7 @@ jobs:
         run: |
           pnpm sst deploy --stage ${{ env.BRANCH_NAME }}
 
-      -name: Staging Deploy
+      - name: Staging Deploy
         if: ${{ github.event_name != 'pull_request' && github.event_name == 'push' &&  env.BRANCH_NAME == 'staging' }}
         run: |
           pnpm sst deploy --stage=staging
