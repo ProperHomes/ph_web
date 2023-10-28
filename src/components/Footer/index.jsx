@@ -99,23 +99,18 @@ export default function Footer() {
             <Link href="/">
               <Stack direction="row" alignItems="center">
                 <Image
-                  src="/assets/images/LogoIcon.png"
-                  width={35}
-                  height={30}
-                />
-                <Typography
-                  color={theme.palette.primary.main}
-                  fontSize={{ xs: "1.4rem", sm: "1.8rem", md: "2rem" }}
-                  fontWeight={600}
-                  fontFamily={theme.typography.fontFamily.Raleway}
-                  sx={{
-                    cursor: "pointer",
-                    maxWidth: "280px",
+                  src="/logo.png"
+                  width={200}
+                  height={50}
+                  priority
+                  quality={100}
+                  alt="logo"
+                  style={{
+                    objectFit: "contain",
+                    width: "auto",
                     height: "auto",
                   }}
-                >
-                  ProperHomes
-                </Typography>
+                />
               </Stack>
             </Link>
 

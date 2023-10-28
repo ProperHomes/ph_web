@@ -7,10 +7,9 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
 export const metadata = {
-  title:
-    "ProperHomes: Find Properties | Buy/Sell/Rent Properties in India | Manage Rentals",
-  description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
-  List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+  title: "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
+  description: `Find Homes and Properties for sale, rent or lease. 
+  List your property for sale, rent or lease. Manage Rental Properties, Say goodbye to spam, scams and brokers.`,
   keywords: [
     "Properties for Sale",
     "Properties for Rent",
@@ -19,26 +18,30 @@ export const metadata = {
     "Homes for rent",
     "Homes for lease",
     "Real Estate India",
+    "Rental Property Management in India",
+    "Manage Rental Properties",
+    "ProperHomes",
+    "Proper Homes",
   ],
   metadataBase: new URL("https://properhomes.in"),
   openGraph: {
     title:
-      "ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals",
+      "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
     description: `Find homes and properties for sale, rent, or lease. 
     List your property for sale, rent or lease. No more spam calls, no more scams and no more brokers.`,
-    url: "https://properhomes.in",
     siteName: "ProperHomes",
+    url: "https://properhomes.in",
     type: "website",
-    images: "/assets/images/Logo.png",
+    images: "/logo.png",
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals",
-    description: `Find homes and properties for sale, rent, or lease, manually reviewed for authenticity and quality. 
-    List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+      "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
+    description: `Find homes and properties for sale, rent or lease, manually verified by us. 
+  List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
     creator: "@ProperHomes",
-    images: ["/assets/images/Logo.png"],
+    images: ["/logo.png"],
   },
 };
 
@@ -68,7 +71,7 @@ function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content="ProperHomes: Find Properties | Buy/Sell/Rent Homes and Properties in India | Manage Rentals"
+          content="Find Properties | Buy Sell Rent Properties in India | Manage Rentals"
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
