@@ -64,7 +64,7 @@ jobs:
         run: |
           pnpm sst deploy --stage ${{ env.BRANCH_NAME }}
 
-      -name: Staging Deploy
+      - name: Staging Deploy
         if: ${{ github.event_name != 'pull_request' && github.event_name == 'push' &&  env.BRANCH_NAME == 'staging' }}
         run: |
           pnpm sst deploy --stage=staging
