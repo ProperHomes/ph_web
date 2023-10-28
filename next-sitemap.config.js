@@ -1,14 +1,17 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-  siteUrl: "https://properhomes.in",
+  siteUrl: "https://staging.properhomes.in",
   generateRobotsTxt: true,
-  generateIndexSitemap: true,
-  exclude: [
-    "/dashboard",
-    "/dashboard/*",
-    "/privacypolicy",
-    "/termsAndConditions",
-  ],
+  generateIndexSitemap: false,
+  exclude: ["/*"],
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: "*",
+        disallow: "/*",
+      },
+    ],
+  },
   // ...other options
 };
