@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "AWS_PROFILE=properhomes_admin_veera sst bind next dev",
     "deploy:prod": "AWS_PROFILE=properhomes_admin_veera npx sst deploy --stage=prod",
-    "build": "next build",
+    "build": "sst bind next build",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
