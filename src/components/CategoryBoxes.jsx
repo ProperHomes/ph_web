@@ -57,11 +57,6 @@ const forRentlinks = [
     link: "/commercial-properties-for-rent",
     Icon: WarehouseOutlined,
   },
-  {
-    label: "Pent Houses For Rent",
-    link: "/pent-houses-for-rent",
-    Icon: WarehouseOutlined,
-  },
 ];
 
 const allLinks = [...forRentlinks, ...forSaleLinks];

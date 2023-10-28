@@ -49,7 +49,7 @@ const propertyResolver = {
   bathrooms: yup.number().required().moreThan(0),
   area: yup.number().required("Size of the property must be specified"),
   areaUnit: yup.string().required().oneOf(AREA_UNITS),
-  description: yup.string(),
+  description: yup.string().required(),
   city: yup.string().oneOf(ALL_CITIES).required(),
   pincode: yup
     .number()
@@ -710,7 +710,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
           </Stack>
 
           <Stack>
-            <Label>Add property details (optional) </Label>
+            <Label>Add property details* </Label>
             <Controller
               name="description"
               control={control}

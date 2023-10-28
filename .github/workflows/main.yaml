@@ -1,7 +1,7 @@
 name: SST deploy workflow
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   pull_request:
     types: [opened, synchronize, closed, reopened]
 
@@ -36,7 +36,8 @@ jobs:
           aws-region: ap-south-1
           role-session-name: GithubActionsDeploy
 
-      - name: Prepare .env
+      - name: Prepare prod .env
+        if: ${{ env.BRANCH_NAME == 'main' }}
         run: |
           touch .env.local
           echo NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} >> .env.local
@@ -44,6 +45,15 @@ jobs:
           echo NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS=${{ secrets.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS }} >> .env.local
           echo NEXT_PUBLIC_CLOUDFRONT_URL=${{ secrets.NEXT_PUBLIC_CLOUDFRONT_URL }} >> .env.local
 
+      - name:  Prepare staging or preview .env
+        if: ${{ env.BRANCH_NAME != 'main' }}
+        run: |
+          touch .env.local
+          echo NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_DEV }} >> .env.local
+          echo NEXT_PUBLIC_GRAPHQL_API=${{ secrets.NEXT_PUBLIC_GRAPHQL_API_DEV }} >> .env.local
+          echo NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS=${{ secrets.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS_DEV }} >> .env.local
+          echo NEXT_PUBLIC_CLOUDFRONT_URL=${{ secrets.NEXT_PUBLIC_CLOUDFRONT_URL_DEV }} >> .env.local
+          
       - name: Remove Preview SST Environment
         if: ${{ github.event_name == 'pull_request' && (github.event.action == 'closed' || github.event.pull_request.merged == true) }}
         run: |
@@ -53,6 +63,11 @@ jobs:
         if: ${{ env.BRANCH_NAME != 'main' && github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize') }}
         run: |
           pnpm sst deploy --stage ${{ env.BRANCH_NAME }}
+
+      -name: Staging Deploy
+        if: ${{ github.event_name != 'pull_request' && github.event_name == 'push' &&  env.BRANCH_NAME == 'staging' }}
+        run: |
+          pnpm sst deploy --stage=staging
 
       - name: Production Deploy
         if: ${{ github.event_name != 'pull_request' && github.event_name == 'push' &&  env.BRANCH_NAME == 'main' }}

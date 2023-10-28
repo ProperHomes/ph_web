@@ -109,11 +109,7 @@ export default function Pricing() {
               ? "transparent"
               : theme.palette.secondary.main,
             height: "100%",
-            border: isDarkMode
-              ? `1px solid ${
-                  isDarkMode ? "#ffffff50" : theme.palette.primary.dark
-                }`
-              : "none",
+            border: `1px solid ${theme.palette.info.main}`,
             borderRadius: "1rem",
             borderTopLeftRadius: "1rem !important",
             transitionDuration: "0.5s",
@@ -168,7 +164,7 @@ export default function Pricing() {
                     <Typography fontSize="1.5rem" fontWeight={800}>
                       {name}
                     </Typography>
-                    <Typography fontSize="1rem" fontWeight={800}>
+                    <Typography fontSize="1rem" color="#ff5757" fontWeight={800}>
                       {price > 0 && `${getRupees(price)} /month`}
                     </Typography>
                   </Stack>

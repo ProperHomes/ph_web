@@ -22,6 +22,9 @@ export default {
       const LISTMONK_USERNAME = new Config.Secret(stack, "LISTMONK_USERNAME");
       const LISTMONK_PASSWORD = new Config.Secret(stack, "LISTMONK_PASSWORD");
 
+      const isStaging = app.stage === "staging";
+      const isProd = app.stage === "prod";
+
       const site = new NextjsSite(stack, "site", {
         bind: [
           REVALIDATION_SECRET_KEY,
@@ -30,13 +33,17 @@ export default {
           LISTMONK_USERNAME,
           LISTMONK_PASSWORD,
         ],
-        customDomain:
-          app.stage === "prod"
-            ? {
-                domainName: "properhomes.in",
-                domainAlias: "www.properhomes.in",
-              }
-            : undefined,
+        customDomain: isProd
+          ? {
+              domainName: "properhomes.in",
+              domainAlias: "www.properhomes.in",
+            }
+          : isStaging
+          ? {
+              domainName: "staging.properhomes.in",
+              hostedZone: "properhomes.in",
+            }
+          : undefined,
       });
       stack.addOutputs({
         SiteUrl: site.url,
