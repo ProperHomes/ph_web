@@ -88,7 +88,7 @@ export default async function Page({ params, searchParams }) {
       </Stack>
     );
   } else {
-    return <Home data={data} />;
+    return <Home />;
   }
 }
 

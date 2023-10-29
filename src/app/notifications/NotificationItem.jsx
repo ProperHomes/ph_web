@@ -14,7 +14,6 @@ function NotificationItem({ notification }) {
   const theme = useTheme();
   const { byUser, actionText, createdAt, property } = notification;
 
-  console.log(notification);
   const handleClick = () => {
     if (property?.slug) {
       router.push(`/property/${property.slug}`);

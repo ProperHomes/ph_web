@@ -1,5 +1,6 @@
 "use client";
 import { useCallback } from "react";
+import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -84,6 +85,9 @@ function SearchInput({ showSearchBtn }) {
           hasCityDivider
           hasTypeDivider
           listedForLabel="Sale/Rent"
+          rootSx={{
+            width: { xs: "100%", md: "600px" },
+          }}
           sx={{
             width: { xs: "100px", md: "100%" },
             height: "60px",

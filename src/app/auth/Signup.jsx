@@ -48,7 +48,6 @@ function SignupForm({ control }) {
         name="phoneNumber"
         control={control}
         render={({ field: { onChange, value }, fieldState: { error } }) => {
-          console.log(error, error?.message);
           return (
             <TextField
               fullWidth

@@ -1,5 +1,4 @@
 "use client";
-
 import { ApolloProvider } from "@apollo/client";
 import Box from "@mui/material/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -28,20 +27,18 @@ function Main({ children }) {
 
   return (
     <ThemeRegistry theme={theme} options={{ key: "mui" }}>
-      <NotificationsProvider>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box
-            sx={{
-              backgroundColor: links.includes(pathname)
-                ? theme.palette.background.secondary
-                : theme.palette.background.default,
-              margin: "0 auto",
-            }}
-          >
-            {children}
-          </Box>
-        </LocalizationProvider>
-      </NotificationsProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Box
+          sx={{
+            backgroundColor: links.includes(pathname)
+              ? theme.palette.background.secondary
+              : theme.palette.background.default,
+            margin: "0 auto",
+          }}
+        >
+          {children}
+        </Box>
+      </LocalizationProvider>
     </ThemeRegistry>
   );
 }
@@ -50,7 +47,9 @@ function AppMain({ children }) {
   return (
     <ApolloProvider client={apolloClient}>
       <AppProvider>
-        <Main>{children}</Main>
+        <NotificationsProvider>
+          <Main>{children}</Main>
+        </NotificationsProvider>
       </AppProvider>
     </ApolloProvider>
   );

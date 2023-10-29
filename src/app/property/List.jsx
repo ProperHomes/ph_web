@@ -1,5 +1,5 @@
 "use client";
-import { useState, memo, Suspense, lazy } from "react";
+import { useState, memo } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { styled, useTheme } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
+import dynamic from "next/dynamic";
 
 import Card from "./Card";
 
@@ -18,10 +19,14 @@ import {
 } from "@/utils/helper";
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 
-const CreatePropertySaleRentLease = lazy(() =>
-  import("../list-your-property-for-sale-rent-lease")
+const ListSkeleton = dynamic(() => import("../../components/ListSkeleton"), {
+  ssr: false,
+});
+const CreatePropertySaleRentLease = dynamic(
+  () => import("../list-your-property-for-sale-rent-lease"),
+  { ssr: false }
 );
-const Filters = lazy(() => import("@/components/Filters"));
+const Filters = dynamic(() => import("@/components/Filters"), { ssr: false });
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -50,6 +55,7 @@ function PropertyList({
   showFilters,
   onCloseEditor,
   searchParams = {},
+  showSkeleton,
 }) {
   const theme = useTheme();
   const [properties, setProperties] = useState([]);
@@ -158,44 +164,43 @@ function PropertyList({
           {pageTitle}
         </Typography>
 
-        <Suspense fallback={<></>}>
-          {showFilters && (
-            <Box
-              sx={{
-                display: "flex",
-                flexFlow: "row wrap",
-                [theme.breakpoints.down("md")]: {
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr 1fr",
-                    md: "repeat(6, 1fr)",
-                  },
+        {showFilters && (
+          <Box
+            sx={{
+              display: "flex",
+              flexFlow: "row wrap",
+              [theme.breakpoints.down("md")]: {
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr 1fr",
+                  md: "repeat(6, 1fr)",
                 },
-                gap: "1em",
-                width: { xs: "100%", md: "auto" },
+              },
+              gap: "1em",
+              width: { xs: "100%", md: "auto" },
+            }}
+          >
+            <Filters
+              typeLabel="Property Type"
+              hideCity={!!cityProp}
+              hideType={!!typeProp}
+              hideListedFor={!!listedForProp}
+              onChangeCity={onChangeFilters}
+              onChangeBedrooms={onChangeFilters}
+              onChangeListedFor={onChangeFilters}
+              onChangePriceSort={onChangeFilters}
+              onChangePropertyType={onChangeFilters}
+              onReset={onChangeFilters}
+              sx={{
+                "& fieldset": {
+                  borderRadius: "8px",
+                  borderColor: "#00000020",
+                },
               }}
-            >
-              <Filters
-                typeLabel="Property Type"
-                hideCity={!!cityProp}
-                hideType={!!typeProp}
-                hideListedFor={!!listedForProp}
-                onChangeCity={onChangeFilters}
-                onChangeBedrooms={onChangeFilters}
-                onChangeListedFor={onChangeFilters}
-                onChangePriceSort={onChangeFilters}
-                onChangePropertyType={onChangeFilters}
-                onReset={onChangeFilters}
-                sx={{
-                  "& fieldset": {
-                    borderRadius: "8px",
-                    borderColor: "#00000020",
-                  },
-                }}
-              />
-            </Box>
-          )}
-        </Suspense>
+            />
+          </Box>
+        )}
+
         {viewMoreLink && (
           <Button
             aria-label="view all"
@@ -213,7 +218,9 @@ function PropertyList({
         )}
       </Stack>
 
-      {!infiniteScroll && !isSearch && !propertyIdToEdit && (
+      {showSkeleton && <ListSkeleton n={10} />}
+
+      {!infiniteScroll && !isSearch && !propertyIdToEdit && !showSkeleton && (
         <Section>
           {data.map((l, i) => {
             return (
@@ -232,7 +239,7 @@ function PropertyList({
         </Section>
       )}
 
-      {infiniteScroll && !propertyIdToEdit && (
+      {infiniteScroll && !propertyIdToEdit && !showSkeleton && (
         <InfiniteScroll
           dataLength={listToShow.length}
           next={handleLoadNext}
@@ -259,15 +266,13 @@ function PropertyList({
         </InfiniteScroll>
       )}
 
-      <Suspense fallback={<></>}>
-        {!!propertyIdToEdit && (
-          <CreatePropertySaleRentLease
-            data={propertyToEdit}
-            handleCancel={toggleEditor()}
-          />
-        )}
-        {Auth}
-      </Suspense>
+      {!!propertyIdToEdit && (
+        <CreatePropertySaleRentLease
+          data={propertyToEdit}
+          handleCancel={toggleEditor()}
+        />
+      )}
+      {Auth}
     </Stack>
   );
 }

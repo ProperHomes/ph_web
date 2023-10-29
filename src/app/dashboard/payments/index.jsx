@@ -46,8 +46,6 @@ export default function PropertyPayments({ propertyId, userId, paymentFor }) {
     setPage(page);
   };
 
-  console.log(data);
-
   return (
     <Stack p={4}>
       {payments.length > 0 && (

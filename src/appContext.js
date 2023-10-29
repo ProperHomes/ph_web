@@ -122,7 +122,6 @@ function AppProvider({ children }) {
           handleFetchUser(userId);
         }
       } catch (err) {
-        console.log(err);
         dispatch({
           type: appActionTypes.UPDATE_LOGGED_IN_USER,
           user: null,

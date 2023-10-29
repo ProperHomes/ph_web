@@ -6,6 +6,7 @@
     "dev": "AWS_PROFILE=properhomes_admin_veera sst bind next dev",
     "deploy:prod": "AWS_PROFILE=properhomes_admin_veera npx sst deploy --stage=prod",
     "build": "sst bind next build",
+    "build:analyze": "ANALYZE=true AWS_PROFILE=properhomes_admin_veera sst bind next build",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
@@ -20,7 +21,6 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.3",
-    "@mui/lab": "^5.0.0-alpha.138",
     "@mui/material": "^5.14.3",
     "@mui/x-date-pickers": "^6.10.1",
     "apollo-upload-client": "^17.0.0",
@@ -35,30 +35,23 @@
     "next": "^13.5.2",
     "next-pwa": "^5.6.0",
     "next-sitemap": "^4.2.3",
-    "nextjs-toploader": "^1.4.2",
-    "prop-types": "^15.8.1",
+    "nextjs-toploader": "^1.5.3",
     "react": "18.2.0",
     "react-csv-importer": "^0.8.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
-    "react-image-gallery": "^1.2.12",
     "react-infinite-scroll-component": "^6.1.0",
     "react-intl": "^6.4.4",
-    "react-pdf": "^7.2.0",
     "react-share": "^4.4.1",
     "react-sticky-box": "^2.0.4",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
-    "server-only": "^0.0.1",
     "yup": "^1.2.0",
     "yup-password": "^0.2.2",
     "yup-phone-lite": "^2.0.1"
   },
   "devDependencies": {
-    "aws-cdk-lib": "2.84.0",
-    "constructs": "^10.2.70",
     "encoding": "^0.1.13",
-    "mini-css-extract-plugin": "^2.7.6",
     "sst": "2.26.10"
   }
 }
