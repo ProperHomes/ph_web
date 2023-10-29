@@ -66,7 +66,6 @@ function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="robots" content="noindex, nofollow" />
         <meta name="application-name" content="ProperHomes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
