@@ -56,7 +56,13 @@ const otherLinks = [
   "/search",
 ];
 
-module.exports = {
+const devConfig = {
+  siteUrl: "https://staging.properhomes.in",
+  generateIndexSitemap: false,
+  exclude: ["/*", "/property/*"],
+};
+
+const prodConfig = {
   siteUrl: "https://properhomes.in",
   generateRobotsTxt: true,
   generateIndexSitemap: true,
@@ -98,3 +104,8 @@ module.exports = {
   },
   // ...other options
 };
+
+const sitemapConfig =
+  process.env.NODE_ENV === "development" ? devConfig : prodConfig;
+
+module.exports = sitemapConfig;
