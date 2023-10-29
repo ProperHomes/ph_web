@@ -153,6 +153,9 @@ export default function Footer() {
           <Tabs
             value={index}
             onChange={handleChange}
+            variant="scrollable"
+            scrollButtons
+            allowScrollButtonsMobile
             aria-label="footer city tabs"
           >
             {tabSections.map(({ label }) => {

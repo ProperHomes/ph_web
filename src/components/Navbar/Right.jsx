@@ -9,6 +9,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
@@ -16,7 +17,6 @@ import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
 import Notifications from "src/app/notifications";
 import { useNotificationsContext } from "src/app/notifications/context";
-import { Badge } from "@mui/material";
 
 function NavbarRight() {
   const pathname = usePathname();

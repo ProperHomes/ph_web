@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Zoom from "@mui/material/Zoom";
+import Grow from "@mui/material/Grow";
 import Stack from "@mui/material/Stack";
 import useTheme from "@mui/material/styles/useTheme";
 import Divider from "@mui/material/Divider";
@@ -15,12 +15,12 @@ const links = [
     showDropdownMenu: true,
   },
   {
-    title: "Manage Rentals",
-    path: "/property-rental-management-for-owners-managers",
-  },
-  {
     title: "List your Property",
     path: "/list-your-property-for-sale-rent-lease",
+  },
+  {
+    title: "Manage Rentals",
+    path: "/property-rental-management-for-owners-managers",
   },
 ];
 
@@ -42,6 +42,7 @@ const tooltipLinks = [
 
 function NavLinks() {
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   return (
     <Stack
       ml={4}
@@ -57,10 +58,9 @@ function NavLinks() {
         if (showDropdownMenu) {
           return (
             <Tooltip
-              arrow
               key={path}
               disableFocusListener
-              TransitionComponent={Zoom}
+              TransitionComponent={Grow}
               TransitionProps={{ timeout: 250 }}
               title={
                 <Stack
@@ -80,7 +80,11 @@ function NavLinks() {
                         style={{ position: "relative", width: "fit-content" }}
                       >
                         <Typography
-                          sx={{ "&:hover": { color: theme.palette.info.main } }}
+                          sx={{
+                            color: theme.palette.text.primary,
+                            fontWeight: 600,
+                            "&:hover": { color: theme.palette.info.main },
+                          }}
                         >
                           {l.title}
                         </Typography>
@@ -90,14 +94,12 @@ function NavLinks() {
                 </Stack>
               }
               componentsProps={{
-                arrow: {
-                  sx: {
-                    color: theme.palette.common.black,
-                  },
-                },
                 tooltip: {
                   sx: {
-                    backgroundColor: theme.palette.common.black,
+                    backgroundColor: isDarkMode
+                      ? theme.palette.common.black
+                      : theme.palette.common.white,
+                    boxShadow: theme.shadows[2],
                   },
                 },
               }}
