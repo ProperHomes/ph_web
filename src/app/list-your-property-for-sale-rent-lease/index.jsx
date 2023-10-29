@@ -47,17 +47,27 @@ const propertyResolver = {
   price: yup.string().required(),
   bedrooms: yup.number().required().moreThan(0),
   bathrooms: yup.number().required().moreThan(0),
-  area: yup.number().required("Size of the property must be specified"),
+  area: yup
+    .number()
+    .positive()
+    .required("Size of the property must be specified"),
   areaUnit: yup.string().required().oneOf(AREA_UNITS),
   description: yup.string().required(),
   city: yup.string().oneOf(ALL_CITIES).required(),
+  facing: yup.string().oneOf(Object.keys(PROPERTY_FACING)),
   pincode: yup
     .number()
-    .required("Must be only digits")
-    .test("len", "Must be exactly 6 characters", (val) => val.length === 6),
+    .positive()
+    .required()
+    .test(
+      "len",
+      "Must be exactly 6 characters",
+      (val) => val.toString().length === 6
+    ),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
   isFurnished: yup.string().required(),
   hasParking: yup.string().required(),
+  underConstruction: yup.string().required(),
   media: yup
     .array()
     .min(5, "atleast fives images are required")
@@ -195,6 +205,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
         "ownerId",
         "tenantId",
         "createdAt",
+        "underConstruction",
       ];
       for (let key in data) {
         if (!keysNotNeeded.includes(key)) {
@@ -235,6 +246,10 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
     try {
       const dataNew = { ...data };
       delete dataNew.media;
+      if (data.underConstruction) {
+        dataNew.status = PROPERTY_STATUS.UNDER_CONSTRUCTION;
+      }
+      delete dataNew.underConstruction;
       const slug = `${convertStringToSlug(data.title)}-${loggedInUser?.number}`;
       const res = await createProperty({
         variables: {
@@ -455,7 +470,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                     variant="outlined"
                     placeholder="Eg: 500123"
                     type="number"
-                    value={value ?? ""}
+                    value={value ? Number(value) : ""}
                     onChange={onChange}
                     error={!!error?.message}
                   />
@@ -610,9 +625,9 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
 
           <StyledGrid>
             <Stack>
-              <Label>Facing *</Label>
+              <Label>Facing</Label>
               <Controller
-                name="listedFor"
+                name="facing"
                 control={control}
                 render={({
                   field: { onChange, value },
@@ -633,14 +648,14 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                     <MenuItem value="" disabled>
                       Select one from below
                     </MenuItem>
-                    {Object.keys(PROPERTY_FACING).map((listingFor) => {
+                    {Object.keys(PROPERTY_FACING).map((f) => {
                       return (
                         <MenuItem
-                          key={listingFor}
-                          value={listingFor}
+                          key={f}
+                          value={f}
                           style={{ fontWeight: 500, fontSize: "0.8rem" }}
                         >
-                          {listingFor}
+                          {f}
                         </MenuItem>
                       );
                     })}
@@ -684,6 +699,26 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                 />
               }
               label="Has Parking"
+            />
+
+            <FormControlLabel
+              sx={{ "& span": { fontSize: "1rem" } }}
+              control={
+                <Controller
+                  name="underConstruction"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <Checkbox
+                      checked={value}
+                      onChange={onChange}
+                      sx={{
+                        "& .MuiSvgIcon-root": { fontSize: 30 },
+                      }}
+                    />
+                  )}
+                />
+              }
+              label="Under Construction"
             />
           </StyledGrid>
 

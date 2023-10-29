@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -58,7 +57,6 @@ const subLinks = [
 ];
 
 export default function Footer() {
-  const pathname = usePathname();
   const theme = useTheme();
   const isDark = theme.palette.mode == "dark";
   const [index, setIndex] = useState(0);
@@ -69,10 +67,10 @@ export default function Footer() {
   const city = ALL_CITIES[index];
 
   const allNavLinks = [
-    { link: "paying-guests-accommodation", title: "Paying Guest" },
-    { link: "hostel-accommodation", title: "Hostels" },
     ...navlinksSale,
     ...navlinksRent,
+    { link: "paying-guests-accommodation", title: "Paying Guest" },
+    { link: "hostel-accommodation", title: "Hostels" },
   ];
 
   return (
