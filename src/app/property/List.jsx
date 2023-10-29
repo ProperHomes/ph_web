@@ -12,7 +12,10 @@ import Card from "./Card";
 
 import useToggleAuth from "src/hooks/useToggleAuth";
 import usePagination from "src/hooks/usePagination";
-import { removeDuplicateObjectsFromArray } from "@/utils/helper";
+import {
+  capitalizeFirstLetter,
+  removeDuplicateObjectsFromArray,
+} from "@/utils/helper";
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 
 const CreatePropertySaleRentLease = lazy(() =>
@@ -132,6 +135,10 @@ function PropertyList({
 
   const hasMore = paginationObj.pageInfo?.hasNextPage;
 
+  const pageTitle = city
+    ? `${title} in ${capitalizeFirstLetter(city)}`
+    : title ?? "";
+
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
       <Stack
@@ -143,12 +150,12 @@ function PropertyList({
         <Typography
           gutterBottom
           fontWeight={600}
-          variant="h3"
+          variant="h1"
           textAlign="left"
           color={theme.palette.text.primary}
           fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
         >
-          {title ?? ""}
+          {pageTitle}
         </Typography>
 
         <Suspense fallback={<></>}>

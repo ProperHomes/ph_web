@@ -28,7 +28,6 @@ import MediaBlocks from "./MediaBlocks";
 import {
   ALL_CITIES,
   AREA_UNITS,
-  LISTING_STATUS,
   LISTING_TYPE,
   PROPERTY_FACING,
   PROPERTY_STATUS,
@@ -44,14 +43,14 @@ import Loading from "@/components/Loading";
 const propertyResolver = {
   type: yup.string().oneOf(Object.keys(PROPERTY_TYPE)).required(),
   title: yup.string().required(),
-  price: yup.string().required(),
+  price: yup.number().required(),
   bedrooms: yup.number().required().moreThan(0),
   bathrooms: yup.number().required().moreThan(0),
   area: yup
     .number()
     .positive()
     .required("Size of the property must be specified"),
-  areaUnit: yup.string().required().oneOf(AREA_UNITS),
+  areaUnit: yup.string().required().oneOf(Object.keys(AREA_UNITS)),
   description: yup.string().required(),
   city: yup.string().oneOf(ALL_CITIES).required(),
   facing: yup.string().oneOf(Object.keys(PROPERTY_FACING)),
@@ -247,7 +246,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
       const dataNew = { ...data };
       delete dataNew.media;
       if (data.underConstruction) {
-        dataNew.status = PROPERTY_STATUS.UNDER_CONSTRUCTION;
+        dataNew.status = "UNDER_CONSTRUCTION";
       }
       delete dataNew.underConstruction;
       const slug = `${convertStringToSlug(data.title)}-${loggedInUser?.number}`;
@@ -281,7 +280,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
   };
 
   const handleSubmitForReview = (data) => {
-    handleCreateProperty({ ...data, listingStatus: LISTING_STATUS.IN_REVIEW });
+    handleCreateProperty({ ...data, listingStatus: "IN_REVIEW" });
   };
 
   const onSubmitDraft = async () => {
@@ -554,17 +553,17 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                                 <MenuItem value="" disabled>
                                   Select one from below
                                 </MenuItem>
-                                {AREA_UNITS.map((listingFor) => {
+                                {Object.keys(AREA_UNITS).map((u) => {
                                   return (
                                     <MenuItem
-                                      key={listingFor}
-                                      value={listingFor}
+                                      key={u}
+                                      value={u}
                                       style={{
                                         fontWeight: 500,
                                         fontSize: "0.8rem",
                                       }}
                                     >
-                                      {listingFor}
+                                      {AREA_UNITS[u]}
                                     </MenuItem>
                                   );
                                 })}

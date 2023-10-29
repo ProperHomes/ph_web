@@ -10,7 +10,7 @@ import { Content } from "./styles";
 import Sidebar from "./sidebar/index";
 import PropertyImages from "./Images";
 import Breadcrumbs from "src/components/Breadcrumbs";
-import { LISTING_TYPE } from "@/utils/constants";
+import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
 
 const SimilarProperties = lazy(() => import("./SimilarProperties"));
 
@@ -83,7 +83,7 @@ function PropertyProfile({ data, similarProperties }) {
       label: bathrooms?.length === 1 ? "Bathroom" : "Bathrooms",
       value: bathrooms,
     },
-    { label: "Area", value: `${area} ${areaUnit}` },
+    { label: "Area", value: `${area} ${AREA_UNITS[areaUnit]}` },
     { label: "Facing", value: facing },
     { label: isFurnished ? "Furnished" : "Not Furnished", value: "" },
     {

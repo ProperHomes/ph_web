@@ -1,7 +1,7 @@
 import PropertyList from "../property/List";
 
 export default function Page({ searchParams }) {
-  const title = `Properties Returned`;
+  const title = `Search Properties`;
   return (
     <PropertyList
       showFilters

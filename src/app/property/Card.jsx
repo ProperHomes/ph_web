@@ -13,7 +13,7 @@ import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
+import { AREA_UNITS, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
 import { useAppContext } from "src/appContext";
 import CardOptionsTooltip from "./CardOptions";
 import useToggleFavoriteProperty from "src/hooks/useToggleFavoriteProperty";
@@ -313,7 +313,7 @@ function PropertyCard({
           </Typography>
         </Stack>
         <Typography fontWeight={500} fontSize="0.9rem" color="primary.main">
-          {area} {areaUnit.toLowerCase()}
+          {area} {AREA_UNITS[areaUnit]}
         </Typography>
       </Link>
     </Stack>

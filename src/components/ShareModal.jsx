@@ -100,6 +100,7 @@ export default function ShareModal({
             direction={{ xs: "column", md: "row" }}
             spacing={1}
             alignItems="center"
+            maxWidth="100%"
           >
             <Typography ml={4} noWrap maxWidth="80%">
               {window.location.href}

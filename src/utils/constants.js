@@ -56,15 +56,15 @@ export const PROPERTY_FACING = {
   SOUTH: "SOUTH",
 };
 
-export const AREA_UNITS = [
-  "cents",
-  "sq.ft",
-  "sq.mt",
-  "sq.yards",
-  "acres",
-  "hectares",
-  "guntha",
-];
+export const AREA_UNITS = {
+  CENT: "cents",
+  "SQ_FT": "sq.ft",
+  "SQ_MT": "sq.mt",
+  "SQ_YARD": "sq.yard",
+  ACRE: "acres",
+  HECTARE: "hectares",
+  GUNTHA: "guntha",
+};
 
 export const ALL_CITIES = [
   "BANGALORE",
