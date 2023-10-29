@@ -40,7 +40,6 @@ jobs:
         if: ${{ env.BRANCH_NAME == 'main' }}
         run: |
           touch .env.local
-          echo NODE_ENV=production >> .env.local
           echo NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} >> .env.local
           echo NEXT_PUBLIC_GRAPHQL_API=${{ secrets.NEXT_PUBLIC_GRAPHQL_API }} >> .env.local
           echo NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS=${{ secrets.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS }} >> .env.local
@@ -50,7 +49,6 @@ jobs:
         if: ${{ env.BRANCH_NAME != 'main' }}
         run: |
           touch .env.local
-          echo NODE_ENV=development >> .env.local
           echo NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_DEV }} >> .env.local
           echo NEXT_PUBLIC_GRAPHQL_API=${{ secrets.NEXT_PUBLIC_GRAPHQL_API_DEV }} >> .env.local
           echo NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS=${{ secrets.NEXT_PUBLIC_GRAPHQL_SUBSCRIPTIONS_DEV }} >> .env.local

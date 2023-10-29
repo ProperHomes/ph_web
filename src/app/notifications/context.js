@@ -74,7 +74,6 @@ function NotificationsProvider({ children }) {
     skip: !appState.user?.id,
   });
 
-  console.log(notifData);
   useEffect(() => {
     const allNotifs = notifData?.notifications?.nodes ?? [];
     const totalCount = notifData?.notifications?.totalCount ?? 0;
