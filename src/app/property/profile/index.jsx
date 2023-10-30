@@ -109,7 +109,7 @@ function PropertyProfile({ data, similarProperties }) {
           >
             <Typography
               variant="h1"
-              fontSize={{ xs: "1.4rem !important", md: "2.5rem !important" }}
+              fontSize={{ xs: "1.4rem !important", md: "2.2rem !important" }}
               fontWeight={600}
               textTransform="capitalize"
             >

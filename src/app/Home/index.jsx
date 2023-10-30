@@ -36,9 +36,8 @@ export default function Home() {
             Find a home that{" "}
             <span
               style={{
-                fontWeight: "700",
-                fontStyle: "italic",
-                fontFamily: theme.typography.fontFamily.Raleway,
+                fontSize: "2.5rem",
+                fontFamily: theme.typography.fontFamily.Damion,
                 color: theme.palette.info.main,
               }}
             >

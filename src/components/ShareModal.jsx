@@ -21,7 +21,7 @@ import {
   LinkedinIcon,
   FacebookShareButton,
   FacebookIcon,
-} from "react-share";
+} from "next-share";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import useToast from "src/hooks/useToast";

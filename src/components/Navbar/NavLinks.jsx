@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Chip from "@mui/material/Chip";
 import Grow from "@mui/material/Grow";
 import Stack from "@mui/material/Stack";
 import useTheme from "@mui/material/styles/useTheme";
@@ -17,6 +18,7 @@ const links = [
   {
     title: "List your Property",
     path: "/list-your-property-for-sale-rent-lease",
+    isListingLink: true,
   },
   {
     title: "Manage Rentals",
@@ -54,7 +56,7 @@ function NavLinks() {
       spacing={3}
       alignItems="center"
     >
-      {links.map(({ title, path, showDropdownMenu }) => {
+      {links.map(({ title, path, showDropdownMenu, isListingLink }) => {
         if (showDropdownMenu) {
           return (
             <Tooltip
@@ -125,6 +127,14 @@ function NavLinks() {
             >
               {title}
             </TypographyUnderline>
+            {isListingLink && (
+              <Chip
+                size="small"
+                label="Free"
+                color="info"
+                sx={{ position: "absolute", top: 20, right: -10 }}
+              />
+            )}
           </Link>
         );
       })}

@@ -295,8 +295,9 @@ function PropertyCard({
             whiteSpace: "nowrap",
           }}
         >
-          {PROPERTY_TYPE[type]?.toLowerCase()} for {listedFor?.toLowerCase()} in{" "}
-          {city.toLowerCase()}
+          {PROPERTY_TYPE[type]?.toLowerCase()}{" "}
+          {PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""} for{" "}
+          {listedFor?.toLowerCase()} in {city.toLowerCase()}
         </Typography>
         <Stack
           direction="row"

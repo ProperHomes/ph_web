@@ -17,6 +17,7 @@ import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
 import Notifications from "src/app/notifications";
 import { useNotificationsContext } from "src/app/notifications/context";
+import useToggleAuth from "src/hooks/useToggleAuth";
 
 function NavbarRight() {
   const pathname = usePathname();
@@ -26,6 +27,7 @@ function NavbarRight() {
   const loggedInUser = appState.user;
   const [showDrawer, setShowDrawer] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const { toggleAuth, Auth } = useToggleAuth();
 
   const { state: notifState } = useNotificationsContext();
 
@@ -41,6 +43,15 @@ function NavbarRight() {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
+      {!loggedInUser && (
+        <Button
+          size="large"
+          aria-label="login or signup button"
+          onClick={toggleAuth}
+        >
+          Login / Signup
+        </Button>
+      )}
       {!!loggedInUser && !isDashboard && !isMobile && (
         <Button
           size="large"
@@ -100,6 +111,7 @@ function NavbarRight() {
       </Button>
       <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
       <Notifications open={showNotifications} toggle={toggleNotifications} />
+      {Auth}
     </Stack>
   );
 }

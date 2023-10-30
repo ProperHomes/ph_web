@@ -40,6 +40,7 @@ export const PROPERTY_STATUS = {
   SOLD: "SOLD",
   RENTED: "RENTED",
   LEASED: "LEASED",
+  READY_TO_MOVE: "READY_TO_MOVE",
 };
 
 export const LISTING_STATUS = {
@@ -58,9 +59,9 @@ export const PROPERTY_FACING = {
 
 export const AREA_UNITS = {
   CENT: "cents",
-  "SQ_FT": "sq.ft",
-  "SQ_MT": "sq.mt",
-  "SQ_YARD": "sq.yard",
+  SQ_FT: "sq.ft",
+  SQ_MT: "sq.mt",
+  SQ_YARD: "sq.yard",
   ACRE: "acres",
   HECTARE: "hectares",
   GUNTHA: "guntha",

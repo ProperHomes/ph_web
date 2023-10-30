@@ -13,23 +13,23 @@ import CabinOutlined from "@mui/icons-material/CabinOutlined";
 
 const forSaleLinks = [
   {
-    label: "Flats For Sale",
+    label: "Flats for Sale",
     link: "/flats-for-sale",
     Icon: LocationCityOutlined,
   },
-  { label: "Villas For Sale", link: "/villas-for-sale", Icon: Villa },
+  { label: "Villas for Sale", link: "/villas-for-sale", Icon: Villa },
   {
-    label: "Houses For Sale",
+    label: "Houses for Sale",
     link: "/houses-for-sale",
     Icon: HouseOutlined,
   },
   {
-    label: "FarmHouses For Sale",
+    label: "Farm Houses for Sale",
     link: "/farm-houses-for-sale",
     Icon: CabinOutlined,
   },
   {
-    label: "Commercial For Sale",
+    label: "Commercial units for Sale",
     link: "/commercial-properties-for-sale",
     Icon: WarehouseOutlined,
   },
@@ -37,29 +37,29 @@ const forSaleLinks = [
 
 const forRentlinks = [
   {
-    label: "Paying Guests (PG)",
-    link: "/paying-guests-accommodation",
-    Icon: CabinOutlined,
-  },
-  {
-    label: "Flats For Rent",
+    label: "Flats for Rent",
     link: "/flats-for-rent",
     Icon: LocationCityOutlined,
   },
-  { label: "Villas For Rent", link: "/villas-for-rent", Icon: Villa },
+  { label: "Villas for Rent", link: "/villas-for-rent", Icon: Villa },
   {
-    label: "Houses For Rent",
+    label: "Houses for Rent",
     link: "/houses-for-rent",
     Icon: HouseOutlined,
   },
   {
-    label: "Commercial For Rent",
+    label: "Commercial units for Rent",
     link: "/commercial-properties-for-rent",
     Icon: WarehouseOutlined,
   },
+  {
+    label: "Paying Guests (PG)",
+    link: "/paying-guests-accommodation",
+    Icon: CabinOutlined,
+  },
 ];
 
-const allLinks = [...forRentlinks, ...forSaleLinks];
+const allLinks = [...forSaleLinks, ...forRentlinks];
 
 function CategoryBoxes() {
   const theme = useTheme();
@@ -83,10 +83,10 @@ function CategoryBoxes() {
               direction="column"
               alignItems="center"
               justifyContent="center"
-              boxShadow={theme.shadows[2]}
+              boxShadow={theme.shadows[1]}
               p={1}
               sx={{
-                width: { xs: "100%", md: "100px" },
+                width: { xs: "100%", md: "110px" },
                 height: "100%",
                 border: isActive
                   ? `2px solid ${theme.palette.info.main}`
@@ -95,7 +95,7 @@ function CategoryBoxes() {
                 transition: "0.3s ease",
                 backgroundColor: isDarkMode ? "#000" : "#fff",
                 "&: hover": {
-                  boxShadow: theme.shadows[4],
+                  boxShadow: theme.shadows[3],
                   "& svg": {
                     color: theme.palette.info.main,
                   },
@@ -115,8 +115,8 @@ function CategoryBoxes() {
               <Typography
                 textAlign="center"
                 color={theme.palette.text[isActive ? "primary" : "secondary"]}
-                fontSize="0.8rem"
-                fontWeight={isActive ? 800 : 700}
+                fontSize="0.9rem"
+                fontWeight={isActive ? 800 : 500}
                 sx={{
                   transition: "all 0.3s ease",
                   color: isActive
