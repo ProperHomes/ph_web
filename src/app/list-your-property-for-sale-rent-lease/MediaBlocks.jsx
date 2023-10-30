@@ -8,7 +8,7 @@ import Close from "@mui/icons-material/Close";
 const Container = styled(Box)(({ theme }) => ({
   display: "grid",
   gap: "1em",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateColumns: "repeat(3, 1fr)",
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
   },

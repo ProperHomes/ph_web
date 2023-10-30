@@ -27,9 +27,7 @@ export default function Home() {
       },
     }
   );
-
   const list = data?.properties?.edges?.map((edge) => edge.node) ?? [];
-
   return (
     <>
       <Stack spacing={4} py={4} alignItems="center">

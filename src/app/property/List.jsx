@@ -203,7 +203,7 @@ function PropertyList({
 
         {viewMoreLink && (
           <Button
-            aria-label="view all"
+            aria-label="view more button"
             variant="contained"
             LinkComponent={Link}
             href={viewMoreLink}

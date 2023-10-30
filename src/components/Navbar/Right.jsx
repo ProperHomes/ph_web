@@ -42,7 +42,12 @@ function NavbarRight() {
   return (
     <Stack direction="row" spacing={2} alignItems="center">
       {!!loggedInUser && !isDashboard && !isMobile && (
-        <Button size="large" LinkComponent={Link} href="/dashboard">
+        <Button
+          size="large"
+          LinkComponent={Link}
+          href="/dashboard"
+          aria-label="dashboard link"
+        >
           Dashboard
         </Button>
       )}
@@ -56,6 +61,7 @@ function NavbarRight() {
       <Button
         component="div"
         size="large"
+        aria-label="navbar user menu button"
         sx={{
           maxWidth: { xs: "150px", sm: "100%" },
           marginLeft: "auto",
