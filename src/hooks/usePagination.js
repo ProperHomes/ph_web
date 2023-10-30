@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, memo } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 
 function usePagination({

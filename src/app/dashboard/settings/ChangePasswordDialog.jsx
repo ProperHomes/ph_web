@@ -39,7 +39,7 @@ const changePasswordFormFields = [
 const verifyPhoneNumberSchema = {
   phoneNumber: yup
     .string()
-    .phone("IN", "Must be a valid phone number")
+    .phone("IN", "Must be a valid mobile number")
     .required("Phone number is required"),
 };
 

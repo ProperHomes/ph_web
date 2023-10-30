@@ -1,10 +1,12 @@
-import { Suspense, lazy } from "react";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import dynamic from "next/dynamic";
+import Box from "@mui/material/Box";
 import NextTopLoader from "nextjs-toploader";
 import { Manrope } from "next/font/google";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+
+const Navbar = dynamic(() => import("../components/Navbar"));
+const BottomNavbar = dynamic(() => import("../components/BottomNavbar"));
+const Footer = dynamic(() => import("../components/Footer"));
 
 export const metadata = {
   title: "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
@@ -49,8 +51,6 @@ import AppMain from "./appMain";
 
 import "../styles/globals.css";
 
-dayjs.extend(relativeTime);
-
 export const manRope = Manrope({
   weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
@@ -58,15 +58,10 @@ export const manRope = Manrope({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
-const Navbar = lazy(() => import("@/components/Navbar"));
-const BottomNavbar = lazy(() => import("@/components/BottomNavbar"));
-const Footer = lazy(() => import("@/components/Footer"));
-
 function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="robots" content="noindex, nofollow" />
         <meta name="application-name" content="ProperHomes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -117,22 +112,20 @@ function RootLayout({ children }) {
               marginBottom: { xs: "4em", md: 0 },
             }}
           >
-            <Suspense fallback={<></>}>
-              <Navbar />
-              <Container
-                maxWidth="xl"
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  paddingTop: "1em",
-                  paddingBottom: "2em",
-                }}
-              >
-                {children}
-              </Container>
-              <Footer />
-              <BottomNavbar />
-            </Suspense>
+            <Navbar />
+            <Container
+              maxWidth="xl"
+              sx={{
+                width: "100%",
+                height: "100%",
+                paddingTop: "1em",
+                paddingBottom: "2em",
+              }}
+            >
+              {children}
+            </Container>
+            <Footer />
+            <BottomNavbar />
           </Box>
         </AppMain>
       </body>

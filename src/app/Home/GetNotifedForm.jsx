@@ -29,7 +29,7 @@ function GetNotifiedFormModal({ open, handleClose }) {
       yup.object().shape({
         name: yup.string().required("Name is required"),
         email: yup.string().email().required("Email is required"),
-        phoneNumber: yup.string().phone("IN", "Must be a valid phone number"),
+        phoneNumber: yup.string().phone("IN", "Must be a valid mobile number"),
       })
     ),
   });
