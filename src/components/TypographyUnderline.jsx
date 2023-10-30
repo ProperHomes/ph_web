@@ -16,7 +16,7 @@ export default function TypographyUnderline({
       fontSize={fontSize ?? theme.spacing(2)}
       color={color ?? theme.palette.text.secondary}
       sx={{
-        transition: "all 0.3s ease",
+        transition: "all 0.5s ease",
         "&::after": {
           content: '""',
           position: "absolute",
@@ -27,7 +27,7 @@ export default function TypographyUnderline({
           left: 0,
           backgroundColor: theme.palette.info.main,
           transformOrigin: "bottom right",
-          transition: "transform 0.25s ease-out",
+          transition: "transform 0.5s ease-out",
         },
         "&:hover": {
           color: theme.palette.text.primary,

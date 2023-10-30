@@ -3,6 +3,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
@@ -16,7 +17,6 @@ import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
 import Notifications from "src/app/notifications";
 import { useNotificationsContext } from "src/app/notifications/context";
-import { Badge } from "@mui/material";
 
 function NavbarRight() {
   const pathname = usePathname();

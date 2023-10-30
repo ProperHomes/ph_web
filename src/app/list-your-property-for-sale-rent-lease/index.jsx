@@ -64,9 +64,9 @@ const propertyResolver = {
       (val) => val.toString().length === 6
     ),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
-  isFurnished: yup.string().required(),
-  hasParking: yup.string().required(),
-  underConstruction: yup.string().required(),
+  isFurnished: yup.string(),
+  hasParking: yup.string(),
+  underConstruction: yup.string(),
   media: yup
     .array()
     .min(5, "atleast fives images are required")
