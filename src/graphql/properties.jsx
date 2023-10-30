@@ -27,6 +27,7 @@ export const PROPERTY_FIELDS = gql`
     ownerId
     tenantId
     status
+    facing
     media: propertyMedias {
       nodes {
         id

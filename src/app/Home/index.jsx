@@ -27,9 +27,7 @@ export default function Home() {
       },
     }
   );
-
   const list = data?.properties?.edges?.map((edge) => edge.node) ?? [];
-
   return (
     <>
       <Stack spacing={4} py={4} alignItems="center">
@@ -38,9 +36,8 @@ export default function Home() {
             Find a home that{" "}
             <span
               style={{
-                fontWeight: "700",
-                fontStyle: "italic",
-                fontFamily: theme.typography.fontFamily.Raleway,
+                fontSize: "2.5rem",
+                fontFamily: theme.typography.fontFamily.Damion,
                 color: theme.palette.info.main,
               }}
             >

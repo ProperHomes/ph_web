@@ -116,6 +116,7 @@ export default function Filters({
     return (
       <Select
         displayEmpty
+        aria-label="sort by price dropdown"
         renderValue={(selected) => {
           if (!selected) {
             return <Typography>Sort By Price</Typography>;
@@ -145,6 +146,7 @@ export default function Filters({
             <MenuItem
               key={o.label}
               value={o.sort}
+              aria-label="sort by price menu item"
               style={{ fontWeight: 500, fontSize: "0.8rem" }}
             >
               {o.label}
@@ -159,6 +161,7 @@ export default function Filters({
     return (
       <Select
         displayEmpty
+        aria-label="select city dropdown"
         renderValue={(selected) => {
           if (!selected) {
             return <Typography>{isMobile ? "City" : "Select City"}</Typography>;
@@ -189,6 +192,7 @@ export default function Filters({
             <MenuItem
               key={city}
               value={city}
+              aria-label="select city dropdown menu item"
               style={{ fontWeight: 500, fontSize: "0.8rem" }}
             >
               {city}
@@ -203,6 +207,7 @@ export default function Filters({
     return (
       <Select
         displayEmpty
+        aria-label="select property type dropdown"
         renderValue={(selected) => {
           if (!selected) {
             return (
@@ -237,6 +242,7 @@ export default function Filters({
             <MenuItem
               key={t}
               value={t}
+              aria-label="select property type dropdown menu item"
               style={{ fontWeight: 500, fontSize: "0.8rem" }}
             >
               {PROPERTY_TYPE[t]}
@@ -251,6 +257,7 @@ export default function Filters({
     return (
       <Select
         displayEmpty
+        aria-label="select bedrooms dropdown"
         renderValue={(selected) => {
           if (!selected) {
             return <Typography>{isMobile ? "BHK" : "Select BHK"}</Typography>;
@@ -280,6 +287,7 @@ export default function Filters({
             <MenuItem
               key={l.label}
               value={l.value}
+              aria-label="select bbedrooms menu item"
               style={{ fontWeight: 500, fontSize: "0.8rem" }}
             >
               {l.label}
@@ -294,6 +302,7 @@ export default function Filters({
     return (
       <Select
         displayEmpty
+        aria-label="select listed for dropdown"
         renderValue={(selected) => {
           if (!selected) {
             return <Typography>{label ?? "Listed For"}</Typography>;
@@ -323,6 +332,7 @@ export default function Filters({
             <MenuItem
               key={l}
               value={l}
+              aria-label="select sale, rent, lease, dropdown menu item"
               style={{ fontWeight: 500, fontSize: "0.8rem" }}
             >
               {l}

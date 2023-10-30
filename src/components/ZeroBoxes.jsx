@@ -8,29 +8,47 @@ import ContentPasteOffIcon from "@mui/icons-material/ContentPasteOff";
 
 const infoBoxes = [
   {
-    title: "Zero Spam",
-    color: "#faf6ff",
-    Icon: PhoneDisabledIcon,
-    description: `No calls or spam messages without your explicit consent.`,
+    title: "Zero ADs",
+    color: "#f9f7e790",
+    Icon: ThumbUpIcon,
+    description: (
+      <Typography variant="body2">
+        We'll never show ADs but only{" "}
+        <b>100% Real Owner Verified Properties. </b>
+      </Typography>
+    ),
   },
   {
     title: "Zero Brokers",
-    color: "#eaf9f5",
+    color: "#eaf9f590",
     Icon: MoneyOffIcon,
-    description: `100% Real Owner Verified Properties. No brokers or middlemen
-    involved.`,
+    description: (
+      <Typography variant="body2">
+        Contact Owners directly. <b>No brokers or agents involved.</b>
+      </Typography>
+    ),
   },
   {
     title: "Zero Paperwork",
-    color: "#f0f8ff",
+    color: "#f0f8ff90",
     Icon: ContentPasteOffIcon,
-    description: ` 100% Digital experience. Even if its Aadhar or Police Verification.`,
+    description: (
+      <Typography variant="body2">
+        <b>100% Digital experience.</b> Even if its Aadhar or Police
+        Verification.
+      </Typography>
+    ),
   },
   {
-    title: "Zero Issues",
-    color: "#f9f7e7",
-    Icon: ThumbUpIcon,
-    description: `From services to refunds, every process happens seamlessly.`,
+    title: "Zero Spam",
+    color: "#faf6ff90",
+    Icon: PhoneDisabledIcon,
+    description: (
+      <Typography variant="body2">
+        <b>No spam calls or spam messages.</b> We'll never contact you unless
+        you want us to.
+      </Typography>
+    ),
   },
 ];
 
@@ -71,7 +89,7 @@ export default function ZeroBoxes() {
               </Typography>
             </Stack>
 
-            <Typography variant="body2">{description}</Typography>
+            {description}
           </Stack>
         );
       })}

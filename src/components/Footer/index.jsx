@@ -9,13 +9,15 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import RedditIcon from "@mui/icons-material/Reddit";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
+import {
+  TwitterIcon,
+  PinterestIcon,
+  LinkedinIcon,
+  FacebookIcon,
+  InstagramIcon,
+} from "next-share";
 
 import CityLinks from "./CityLinks";
 import { ALL_CITIES, navlinksSale, navlinksRent } from "@/utils/constants";
@@ -26,9 +28,8 @@ const tabSections = ALL_CITIES.map((c) => ({ label: c }));
 const socialLinks = [
   { Icon: FacebookIcon, href: "/" },
   { Icon: InstagramIcon, href: "/" },
-  { Icon: LinkedInIcon, href: "/" },
+  { Icon: LinkedinIcon, href: "/" },
   { Icon: PinterestIcon, href: "/" },
-  { Icon: RedditIcon, href: "/" },
   { Icon: TwitterIcon, href: "/" },
 ];
 
@@ -58,6 +59,7 @@ const subLinks = [
 
 export default function Footer() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDark = theme.palette.mode == "dark";
   const [index, setIndex] = useState(0);
 
@@ -112,17 +114,12 @@ export default function Footer() {
               </Stack>
             </Link>
 
-            <Stack
-              my={1}
-              ml={-1}
-              direction="row"
-              alignItems="center"
-              spacing={1}
-            >
+            <Stack my={1} direction="row" alignItems="center">
+              <Typography fontWeight={600}>Follow us on: </Typography>
               {socialLinks.map(({ Icon, href }, i) => {
                 return (
                   <IconButton LinkComponent={Link} href={href} key={i}>
-                    <Icon />
+                    <Icon round size="30" />
                   </IconButton>
                 );
               })}
@@ -154,7 +151,7 @@ export default function Footer() {
             value={index}
             onChange={handleChange}
             variant="scrollable"
-            scrollButtons
+            scrollButtons={isMobile}
             allowScrollButtonsMobile
             aria-label="footer city tabs"
           >
@@ -181,7 +178,7 @@ export default function Footer() {
 
         <Typography
           color={theme.palette.getContrastText(theme.palette.background.paper)}
-          fontSize="12px"
+          fontSize="14px"
         >
           All trademarks, logos and names are properties of their respective
           owners. All Rights Reserved. &nbsp; © Copyright{" "}

@@ -64,9 +64,9 @@ const propertyResolver = {
       (val) => val.toString().length === 6
     ),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
-  isFurnished: yup.string().required(),
-  hasParking: yup.string().required(),
-  underConstruction: yup.string().required(),
+  isFurnished: yup.string(),
+  hasParking: yup.string(),
+  underConstruction: yup.string(),
   media: yup
     .array()
     .min(5, "atleast fives images are required")
@@ -106,7 +106,7 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
   },
 }));
 
-function CreatePropertySaleRentLease({ data, handleCancel }) {
+function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
   const theme = useTheme();
   const router = useRouter();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
@@ -326,7 +326,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
           {isEditMode ? "Update Property" : "List your property"}
         </Typography>
 
-        {!isEditMode && (
+        {!isEditMode && !isFromDashboard && (
           <Typography fontSize="1.2rem" align="center" gutterBottom>
             Add your property details to get your property listed on ProperHomes
             for free.
@@ -541,7 +541,7 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
                                   }
                                   return selected;
                                 }}
-                                value={value ?? ""}
+                                value={value ? AREA_UNITS[value] : ""}
                                 onChange={onChange}
                                 error={!!error?.message}
                                 sx={{
@@ -767,9 +767,9 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
             />
           </Stack>
         </Stack>
-        <Stack spacing={2} sx={{ height: "100%" }}>
+        <Stack spacing={2} sx={{ height: "100%", maxWidth: "300px" }}>
           <Typography fontSize="1.5rem">
-            Add Property Media (minimum of 5 images or videos)*
+            Add Property Media (min. of 5 images or videos)*
           </Typography>
           <Box my={8}>
             <MediaBlocks
@@ -814,9 +814,11 @@ function CreatePropertySaleRentLease({ data, handleCancel }) {
               variant="contained"
               color="info"
               disabled={submitting}
-              aria-label="submit property for review"
+              aria-label={
+                isEditMode ? "update property" : "submit property for review"
+              }
             >
-              Submit Property
+              {isEditMode ? "Update Property" : "Submit Property"}
             </Button>
           </Stack>
         </Stack>

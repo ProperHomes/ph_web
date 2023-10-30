@@ -1,4 +1,4 @@
-import { Raleway } from "next/font/google";
+import { Raleway, Damion } from "next/font/google";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 export const ralewayFont = Raleway({
@@ -8,9 +8,17 @@ export const ralewayFont = Raleway({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
+export const DamionFont = Damion({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
+
 const defaultThemeOptions = {
   typography: {
     fontFamily: {
+      Damion: DamionFont.style.fontFamily,
       Raleway: ralewayFont.style.fontFamily,
       // Manrope: manRopeFont.style.fontFamily, // manrope is default, check layout.js in app
     },
