@@ -61,6 +61,7 @@ module.exports = {
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: [
+    "/dashboard",
     "/dashboard/*",
     "/privacypolicy",
     "/affiliate-program",

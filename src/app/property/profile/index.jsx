@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -7,12 +7,12 @@ import StickyBox from "src/components/StickyBox";
 import Divider from "@mui/material/Divider";
 
 import { Content } from "./styles";
-import Sidebar from "./sidebar/index";
-import PropertyImages from "./Images";
 import Breadcrumbs from "src/components/Breadcrumbs";
 import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
 
-const SimilarProperties = lazy(() => import("./SimilarProperties"));
+const SimilarProperties = dynamic(() => import("./SimilarProperties"));
+const PropertyImages = dynamic(() => import("./Images"));
+const Sidebar = dynamic(() => import("./sidebar/index"));
 
 function PropertyProfile({ data, similarProperties }) {
   const {
@@ -164,9 +164,7 @@ function PropertyProfile({ data, similarProperties }) {
           </Box>
           <Divider />
           <Typography variant="body1">{description}</Typography>
-          <Suspense fallback={<></>}>
-            <SimilarProperties city={city} properties={similarProperties} />
-          </Suspense>
+          <SimilarProperties city={city} properties={similarProperties} />
         </Stack>
 
         <StickyBox
