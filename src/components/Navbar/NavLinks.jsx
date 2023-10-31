@@ -24,10 +24,6 @@ const links = [
     title: "Manage Rentals",
     path: "/property-rental-management-for-owners-managers",
   },
-  {
-    title: "Manage Rentals",
-    path: "/property-rental-management-for-owners-managers",
-  },
 ];
 
 const tooltipLinks = [
