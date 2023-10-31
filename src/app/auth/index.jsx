@@ -208,7 +208,7 @@ function AuthModal({ open, handleClose }) {
     } catch (err) {
       setError("phoneNumber", {
         type: "server",
-        message: err?.response?.data?.error ?? "",
+        message: "Something went wrong with sending OTP. Pls contact support.",
       });
     }
   };

@@ -17,6 +17,7 @@ import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
+import isEqual from "lodash.isequal";
 
 import {
   CREATE_PROPERTY,
@@ -64,9 +65,9 @@ const propertyResolver = {
       (val) => val.toString().length === 6
     ),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
-  isFurnished: yup.string(),
-  hasParking: yup.string(),
-  underConstruction: yup.string(),
+  isFurnished: yup.boolean(),
+  hasParking: yup.boolean(),
+  status: yup.string().oneOf(Object.keys(PROPERTY_STATUS)).nullable(),
   media: yup
     .array()
     .min(5, "atleast fives images are required")
@@ -122,10 +123,11 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
 
   const isEditMode = !!data;
 
-  const { control, handleSubmit, setValue, formState } = useForm({
+  const { control, handleSubmit, setValue, watch, formState } = useForm({
     resolver: yupResolver(yup.object().shape(propertyResolver)),
     defaultValues: data,
   });
+  watch();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -191,53 +193,62 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
     }
   };
 
-  const handleUpdateProperty = async (data) => {
-    setIsLoading(true);
-    try {
-      const dataToUpdate = {};
-      const keysNotNeeded = [
-        "__typename",
-        "id",
-        "number",
-        "media",
-        "slug",
-        "ownerId",
-        "tenantId",
-        "createdAt",
-        "underConstruction",
-      ];
-      for (let key in data) {
-        if (!keysNotNeeded.includes(key)) {
-          const value = data[key];
-          if (value === "true" || value === "false") {
-            dataToUpdate[key] = Boolean(value);
-          } else {
-            dataToUpdate[key] = value;
+  const handleUpdateProperty = async (formData) => {
+    const dataFromProps = { ...data };
+    dataFromProps.media = data?.media?.nodes?.map((m) => ({
+      id: m?.id,
+      mediaId: m?.mediaId,
+      preview: m?.mediaUrl ?? m?.media?.signedUrl,
+    }));
+    const isChanged = !isEqual(dataFromProps, formData);
+    if (isChanged) {
+      setIsLoading(true);
+      try {
+        const dataToUpdate = {};
+        const keysNotNeeded = [
+          "__typename",
+          "id",
+          "number",
+          "media",
+          "slug",
+          "ownerId",
+          "tenantId",
+          "createdAt",
+        ];
+
+        for (let key in formData) {
+          if (!keysNotNeeded.includes(key)) {
+            const value = formData[key];
+            if (value === "true" || value === "false") {
+              dataToUpdate[key] = Boolean(value);
+            } else {
+              dataToUpdate[key] = value;
+            }
           }
         }
-      }
-      const res = await updateProperty({
-        variables: {
-          input: {
-            id: data.id,
-            patch: dataToUpdate,
+        const res = await updateProperty({
+          variables: {
+            input: {
+              id: formData.id,
+              patch: dataToUpdate,
+            },
           },
-        },
-      });
-      const updatedProperty = res?.data?.updateProperty?.property;
-      if (updatedProperty?.id) {
-        await handleUploadPropertyMedia(data.media, updatedProperty.id);
-        await handleDeletePropertyMedia(data.media);
-        handleRevalidate([
-          `/property/${data.slug}`,
-          `/dashboard/manage/property/${data.slug}`,
-        ]);
-        handleCancel();
+        });
+        const updatedProperty = res?.data?.updateProperty?.property;
+        if (updatedProperty?.id) {
+          await handleUploadPropertyMedia(formData.media, updatedProperty.id);
+          await handleDeletePropertyMedia(formData.media);
+          handleRevalidate([
+            `/property/${formData.slug}`,
+            `/dashboard/manage/property/${formData.slug}`,
+          ]);
+          handleCancel();
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleCreateProperty = async (data) => {
@@ -245,10 +256,6 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
     try {
       const dataNew = { ...data };
       delete dataNew.media;
-      if (data.underConstruction) {
-        dataNew.status = "UNDER_CONSTRUCTION";
-      }
-      delete dataNew.underConstruction;
       const slug = `${convertStringToSlug(data.title)}-${loggedInUser?.number}`;
       const res = await createProperty({
         variables: {
@@ -670,7 +677,7 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <Checkbox
-                      checked={value}
+                      checked={!!value}
                       onChange={onChange}
                       sx={{
                         "& .MuiSvgIcon-root": { fontSize: 30 },
@@ -689,7 +696,7 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <Checkbox
-                      checked={value}
+                      checked={!!value}
                       onChange={onChange}
                       size="medium"
                       sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
@@ -704,12 +711,21 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
               sx={{ "& span": { fontSize: "1rem" } }}
               control={
                 <Controller
-                  name="underConstruction"
+                  name="status"
                   control={control}
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { value } }) => (
                     <Checkbox
-                      checked={value}
-                      onChange={onChange}
+                      checked={value === "UNDER_CONSTRUCTION"}
+                      onChange={(e) => {
+                        const isUnderConstruction = e.target.checked;
+                        if (isUnderConstruction) {
+                          setValue("status", "UNDER_CONSTRUCTION");
+                        } else {
+                          if (value === "UNDER_CONSTRUCTION") {
+                            setValue("status", null);
+                          }
+                        }
+                      }}
                       sx={{
                         "& .MuiSvgIcon-root": { fontSize: 30 },
                       }}
