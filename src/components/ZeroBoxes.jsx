@@ -1,16 +1,16 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import PhoneDisabledIcon from "@mui/icons-material/PhoneDisabled";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ContentPasteOffIcon from "@mui/icons-material/ContentPasteOff";
 
 const infoBoxes = [
   {
     title: "Zero ADs",
-    color: "#f9f7e790",
-    Icon: ThumbUpIcon,
+    color: "#f0f8ff",
+    Icon: MoneyOffIcon,
     description: (
       <Typography variant="body2">
         We'll never show ADs but only{" "}
@@ -20,8 +20,8 @@ const infoBoxes = [
   },
   {
     title: "Zero Brokers",
-    color: "#eaf9f590",
-    Icon: MoneyOffIcon,
+    color: "#eaf9f5",
+    Icon: PersonOffIcon,
     description: (
       <Typography variant="body2">
         Contact Owners directly. <b>No brokers or agents involved.</b>
@@ -30,7 +30,7 @@ const infoBoxes = [
   },
   {
     title: "Zero Paperwork",
-    color: "#f0f8ff90",
+    color: "#faf6ff",
     Icon: ContentPasteOffIcon,
     description: (
       <Typography variant="body2">
@@ -41,7 +41,7 @@ const infoBoxes = [
   },
   {
     title: "Zero Spam",
-    color: "#faf6ff90",
+    color: "#f9f7e7",
     Icon: PhoneDisabledIcon,
     description: (
       <Typography variant="body2">

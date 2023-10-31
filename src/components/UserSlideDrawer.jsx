@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useTheme, styled } from "@mui/material/styles";
+import styled from "@mui/material/styles/styled";
+import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import useDarkMode from "src/hooks/useDarkMode";
@@ -11,10 +12,8 @@ import SlideDrawer from "./Drawer";
 import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
 import Dashboard from "@mui/icons-material/Dashboard";
 import Login from "@mui/icons-material/Login";
-import Logout from "@mui/icons-material/Logout";
 import DarkMode from "@mui/icons-material/DarkMode";
 import LightMode from "@mui/icons-material/LightMode";
-import SettingsIcon from "@mui/icons-material/Settings";
 import CurrencyRupeeOutlined from "@mui/icons-material/CurrencyRupeeOutlined";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 
@@ -57,12 +56,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
       }
       position={isMobile ? "bottom" : "right"}
     >
-      <Stack
-        p={2}
-        direction="column"
-        justifyContent="space-between"
-        sx={{ height: "100%" }}
-      >
+      <Stack p={2} direction="column" sx={{ height: "100%" }} spacing={8}>
         <Stack spacing={2}>
           <Stack direction="row" alignItems="center">
             <Typography
@@ -93,21 +87,12 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           </Stack>
 
           {isLoggedIn && (
-            <>
-              <StyledBtn
-                startIcon={<Dashboard />}
-                onClick={navigateTo("/dashboard")}
-              >
-                Dashboard
-              </StyledBtn>
-
-              <StyledBtn
-                startIcon={<SettingsIcon />}
-                onClick={navigateTo("/dashboard/settings")}
-              >
-                Settings
-              </StyledBtn>
-            </>
+            <StyledBtn
+              startIcon={<Dashboard />}
+              onClick={navigateTo("/dashboard")}
+            >
+              Dashboard
+            </StyledBtn>
           )}
         </Stack>
 
@@ -159,17 +144,11 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           </StyledBtn>
         </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={2}>
-          {!isLoggedIn ? (
-            <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
-              Login or Signup
-            </StyledBtn>
-          ) : (
-            <StyledBtn startIcon={<Logout />} fullWidth onClick={logout}>
-              Logout
-            </StyledBtn>
-          )}
-        </Stack>
+        {!isLoggedIn && (
+          <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
+            Login or Signup
+          </StyledBtn>
+        )}
       </Stack>
 
       {Auth}
