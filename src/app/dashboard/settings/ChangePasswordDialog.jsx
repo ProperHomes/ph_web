@@ -205,12 +205,14 @@ function ChangePasswordModal({ handleClose, open }) {
               {otpReqSuccessful ? (
                 <>
                   <OtpInput
+                    autoFocus
                     value={otp}
                     length={4}
                     onChange={handleChangeOtp}
                     onComplete={handleSubmitOtp}
                     TextFieldsProps={{
                       error: otpError,
+                      inputMode: "numeric",
                     }}
                   />
                   <Typography variant="subtitle1" pt={2} gutterBottom>
