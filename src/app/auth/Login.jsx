@@ -25,8 +25,8 @@ function LoginForm({ control, isLoginWithOtp }) {
             fullWidth
             variant="outlined"
             label="Mobile Number"
-            type="text"
             inputMode="tel"
+            type="tel"
             value={value ?? ""}
             onChange={onChange}
             error={!!error?.message}

@@ -54,7 +54,7 @@ function SignupForm({ control }) {
               variant="outlined"
               label="Mobile Number"
               inputMode="tel"
-              type="text"
+              type="tel"
               value={value ?? ""}
               onChange={onChange}
               error={!!error?.message}

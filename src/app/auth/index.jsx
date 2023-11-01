@@ -348,7 +348,8 @@ function AuthModal({ open, handleClose }) {
                 onComplete={handleSubmitOtp}
                 TextFieldsProps={{
                   error: otpError,
-                  inputmode: "decimal",
+                  type:"tel",
+                  inputmode: "tel",
                 }}
               />
               <Typography variant="subtitle1" pt={2} gutterBottom>

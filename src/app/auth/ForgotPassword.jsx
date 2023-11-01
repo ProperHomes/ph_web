@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
@@ -14,7 +14,8 @@ function ForgorPasswordForm({ control }) {
           fullWidth
           variant="outlined"
           label="Mobile Number"
-          type="text"
+          type="tel"
+          inputMode="tel"
           value={value ?? ""}
           onChange={onChange}
           error={!!error?.message}
