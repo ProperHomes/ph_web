@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -26,6 +26,7 @@ function LoginForm({ control, isLoginWithOtp }) {
             variant="outlined"
             label="Mobile Number"
             type="text"
+            inputMode="tel"
             value={value ?? ""}
             onChange={onChange}
             error={!!error?.message}

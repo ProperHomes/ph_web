@@ -53,6 +53,7 @@ function SignupForm({ control }) {
               fullWidth
               variant="outlined"
               label="Mobile Number"
+              inputMode="tel"
               type="text"
               value={value ?? ""}
               onChange={onChange}
