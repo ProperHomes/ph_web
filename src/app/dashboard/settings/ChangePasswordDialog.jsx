@@ -212,7 +212,8 @@ function ChangePasswordModal({ handleClose, open }) {
                     onComplete={handleSubmitOtp}
                     TextFieldsProps={{
                       error: otpError,
-                      inputmode: "decimal",
+                      type: "tel",
+                      inputmode: "tel",
                     }}
                   />
                   <Typography variant="subtitle1" pt={2} gutterBottom>
@@ -231,7 +232,7 @@ function ChangePasswordModal({ handleClose, open }) {
                       fullWidth
                       variant="outlined"
                       label="Mobile Number"
-                      type="text"
+                      type="tel"
                       inputMode="tel"
                       value={value ?? ""}
                       onChange={onChange}
