@@ -62,6 +62,7 @@ function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta name="robots" content="noindex, nofollow" />
         <meta name="author" content="ProperHomes" />
         <meta name="copyright" content="ProperHomes" />
         <meta name="application-name" content="ProperHomes" />
