@@ -57,7 +57,7 @@ const otherLinks = [
 ];
 
 module.exports = {
-  siteUrl: "https://properhomes.in",
+  siteUrl: "https://www.properhomes.in",
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: [

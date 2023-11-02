@@ -89,7 +89,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           {isLoggedIn && (
             <StyledBtn
               startIcon={<Dashboard />}
-              onClick={navigateTo("/dashboard")}
+              onClick={navigateTo("/dashboard/manage")}
             >
               Dashboard
             </StyledBtn>

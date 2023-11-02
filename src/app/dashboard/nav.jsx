@@ -16,11 +16,11 @@ import BottomNavbar from "src/components/BottomNavbar";
 import { useAppContext } from "src/appContext";
 
 let list = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    Icon: DashboardIcon,
-  },
+  // {
+  //   label: "Dashboard",
+  //   href: "/dashboard",
+  //   Icon: DashboardIcon,
+  // },
   {
     label: "Manage Properties",
     href: "/dashboard/manage",

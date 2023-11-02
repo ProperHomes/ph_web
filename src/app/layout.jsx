@@ -9,39 +9,39 @@ const BottomNavbar = dynamic(() => import("../components/BottomNavbar"));
 const Footer = dynamic(() => import("../components/Footer"));
 
 export const metadata = {
-  title: "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
-  description: `Find Homes and Properties for sale, rent or lease. 
-  List your property for sale, rent or lease. Manage Rental Properties, Say goodbye to spam, scams and brokers.`,
+  title:
+    "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals",
+  description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
   keywords: [
-    "Properties for Sale",
-    "Properties for Rent",
-    "Properties for Lease",
-    "Homes for sale",
-    "Homes for rent",
-    "Homes for lease",
+    "Homes for sale, rent",
+    "Flats for sale, rent",
+    "Apartments for sale, rent",
+    "Properties for Sale, Rent",
     "Real Estate India",
+    "Find Residential properties",
+    "Find Real Estate Projects",
     "Rental Property Management in India",
     "Manage Rental Properties",
+    "100% verified Owners",
+    "No Brokers, No Agents, No Middlemen",
     "ProperHomes",
     "Proper Homes",
   ],
-  metadataBase: new URL("https://properhomes.in"),
+  metadataBase: new URL("https://www.properhomes.in"),
   openGraph: {
     title:
-      "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
-    description: `Find homes and properties for sale, rent, or lease. 
-    List your property for sale, rent or lease. No more spam calls, no more scams and no more brokers.`,
+      "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals",
+    description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
     siteName: "ProperHomes",
-    url: "https://properhomes.in",
+    url: "https://www.properhomes.in",
     type: "website",
     images: "/logo.png",
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
-    description: `Find homes and properties for sale, rent or lease, manually verified by us. 
-  List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+      "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals",
+    description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
     creator: "@ProperHomes",
     images: ["/logo.png"],
   },
@@ -69,13 +69,13 @@ function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content="Find Properties | Buy Sell Rent Properties in India | Manage Rentals"
+          content="ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals"
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#2B5797" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#ffffff" />
         <link rel="apple-touch-icon" href="/assets/images/LogoIcon.png" />
         <link
           rel="apple-touch-icon"

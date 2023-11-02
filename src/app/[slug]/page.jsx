@@ -11,6 +11,8 @@ import {
 } from "@/utils/constants";
 import CategoryBoxes from "@/components/CategoryBoxes";
 
+// Todo: create metadata for properties within cities and also by categories.
+
 export default async function Page({ params, searchParams }) {
   const { slug = "" } = params;
   let data = [];
