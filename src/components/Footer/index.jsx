@@ -137,6 +137,7 @@ export default function Footer() {
                 <Link
                   key={l.path}
                   href={l.path}
+                  prefetch={false}
                   style={{ position: "relative" }}
                 >
                   <TypographyUnderline>{l.title}</TypographyUnderline>
@@ -173,7 +174,7 @@ export default function Footer() {
             })}
           </Tabs>
 
-          <CityLinks links={allNavLinks} city={city} prefetch={false} />
+          <CityLinks links={allNavLinks} city={city} />
         </Box>
 
         <Typography

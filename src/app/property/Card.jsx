@@ -34,7 +34,6 @@ function PropertyCard({
   const { state: appState } = useAppContext();
   const {
     id,
-    number,
     description,
     slug,
     media,
@@ -122,7 +121,7 @@ function PropertyCard({
           borderRadius: "1em",
         }}
       >
-        <Link href={linkHref}>
+        <Link href={linkHref} prefetch={false}>
           <Box
             sx={{
               position: "relative",
@@ -283,7 +282,7 @@ function PropertyCard({
         )}
       </Box>
 
-      <Link href={`/property/${slug}`}>
+      <Link href={`/property/${slug}`} prefetch={false}>
         <Typography
           sx={{
             width: "100%",

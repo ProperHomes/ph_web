@@ -3,7 +3,7 @@ import Link from "next/link";
 import Box from "@mui/material/Box";
 import TypographyUnderline from "../TypographyUnderline";
 
-export default function CityLinks({ city, links, prefetch = true }) {
+export default function CityLinks({ city, links }) {
   return (
     <Box
       py={2}
@@ -21,7 +21,7 @@ export default function CityLinks({ city, links, prefetch = true }) {
           <Link
             key={link}
             href={`${link}-in-${city.toLocaleLowerCase()}`}
-            prefetch={prefetch}
+            prefetch={false}
             style={{
               width: "fit-content",
               maxHeight: "40px",

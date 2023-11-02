@@ -77,7 +77,7 @@ function CategoryBoxes() {
       {allLinks.map(({ link, Icon, label }) => {
         const isActive = link === pathname;
         return (
-          <Link href={link} key={link} aria-label={label}>
+          <Link href={link} key={link} aria-label={label} prefetch={false}>
             <Stack
               spacing={1}
               direction="column"

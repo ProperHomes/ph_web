@@ -374,17 +374,21 @@ function AuthModal({ open, handleClose }) {
             </Stack>
           )}
           {!otpReqSuccessful && !otpError && (
-            <Typography
-              variant="button"
-              sx={{ cursor: "pointer", fontWeight: 800 }}
+            <Button
+              sx={{
+                cursor: "pointer",
+                fontWeight: 800,
+                fontSize: "1.2rem",
+                textDecoration: "underline",
+              }}
               onClick={showLogin ? toggleSignup : toggleLogin}
             >
               {showLogin
-                ? "Don't have an account yet ? "
+                ? "Signup Here"
                 : showForgotPassword
                 ? "Back"
-                : "Already have an account ?"}
-            </Typography>
+                : "Login Here"}
+            </Button>
           )}
         </Stack>
       </DialogContent>

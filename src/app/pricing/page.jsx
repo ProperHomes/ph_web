@@ -19,6 +19,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { getRupees } from "src/utils/helper";
 import CustomTabPanel from "@/components/CustomTabPanel";
+import useToggleAuth from "src/hooks/useToggleAuth";
 
 const CustomTabs = styled(Tabs)(({ theme }) => ({
   background:
@@ -58,8 +59,7 @@ const sellerPricing = [
       "List 1 Property.",
       "Basic Analytics.",
       "Rental Management with Autopay.",
-      "Rental Agreement Generation.",
-      "Rental Receipt Generation.",
+      "Rental Agreement and Receipt Generation.",
       "Realtime Customer Interest Notification Alerts.",
     ],
   },
@@ -69,10 +69,9 @@ const sellerPricing = [
     features: [
       "Everything in free plan.",
       "List upto 10 Properties.",
-      "Customer Support.",
+      "Basic Support.",
       "Separate Business Profile Page.",
       "Buyers don't need to pay to view your property contact details (if agreed by you).",
-      "Full fledged Analytics, insights and alerts.",
     ],
   },
   {
@@ -81,10 +80,9 @@ const sellerPricing = [
     features: [
       "Everything in Prime Plan.",
       "List upto 25 Properties.",
-      "Priority Customer Support 24/7.",
+      "Priority Support.",
       "Boost 1 property in 1 city everyday.",
-      "Free Doorstep Rental Agreement Delivery.",
-      "Exclusive Discount on Home Services for your Properties.",
+      "Full fledged Analytics, insights and alerts.",
     ],
   },
 ];
@@ -93,6 +91,7 @@ export default function Pricing() {
   const theme = useTheme();
   const [index, setIndex] = useState(0);
 
+  const { toggleAuth, Auth, isLoggedIn } = useToggleAuth();
   const isDarkMode = theme.palette.mode === "dark";
   const handleChange = (_e, newIndex) => {
     setIndex(newIndex);
@@ -164,7 +163,11 @@ export default function Pricing() {
                     <Typography fontSize="1.5rem" fontWeight={800}>
                       {name}
                     </Typography>
-                    <Typography fontSize="1rem" color="#ff5757" fontWeight={800}>
+                    <Typography
+                      fontSize="1rem"
+                      color="#ff5757"
+                      fontWeight={800}
+                    >
                       {price > 0 && `${getRupees(price)} /month`}
                     </Typography>
                   </Stack>
@@ -180,6 +183,7 @@ export default function Pricing() {
                   </List>
                   <Button
                     variant="outlined"
+                    onClick={!isLoggedIn ? toggleAuth : () => {}}
                     sx={{
                       marginTop: "auto",
                       borderRadius: "0.8rem",
@@ -189,7 +193,7 @@ export default function Pricing() {
                       fontSize: "1rem",
                     }}
                   >
-                    Signup Now
+                    {isLoggedIn ? "Get this Plan" : "Signup Now"}
                   </Button>
                 </ListBox>
               );
@@ -299,6 +303,7 @@ export default function Pricing() {
           </Button>
         </ListBox>
       </CustomTabPanel>
+      {Auth}
     </Stack>
   );
 }
