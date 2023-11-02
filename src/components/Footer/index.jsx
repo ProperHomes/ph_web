@@ -136,6 +136,7 @@ export default function Footer() {
                   key={l.path}
                   href={l.path}
                   prefetch={false}
+                  title={l.title}
                   style={{ position: "relative" }}
                 >
                   <TypographyUnderline>{l.title}</TypographyUnderline>

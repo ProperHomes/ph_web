@@ -10,8 +10,8 @@ const Footer = dynamic(() => import("../components/Footer"));
 
 export const metadata = {
   title:
-    "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals",
-  description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
+  "Find Properties for Sale & Rent in India without brokers | Buy, Sell & Rent Properties",
+  description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease and more at ProperHomes.`,
   keywords: [
     "Homes for sale, rent",
     "Flats for sale, rent",
@@ -30,8 +30,8 @@ export const metadata = {
   metadataBase: new URL("https://www.properhomes.in"),
   openGraph: {
     title:
-      "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals",
-    description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
+    "Find Properties for Sale & Rent in India without brokers | Buy, Sell & Rent Properties",
+    description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease and more at ProperHomes.`,
     siteName: "ProperHomes",
     url: "https://www.properhomes.in",
     type: "website",
@@ -40,8 +40,8 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title:
-      "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals",
-    description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
+    "Find Properties for Sale & Rent in India without brokers | Buy, Sell & Rent Properties",
+    description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease and more at ProperHomes.`,
     creator: "@ProperHomes",
     images: ["/logo.png"],
   },
@@ -69,13 +69,14 @@ function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content="ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals"
+          content="Find Properties for Sale & Rent in India without brokers | Buy, Sell & Rent Properties"
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#2B5797" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel="canonical" href="https://www.properhomes.in" />
         <link rel="apple-touch-icon" href="/assets/images/LogoIcon.png" />
         <link
           rel="apple-touch-icon"

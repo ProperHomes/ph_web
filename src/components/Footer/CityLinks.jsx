@@ -22,6 +22,7 @@ export default function CityLinks({ city, links }) {
             key={link}
             href={`${link}-in-${city.toLocaleLowerCase()}`}
             prefetch={false}
+            title={title}
             style={{
               width: "fit-content",
               maxHeight: "40px",
