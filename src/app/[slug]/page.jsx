@@ -10,8 +10,77 @@ import {
   LISTING_TYPE,
 } from "@/utils/constants";
 import CategoryBoxes from "@/components/CategoryBoxes";
+import { capitalizeFirstLetter } from "@/utils/helper";
 
-// Todo: create metadata for properties within cities and also by categories.
+export async function generateMetadata({ params }) {
+  const { slug = "" } = params;
+  const navLink = navlinks.find((l) => l.link === slug);
+  const navLinkWithCity = navLinkWithCities.find((l) => l.link === slug);
+  const isCityLink = navLinkWithCity?.link === slug;
+  const isPG = slug.includes("pg") || slug.includes("paying-guests");
+  const isHostel = slug.includes("hostel");
+
+  let propertyType = slug.split("-for-")[0];
+  propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
+  if (slug.includes("commercial")) {
+    propertyType = "Commercial Propertie";
+  }
+  if (slug.includes("farm")) {
+    propertyType = PROPERTY_TYPE.FARM_HOUSE;
+  }
+
+  if (isPG) {
+    propertyType = PROPERTY_TYPE.PG;
+  }
+  if (isHostel) {
+    propertyType = PROPERTY_TYPE.HOSTEL;
+  }
+
+  let title =
+    "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals";
+  let description = `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`;
+  if (isCityLink) {
+    const { title: cityLinkTitle, city } = navLinkWithCity;
+    title = `${cityLinkTitle} | ProperHomes`;
+    description = isPG
+      ? `Find Paying Guest Accomodation in ${city}. Find Properties for PG in ${city}. PG ready properties in ${city}`
+      : `${
+          propertyType ? `${capitalizeFirstLetter(propertyType)}s` : "Flats"
+        } for sale, rent in ${city}. Search Properties for Sale, Rent in ${city}. Find Residential Properties and New Projects in ${city} `;
+  } else {
+    title = navLink?.title
+      ? `${navLink.title} | ProperHomes`
+      : "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals";
+    description = isPG
+      ? `Find Paying Guest Accomodation. Find Properties available for PG. PG ready properties.`
+      : navLink && propertyType
+      ? `${capitalizeFirstLetter(
+          propertyType
+        )}s for Sale, Rent! Search Properties for Sale, Rent in India. ProperHomes`
+      : `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`;
+  }
+
+  return {
+    title,
+    description,
+    metadataBase: new URL("https://www.properhomes.in"),
+    openGraph: {
+      title,
+      description,
+      siteName: "ProperHomes",
+      url: "https://www.properhomes.in",
+      type: "website",
+      images: "/logo.png",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      creator: "@ProperHomes",
+      images: ["/logo.png"],
+    },
+  };
+}
 
 export default async function Page({ params, searchParams }) {
   const { slug = "" } = params;

@@ -146,6 +146,7 @@ for (let link of navlinks) {
       title: `${link.title} in ${
         city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()
       }`,
+      city,
     });
   }
 }
