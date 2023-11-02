@@ -96,22 +96,20 @@ export default function Footer() {
           justifyContent={{ xs: "center", md: "space-between" }}
         >
           <Stack alignItems={{ xs: "center", md: "start" }}>
-            <Link href="/">
-              <Stack direction="row" alignItems="center">
-                <Image
-                  src="/logo.png"
-                  width={200}
-                  height={50}
-                  priority
-                  quality={100}
-                  alt="logo"
-                  style={{
-                    objectFit: "contain",
-                    width: "auto",
-                    height: "auto",
-                  }}
-                />
-              </Stack>
+            <Link href="/" title="ProperHomes">
+              <Image
+                src="/logo.png"
+                width={200}
+                height={50}
+                priority
+                quality={100}
+                alt="logo"
+                style={{
+                  objectFit: "contain",
+                  width: "auto",
+                  height: "auto",
+                }}
+              />
             </Link>
 
             <Stack my={1} direction="row" alignItems="center">

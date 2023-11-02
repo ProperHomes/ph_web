@@ -107,6 +107,10 @@ function PropertyCard({
     ? `/dashboard/manage/property/${slug}`
     : `/property/${slug}`;
 
+  const formattedTitle = `${PROPERTY_TYPE[type]?.toLowerCase()} ${
+    PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""
+  } for ${listedFor?.toLowerCase()} in ${city.toLowerCase()}`;
+
   return (
     <Stack spacing={1}>
       <Box
@@ -121,7 +125,7 @@ function PropertyCard({
           borderRadius: "1em",
         }}
       >
-        <Link href={linkHref} prefetch={false}>
+        <Link href={linkHref} prefetch={false} title={formattedTitle}>
           <Box
             sx={{
               position: "relative",
@@ -282,7 +286,7 @@ function PropertyCard({
         )}
       </Box>
 
-      <Link href={`/property/${slug}`} prefetch={false}>
+      <Link href={`/property/${slug}`} prefetch={false} title={formattedTitle}>
         <Typography
           sx={{
             width: "100%",

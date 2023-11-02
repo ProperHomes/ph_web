@@ -6,7 +6,7 @@ import Image from "next/image";
 function NavbarLeft() {
   return (
     <Stack direction="row" alignItems="center">
-      <Link href="/">
+      <Link href="/" title="ProperHomes">
         <Image
           src="/logo.png"
           width={200}

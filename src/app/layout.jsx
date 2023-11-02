@@ -92,16 +92,11 @@ function RootLayout({ children }) {
           sizes="167x167"
           href="/assets/images/PWA/ios/167.png"
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/assets/images/LogoIcon.png"
-        />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="mask-icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="mask-icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.png" />
       </head>
       <body className={manRope.className}>
         <NextTopLoader showSpinner={false} />
