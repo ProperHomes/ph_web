@@ -36,7 +36,7 @@ export default {
         customDomain: isProd
           ? {
               domainName: "www.properhomes.in",
-              domainAlias: "properhomes.in",
+              hostedZone: "properhomes.in",
             }
           : isStaging
           ? {
