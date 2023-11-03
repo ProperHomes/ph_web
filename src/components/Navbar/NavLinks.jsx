@@ -80,7 +80,6 @@ function NavLinks() {
                         href={l.path}
                         key={l.path}
                         prefetch={false}
-                        title={l.title}
                         style={{ position: "relative", width: "fit-content" }}
                       >
                         <Typography
@@ -108,12 +107,7 @@ function NavLinks() {
                 },
               }}
             >
-              <Link
-                href={path}
-                key={path}
-                title={title}
-                style={{ position: "relative" }}
-              >
+              <Link href={path} key={path} style={{ position: "relative" }}>
                 <TypographyUnderline
                   fontWeight={600}
                   fontSize={theme.spacing(2)}

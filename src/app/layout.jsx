@@ -13,6 +13,10 @@ export const metadata = {
     "Find Properties for Sale & Rent in India without brokers. Buy, Sell & Rent Properties",
   description: `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`,
   keywords: [
+    "2BHK apartments for sale",
+    "3BHK apartments for sale",
+    "2BHK apartments for rent",
+    "3BHK apartments for rent",
     "Homes for sale, rent",
     "Flats for sale, rent",
     "Apartments for sale, rent",

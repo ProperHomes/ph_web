@@ -8,6 +8,7 @@ import {
   navlinks,
   navLinkWithCities,
   LISTING_TYPE,
+  ALL_CITIES,
 } from "@/utils/constants";
 import CategoryBoxes from "@/components/CategoryBoxes";
 import { capitalizeFirstLetter } from "@/utils/helper";
@@ -17,23 +18,27 @@ export async function generateMetadata({ params }) {
   const navLink = navlinks.find((l) => l.link === slug);
   const navLinkWithCity = navLinkWithCities.find((l) => l.link === slug);
   const isCityLink = navLinkWithCity?.link === slug;
+  const isCitySlug = ALL_CITIES.includes(slug.toUpperCase());
   const isPG = slug.includes("pg") || slug.includes("paying-guests");
   const isHostel = slug.includes("hostel");
 
-  let propertyType = slug.split("-for-")[0];
-  propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
-  if (slug.includes("commercial")) {
-    propertyType = "Commercial Propertie";
-  }
-  if (slug.includes("farm")) {
-    propertyType = PROPERTY_TYPE.FARM_HOUSE;
-  }
+  let propertyType = null;
+  if (isCitySlug) {
+    propertyType = slug.split("-for-")[0];
+    propertyType = propertyType.split("-").join("_").slice(0, -1).toUpperCase();
+    if (slug.includes("commercial")) {
+      propertyType = "Commercial Propertie";
+    }
+    if (slug.includes("farm")) {
+      propertyType = PROPERTY_TYPE.FARM_HOUSE;
+    }
 
-  if (isPG) {
-    propertyType = PROPERTY_TYPE.PG;
-  }
-  if (isHostel) {
-    propertyType = PROPERTY_TYPE.HOSTEL;
+    if (isPG) {
+      propertyType = PROPERTY_TYPE.PG;
+    }
+    if (isHostel) {
+      propertyType = PROPERTY_TYPE.HOSTEL;
+    }
   }
 
   let title =
@@ -47,6 +52,10 @@ export async function generateMetadata({ params }) {
       : `${
           propertyType ? `${capitalizeFirstLetter(propertyType)}s` : "Flats"
         } for sale, rent in ${city}. Search Properties for Sale, Rent in ${city}. Find Residential Properties and New Projects in ${city} `;
+  } else if (isCitySlug) {
+    const slugCity = capitalizeFirstLetter(slug);
+    title = `Properties for sale, rent in ${slugCity} | ProperHomes`;
+    description = `Properties for sale, rent in ${slugCity}. Search Properties for Sale, Rent in ${slugCity}. Find Residential Properties and New Projects in ${slugCity} `;
   } else {
     title = navLink?.title
       ? `${navLink.title} | ProperHomes`
@@ -82,14 +91,51 @@ export async function generateMetadata({ params }) {
   };
 }
 
+async function getDefaultProperties() {
+  const res = await client.request(GET_PROPERTIES, {
+    first: 20,
+    orderBy: ["CREATED_AT_DESC"],
+  });
+  return res?.properties?.edges?.map((edge) => edge.node) ?? [];
+}
+
 export default async function Page({ params, searchParams }) {
   const { slug = "" } = params;
   let data = [];
   const navLink = navlinks.find((l) => l.link === slug);
   const navLinkWithCity = navLinkWithCities.find((l) => l.link === slug);
-  const isCityLink = navLinkWithCity?.link === slug;
+  const isCityLink =
+    navLinkWithCity?.link === slug || ALL_CITIES.includes(slug);
+  const isCitySlug = ALL_CITIES.includes(slug.toUpperCase());
 
-  if (navLink?.link === slug || isCityLink) {
+  if (isCitySlug) {
+    const citySlug = slug.toUpperCase();
+    const variables = {
+      first: 20,
+      city: citySlug,
+      orderBy: ["CREATED_AT_DESC"],
+    };
+    let res = await client.request(GET_PROPERTIES, variables);
+    data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
+    if (data.length === 0) {
+      data = getDefaultProperties();
+    }
+    return (
+      <Stack spacing={4} py={2}>
+        <PropertyList
+          data={data}
+          infiniteScroll
+          city={citySlug}
+          count={20}
+          searchParams={searchParams}
+          title={`Explore Properties in ${capitalizeFirstLetter(citySlug)}`}
+          showFilters
+        />
+      </Stack>
+    );
+  }
+
+  if ((navLink?.link === slug || isCityLink) && !isCitySlug) {
     let listedFor = null;
     let city = null;
     if (isCityLink) {
@@ -136,11 +182,7 @@ export default async function Page({ params, searchParams }) {
     let res = await client.request(GET_PROPERTIES, variables);
     data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
     if (data.length === 0) {
-      res = await client.request(GET_PROPERTIES, {
-        first: isProperties ? 20 : 10,
-        orderBy: ["CREATED_AT_DESC"],
-      });
-      data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
+      data = getDefaultProperties();
     }
     return (
       <Stack spacing={4} py={2}>
@@ -173,6 +215,11 @@ export function generateStaticParams() {
   for (let link of navLinkWithCities) {
     paths.push({
       slug: link.link,
+    });
+  }
+  for (let city of ALL_CITIES) {
+    paths.push({
+      slug: city.toLowerCase(),
     });
   }
   return paths;
