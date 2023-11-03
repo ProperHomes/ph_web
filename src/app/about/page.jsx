@@ -1,14 +1,15 @@
-import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { StyledContainer } from "@/styles/styles";
 
 function AboutUs() {
   return (
-    <Container>
+    <StyledContainer>
       <Stack spacing={4} py={4}>
         <Typography
           variant="h1"
+          textAlign="center"
           sx={{ fontSize: "2rem !important", fontWeight: 700 }}
         >
           About <Link href="/">ProperHomes</Link>
@@ -112,7 +113,7 @@ function AboutUs() {
           to continually improve and serve you better.
         </Typography>
       </Stack>
-    </Container>
+    </StyledContainer>
   );
 }
 

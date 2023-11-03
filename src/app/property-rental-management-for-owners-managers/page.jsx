@@ -1,14 +1,12 @@
-import Link from "next/link";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { InfoStack, StyledContainer } from "./styles";
+import { InfoStack, StyledContainer } from "@/styles/styles";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import { ArrowForward } from "@mui/icons-material";
 
 const info = [
   {
@@ -41,12 +39,7 @@ const info = [
 
 export default function PropertyManagement() {
   return (
-    <StyledContainer
-      maxWidth="xl"
-      sx={{
-        minHeight: "100vh",
-      }}
-    >
+    <StyledContainer maxWidth="xl">
       <Stack py={2}>
         <Typography
           gutterBottom

@@ -1,11 +1,13 @@
 "use client";
-import Stack from "@mui/material/Stack";
+
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import styled from "@mui/material/styles/styled";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#000" : "#fff",
   borderRadius: "1em",
+  minHeight: "100vh",
 }));
 
 export const InfoStack = styled(Stack)(({ theme }) => ({

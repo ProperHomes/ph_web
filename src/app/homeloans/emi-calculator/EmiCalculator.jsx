@@ -57,15 +57,17 @@ function EMICalculator() {
   };
 
   return (
-    <Stack spacing={2} mx={2} sx={{ maxWidth: "sm" }}>
+    <Stack spacing={2} p={4}>
       <Typography
         variant="h1"
+        textAlign="center"
+        gutterBottom
         sx={{ fontSize: "2rem !important", fontWeight: 700 }}
         color={theme.palette.primary.main}
       >
         Calculate EMI on your home loan!
       </Typography>
-      <Paper elevation={2}>
+      <Paper elevation={2} sx={{ maxWidth: "sm", borderRadius: "1rem" }}>
         <Stack p={4} spacing={4}>
           {inputFields
             .slice(0, 2)

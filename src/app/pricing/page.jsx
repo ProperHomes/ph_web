@@ -20,6 +20,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { getRupees } from "src/utils/helper";
 import CustomTabPanel from "@/components/CustomTabPanel";
 import useToggleAuth from "src/hooks/useToggleAuth";
+import { StyledContainer } from "@/styles/styles";
 
 const CustomTabs = styled(Tabs)(({ theme }) => ({
   background:
@@ -98,141 +99,82 @@ export default function Pricing() {
   };
 
   return (
-    <Stack py={4} spacing={4} alignItems="center" justifyContent="center">
-      <CustomTabs
-        value={index}
-        onChange={handleChange}
-        TabIndicatorProps={{
-          style: {
-            backgroundColor: isDarkMode
-              ? "transparent"
-              : theme.palette.secondary.main,
-            height: "100%",
-            border: `1px solid ${theme.palette.info.main}`,
-            borderRadius: "1rem",
-            borderTopLeftRadius: "1rem !important",
-            transitionDuration: "0.5s",
-          },
-        }}
-        aria-label="pricing page select buyer or seller"
-      >
-        {["Owner/Seller", "Buyer/Tenant"].map((t) => {
-          return (
-            <Tab
-              key={t}
-              disableRipple
-              disableFocusRipple
-              sx={{
-                width: "50%",
-              }}
-              label={<Typography fontSize="1.5rem">{t}</Typography>}
-            />
-          );
-        })}
-      </CustomTabs>
+    <StyledContainer>
+      <Stack py={4} spacing={4} alignItems="center" justifyContent="center">
+        <CustomTabs
+          value={index}
+          onChange={handleChange}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: isDarkMode
+                ? "transparent"
+                : theme.palette.secondary.main,
+              height: "100%",
+              border: `1px solid ${theme.palette.info.main}`,
+              borderRadius: "1rem",
+              borderTopLeftRadius: "1rem !important",
+              transitionDuration: "0.5s",
+            },
+          }}
+          aria-label="pricing page select buyer or seller"
+        >
+          {["Owner/Seller", "Buyer/Tenant"].map((t) => {
+            return (
+              <Tab
+                key={t}
+                disableRipple
+                disableFocusRipple
+                sx={{
+                  width: "50%",
+                }}
+                label={<Typography fontSize="1.5rem">{t}</Typography>}
+              />
+            );
+          })}
+        </CustomTabs>
 
-      <CustomTabPanel index={0} value={index}>
-        <Stack spacing={2}>
-          <Typography textAlign="center" fontSize="1.2rem">
-            All Paid plans come with a <b>10% Annual Discount</b> ..!
-          </Typography>
-          <Stack
-            display={{ xs: "none", md: "flex" }}
-            direction="row"
-            justifyContent="space-between"
-            spacing={4}
-          >
-            {sellerPricing.map(({ name, price, features }) => {
-              return (
-                <ListBox
-                  key={name}
-                  sx={{
-                    maxWidth: "300px",
-                  }}
-                >
-                  <Stack
-                    spacing={2}
-                    direction="row"
-                    alignItems="center"
-                    px={1}
-                    py={2}
+        <CustomTabPanel index={0} value={index}>
+          <Stack spacing={2}>
+            <Typography textAlign="center" fontSize="1.2rem">
+              All Paid plans come with a <b>10% Annual Discount</b> ..!
+            </Typography>
+            <Stack
+              display={{ xs: "none", md: "flex" }}
+              direction="row"
+              justifyContent="space-between"
+              spacing={4}
+            >
+              {sellerPricing.map(({ name, price, features }) => {
+                return (
+                  <ListBox
+                    key={name}
                     sx={{
-                      backgroundColor: theme.palette.background.default,
+                      maxWidth: "300px",
                     }}
                   >
-                    <Typography fontSize="1.5rem" fontWeight={800}>
-                      {name}
-                    </Typography>
-                    <Typography
-                      fontSize="1rem"
-                      color="#ff5757"
-                      fontWeight={800}
-                    >
-                      {price > 0 && `${getRupees(price)} /month`}
-                    </Typography>
-                  </Stack>
-                  <Divider />
-                  <List>
-                    {features.map((f) => {
-                      return (
-                        <ListItem key={f}>
-                          <ListItemText>{f}</ListItemText>
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                  <Button
-                    variant="outlined"
-                    onClick={!isLoggedIn ? toggleAuth : () => {}}
-                    sx={{
-                      marginTop: "auto",
-                      borderRadius: "0.8rem",
-                      borderColor: theme.palette.info.main,
-                      color: theme.palette.info.main,
-                      fontWeight: 800,
-                      fontSize: "1rem",
-                    }}
-                  >
-                    {isLoggedIn ? "Get this Plan" : "Signup Now"}
-                  </Button>
-                </ListBox>
-              );
-            })}
-          </Stack>
-
-          <Stack
-            display={{ xs: "flex", md: "none" }}
-            direction="column"
-            justifyContent="space-between"
-            spacing={2}
-          >
-            {sellerPricing.map(({ name, price, features }) => {
-              return (
-                <Accordion key={name} defaultExpanded>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Stack
                       spacing={2}
                       direction="row"
                       alignItems="center"
-                      p={1}
+                      px={1}
+                      py={2}
                       sx={{
                         backgroundColor: theme.palette.background.default,
                       }}
                     >
-                      <Typography
-                        fontSize={{ xs: "1.2rem", md: "1.5rem" }}
-                        fontWeight={800}
-                      >
+                      <Typography fontSize="1.5rem" fontWeight={800}>
                         {name}
                       </Typography>
-                      <Typography fontSize="1rem" fontWeight={800}>
-                        {name !== "Free" && `${getRupees(price)} /month`}
+                      <Typography
+                        fontSize="1rem"
+                        color="#ff5757"
+                        fontWeight={800}
+                      >
+                        {price > 0 && `${getRupees(price)} /month`}
                       </Typography>
                     </Stack>
-                  </AccordionSummary>
-                  <Divider />
-                  <AccordionDetails>
-                    <Stack>
+                    <Divider />
+                    <List>
                       {features.map((f) => {
                         return (
                           <ListItem key={f}>
@@ -240,82 +182,144 @@ export default function Pricing() {
                           </ListItem>
                         );
                       })}
-                      <Button
-                        variant="outlined"
+                    </List>
+                    <Button
+                      variant="outlined"
+                      onClick={!isLoggedIn ? toggleAuth : () => {}}
+                      sx={{
+                        marginTop: "auto",
+                        borderRadius: "0.8rem",
+                        borderColor: theme.palette.info.main,
+                        color: theme.palette.info.main,
+                        fontWeight: 800,
+                        fontSize: "1rem",
+                      }}
+                    >
+                      {isLoggedIn ? "Get this Plan" : "Signup Now"}
+                    </Button>
+                  </ListBox>
+                );
+              })}
+            </Stack>
+
+            <Stack
+              display={{ xs: "flex", md: "none" }}
+              direction="column"
+              justifyContent="space-between"
+              spacing={2}
+            >
+              {sellerPricing.map(({ name, price, features }) => {
+                return (
+                  <Accordion key={name} defaultExpanded>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Stack
+                        spacing={2}
+                        direction="row"
+                        alignItems="center"
+                        p={1}
                         sx={{
-                          marginTop: "auto",
-                          borderRadius: "0.8rem",
-                          borderColor: theme.palette.info.main,
-                          color: theme.palette.info.main,
-                          fontWeight: 800,
-                          fontSize: "1rem",
+                          backgroundColor: theme.palette.background.default,
                         }}
                       >
-                        Signup Now
-                      </Button>
-                    </Stack>
-                  </AccordionDetails>
-                </Accordion>
-              );
-            })}
+                        <Typography
+                          fontSize={{ xs: "1.2rem", md: "1.5rem" }}
+                          fontWeight={800}
+                        >
+                          {name}
+                        </Typography>
+                        <Typography fontSize="1rem" fontWeight={800}>
+                          {name !== "Free" && `${getRupees(price)} /month`}
+                        </Typography>
+                      </Stack>
+                    </AccordionSummary>
+                    <Divider />
+                    <AccordionDetails>
+                      <Stack>
+                        {features.map((f) => {
+                          return (
+                            <ListItem key={f}>
+                              <ListItemText>{f}</ListItemText>
+                            </ListItem>
+                          );
+                        })}
+                        <Button
+                          variant="outlined"
+                          sx={{
+                            marginTop: "auto",
+                            borderRadius: "0.8rem",
+                            borderColor: theme.palette.info.main,
+                            color: theme.palette.info.main,
+                            fontWeight: 800,
+                            fontSize: "1rem",
+                          }}
+                        >
+                          Signup Now
+                        </Button>
+                      </Stack>
+                    </AccordionDetails>
+                  </Accordion>
+                );
+              })}
+            </Stack>
           </Stack>
-        </Stack>
-      </CustomTabPanel>
+        </CustomTabPanel>
 
-      <CustomTabPanel value={index} index={1}>
-        <ListBox
-          spacing={4}
-          sx={{
-            boxShadow: theme.shadows[1],
-            maxWidth: "500px",
-          }}
-        >
-          <Typography sx={{ fontSize: "1.2rem" }}>
-            a&#41; Every property listed on <Link href="/">ProperHomes</Link> is
-            <b> manually verified by us.</b>
-          </Typography>
-          <Typography sx={{ fontSize: "1.2rem" }}>
-            b&#41; As a buyer or tenant, you can{" "}
-            <b> view unlimited properties for free.</b>
-          </Typography>
-          <Typography sx={{ fontSize: "1.2rem" }}>
-            c&#41; To access contact details of properties, you need credits
-            which costs <b>{getRupees(25)}</b> each. So with 1 credit you can
-            view contact details of one property.
-          </Typography>
-          <Typography sx={{ fontSize: "1.2rem" }}>
-            d&#41; <b>Credits never expire </b> unlike other platforms.
-            You&apos;ll always have acccess to previously viewed contact details
-            of a property forever.
-          </Typography>
-          <Button
-            variant="outlined"
+        <CustomTabPanel value={index} index={1}>
+          <ListBox
+            spacing={4}
             sx={{
-              marginTop: "auto",
-              borderRadius: "0.8rem",
-              borderColor: theme.palette.info.main,
-              color: theme.palette.info.main,
-              fontWeight: 800,
-              fontSize: "1rem",
+              boxShadow: theme.shadows[1],
+              maxWidth: "500px",
             }}
           >
-            Buy Credits
-          </Button>
-        </ListBox>
-      </CustomTabPanel>
+            <Typography sx={{ fontSize: "1.2rem" }}>
+              a&#41; Every property listed on <Link href="/">ProperHomes</Link>{" "}
+              is
+              <b> manually verified by us.</b>
+            </Typography>
+            <Typography sx={{ fontSize: "1.2rem" }}>
+              b&#41; As a buyer or tenant, you can{" "}
+              <b> view unlimited properties for free.</b>
+            </Typography>
+            <Typography sx={{ fontSize: "1.2rem" }}>
+              c&#41; To access contact details of properties, you need credits
+              which costs <b>{getRupees(25)}</b> each. So with 1 credit you can
+              view contact details of one property.
+            </Typography>
+            <Typography sx={{ fontSize: "1.2rem" }}>
+              d&#41; <b>Credits never expire </b> unlike other platforms.
+              You&apos;ll always have acccess to previously viewed contact
+              details of a property forever.
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                marginTop: "auto",
+                borderRadius: "0.8rem",
+                borderColor: theme.palette.info.main,
+                color: theme.palette.info.main,
+                fontWeight: 800,
+                fontSize: "1rem",
+              }}
+            >
+              Buy Credits
+            </Button>
+          </ListBox>
+        </CustomTabPanel>
 
-      <Typography>
-        If you have any questions, you can either read the{" "}
-        <Link
-          href="/faq"
-          prefetch={false}
-          style={{ textDecoration: "underline" }}
-        >
-          FAQ questions
-        </Link>{" "}
-        or contact us directly at support@properhomes.in
-      </Typography>
-      {Auth}
-    </Stack>
+        <Typography>
+          If you have any questions, you can either read the{" "}
+          <Link
+            href="/faq"
+            prefetch={false}
+            style={{ textDecoration: "underline" }}
+          >
+            FAQ questions
+          </Link>{" "}
+          or contact us directly at support@properhomes.in
+        </Typography>
+        {Auth}
+      </Stack>
+    </StyledContainer>
   );
 }

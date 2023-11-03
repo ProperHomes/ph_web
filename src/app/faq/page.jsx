@@ -2,11 +2,11 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { StyledContainer } from "@/styles/styles";
 
 const buyerFAQ = [
   {
@@ -110,8 +110,8 @@ const sellerFAQ = [
 
 export default function FAQ() {
   return (
-    <Container>
-      <Stack spacing={4} py={4} sx={{ maxWidth: "1024px" }}>
+    <StyledContainer>
+      <Stack spacing={4} py={4} sx={{ maxWidth: "1024px", margin: "0 auto" }}>
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}
@@ -197,6 +197,6 @@ export default function FAQ() {
           })}
         </Stack>
       </Stack>
-    </Container>
+    </StyledContainer>
   );
 }
