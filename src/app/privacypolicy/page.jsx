@@ -16,11 +16,11 @@ export default function Privacy() {
       <Typography gutterBottom>
         ProperHomes is the owned by Proper Eleven Technologies Private Limited.
       </Typography>
-      
+
       <Typography gutterBottom>
-        At ProperHomes, accessible from https://properhomes.in, one of our main
-        priorities is the privacy of our visitors. This Privacy Policy document
-        contains types of information that is collected and recorded by
+        At ProperHomes, accessible from https://www.properhomes.in, one of our
+        main priorities is the privacy of our visitors. This Privacy Policy
+        document contains types of information that is collected and recorded by
         ProperHomes and how we use it.
       </Typography>
 

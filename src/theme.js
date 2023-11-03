@@ -71,6 +71,11 @@ const defaultThemeOptions = {
             color: "#f9f9f9",
           }),
         }),
+        h2: ({ theme }) => ({
+          ...(theme.palette.mode === "dark" && {
+            color: "#f9f9f9",
+          }),
+        }),
         h4: ({ theme }) => ({
           ...(theme.palette.mode === "dark" && {
             color: "#f9f9f9",
