@@ -37,8 +37,8 @@ export async function generateMetadata({ params }) {
   }
 
   let title =
-    "Find Properties for Sale & Rent in India without brokers | Buy, Sell & Rent Properties";
-  let description = `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease and more at ProperHomes.`;
+    "Find Properties for Sale & Rent in India without brokers. Buy, Sell & Rent Properties";
+  let description = `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`;
   if (isCityLink) {
     const { title: cityLinkTitle, city } = navLinkWithCity;
     title = `${cityLinkTitle} | ProperHomes`;
@@ -50,14 +50,14 @@ export async function generateMetadata({ params }) {
   } else {
     title = navLink?.title
       ? `${navLink.title} | ProperHomes`
-      : "ProperHomes | Find Properties | Buy Sell Rent Properties in India | No Brokers | Manage Rentals";
+      : "Find Properties for Sale & Rent in India without brokers. Buy, Sell & Rent Properties";
     description = isPG
       ? `Find Paying Guest Accomodation. Find Properties available for PG. PG ready properties.`
       : navLink && propertyType
       ? `${capitalizeFirstLetter(
           propertyType
         )}s for Sale, Rent! Search Properties for Sale, Rent in India. ProperHomes`
-      : `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease and more at ProperHomes.`;
+      : `Search Properties for Sale, Rent! Find Residential Properties and New Projects. List property for sale, rent or lease, Manage Rentals and more at ProperHomes.`;
   }
 
   return {
