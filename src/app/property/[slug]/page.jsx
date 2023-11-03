@@ -21,7 +21,7 @@ export async function generateMetadata({ params }, parent) {
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title,
+    title: `${title} - ProperHomes`,
     description,
     openGraph: {
       images: [coverImage, ...previousImages].filter((x) => x),

@@ -288,7 +288,9 @@ function PropertyCard({
 
       <Link href={`/property/${slug}`} prefetch={false} title={formattedTitle}>
         <Typography
+          variant="h2"
           sx={{
+            fontSize: "1rem !important",
             width: "100%",
             maxWidth: { xs: "100%", md: "280px" },
             fontWeight: "medium",

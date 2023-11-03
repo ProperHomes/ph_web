@@ -32,8 +32,8 @@ let list = [
     Icon: SaveIcon,
   },
   {
-    label: "Subscription/Payments",
-    href: "/dashboard/subscription",
+    label: "Payments",
+    href: "/dashboard/subscription", // Todo: should be /payments
     Icon: CreditCardIcon,
   },
   {
