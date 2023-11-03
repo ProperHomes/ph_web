@@ -286,34 +286,37 @@ function PropertyCard({
         )}
       </Box>
 
-      <Link href={`/property/${slug}`} prefetch={false} title={formattedTitle}>
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: "1rem !important",
-            width: "100%",
-            maxWidth: { xs: "100%", md: "280px" },
-            fontWeight: "medium",
-            textTransform: "capitalize",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
+      <Typography
+        variant="h2"
+        sx={{
+          fontSize: "1rem !important",
+          width: "100%",
+          maxWidth: { xs: "100%", md: "280px" },
+          fontWeight: "medium",
+          textTransform: "capitalize",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <Link
+          href={`/property/${slug}`}
+          prefetch={false}
+          title={formattedTitle}
         >
           {PROPERTY_TYPE[type]?.toLowerCase()}{" "}
           {PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""} for{" "}
           {listedFor?.toLowerCase()} in {city.toLowerCase()}
-        </Typography>
+        </Link>
+      </Typography>
+
+      <Link href={`/property/${slug}`} prefetch={false} title={formattedTitle}>
         <Stack
           direction="row"
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography
-            fontWeight="bold"
-            color="primary.main"
-            suppressHydrationWarning
-          >
+          <Typography fontWeight="bold" color="primary.main">
             {formattedPrice.slice(0, -3)}{" "}
             {listedFor === LISTING_TYPE.RENT ? " monthly " : ""}
           </Typography>

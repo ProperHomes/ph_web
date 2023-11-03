@@ -47,7 +47,21 @@ function Dashboardnav() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
-  const { isBuyer, isSeller, isBuyerAndSeller } = useAppContext();
+  const { state, isBuyer, isSeller, isBuyerAndSeller } = useAppContext();
+
+  let navList = list;
+  if (state?.user?.isSysAdmin) {
+    navList = [
+      {
+        label: "SysAdmin",
+        href: "/dashboard/sysadmin",
+        Icon: PersonIcon,
+      },
+      ,
+      ...navList,
+    ];
+  }
+
   return (
     <>
       <Stack
@@ -62,7 +76,7 @@ function Dashboardnav() {
           maxHeight: "85vh",
         }}
       >
-        {list.map(({ label, href, Icon }) => {
+        {navList.map(({ label, href, Icon }) => {
           let isActive = pathname === href;
           if (label === "Manage Properties") {
             isActive = pathname.includes(href);

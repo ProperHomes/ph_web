@@ -14,6 +14,7 @@ export const USER_FIELDS = gql`
     avatar {
       signedUrl
     }
+    isSysAdmin
     email
     credits
     subscriptionPurchases {
