@@ -35,7 +35,7 @@ const infoBoxes = [
     description: (
       <Typography variant="body2">
         <b>100% Digital experience.</b> Even if its Aadhar or Police
-        Verification.
+        Verification. Coming Soon.
       </Typography>
     ),
   },

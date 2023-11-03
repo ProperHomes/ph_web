@@ -1,4 +1,4 @@
-import EMICalculator from "src/components/EmiCalculator";
+import EMICalculator from "./EmiCalculator";
 
 export default function Page() {
   return <EMICalculator />;

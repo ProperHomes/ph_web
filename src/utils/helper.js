@@ -117,12 +117,12 @@ export function findKeyByValue(obj, value) {
 }
 
 // tenure in months
-export function calculateEmi({ principal, tenure, interest }) {
+export function calculateEmi({ loanAmount, tenure, interest }) {
   const numberOfMonths = tenure * 12;
   const rate = interest / 100 / 12;
   const top = Math.pow(1 + rate, numberOfMonths);
   const bottom = top - 1;
-  return Math.trunc(principal * rate * (top / bottom));
+  return Math.trunc(loanAmount * rate * (top / bottom));
 }
 
 // credit: https://github.com/salmanm/num-words/blob/main/index.js

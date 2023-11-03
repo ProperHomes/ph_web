@@ -93,6 +93,14 @@ module.exports = {
         lastmod: new Date().toISOString(),
       });
     }
+    for (let city of ALL_CITIES) {
+      paths.push({
+        loc: `/${city.toLowerCase()}`,
+        changefreq: "hourly",
+        priority: 1,
+        lastmod: new Date().toISOString(),
+      });
+    }
     return paths;
   },
 };

@@ -303,6 +303,18 @@ export default function Pricing() {
           </Button>
         </ListBox>
       </CustomTabPanel>
+
+      <Typography>
+        If you have any questions, you can either read the{" "}
+        <Link
+          href="/faq"
+          prefetch={false}
+          style={{ textDecoration: "underline" }}
+        >
+          FAQ questions
+        </Link>{" "}
+        or contact us directly at support@properhomes.in
+      </Typography>
       {Auth}
     </Stack>
   );

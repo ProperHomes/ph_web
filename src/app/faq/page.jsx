@@ -2,6 +2,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -108,87 +110,93 @@ const sellerFAQ = [
 
 export default function FAQ() {
   return (
-    <Stack spacing={4} py={4} sx={{ maxWidth: "1024px" }}>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={2}
-        alignItems="center"
-      >
-        <Typography
-          variant="h1"
-          sx={{ fontSize: "2rem !important", fontWeight: 700 }}
-        >
-          ProperHomes: Frequently Asked Questions
-        </Typography>
-
+    <Container>
+      <Stack spacing={4} py={4} sx={{ maxWidth: "1024px" }}>
         <Stack
           direction={{ xs: "column", md: "row" }}
-          py={2}
           spacing={2}
           alignItems="center"
         >
-          <Button
-            variant="outlined"
-            size="large"
-            component="a"
-            href="#buyersFAQ"
-            sx={{ whiteSpace: "nowrap" }}
+          <Typography
+            variant="h1"
+            sx={{ fontSize: "2rem !important", fontWeight: 700 }}
           >
-            View Buyers FAQ
-          </Button>
-          <Button
-            variant="outlined"
-            size="large"
-            component="a"
-            href="#sellersFAQ"
-            sx={{ whiteSpace: "nowrap" }}
+            ProperHomes: Frequently Asked Questions
+          </Typography>
+
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            py={2}
+            spacing={2}
+            alignItems="center"
           >
-            View Sellers FAQ
-          </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              component="a"
+              href="#buyersFAQ"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              View Buyers FAQ
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              component="a"
+              href="#sellersFAQ"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              View Sellers FAQ
+            </Button>
+          </Stack>
+        </Stack>
+
+        <Stack spacing={2} py={4} id="buyersFAQ">
+          <Typography
+            variant="h2"
+            sx={{ fontSize: "1.4rem !important", textDecoration: "underline" }}
+          >
+            ProperHomes FAQ for Buyers or Tenants:
+          </Typography>
+          {buyerFAQ.map(({ question, answer }, index) => {
+            return (
+              <Accordion key={index}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography sx={{ fontSize: "1.2rem" }}>
+                    {question}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography sx={{ fontSize: "1.2rem" }}>{answer}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            );
+          })}
+        </Stack>
+
+        <Stack spacing={2} py={4} id="sellersFAQ">
+          <Typography
+            variant="h2"
+            sx={{ fontSize: "1.4rem !important", textDecoration: "underline" }}
+          >
+            ProperHomes FAQ for Sellers or Owners:
+          </Typography>
+          {sellerFAQ.map(({ question, answer }, index) => {
+            return (
+              <Accordion key={index}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography sx={{ fontSize: "1.2rem" }}>
+                    {question}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography sx={{ fontSize: "1.2rem" }}>{answer}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            );
+          })}
         </Stack>
       </Stack>
-
-      <Stack spacing={2} py={4} id="buyersFAQ">
-        <Typography
-          variant="h2"
-          sx={{ fontSize: "1.4rem !important", textDecoration: "underline" }}
-        >
-          ProperHomes FAQ for Buyers or Tenants:
-        </Typography>
-        {buyerFAQ.map(({ question, answer }, index) => {
-          return (
-            <Accordion key={index}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography sx={{ fontSize: "1.2rem" }}>{question}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography sx={{ fontSize: "1.2rem" }}>{answer}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
-      </Stack>
-
-      <Stack spacing={2} py={4} id="sellersFAQ">
-        <Typography
-          variant="h2"
-          sx={{ fontSize: "1.4rem !important", textDecoration: "underline" }}
-        >
-          ProperHomes FAQ for Sellers or Owners:
-        </Typography>
-        {sellerFAQ.map(({ question, answer }, index) => {
-          return (
-            <Accordion key={index}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography sx={{ fontSize: "1.2rem" }}>{question}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography sx={{ fontSize: "1.2rem" }}>{answer}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
-      </Stack>
-    </Stack>
+    </Container>
   );
 }

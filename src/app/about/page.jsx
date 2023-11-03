@@ -51,8 +51,9 @@ function AboutUs() {
           <Typography sx={{ fontSize: "1.2rem" }}>
             Your privacy and peace of mind are our top priorities. ProperHomes
             is committed to the strictest privacy and ownership standards. We
-            will never spam our users unless explicitly requested or given
-            permission to do so. Your trust is paramount to us.
+            will never spam our users. We will not contact them unless
+            explicitly requested or given permission to do so. Your trust is
+            paramount to us.
           </Typography>
         </Stack>
         <Stack spacing={1}>
