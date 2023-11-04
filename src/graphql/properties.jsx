@@ -83,6 +83,37 @@ export const GET_PROPERTIES = gql`
   }
 `;
 
+export const GET_PROPERTIES_BY_LISTING_STATUS = gql`
+  ${PROPERTY_FIELDS}
+  query getProperties(
+    $first: Int
+    $after: Cursor
+    $listingStatus: ListingStatus!
+    $orderBy: [PropertiesOrderBy!]!
+  ) {
+    properties(
+      first: $first
+      after: $after
+      orderBy: $orderBy
+      condition: { listingStatus: $listingStatus }
+    ) {
+      edges {
+        cursor
+        node {
+          ...PropertyFields
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
+    }
+  }
+`;
+
 export const GET_OWNER_PROPERTIES = gql`
   ${PROPERTY_FIELDS}
   query getProperties($ownerId: UUID!, $first: Int!, $offset: Int!) {

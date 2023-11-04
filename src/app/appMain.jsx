@@ -15,6 +15,12 @@ import { AppProvider } from "src/appContext";
 import "../styles/globals.css";
 
 const links = [
+  "/about",
+  "/faq",
+  "/pricing",
+  "/terms-and-conditions",
+  "/privacypolicy",
+  "/homeloans/emi-calculator",
   "/create-rental-agreement",
   "/list-your-property-for-sale-rent-lease",
   "/property-rental-management-for-owners-managers",

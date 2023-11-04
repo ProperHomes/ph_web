@@ -56,7 +56,7 @@ function NavbarRight() {
         <Button
           size="large"
           LinkComponent={Link}
-          href="/dashboard"
+          href="/dashboard/manage"
           aria-label="dashboard link"
         >
           Dashboard

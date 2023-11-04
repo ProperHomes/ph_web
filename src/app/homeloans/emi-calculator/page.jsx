@@ -1,5 +1,10 @@
-import EMICalculator from "src/components/EmiCalculator";
+import { StyledContainer } from "@/styles/styles";
+import EMICalculator from "./EmiCalculator";
 
 export default function Page() {
-  return <EMICalculator />;
+  return (
+    <StyledContainer>
+      <EMICalculator />
+    </StyledContainer>
+  );
 }

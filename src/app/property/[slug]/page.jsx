@@ -21,7 +21,7 @@ export async function generateMetadata({ params }, parent) {
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title,
+    title: `${title} - ProperHomes`,
     description,
     openGraph: {
       images: [coverImage, ...previousImages].filter((x) => x),
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }, parent) {
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
-  const { id, city, type } = data;
+  const { id, city, type, title, description, bedrooms, price } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 3,
     city,
@@ -42,6 +42,7 @@ export default async function Page({ params }) {
   });
   const properties =
     similarRes?.properties?.edges?.map((edge) => edge.node) ?? [];
+
   return (
     <Stack spacing={2} px={{ xs: 1, sm: 3, md: 4 }} py={2}>
       <Profile data={data} similarProperties={properties} />

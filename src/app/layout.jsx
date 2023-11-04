@@ -9,39 +9,43 @@ const BottomNavbar = dynamic(() => import("../components/BottomNavbar"));
 const Footer = dynamic(() => import("../components/Footer"));
 
 export const metadata = {
-  title: "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
-  description: `Find Homes and Properties for sale, rent or lease. 
-  List your property for sale, rent or lease. Manage Rental Properties, Say goodbye to spam, scams and brokers.`,
+  title:
+    "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
+  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
   keywords: [
-    "Properties for Sale",
-    "Properties for Rent",
-    "Properties for Lease",
-    "Homes for sale",
-    "Homes for rent",
-    "Homes for lease",
+    "2BHK apartments for sale",
+    "3BHK apartments for sale",
+    "2BHK apartments for rent",
+    "3BHK apartments for rent",
+    "Homes for sale, rent",
+    "Flats for sale, rent",
+    "Apartments for sale, rent",
+    "Properties for Sale, Rent",
     "Real Estate India",
+    "Find Residential properties",
+    "Find Real Estate Projects",
     "Rental Property Management in India",
     "Manage Rental Properties",
+    "100% verified Owners",
+    "No Brokers, No Agents, No Middlemen",
     "ProperHomes",
     "Proper Homes",
   ],
-  metadataBase: new URL("https://properhomes.in"),
+  metadataBase: new URL("https://www.properhomes.in"),
   openGraph: {
     title:
-      "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
-    description: `Find homes and properties for sale, rent, or lease. 
-    List your property for sale, rent or lease. No more spam calls, no more scams and no more brokers.`,
+      "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
+    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
     siteName: "ProperHomes",
-    url: "https://properhomes.in",
+    url: "https://www.properhomes.in",
     type: "website",
     images: "/logo.png",
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Find Properties | Buy Sell Rent Properties in India | Manage Rentals",
-    description: `Find homes and properties for sale, rent or lease, manually verified by us. 
-  List your property for sale, rent or lease. Say goodbye to spam calls, scams and brokers.`,
+      "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
+    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
     creator: "@ProperHomes",
     images: ["/logo.png"],
   },
@@ -59,6 +63,43 @@ export const manRope = Manrope({
 });
 
 function RootLayout({ children }) {
+  const jsonLD = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "ProperHomes",
+    url: "https://www.properhomes.in/",
+    alternateName: "Proper Homes",
+    description:
+      "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://properhomes.in/logo.png",
+      width: 374,
+      height: 72,
+    },
+    // sameAs: [
+    //   "https://www.facebook.com/magicbricks",
+    //   "https://www.twitter.com/magicbricks",
+    //   "https://www.youtube.com/user/magicbricksvideo",
+    //   "https://www.linkedin.com/company/magicbricks/",
+    // ],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress:
+        "Proper Eleven Technologies Private Limited (properhomes.in), Sarojini Heights, Kanuru, 520007",
+      addressLocality: "Vijayawada",
+      addressRegion: "India",
+      postalCode: "520007",
+    },
+    // contactPoint: [
+    //   {
+    //     "@type": "ContactPoint",
+    //     telephone: "+91 120-6866600",
+    //     contactType: "Customer Service",
+    //     areaServed: "India",
+    //   },
+    // ],
+  };
   return (
     <html lang="en">
       <head>
@@ -70,13 +111,14 @@ function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content="Find Properties | Buy Sell Rent Properties in India | Manage Rentals"
+          content="ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more."
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#2B5797" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="canonical" href="https://www.properhomes.in" />
         <link rel="apple-touch-icon" href="/assets/images/LogoIcon.png" />
         <link
           rel="apple-touch-icon"
@@ -93,16 +135,11 @@ function RootLayout({ children }) {
           sizes="167x167"
           href="/assets/images/PWA/ios/167.png"
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/assets/images/LogoIcon.png"
-        />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="mask-icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="mask-icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.png" />
       </head>
       <body className={manRope.className}>
         <NextTopLoader showSpinner={false} />
@@ -131,6 +168,10 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
+        />
       </body>
     </html>
   );

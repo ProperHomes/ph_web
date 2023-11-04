@@ -104,7 +104,7 @@ export const navlinksSale = [
   { link: "farm-houses-for-sale", title: "Farm Houses For Sale" },
   {
     link: "commercial-properties-for-sale",
-    title: "Commerical Properties For Sale",
+    title: "Commercial Properties For Sale",
   },
   {
     link: "bungalows-for-sale",
@@ -146,6 +146,7 @@ for (let link of navlinks) {
       title: `${link.title} in ${
         city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()
       }`,
+      city,
     });
   }
 }

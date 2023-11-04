@@ -90,10 +90,6 @@ function PropertyProfile({ data, similarProperties }) {
       label: hasParking ? "Parking Facility" : "No Parking",
       value: "",
     },
-    {
-      label: hasSwimmingPool ? "Swimming Pool" : "No Swimming Pool",
-      value: facing,
-    },
   ];
 
   return (
