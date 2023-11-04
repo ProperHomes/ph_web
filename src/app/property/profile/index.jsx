@@ -26,7 +26,6 @@ function PropertyProfile({ data, similarProperties }) {
     facing,
     isFurnished,
     hasParking,
-    hasSwimmingPool,
     media,
     city,
     listedFor,
@@ -89,10 +88,6 @@ function PropertyProfile({ data, similarProperties }) {
     {
       label: hasParking ? "Parking Facility" : "No Parking",
       value: "",
-    },
-    {
-      label: hasSwimmingPool ? "Swimming Pool" : "No Swimming Pool",
-      value: facing,
     },
   ];
 
