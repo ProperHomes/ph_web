@@ -53,7 +53,8 @@ module.exports = withPWA({
     ignoreDuringBuilds: true,
   },
   images: {
-    minimumCacheTTL: 86400,
+    formats: ["image/webp"],
+    minimumCacheTTL: 86400 * 30, // 30 days
     remotePatterns: [
       {
         protocol: "https",
