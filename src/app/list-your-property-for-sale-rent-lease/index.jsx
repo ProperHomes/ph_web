@@ -71,7 +71,7 @@ const propertyResolver = {
   media: yup
     .array()
     .min(5, "atleast fives images are required")
-    .max(10, "Only 10 max images can be added")
+    .max(20, "Only 20 maximum images can be added")
     .required(),
 };
 
@@ -107,7 +107,13 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
   },
 }));
 
-function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
+function CreatePropertySaleRentLease({
+  data,
+  handleCancel,
+  isFromDashboard,
+  ownerId,
+  ownerNumber,
+}) {
   const theme = useTheme();
   const router = useRouter();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
@@ -171,7 +177,7 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
             file: {
               key: f,
               extension: f.type,
-              creatorId: loggedInUser?.id,
+              creatorId: ownerId ?? loggedInUser?.id,
             },
           });
           if (newFile?.id) {
@@ -256,14 +262,16 @@ function CreatePropertySaleRentLease({ data, handleCancel, isFromDashboard }) {
     try {
       const dataNew = { ...data };
       delete dataNew.media;
-      const slug = `${convertStringToSlug(data.title)}-${loggedInUser?.number}`;
+      const slug = `${convertStringToSlug(data.title)}-${
+        ownerNumber ?? loggedInUser?.number
+      }`;
       const res = await createProperty({
         variables: {
           input: {
             property: {
               ...dataNew,
               slug,
-              ownerId: loggedInUser?.id,
+              ownerId: ownerId ?? loggedInUser?.id,
               country: "INDIA",
               isFurnished: Boolean(data.isFurnished),
               hasParking: Boolean(data.hasParking),

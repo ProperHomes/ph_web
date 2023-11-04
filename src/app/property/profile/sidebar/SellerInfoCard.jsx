@@ -62,35 +62,36 @@ function SellerInfoCard(props) {
     if (!isLoggedIn) {
       return toggleAuth();
     }
-    if (hasPaidAlready) {
-      return toggleContactDetails();
-    }
-    if (hasCredits) {
-      setIsSubmitting(true);
-      toggleContactDetails();
-      await addPropertyCreditExpense({
-        variables: {
-          input: {
-            propertyCreditExpense: { userId: loggedInUser?.id, propertyId },
-          },
-        },
-      });
-      refetch();
-      await updateUser({
-        variables: {
-          input: {
-            id: loggedInUser?.id,
-            patch: { credits: userCredits - 1 },
-          },
-        },
-      });
-      dispatch({
-        type: appActionTypes.UPDATE_LOGGED_IN_USER,
-        user: { ...state.user, credits: userCredits - 1 },
-      });
-      setIsSubmitting(false);
-    }
-    togglePaymentModal();
+    toggleContactDetails();
+    // if (hasPaidAlready) {
+    //   return toggleContactDetails();
+    // }
+    // if (hasCredits) {
+    //   setIsSubmitting(true);
+    //   toggleContactDetails();
+    //   await addPropertyCreditExpense({
+    //     variables: {
+    //       input: {
+    //         propertyCreditExpense: { userId: loggedInUser?.id, propertyId },
+    //       },
+    //     },
+    //   });
+    //   refetch();
+    //   await updateUser({
+    //     variables: {
+    //       input: {
+    //         id: loggedInUser?.id,
+    //         patch: { credits: userCredits - 1 },
+    //       },
+    //     },
+    //   });
+    //   dispatch({
+    //     type: appActionTypes.UPDATE_LOGGED_IN_USER,
+    //     user: { ...state.user, credits: userCredits - 1 },
+    //   });
+    //   setIsSubmitting(false);
+    // }
+    // togglePaymentModal();
   };
 
   return (

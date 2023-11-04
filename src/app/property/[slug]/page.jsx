@@ -33,7 +33,17 @@ export async function generateMetadata({ params }, parent) {
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
-  const { id, city, type, title, description, bedrooms, price } = data;
+  const {
+    id,
+    city,
+    type,
+    title,
+    description,
+    bedrooms,
+    price,
+    area,
+    areaUnit,
+  } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 3,
     city,
@@ -56,7 +66,7 @@ export default async function Page({ params }) {
     type,
     name: `${title}`,
     description,
-    url: `https://www.properhomes.in/property/${slug}`,
+    url: `https://www.properhomes.in/property/${params.slug}`,
     numberOfRooms: `${bedrooms}`,
     address: {
       "@type": "PostalAddress",

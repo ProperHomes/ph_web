@@ -159,7 +159,9 @@ function PropertyProfile({ data, similarProperties }) {
           </Box>
           <Divider />
           <Typography variant="body1">{description}</Typography>
-          <SimilarProperties city={city} properties={similarProperties} />
+          {similarProperties.length > 0 && (
+            <SimilarProperties city={city} properties={similarProperties} />
+          )}
         </Stack>
 
         <StickyBox
