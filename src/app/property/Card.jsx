@@ -153,7 +153,7 @@ function PropertyCard({
               priority={isPriority}
               quality={100}
               onLoadingComplete={onImageLoadComplete}
-              sizes="(max-width: 324px) 80vw, (max-width: 1200px) 280px, 280px"
+              sizes="(max-width: 324px) 80vw, (max-width: 1200px) 20vw, 20vw"
               style={{
                 opacity: isImageLoaded ? 1 : 0,
                 backgroundColor: "#000",

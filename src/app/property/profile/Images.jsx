@@ -92,6 +92,8 @@ function PropertyImages({ images }) {
                   gridColumn: `${i === 0 ? "span 2 / span 2" : "auto"}`,
                   gridRow: `${i === 0 ? "span 2 / span 2" : "auto"}`,
                   cursor: "pointer",
+                  position: "relative",
+                  height: i === 0 ? "560px" : "280px",
                 }}
               >
                 {!isLoaded && (
@@ -122,12 +124,14 @@ function PropertyImages({ images }) {
                   src={url}
                   priority
                   quality={100}
-                  width={i === 0 ? 560 : 400}
-                  height={i === 0 ? 560 : 280}
+                  fill
+                  sizes={
+                    i === 0
+                      ? "(max-width: 324px) 80vw, (min-width: 1200px) 40vw, 40vw"
+                      : "(max-width: 324px) 80vw, (min-width: 1200px) 20vw, 20vw"
+                  }
                   onLoadingComplete={handleLoadingComplete(i)}
                   style={{
-                    width: "100%",
-                    height: "100%",
                     objectFit: "cover",
                     opacity: isLoaded ? 1 : 0,
                     borderRadius:

@@ -35,7 +35,7 @@ const withPWA = require("next-pwa")({
     process.env.NODE_ENV === "preview",
 });
 
-const nextConfig = {
+module.exports = withPWA({
   swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -47,6 +47,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    formats: ["image/webp"],
+    minimumCacheTTL: 31536000, // 1 year
     remotePatterns: [
       {
         protocol: "https",
@@ -66,12 +68,4 @@ const nextConfig = {
       },
     ];
   },
-};
-
-// const withBundleAnalyzer = require("@next/bundle-analyzer")({
-//   enabled: process.env.ANALYZE === "true",
-// });
-
-// module.exports = withBundleAnalyzer(withPWA(nextConfig));
-
-module.exports = withPWA(nextConfig);
+});

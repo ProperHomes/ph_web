@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
+    "sharp": "^0.32.6",
     "sst": "2.26.10"
   }
 }
