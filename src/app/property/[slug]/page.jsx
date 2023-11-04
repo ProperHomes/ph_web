@@ -7,6 +7,7 @@ import {
 import { client } from "@/graphql/serverClient";
 
 import Profile from "../profile";
+import { numWords } from "@/utils/helper";
 
 export const dynamicParams = true;
 
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }, parent) {
 export default async function Page({ params }) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
-  const { id, city, type } = data;
+  const { id, city, type, title, description, bedrooms, price } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 3,
     city,
@@ -42,9 +43,52 @@ export default async function Page({ params }) {
   });
   const properties =
     similarRes?.properties?.edges?.map((edge) => edge.node) ?? [];
+
+  const pricejsonLD = {
+    "@context": "http://schema.org/",
+    "@type": "PriceSpecification",
+    price: `${numWords(price)}`,
+    priceCurrency: "INR",
+  };
+
+  const propertyjsonLD = {
+    "@context": "http://schema.org/",
+    type,
+    name: `${title}`,
+    description,
+    url: `https://www.properhomes.in/property/${slug}`,
+    numberOfRooms: `${bedrooms}`,
+    address: {
+      "@type": "PostalAddress",
+      // addressLocality: "Alkapur Township",
+      addressRegion: `${city}`,
+      addressCountry: {
+        "@type": "Country",
+        name: "IN",
+      },
+    },
+    // geo: {
+    //   "@type": "GeoCoordinates",
+    //   longitude: "78.3702875",
+    //   latitude: "17.3861055",
+    // },
+    floorSize: {
+      "@type": "QuantitativeValue",
+      name: `${area} ${areaUnit}`,
+    },
+  };
+
   return (
     <Stack spacing={2} px={{ xs: 1, sm: 3, md: 4 }} py={2}>
       <Profile data={data} similarProperties={properties} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricejsonLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(propertyjsonLD) }}
+      />
     </Stack>
   );
 }
