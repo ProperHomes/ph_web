@@ -11,7 +11,7 @@ const Footer = dynamic(() => import("../components/Footer"));
 export const metadata = {
   title:
     "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-  description: `Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
+  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
   keywords: [
     "2BHK apartments for sale",
     "3BHK apartments for sale",
@@ -35,7 +35,7 @@ export const metadata = {
   openGraph: {
     title:
       "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-    description: `Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
+    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
     siteName: "ProperHomes",
     url: "https://www.properhomes.in",
     type: "website",
@@ -45,7 +45,7 @@ export const metadata = {
     card: "summary_large_image",
     title:
       "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-    description: `Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
+    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
     creator: "@ProperHomes",
     images: ["/logo.png"],
   },
@@ -63,6 +63,15 @@ export const manRope = Manrope({
 });
 
 function RootLayout({ children }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "ProperHomes",
+    url: "https://www.properhomes.in/",
+    alternateName: "Proper Homes",
+    description:
+      "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.",
+  };
   return (
     <html lang="en">
       <head>
@@ -134,6 +143,10 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );

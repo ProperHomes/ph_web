@@ -104,7 +104,7 @@ export const navlinksSale = [
   { link: "farm-houses-for-sale", title: "Farm Houses For Sale" },
   {
     link: "commercial-properties-for-sale",
-    title: "Commerical Properties For Sale",
+    title: "Commercial Properties For Sale",
   },
   {
     link: "bungalows-for-sale",

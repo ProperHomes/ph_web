@@ -43,7 +43,7 @@ export async function generateMetadata({ params }) {
 
   let title =
     "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.";
-  let description = `Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`;
+  let description = `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`;
   if (isCityLink) {
     const { title: cityLinkTitle, city } = navLinkWithCity;
     title = `${cityLinkTitle} | ProperHomes`;
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }) {
       ? `${capitalizeFirstLetter(
           propertyType
         )}s for Sale, Rent! Search Properties for Sale, Rent in India. ProperHomes`
-      : `Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`;
+      : `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`;
   }
 
   return {
