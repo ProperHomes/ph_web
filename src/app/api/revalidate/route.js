@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 import {
   CloudFrontClient,
   CreateInvalidationCommand,
@@ -30,23 +30,28 @@ async function invalidateCFPaths(paths) {
 
 export async function POST(req) {
   const body = await req.json();
-  const { tag, paths } = body;
-  if (!tag) {
-    return NextResponse.json({ error: "tag not provided" }, { status: 500 });
+  const { tag, mainPath, paths } = body;
+  // if (!tag) {
+  //   return NextResponse.json({ error: "tag not provided" }, { status: 500 });
+  // }
+  if (!mainPath) {
+    return NextResponse.json(
+      { error: "mainPath not provided" },
+      { status: 400 }
+    );
   }
   if (!paths || paths.length === 0) {
     return NextResponse.json(
       { error: "paths array is either empty or not provided" },
-      { status: 500 }
+      { status: 400 }
     );
   }
   try {
-    revalidateTag(tag);
+    // revalidateTag(tag);
+    revalidatePath(mainPath);
     await invalidateCFPaths(paths);
     return NextResponse.json({ revalidated: true });
   } catch (err) {
-    return NextResponse.json({
-      error: err,
-    });
+    return NextResponse.json({ error: err }, { status: 500 });
   }
 }
