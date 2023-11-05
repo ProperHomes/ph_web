@@ -25,6 +25,7 @@ function PropertyProfile({ data, similarProperties }) {
     price,
     facing,
     isFurnished,
+    isSemiFurnished,
     hasParking,
     media,
     city,
@@ -38,7 +39,10 @@ function PropertyProfile({ data, similarProperties }) {
     currency: "INR",
   });
   const images = (media?.nodes ?? []).map((m) => {
-    return m.media?.signedUrl ?? m.mediaUrl;
+    return {
+      url: m.media?.signedUrl ?? m.mediaUrl,
+      isCoverImage: m.isCoverImage,
+    };
   });
 
   const isForSale = listedFor === LISTING_TYPE.SALE;
@@ -84,12 +88,23 @@ function PropertyProfile({ data, similarProperties }) {
     },
     { label: "Area", value: `${area} ${AREA_UNITS[areaUnit]}` },
     { label: "Facing", value: facing },
-    { label: isFurnished ? "Furnished" : "Not Furnished", value: "" },
+
     {
       label: hasParking ? "Parking Facility" : "No Parking",
       value: "",
     },
   ];
+
+  if (isFurnished && !isSemiFurnished) {
+    importantInfo.push({
+      label: "Furnished",
+      value: "",
+    });
+  }
+
+  if (isSemiFurnished && !isFurnished) {
+    importantInfo.push({ label: "Semi Furnished", value: "" });
+  }
 
   return (
     <Stack p={1} spacing={2}>
