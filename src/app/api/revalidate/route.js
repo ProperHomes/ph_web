@@ -6,12 +6,7 @@ import {
 } from "@aws-sdk/client-cloudfront";
 import { Config } from "sst/node/config";
 
-const cloudFront = new CloudFrontClient({
-  credentials: {
-    accessKeyId: Config.AWS_ACCESS_KEY_ID,
-    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  },
-});
+const cloudFront = new CloudFrontClient();
 
 async function invalidateCFPaths(paths) {
   await cloudFront.send(
