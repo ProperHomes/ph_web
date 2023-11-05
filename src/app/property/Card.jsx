@@ -1,6 +1,7 @@
 "use client";
 import { useState, memo } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -17,6 +18,10 @@ import { AREA_UNITS, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
 import { useAppContext } from "src/appContext";
 import CardOptionsTooltip from "./CardOptions";
 import useToggleFavoriteProperty from "src/hooks/useToggleFavoriteProperty";
+
+const Description = dynamic(() => import("./profile/Description"), {
+  ssr: false,
+});
 
 function PropertyCard({
   data,
@@ -178,21 +183,19 @@ function PropertyCard({
                   overflow: "hidden",
                 }}
               >
-                <Typography
-                  fontSize="1em"
-                  color="#fff"
-                  fontWeight="regular"
-                  mt="50%"
+                <Description
+                  content={description}
                   sx={{
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     display: "-webkit-box",
                     WebkitLineClamp: "5",
                     WebkitBoxOrient: "vertical",
+                    marginTop: "50%",
+                    color: "#fff",
+                    fontSize: "1rem",
                   }}
-                >
-                  {description}
-                </Typography>
+                />
               </Box>
             </Fade>
           </Box>
