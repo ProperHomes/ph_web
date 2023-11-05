@@ -8,7 +8,7 @@ import { client } from "@/graphql/serverClient";
 
 import Profile from "../profile";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }, parent) {
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
