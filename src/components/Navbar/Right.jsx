@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
@@ -20,6 +19,7 @@ import { useNotificationsContext } from "src/app/notifications/context";
 import useToggleAuth from "src/hooks/useToggleAuth";
 
 function NavbarRight() {
+  const router = useRouter();
   const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -39,6 +39,10 @@ function NavbarRight() {
     setShowNotifications((prev) => !prev);
   };
 
+  const navigateTo = (link) => () => {
+    router.push(link);
+  };
+
   const isDashboard = pathname.includes("/dashboard");
 
   return (
@@ -55,8 +59,7 @@ function NavbarRight() {
       {!!loggedInUser && !isDashboard && !isMobile && (
         <Button
           size="large"
-          LinkComponent={Link}
-          href="/dashboard/manage"
+          onClick={navigateTo("/dashboard/manage")}
           aria-label="dashboard link"
         >
           Dashboard

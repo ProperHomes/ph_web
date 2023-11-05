@@ -34,17 +34,7 @@ export default async function Page({ params }) {
     fetch(url, { ...options, next: { tags: [`property${params.number}`] } });
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
-  const {
-    id,
-    city,
-    type,
-    title,
-    description,
-    bedrooms,
-    price,
-    area,
-    areaUnit,
-  } = data;
+  const { id, city, type } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 3,
     city,

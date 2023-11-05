@@ -65,6 +65,14 @@ export const manRope = Manrope({
 });
 
 function RootLayout({ children }) {
+  // https://open-next.js.org/common_issues/isr#patch-fetch-behaviour-for-isr-only-for-next1351
+  const asyncStorage = require("next/dist/client/components/static-generation-async-storage.external");
+  const staticStore =
+    fetch.__nextGetStaticStore?.() || asyncStorage.staticGenerationAsyncStorage;
+  const store = staticStore.getStore();
+  store.isOnDemandRevalidate =
+    store.isOnDemandRevalidate && !(process.env.OPEN_NEXT_ISR === "true");
+
   return (
     <html lang="en">
       <head>
@@ -133,7 +141,6 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
-     
       </body>
     </html>
   );
