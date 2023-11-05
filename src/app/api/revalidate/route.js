@@ -1,54 +1,14 @@
-import {
-  CloudFrontClient,
-  CreateInvalidationCommand,
-} from "@aws-sdk/client-cloudfront";
 import { NextResponse } from "next/server";
-import { Config } from "sst/node/config";
-
-// const cloudFront = new CloudFrontClient();
-
-// function invalidateCloudFrontPaths(paths) {
-//   cloudFront.send(
-//     new CreateInvalidationCommand({
-//       DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
-//       InvalidationBatch: {
-//         CallerReference: `${Date.now()}`,
-//         Paths: {
-//           Quantity: paths.length,
-//           Items: paths,
-//         },
-//       },
-//     })
-//   );
-// }
+import { revalidateTag } from "next/cache";
 
 export async function POST(req, res) {
   const body = await req.json();
-  const { paths, secret } = body;
-  if (!paths) {
-    return NextResponse.json(
-      { error: "Page paths not provided" },
-      { status: 500 }
-    );
-  }
-  if (!secret) {
-    return NextResponse.json({ error: "secret not provided" }, { status: 500 });
-  }
-  const validSecret = secret === Config.REVALIDATION_SECRET_KEY;
-  if (!validSecret) {
-    return NextResponse.json(
-      { error: "Invalid request. Not authorized" },
-      { status: 401 }
-    );
+  const { tag } = body;
+  if (!tag) {
+    return NextResponse.json({ error: "tag not provided" }, { status: 500 });
   }
   try {
-    process.env.__NEXT_PRIVATE_PREBUNDLED_REACT = "next";
-    await Promise.all(
-      paths.map(async (p) => {
-        await res.revalidate(p);
-      })
-    );
-    // await invalidateCloudFrontPaths(paths);
+    revalidateTag(tag);
     return NextResponse.json({ revalidated: true });
   } catch (err) {
     return NextResponse.json({

@@ -10,6 +10,7 @@ import { Content } from "./styles";
 import Breadcrumbs from "src/components/Breadcrumbs";
 import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
 
+const Description = dynamic(() => import("./Description"), { ssr: false });
 const SimilarProperties = dynamic(() => import("./SimilarProperties"));
 const PropertyImages = dynamic(() => import("./Images"));
 const Sidebar = dynamic(() => import("./sidebar/index"));
@@ -25,8 +26,8 @@ function PropertyProfile({ data, similarProperties }) {
     price,
     facing,
     isFurnished,
+    isSemiFurnished,
     hasParking,
-    hasSwimmingPool,
     media,
     city,
     listedFor,
@@ -39,7 +40,10 @@ function PropertyProfile({ data, similarProperties }) {
     currency: "INR",
   });
   const images = (media?.nodes ?? []).map((m) => {
-    return m.media?.signedUrl ?? m.mediaUrl;
+    return {
+      url: m.media?.signedUrl ?? m.mediaUrl,
+      isCoverImage: m.isCoverImage,
+    };
   });
 
   const isForSale = listedFor === LISTING_TYPE.SALE;
@@ -85,12 +89,23 @@ function PropertyProfile({ data, similarProperties }) {
     },
     { label: "Area", value: `${area} ${AREA_UNITS[areaUnit]}` },
     { label: "Facing", value: facing },
-    { label: isFurnished ? "Furnished" : "Not Furnished", value: "" },
+
     {
       label: hasParking ? "Parking Facility" : "No Parking",
       value: "",
     },
   ];
+
+  if (isFurnished && !isSemiFurnished) {
+    importantInfo.push({
+      label: "Furnished",
+      value: "",
+    });
+  }
+
+  if (isSemiFurnished && !isFurnished) {
+    importantInfo.push({ label: "Semi Furnished", value: "" });
+  }
 
   return (
     <Stack p={1} spacing={2}>
@@ -159,8 +174,12 @@ function PropertyProfile({ data, similarProperties }) {
             })}
           </Box>
           <Divider />
-          <Typography variant="body1">{description}</Typography>
-          <SimilarProperties city={city} properties={similarProperties} />
+
+          <Description content={description} />
+
+          {similarProperties.length > 0 && (
+            <SimilarProperties city={city} properties={similarProperties} />
+          )}
         </Stack>
 
         <StickyBox

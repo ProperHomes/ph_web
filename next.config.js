@@ -35,12 +35,6 @@ const withPWA = require("next-pwa")({
     process.env.NODE_ENV === "preview",
 });
 
-// const withBundleAnalyzer = require("@next/bundle-analyzer")({
-//   enabled: process.env.ANALYZE === "true",
-// });
-
-// module.exports = withBundleAnalyzer(withPWA(nextConfig));
-
 module.exports = withPWA({
   swcMinify: true,
   compiler: {
@@ -54,7 +48,7 @@ module.exports = withPWA({
   },
   images: {
     formats: ["image/webp"],
-    minimumCacheTTL: 86400 * 30, // 30 days
+    minimumCacheTTL: 31536000, // 1 year
     remotePatterns: [
       {
         protocol: "https",

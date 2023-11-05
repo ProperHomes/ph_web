@@ -11,6 +11,7 @@ export const PROPERTY_FIELDS = gql`
     price
     listedFor
     isFurnished
+    isSemiFurnished
     hasSwimmingPool
     hasParking
     hasBasement

@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import Box from "@mui/material/Box";
 import NextTopLoader from "nextjs-toploader";
 import { Manrope } from "next/font/google";
@@ -11,7 +12,7 @@ const Footer = dynamic(() => import("../components/Footer"));
 export const metadata = {
   title:
     "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
+  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
   keywords: [
     "2BHK apartments for sale",
     "3BHK apartments for sale",
@@ -24,6 +25,7 @@ export const metadata = {
     "Real Estate India",
     "Find Residential properties",
     "Find Real Estate Projects",
+    "Holiday Homes",
     "Rental Property Management in India",
     "Manage Rental Properties",
     "100% verified Owners",
@@ -63,43 +65,6 @@ export const manRope = Manrope({
 });
 
 function RootLayout({ children }) {
-  const jsonLD = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "ProperHomes",
-    url: "https://www.properhomes.in/",
-    alternateName: "Proper Homes",
-    description:
-      "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://properhomes.in/logo.png",
-      width: 374,
-      height: 72,
-    },
-    // sameAs: [
-    //   "https://www.facebook.com/magicbricks",
-    //   "https://www.twitter.com/magicbricks",
-    //   "https://www.youtube.com/user/magicbricksvideo",
-    //   "https://www.linkedin.com/company/magicbricks/",
-    // ],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress:
-        "Proper Eleven Technologies Private Limited (properhomes.in), Sarojini Heights, Kanuru, 520007",
-      addressLocality: "Vijayawada",
-      addressRegion: "India",
-      postalCode: "520007",
-    },
-    // contactPoint: [
-    //   {
-    //     "@type": "ContactPoint",
-    //     telephone: "+91 120-6866600",
-    //     contactType: "Customer Service",
-    //     areaServed: "India",
-    //   },
-    // ],
-  };
   return (
     <html lang="en">
       <head>
@@ -168,10 +133,7 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
-        />
+     
       </body>
     </html>
   );

@@ -30,9 +30,21 @@ export async function generateMetadata({ params }, parent) {
 }
 
 export default async function Page({ params }) {
+  client.requestConfig.fetch = (url, options) =>
+    fetch(url, { ...options, next: { tags: [`property${params.number}`] } });
   let res = await client.request(GET_PROPERTY_BY_SLUG, { slug: params.slug });
   const data = res?.propertyBySlug;
-  const { id, city, type, title, description, bedrooms, price } = data;
+  const {
+    id,
+    city,
+    type,
+    title,
+    description,
+    bedrooms,
+    price,
+    area,
+    areaUnit,
+  } = data;
   const similarRes = await client.request(GET_PROPERTIES, {
     first: 3,
     city,
@@ -53,7 +65,7 @@ export default async function Page({ params }) {
 export async function generateStaticParams() {
   let res = await client.request(GET_ALL_PROPERTIES_FOR_STATIC_PATHS);
   const properties = res?.properties?.nodes ?? [];
-  return properties.map(({ slug }) => {
-    return { slug };
+  return properties.map(({ slug, number }) => {
+    return { slug, number };
   });
 }

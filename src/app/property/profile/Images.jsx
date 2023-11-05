@@ -18,6 +18,16 @@ function PropertyImages({ images }) {
     setImagesLoaded((prev) => [...prev, index]);
   };
 
+  let coverImage = images.find((im) => !!im.isCoverImage);
+  let otherImages = images.slice(1);
+  if (!!coverImage) {
+    otherImages = images.filter((im) => !im.isCoverImage);
+  } else {
+    coverImage = images[0];
+  }
+
+  const imagesToLoad = [coverImage, ...otherImages];
+
   return (
     <>
       {ImageGallery}
@@ -30,8 +40,8 @@ function PropertyImages({ images }) {
           overflow: "hidden",
         }}
       >
-        <Swiper images={images}>
-          {images.map((url, i) => {
+        <Swiper images={imagesToLoad}>
+          {imagesToLoad.map(({ url }, i) => {
             const isLoaded = imagesLoaded.includes(i);
             return (
               <Box key={i}>
@@ -82,8 +92,8 @@ function PropertyImages({ images }) {
       </Box>
 
       <Box sx={{ display: { xs: "none", md: "block" } }}>
-        <ImageGrid images={images}>
-          {images.map((url, i) => {
+        <ImageGrid>
+          {imagesToLoad.map(({ url }, i) => {
             const isLoaded = imagesLoaded.includes(i);
             return (
               <Box
@@ -119,7 +129,7 @@ function PropertyImages({ images }) {
                   />
                 )}
                 <Image
-                  alt=""
+                  alt="property image"
                   onClick={toggleModal}
                   src={url}
                   priority
