@@ -12,7 +12,7 @@ const Footer = dynamic(() => import("../components/Footer"));
 export const metadata = {
   title:
     "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals at ProperHomes.`,
+  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
   keywords: [
     "2BHK apartments for sale",
     "3BHK apartments for sale",
@@ -25,6 +25,7 @@ export const metadata = {
     "Real Estate India",
     "Find Residential properties",
     "Find Real Estate Projects",
+    "Holiday Homes",
     "Rental Property Management in India",
     "Manage Rental Properties",
     "100% verified Owners",

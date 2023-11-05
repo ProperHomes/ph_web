@@ -9,8 +9,8 @@ import Divider from "@mui/material/Divider";
 import { Content } from "./styles";
 import Breadcrumbs from "src/components/Breadcrumbs";
 import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
-import Description from "./Description";
 
+const Description = dynamic(() => import("./Description"), { ssr: false });
 const SimilarProperties = dynamic(() => import("./SimilarProperties"));
 const PropertyImages = dynamic(() => import("./Images"));
 const Sidebar = dynamic(() => import("./sidebar/index"));
