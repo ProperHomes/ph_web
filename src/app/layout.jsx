@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import Box from "@mui/material/Box";
 import NextTopLoader from "nextjs-toploader";
 import { Manrope } from "next/font/google";
@@ -143,6 +144,18 @@ function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/favicon.png" />
         <link rel="shortcut icon" href="/favicon.png" />
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
+          strategy="afterInteractive"
+        />
+        <Script strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-B3E4HE2Y6F');`}
+        </Script>
       </head>
       <body className={manRope.className}>
         <NextTopLoader showSpinner={false} />

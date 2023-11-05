@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import { Content } from "./styles";
 import Breadcrumbs from "src/components/Breadcrumbs";
 import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
+import Description from "./Description";
 
 const SimilarProperties = dynamic(() => import("./SimilarProperties"));
 const PropertyImages = dynamic(() => import("./Images"));
@@ -173,7 +174,9 @@ function PropertyProfile({ data, similarProperties }) {
             })}
           </Box>
           <Divider />
-          <Typography variant="body1">{description}</Typography>
+
+          <Description content={description} />
+
           {similarProperties.length > 0 && (
             <SimilarProperties city={city} properties={similarProperties} />
           )}

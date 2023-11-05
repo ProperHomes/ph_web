@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -41,6 +42,10 @@ import useUploadFile from "src/hooks/useUploadFile";
 import { convertStringToSlug } from "@/utils/helper";
 import Loading from "@/components/Loading";
 
+const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
+  ssr: false,
+});
+
 const propertyResolver = {
   type: yup.string().oneOf(Object.keys(PROPERTY_TYPE)).required(),
   title: yup.string().required(),
@@ -66,6 +71,7 @@ const propertyResolver = {
     ),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
   isFurnished: yup.boolean(),
+  isSemiFurnished: yup.boolean(),
   hasParking: yup.boolean(),
   status: yup.string().oneOf(Object.keys(PROPERTY_STATUS)).nullable(),
   media: yup
@@ -298,6 +304,10 @@ function CreatePropertySaleRentLease({
     handleCreateProperty({ ...data, listingStatus: "IN_REVIEW" });
   };
 
+  const handleChangeDescription = (htmlDescription) => {
+    setValue("description", htmlDescription);
+  };
+
   const onSubmitDraft = async () => {
     if (isLoggedIn) {
       handleSubmit(handleCreateDraft)();
@@ -349,7 +359,7 @@ function CreatePropertySaleRentLease({
         )}
       </Stack>
 
-      <StyledForm p={{ xs: 2, md: 6 }}>
+      <StyledForm p={{ xs: 2, md: 6 }} px={{ xs: 0 }}>
         <Stack spacing={4}>
           <StyledGrid>
             <Stack>
@@ -696,6 +706,26 @@ function CreatePropertySaleRentLease({
               }
               label="Is Furnished"
             />
+
+            <FormControlLabel
+              sx={{ "& span": { fontSize: "1rem" } }}
+              control={
+                <Controller
+                  name="isSemiFurnished"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <Checkbox
+                      checked={!!value}
+                      onChange={onChange}
+                      sx={{
+                        "& .MuiSvgIcon-root": { fontSize: 30 },
+                      }}
+                    />
+                  )}
+                />
+              }
+              label="Is Semi Furnished"
+            />
             <FormControlLabel
               sx={{ "& span": { fontSize: "1rem" } }}
               control={
@@ -767,32 +797,21 @@ function CreatePropertySaleRentLease({
             />
           </Stack>
 
-          <Stack>
+          <Stack sx={{ minHeight: { xs: "50px", md: "200px" } }} spacing={2}>
             <Label>Add property details* </Label>
-            <Controller
-              name="description"
-              control={control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={5}
-                  variant="outlined"
-                  placeholder="Enter property details that you want to mention here"
-                  type="text"
-                  value={value ?? ""}
-                  onChange={onChange}
-                  error={!!error?.message}
-                />
-              )}
+            <Editor
+              setValue={handleChangeDescription}
+              initialState={data?.description}
+              isError={!!errors?.description}
             />
           </Stack>
         </Stack>
-        <Stack spacing={2} sx={{ height: "100%", maxWidth: "300px" }}>
-          <Typography fontSize="1.5rem">
+        <Stack
+          mt={{ xs: 4, md: 0 }}
+          spacing={2}
+          sx={{ height: "100%", maxWidth: "300px" }}
+        >
+          <Typography fontSize={{ xs: "1rem", md: "1.5rem" }}>
             Add Property Media (min. of 5 images or videos)*
           </Typography>
           <Box my={8}>
