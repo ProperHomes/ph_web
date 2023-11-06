@@ -43,6 +43,7 @@ const subLinks = [
     title: "About Us",
     path: "/about",
   },
+  { title: "Blog", path: "/blog" },
   {
     title: "FAQ",
     path: "/faq",
