@@ -307,9 +307,7 @@ function PropertyCard({
           prefetch={false}
           title={formattedTitle}
         >
-          {PROPERTY_TYPE[type]?.toLowerCase()}{" "}
-          {PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""} for{" "}
-          {listedFor?.toLowerCase()} in {city.toLowerCase()}
+          {title}
         </Link>
       </Typography>
 
