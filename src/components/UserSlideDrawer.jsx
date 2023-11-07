@@ -47,6 +47,8 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
     toggleDrawer();
   };
 
+  const isSysAdmin = !!loggedInUser?.isSysAdmin;
+
   return (
     <SlideDrawer
       open={showDrawer}
@@ -94,6 +96,14 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
               Dashboard
             </StyledBtn>
           )}
+          {isSysAdmin && (
+            <StyledBtn
+              startIcon={<Dashboard />}
+              onClick={navigateTo("/dashboard/sysadmin")}
+            >
+              SysAdmin
+            </StyledBtn>
+          )}
         </Stack>
 
         <Stack
@@ -109,13 +119,13 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           >
             Home
           </StyledBtn>
-          <StyledBtn
+          {/* <StyledBtn
             fullWidth
             startIcon={<CurrencyRupeeOutlined />}
             onClick={navigateTo("/pay-rent-online")}
           >
             Pay Rent
-          </StyledBtn>
+          </StyledBtn> */}
           <StyledBtn
             startIcon={<CalculateOutlined />}
             onClick={navigateTo("/homeloans/emi-calculator")}
@@ -130,12 +140,12 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           >
             Manage Rentals
           </StyledBtn>
-          <StyledBtn
+          {/* <StyledBtn
             startIcon={<CalculateOutlined />}
             onClick={navigateTo("/free-rent-receipt-generator-online")}
           >
             Generate Rent Receipt
-          </StyledBtn>
+          </StyledBtn> */}
           <StyledBtn
             startIcon={<CalculateOutlined />}
             onClick={navigateTo("/create-rental-agreement")}
