@@ -277,7 +277,7 @@ function CreatePropertySaleRentLease({
             property: {
               ...dataNew,
               slug,
-              ownerId: ownerId ?? loggedInUser?.id,
+              ownerId: ownerId ?? loggedInUser?.id, // Todo: remove this if we need to attach ord_id
               country: "INDIA",
               isFurnished: Boolean(data.isFurnished),
               hasParking: Boolean(data.hasParking),
@@ -812,7 +812,7 @@ function CreatePropertySaleRentLease({
           sx={{ height: "100%", maxWidth: "300px" }}
         >
           <Typography fontSize={{ xs: "1rem", md: "1.5rem" }}>
-            Add Property Media (min. of 5 images or videos)*
+            Add Property Media (min. of 5 images)*
           </Typography>
           <Box my={8}>
             <MediaBlocks

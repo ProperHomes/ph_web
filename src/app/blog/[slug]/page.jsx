@@ -26,7 +26,7 @@ export default async function Page({ params }) {
   return <BlogPost post={post} />;
 }
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   let paths = [];
   try {
     const res = await fetch({

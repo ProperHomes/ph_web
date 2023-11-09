@@ -44,6 +44,9 @@ export default function BlogPost({ post }) {
               margin: "1rem 0",
               fontSize: "1.4rem",
             },
+            "& > h2, h3, h4": {
+              marginTop: "1rem",
+            },
             "& > p": {
               fontSize: "1.1rem",
             },
@@ -60,3 +63,6 @@ export default function BlogPost({ post }) {
     </Container>
   );
 }
+
+
+

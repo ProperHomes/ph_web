@@ -9,9 +9,11 @@ import {
   navLinkWithCities,
   LISTING_TYPE,
   ALL_CITIES,
+  HOME_SERVICES_LINKS,
 } from "@/utils/constants";
 import CategoryBoxes from "@/components/CategoryBoxes";
 import { capitalizeFirstLetter } from "@/utils/helper";
+import HomeServices from "../homeServices";
 
 export async function generateMetadata({ params }) {
   const { slug = "" } = params;
@@ -107,6 +109,9 @@ export default async function Page({ params, searchParams }) {
   const isCityLink =
     navLinkWithCity?.link === slug || ALL_CITIES.includes(slug);
   const isCitySlug = ALL_CITIES.includes(slug.toUpperCase());
+  const isHomServiceLink = HOME_SERVICES_LINKS.map((h) => h.path).includes(
+    slug
+  );
 
   if (isCitySlug) {
     const citySlug = slug.toUpperCase();
@@ -133,6 +138,10 @@ export default async function Page({ params, searchParams }) {
         />
       </Stack>
     );
+  }
+
+  if (isHomServiceLink) {
+    return <HomeServices />;
   }
 
   if ((navLink?.link === slug || isCityLink) && !isCitySlug) {
@@ -220,6 +229,11 @@ export function generateStaticParams() {
   for (let city of ALL_CITIES) {
     paths.push({
       slug: city.toLowerCase(),
+    });
+  }
+  for (let homeService of HOME_SERVICES_LINKS) {
+    paths.push({
+      slug: homeService.path.toLowerCase(),
     });
   }
   return paths;

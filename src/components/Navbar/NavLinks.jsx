@@ -9,24 +9,7 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import TypographyUnderline from "../TypographyUnderline";
 
-const links = [
-  {
-    title: "Explore Properties",
-    path: "/explore-properties",
-    showDropdownMenu: true,
-  },
-  {
-    title: "List your Property",
-    path: "/list-your-property-for-sale-rent-lease",
-    isListingLink: true,
-  },
-  {
-    title: "Manage Rentals",
-    path: "/property-rental-management-for-owners-managers",
-  },
-];
-
-const tooltipLinks = [
+const exploreTooltipLinks = [
   {
     title: "Properties For Sale",
     path: "/properties-for-sale",
@@ -39,6 +22,35 @@ const tooltipLinks = [
   {
     title: "Properties For Lease",
     path: "/properties-for-lease",
+  },
+];
+
+const homeServicesTooltipLinks = [
+  { title: "Home Cleaning Services", path: "/home-cleaning-services" },
+  { title: "Home AC Repairs Services", path: "/home-repairs-services" },
+  { title: "Home Painting Services", path: "/home-painting-services" },
+  { title: "Home Plumbing Services", path: "/home-plumbing-services" },
+];
+
+const links = [
+  {
+    title: "Explore Properties",
+    path: "/explore-properties",
+    tooltipLinks: exploreTooltipLinks,
+  },
+  {
+    title: "List your Property",
+    path: "/list-your-property-for-sale-rent-lease",
+    isListingLink: true,
+  },
+  {
+    title: "Home Services",
+    path: "/home-services",
+    tooltipLinks: homeServicesTooltipLinks,
+  },
+  {
+    title: "Manage Rentals",
+    path: "/property-rental-management-for-owners-managers",
   },
 ];
 
@@ -56,8 +68,8 @@ function NavLinks() {
       spacing={3}
       alignItems="center"
     >
-      {links.map(({ title, path, showDropdownMenu, isListingLink }) => {
-        if (showDropdownMenu) {
+      {links.map(({ title, path, tooltipLinks, isListingLink }) => {
+        if (tooltipLinks) {
           return (
             <Tooltip
               key={path}
