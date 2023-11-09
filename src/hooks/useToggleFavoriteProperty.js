@@ -6,8 +6,10 @@ import {
   DELETE_SAVED_PROPERTY,
   SAVE_PROPERTY,
 } from "@/graphql/properties";
+import { FETCH_USER_DEVICE_TOKENS } from "@/graphql/user";
 import { useAppContext } from "src/appContext";
 import useNotification from "./useNotification";
+import usePushNotifications from "./usePushNotification";
 
 export default function useToggleFavoriteProperty({
   data,
@@ -21,6 +23,8 @@ export default function useToggleFavoriteProperty({
 
   const loggedInUserId = state?.user?.id;
 
+  const [fetchUserDeviceTokens] = useLazyQuery(FETCH_USER_DEVICE_TOKENS);
+
   const [savedPropertyId, setSavedPropertyId] = useState(false);
 
   const [createSavedProperty] = useMutation(SAVE_PROPERTY);
@@ -29,6 +33,27 @@ export default function useToggleFavoriteProperty({
   const [checkIfUserSavedProperty] = useLazyQuery(CHECK_IF_USER_SAVED_PROPERTY);
 
   const { sendNotification } = useNotification();
+
+  const { sendPushNotification } = usePushNotifications();
+
+  const handleSendPushNotification = async () => {
+    try {
+      const res = await fetchUserDeviceTokens({
+        variables: { userId: ownerId },
+      });
+      let deviceTokens = res?.data?.userDeviceTokens?.nodes ?? [];
+      deviceTokens = deviceTokens.map((t) => t.deviceToken);
+      if (deviceTokens.length > 0) {
+        sendPushNotification({
+          title: `A user shortlisted your property`,
+          body: `Your property titled: ${data?.title} has been shortlisted just now`,
+          pushTokens: deviceTokens,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const handleCheckIfUserSavedProperty = async () => {
@@ -67,6 +92,7 @@ export default function useToggleFavoriteProperty({
           },
         });
         setSavedPropertyId(data?.createSavedProperty?.savedProperty?.id);
+        handleSendPushNotification();
         sendNotification({
           toUserId: ownerId,
           byUserId: loggedInUserId,
