@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
@@ -13,11 +14,16 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
-import UserSlideDrawer from "../UserSlideDrawer";
 import { useAppContext } from "src/appContext";
-import Notifications from "src/app/notifications";
 import { useNotificationsContext } from "src/app/notifications/context";
 import useToggleAuth from "src/hooks/useToggleAuth";
+
+const UserSlideDrawer = dynamic(() => import("../UserSlideDrawer"), {
+  ssr: false,
+});
+const Notifications = dynamic(() => import("../../app/notifications"), {
+  ssr: false,
+});
 
 function NavbarRight() {
   const pathname = usePathname();

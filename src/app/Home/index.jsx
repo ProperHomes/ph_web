@@ -1,17 +1,16 @@
 "use client";
+import { useQuery } from "@apollo/client";
+
 import Stack from "@mui/material/Stack";
 import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 
 import { GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
+import PropertyList from "src/app/property/List";
 import SearchBlock from "@/components/SearchBlock";
 import CategoryBoxes from "@/components/CategoryBoxes";
 import ZeroBoxes from "@/components/ZeroBoxes";
-import { useQuery } from "@apollo/client";
-import dynamic from "next/dynamic";
-
-const PropertyList = dynamic(() => import("../property/List"), { ssr: false });
 
 export default function Home({ data }) {
   const theme = useTheme();
@@ -33,18 +32,19 @@ export default function Home({ data }) {
     <>
       <Stack spacing={4} py={4} alignItems="center">
         <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
-          <Typography variant="h4">
-            Find a home that{" "}
-            <span
-              style={{
+          <Stack spacing={1} direction="row" alignItems="center">
+            <Typography variant="h4">Find a home that </Typography>
+            <Typography
+              sx={{
                 fontSize: "2.5rem",
                 fontFamily: theme.typography.fontFamily.Damion,
                 color: theme.palette.info.main,
               }}
             >
               loves you
-            </span>{" "}
-          </Typography>
+            </Typography>
+          </Stack>
+
           <SearchBlock />
         </Stack>
 
