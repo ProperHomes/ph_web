@@ -14,6 +14,7 @@ import {
 import CategoryBoxes from "@/components/CategoryBoxes";
 import { capitalizeFirstLetter } from "@/utils/helper";
 import HomeServices from "../homeServices";
+import RentalAgreement from "../create-rental-agreement";
 
 export async function generateMetadata({ params }) {
   const { slug = "" } = params;
@@ -113,6 +114,11 @@ export default async function Page({ params, searchParams }) {
     slug
   );
 
+  const isRentalAgreement = slug.includes("create-rental-agreement");
+  if (isRentalAgreement) {
+    return <RentalAgreement />;
+  }
+  
   if (isCitySlug) {
     const citySlug = slug.toUpperCase();
     const variables = {
@@ -215,7 +221,7 @@ export default async function Page({ params, searchParams }) {
 }
 
 export function generateStaticParams() {
-  const paths = [];
+  const paths = ["create-rental-agreement"];
   for (let link of navlinks) {
     paths.push({
       slug: link.link,
@@ -234,6 +240,11 @@ export function generateStaticParams() {
   for (let homeService of HOME_SERVICES_LINKS) {
     paths.push({
       slug: homeService.path.toLowerCase(),
+    });
+  }
+  for (let city of ALL_CITIES) {
+    paths.push({
+      slug: `create-rental-agreement-in-${city.toLowerCase()}`,
     });
   }
   return paths;

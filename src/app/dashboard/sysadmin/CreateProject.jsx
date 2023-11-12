@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, forwardRef } from "react";
 import dynamic from "next/dynamic";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -16,6 +16,7 @@ import Select from "@mui/material/Select";
 import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
+import Slider from "@mui/material/Slider";
 import Add from "@mui/icons-material/Add";
 
 import useToggleAuth from "src/hooks/useToggleAuth";
@@ -34,7 +35,8 @@ const resolver = {
   name: yup.string().required(),
   description: yup.string().required(),
   address: yup.string().required(),
-  priceRange: yup.string(),
+  priceRange: yup.array().required(),
+  amenities: yup.object().required(),
   status: yup.string().oneOf(Object.keys(PROJECT_STATUS)),
 };
 
@@ -83,9 +85,10 @@ export default function CreateProject({ handleCancel }) {
 
   const handleFileUpload = useUploadFile();
 
-  const { control, handleSubmit, setValue, watch, formState } = useForm({
-    resolver: yupResolver(yup.object().shape(resolver)),
-  });
+  const { control, handleSubmit, setValue, getValues, watch, formState } =
+    useForm({
+      resolver: yupResolver(yup.object().shape(resolver)),
+    });
   watch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -125,10 +128,10 @@ export default function CreateProject({ handleCancel }) {
         });
         newData.brochureId = newBrochure?.id;
       }
-      const res = await createProject({
+      await createProject({
         variables: {
           input: {
-            builder: {
+            project: {
               ...newData,
               slug,
             },
@@ -188,7 +191,8 @@ export default function CreateProject({ handleCancel }) {
 
   const { submitting, errors } = formState;
 
-  const PictureBlock = ({ file, ref, onClickInput, onChange }) => {
+  console.log(errors);
+  const PictureBlock = forwardRef(({ file, onClickInput, onChange }, ref) => {
     return (
       <AddPicture onClick={onClickInput}>
         {file?.preview ? (
@@ -201,7 +205,7 @@ export default function CreateProject({ handleCancel }) {
               left: 0,
               width: "100%",
               height: "100%",
-              opacity: img ? 1 : 0,
+              opacity: file ? 1 : 0,
               objectFit: "cover",
               borderRadius: "10px",
             }}
@@ -229,7 +233,7 @@ export default function CreateProject({ handleCancel }) {
         />
       </AddPicture>
     );
-  };
+  });
 
   return (
     <Box
@@ -244,7 +248,7 @@ export default function CreateProject({ handleCancel }) {
       {isLoading && <Loading />}
 
       <Typography gutterBottom variant="h4">
-        Create Builder
+        Create Project
       </Typography>
 
       <Stack direction="row" alignItems="center" spacing={2} py={2}>
@@ -316,6 +320,24 @@ export default function CreateProject({ handleCancel }) {
           />
         </Stack>
 
+        <Stack>
+          <Label>Address *</Label>
+          <Controller
+            name="address"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextField
+                fullWidth
+                variant="outlined"
+                type="text"
+                value={value ?? ""}
+                onChange={onChange}
+                error={!!error?.message}
+              />
+            )}
+          />
+        </Stack>
+
         <Stack sx={{ minHeight: { xs: "50px", md: "200px" } }} spacing={2}>
           <Label>Add project details or description* </Label>
           <Editor
@@ -324,81 +346,294 @@ export default function CreateProject({ handleCancel }) {
           />
         </Stack>
 
-        <FormControlLabel
-          sx={{ "& span": { fontSize: "1rem" } }}
-          control={
-            <Controller
-              name="isReraApproved"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Checkbox
-                  checked={!!value}
-                  onChange={onChange}
-                  sx={{
-                    "& .MuiSvgIcon-root": { fontSize: 30 },
-                  }}
-                />
-              )}
-            />
-          }
-          label="Is Rera Approved"
-        />
+        <Stack>
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="isReraApproved"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Is Rera Approved"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasPowerBackup"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Power backup"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasLift"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Lift"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasIntercom"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Intercom Facility"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasSecurity"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Security"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasMaintenanceStaff"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Maintenance Staff"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasClubHouse"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Club House"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasRainWaterHarvesting"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Rain Water Harvesting"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasCCTV"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has CC TV"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasVaastuComplaince"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Vaastu Complaince"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasSwimmingPool"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Swimming Pool"
+          />
+          <FormControlLabel
+            sx={{ "& span": { fontSize: "1rem" } }}
+            control={
+              <Controller
+                name="amenities.hasEarthquakeResistance"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    checked={!!value}
+                    onChange={onChange}
+                    sx={{
+                      "& .MuiSvgIcon-root": { fontSize: 30 },
+                    }}
+                  />
+                )}
+              />
+            }
+            label="Has Earthquake Resistance"
+          />
+        </Stack>
+
+        <Stack>
+          <Label>Price Range *</Label>
+          <Controller
+            name="priceRange"
+            control={control}
+            render={({ field: { value } }) => (
+              <Slider
+                step={100000}
+                getAriaLabel={() => "Price Range"}
+                value={value ?? [5000000, 10000000]}
+                onChange={(_e, v) => setValue("priceRange", v)}
+                valueLabelDisplay="auto"
+                min={1500000}
+                max={20000000}
+              />
+            )}
+          />
+        </Stack>
+
+        <Stack>
+          <Label>Project Status *</Label>
+          <Controller
+            name="status"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <StyledSelect
+                displayEmpty
+                renderValue={(selected) => {
+                  if (!selected) {
+                    return <Typography>Select one</Typography>;
+                  }
+                  return selected;
+                }}
+                value={value ?? ""}
+                onChange={onChange}
+                error={!!error?.message}
+              >
+                <MenuItem value="" disabled>
+                  Select one from below
+                </MenuItem>
+                {Object.keys(PROJECT_STATUS).map((s) => {
+                  return (
+                    <MenuItem
+                      key={s}
+                      value={s}
+                      style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                    >
+                      {s}
+                    </MenuItem>
+                  );
+                })}
+              </StyledSelect>
+            )}
+          />
+        </Stack>
       </Stack>
 
-      <Stack>
-        <Label>Price Range *</Label>
-        <Controller
-          name="priceRange"
-          control={control}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextField
-              fullWidth
-              variant="outlined"
-              type="text"
-              value={value ?? ""}
-              onChange={onChange}
-              error={!!error?.message}
-            />
-          )}
-        />
-      </Stack>
-
-      <Stack>
-        <Label>Project Status *</Label>
-        <Controller
-          name="status"
-          control={control}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <StyledSelect
-              displayEmpty
-              renderValue={(selected) => {
-                if (!selected) {
-                  return <Typography>Select one</Typography>;
-                }
-                return selected;
-              }}
-              value={value ?? ""}
-              onChange={onChange}
-              error={!!error?.message}
-            >
-              <MenuItem value="" disabled>
-                Select one from below
-              </MenuItem>
-              {Object.keys(PROJECT_STATUS).map((s) => {
-                return (
-                  <MenuItem
-                    key={s}
-                    value={s}
-                    style={{ fontWeight: 500, fontSize: "0.8rem" }}
-                  >
-                    {s}
-                  </MenuItem>
-                );
-              })}
-            </StyledSelect>
-          )}
-        />
-      </Stack>
       <Stack py={2} spacing={2} sx={{ height: "100%", maxWidth: "300px" }}>
         <Stack direction="row" alignItems="center" spacing={4}>
           <Button

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, forwardRef } from "react";
 import dynamic from "next/dynamic";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -29,10 +29,7 @@ const propertyResolver = {
   name: yup.string().required(),
   experience: yup.number().required().moreThan(0),
   description: yup.string().required(),
-  phoneNumber: yup
-    .string()
-    .phone("IN", "Must be a valid mobile number")
-    .required("Phone number is required"),
+  phoneNumber: yup.string().required("Phone number is required"),
 };
 
 const Label = styled("label")(({ theme }) => ({
@@ -156,7 +153,7 @@ export default function CreateBuilder({ handleCancel }) {
 
   const { submitting, errors } = formState;
 
-  const PictureBlock = ({ img, picRef, onClickInput, onChangePic }) => {
+  const PictureBlock = forwardRef(({ img, onClickInput, onChangePic }, ref) => {
     return (
       <AddPicture onClick={onClickInput}>
         {img?.preview ? (
@@ -179,7 +176,7 @@ export default function CreateBuilder({ handleCancel }) {
         )}
 
         <input
-          ref={picRef}
+          ref={ref}
           type="file"
           hidden
           multiple
@@ -197,7 +194,7 @@ export default function CreateBuilder({ handleCancel }) {
         />
       </AddPicture>
     );
-  };
+  });
 
   return (
     <Box
@@ -220,7 +217,7 @@ export default function CreateBuilder({ handleCancel }) {
           <Label>Add Logo</Label>
           <PictureBlock
             img={logo}
-            picRef={logoInputRef}
+            ref={logoInputRef}
             onClickInput={handleClickLogoInput}
             onChangePic={handleInputLogo}
           />
@@ -230,7 +227,7 @@ export default function CreateBuilder({ handleCancel }) {
           <Label>Add Cover Image </Label>
           <PictureBlock
             img={coverImage}
-            picRef={coverImgInputRef}
+            ref={coverImgInputRef}
             onClickInput={handleClickCoverImgInput}
             onChangePic={handleInputCover}
           />

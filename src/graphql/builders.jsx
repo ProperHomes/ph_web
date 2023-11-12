@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const BUILDER_FIELDS = gql`
-  fragment BuilderFields on User {
+  fragment BuilderFields on Builder {
     id
     name
     description
@@ -11,9 +11,24 @@ export const BUILDER_FIELDS = gql`
     coverImage {
       signedUrl
     }
+    officeAddress
+    operatingCities
     experience
     phoneNumber
     attributes
+    projects {
+      nodes {
+        id
+        name
+        slug
+        status
+        address
+        priceRange
+        coverImage {
+          signedUrl
+        }
+      }
+    }
   }
 `;
 

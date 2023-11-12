@@ -14,7 +14,6 @@ import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Divider from "@mui/material/Divider";
 import * as yup from "yup";
-import "yup-phone-lite";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -29,7 +28,7 @@ function GetNotifiedFormModal({ open, handleClose }) {
       yup.object().shape({
         name: yup.string().required("Name is required"),
         email: yup.string().email().required("Email is required"),
-        phoneNumber: yup.string().phone("IN", "Must be a valid mobile number"),
+        // phoneNumber: yup.string().phone("IN", "Must be a valid mobile number"),
       })
     ),
   });

@@ -40,7 +40,7 @@ export default function DraftEditor({ initialState, isError, setValue }) {
         editorState={editorState}
         onEditorStateChange={handleChangeEditorState}
         toolbar={{
-          options: ["inline", "textAlign"],
+          options: ["inline", "textAlign", "list"],
           inline: {
             inDropdown: false,
             className: undefined,

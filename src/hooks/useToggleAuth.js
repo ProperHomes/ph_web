@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import axios from "axios";
-import AuthModal from "src/app/auth";
 import { appActionTypes, useAppContext } from "src/appContext";
+
+const AuthModal = dynamic(() => import("../app/auth/index"), { ssr: false });
 
 function useToggleAuth() {
   const { state, dispatch } = useAppContext();

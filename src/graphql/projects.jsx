@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const PROJECT_FIELDS = gql`
-  fragment ProjectFields on User {
+  fragment ProjectFields on Project {
     id
     name
     description
@@ -56,6 +56,31 @@ export const FETCH_PROJECT = gql`
   query fetchProject($id: UUID!) {
     project(id: $id) {
       ...ProjectFields
+      properties(first: 5) {
+        nodes {
+          id
+          slug
+          type
+          title
+          description
+          listedFor
+          city
+          area
+          areaUnit
+          price
+          media: propertyMedias(first: 1) {
+            nodes {
+              id
+              mediaUrl
+              mediaId
+              media {
+                signedUrl
+              }
+              isCoverImage
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -65,6 +90,31 @@ export const FETCH_PROJECT_BY_SLUG = gql`
   query fetchProjectBySlug($slug: String!) {
     projectBySlug(slug: $slug) {
       ...ProjectFields
+      properties(first: 5) {
+        nodes {
+          id
+          slug
+          type
+          description
+          listedFor
+          title
+          city
+          area
+          areaUnit
+          price
+          media: propertyMedias(first: 1) {
+            nodes {
+              id
+              mediaUrl
+              mediaId
+              media {
+                signedUrl
+              }
+              isCoverImage
+            }
+          }
+        }
+      }
     }
   }
 `;
