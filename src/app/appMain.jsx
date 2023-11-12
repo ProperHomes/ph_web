@@ -29,6 +29,8 @@ const links = [
 function Main({ children }) {
   const { isDarkModeActive } = useDarkMode();
   const pathname = usePathname();
+  const isBuilderOrProject =
+    pathname.includes("/builder") || pathname.includes("/project");
   const theme = isDarkModeActive ? darkTheme : lightTheme;
 
   return (
@@ -36,9 +38,10 @@ function Main({ children }) {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box
           sx={{
-            backgroundColor: links.includes(pathname)
-              ? theme.palette.background.secondary
-              : theme.palette.background.default,
+            backgroundColor:
+              links.includes(pathname) || isBuilderOrProject
+                ? theme.palette.background.secondary
+                : theme.palette.background.default,
             margin: "0 auto",
           }}
         >

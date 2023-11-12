@@ -26,10 +26,10 @@ export default async function Page({ params }) {
   return <BlogPost post={post} />;
 }
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   let paths = [];
   try {
-    const res = await fetch({
+    const res = await axios({
       url: "https://wpsuperadmin.properhomes.in/graphql",
       method: "post",
       headers: {
@@ -41,7 +41,7 @@ export async function getStaticParams() {
     });
     const posts = res?.data?.data?.posts?.nodes ?? [];
     for (let p = 0; p < posts.length; p++) {
-      paths.push({ slug: p.slug });
+      paths.push({ slug: posts[p].slug });
     }
   } catch (err) {
     console.log("err", err);

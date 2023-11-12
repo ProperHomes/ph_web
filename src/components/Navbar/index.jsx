@@ -2,11 +2,14 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Link from "next/link";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Image from "next/image";
 
-import NavbarLeft from "./Left";
+import NavLinks from "./NavLinks";
 import NavbarRight from "./Right";
 import UserSlideDrawer from "../UserSlideDrawer";
 import HideOnScroll from "../HideOnScroll";
@@ -43,7 +46,33 @@ function Navbar() {
               pb={2}
               spacing={1}
             >
-              <NavbarLeft />
+              <Stack direction="row" alignItems="center">
+                <Link href="/" title="ProperHomes">
+                  <Image
+                    src="/logo.png"
+                    width={200}
+                    height={50}
+                    priority
+                    quality={100}
+                    alt="logo"
+                    style={{
+                      objectFit: "contain",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                  <Typography
+                    variant="h1"
+                    sx={{
+                      fontSize: "0px !important",
+                      position: "absolute",
+                    }}
+                  >
+                    ProperHomes
+                  </Typography>
+                </Link>
+                <NavLinks />
+              </Stack>
               <NavbarRight />
             </Stack>
           </Stack>

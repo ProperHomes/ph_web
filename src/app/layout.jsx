@@ -6,8 +6,10 @@ import { Manrope } from "next/font/google";
 import Container from "@mui/material/Container";
 
 const Navbar = dynamic(() => import("../components/Navbar"));
-const BottomNavbar = dynamic(() => import("../components/BottomNavbar"));
-const Footer = dynamic(() => import("../components/Footer"));
+const BottomNavbar = dynamic(() => import("../components/BottomNavbar"), {
+  ssr: false,
+});
+const Footer = dynamic(() => import("../components/Footer"), { ssr: false });
 
 export const metadata = {
   title:

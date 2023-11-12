@@ -87,7 +87,7 @@ export const FETCH_USER_BY_NUMBER = gql`
 
 export const FETCH_USER_DEVICE_TOKENS = gql`
   query userDeviceTokens($userId: UUID!) {
-    userDeviceTokens(condition: {userId: $userId}) {
+    userDeviceTokens(condition: { userId: $userId }) {
       nodes {
         deviceToken
         deviceType

@@ -50,6 +50,12 @@ export const LISTING_STATUS = {
   APPROVED: "APPROVED",
 };
 
+export const PROJECT_STATUS = {
+  UNDER_CONSTRUCTION: "UNDER CONSTRUCTION",
+  READY_TO_MOVE: "READY TO MOVE",
+  SOLD_OUT: "SOLD_OUT",
+};
+
 export const PROPERTY_FACING = {
   EAST: "EAST",
   WEST: "WEST",
@@ -151,3 +157,11 @@ for (let link of navlinks) {
   }
 }
 export { navLinkWithCities };
+
+export const HOME_SERVICES_LINKS = [
+  { title: "Home Services", path: "home-services" },
+  { title: "Home Cleaning Services", path: "home-cleaning-services" },
+  { title: "Home AC Repairs Services", path: "home-repairs-services" },
+  { title: "Home Painting Services", path: "home-painting-services" },
+  { title: "Home Plumbing Services", path: "home-plumbing-services" },
+];

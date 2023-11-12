@@ -3,6 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import { CardsGrid } from "@/styles/styles";
@@ -35,19 +36,21 @@ export default async function BlogPosts({ posts }) {
                   />
                 )}
                 <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h2"
-                    sx={{ fontSize: "1.4rem !important" }}
-                  >
-                    {title}
-                  </Typography>
-                  <div
-                    style={{ fontSize: "1rem" }}
-                    dangerouslySetInnerHTML={{
-                      __html: excerpt,
-                    }}
-                  />
+                  <Stack>
+                    <Typography
+                      gutterBottom
+                      variant="h2"
+                      sx={{ fontSize: "1.2rem !important", fontWeight: 600 }}
+                    >
+                      {title}
+                    </Typography>
+                    <div
+                      style={{ fontSize: "1rem" }}
+                      dangerouslySetInnerHTML={{
+                        __html: excerpt,
+                      }}
+                    />
+                  </Stack>
                 </CardContent>
               </CardActionArea>
             </Card>

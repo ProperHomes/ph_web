@@ -56,6 +56,10 @@ module.exports = withPWA({
       },
       {
         protocol: "https",
+        hostname: "placehold.co",
+      },
+      {
+        protocol: "https",
         hostname: "wpsuperadmin.properhomes.in",
       },
       {

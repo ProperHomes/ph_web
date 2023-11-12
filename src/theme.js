@@ -67,16 +67,19 @@ const defaultThemeOptions = {
     MuiTypography: {
       styleOverrides: {
         h1: ({ theme }) => ({
+          fontSize: "2rem !important",
           ...(theme.palette.mode === "dark" && {
             color: "#f9f9f9",
           }),
         }),
         h2: ({ theme }) => ({
+          fontSize: "1.8rem !important",
           ...(theme.palette.mode === "dark" && {
             color: "#f9f9f9",
           }),
         }),
         h4: ({ theme }) => ({
+          fontSize: "1.5rem !important",
           ...(theme.palette.mode === "dark" && {
             color: "#f9f9f9",
           }),

@@ -6,6 +6,7 @@ export default async function Page({ params }) {
   return <ManageProperty slug={params.slug} />;
 }
 
+// Todo: remove this and make 'Manage Property' client side.
 export async function generateStaticParams() {
   let res = await client.request(GET_ALL_PROPERTIES_FOR_STATIC_PATHS);
   const properties = res?.properties?.nodes ?? [];
