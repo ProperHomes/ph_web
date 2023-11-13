@@ -42,12 +42,10 @@
     "next-sitemap": "^4.2.3",
     "nextjs-toploader": "^1.5.3",
     "react": "18.2.0",
-    "react-csv-importer": "^0.8.1",
     "react-dom": "18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-hook-form": "^7.45.2",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-intl": "^6.4.4",
     "react-sticky-box": "^2.0.4",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
@@ -57,7 +55,6 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
-    "sharp": "^0.32.6",
-    "sst": "2.26.10"
+    "sst": "^2.34.3"
   }
 }
