@@ -116,7 +116,7 @@ export const navlinksSale = [
   //   link: "bungalows-for-sale",
   //   title: "Bungalows For Sale",
   // },
-  // { link: "properties-for-sale", title: "Properties For Sale" },
+  { link: "properties-for-sale", title: "Properties For Sale" },
 ];
 
 export const navlinksRent = [
@@ -131,8 +131,8 @@ export const navlinksRent = [
   //   link: "bungalows-for-rent",
   //   title: "Bungalows For Rent",
   // },
-  // { link: "properties-for-rent", title: "Properties For Rent" },
-  // { link: "properties-for-lease", title: "Properties For Lease" },
+  { link: "properties-for-rent", title: "Properties For Rent" },
+  { link: "properties-for-lease", title: "Properties For Lease" },
 ];
 
 export const navlinksOthers = [
