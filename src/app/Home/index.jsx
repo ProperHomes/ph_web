@@ -24,9 +24,10 @@ export default function Home({ data }) {
     },
     skip: !loggedInUserId,
   });
-  const list = !!loggedInUserId
-    ? properties?.properties?.edges?.map((edge) => edge.node) ?? data
-    : data;
+  const list =
+    (!!loggedInUserId
+      ? properties?.properties?.edges?.map((edge) => edge.node) ?? data ?? []
+      : data) ?? [];
 
   return (
     <>
