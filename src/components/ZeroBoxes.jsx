@@ -8,34 +8,12 @@ import ContentPasteOffIcon from "@mui/icons-material/ContentPasteOff";
 
 const infoBoxes = [
   {
-    title: "Zero ADs",
-    color: "#f0f8ff",
-    Icon: MoneyOffIcon,
-    description: (
-      <Typography variant="body2">
-        We'll never show ADs but only{" "}
-        <b>100% Real Owner Verified Properties. </b>
-      </Typography>
-    ),
-  },
-  {
     title: "Zero Brokers",
     color: "#eaf9f5",
     Icon: PersonOffIcon,
     description: (
       <Typography variant="body2">
         Contact Owners directly. <b>No brokers or agents involved.</b>
-      </Typography>
-    ),
-  },
-  {
-    title: "Zero Paperwork",
-    color: "#faf6ff",
-    Icon: ContentPasteOffIcon,
-    description: (
-      <Typography variant="body2">
-        <b>100% Digital experience.</b> Even if its Aadhar or Police
-        Verification. Coming Soon.
       </Typography>
     ),
   },
@@ -47,6 +25,28 @@ const infoBoxes = [
       <Typography variant="body2">
         <b>No spam calls or spam messages.</b> We'll never contact you unless
         you want us to.
+      </Typography>
+    ),
+  },
+  {
+    title: "Zero Hidden Charges",
+    color: "#f0f8ff",
+    Icon: MoneyOffIcon,
+    description: (
+      <Typography variant="body2">
+        We won't charge you more than what's on our pricing page.{" "}
+        <b>Zero Tricks.</b>
+      </Typography>
+    ),
+  },
+  {
+    title: "Zero Paperwork",
+    color: "#faf6ff",
+    Icon: ContentPasteOffIcon,
+    description: (
+      <Typography variant="body2">
+        <b>100% Digital experience.</b> Even if its Aadhar or Police
+        Verification. Coming Soon.
       </Typography>
     ),
   },
