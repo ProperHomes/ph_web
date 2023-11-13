@@ -88,13 +88,28 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
             )}
           </Stack>
 
+          <StyledBtn
+            fullWidth
+            startIcon={<HomeIcon />}
+            onClick={navigateTo("/")}
+          >
+            Home
+          </StyledBtn>
           {isLoggedIn && (
-            <StyledBtn
-              startIcon={<Dashboard />}
-              onClick={navigateTo("/dashboard/manage")}
-            >
-              Dashboard
-            </StyledBtn>
+            <>
+              <StyledBtn
+                startIcon={<Dashboard />}
+                onClick={navigateTo("/dashboard/manage")}
+              >
+                Dashboard
+              </StyledBtn>
+              <StyledBtn
+                startIcon={<Dashboard />}
+                onClick={navigateTo("/dashboard/settings")}
+              >
+                Settings
+              </StyledBtn>
+            </>
           )}
           {isSysAdmin && (
             <StyledBtn
@@ -112,13 +127,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           spacing={2}
           sx={{ margin: "0 auto", width: "100%" }}
         >
-          <StyledBtn
-            fullWidth
-            startIcon={<HomeIcon />}
-            onClick={navigateTo("/")}
-          >
-            Home
-          </StyledBtn>
           {/* <StyledBtn
             fullWidth
             startIcon={<CurrencyRupeeOutlined />}

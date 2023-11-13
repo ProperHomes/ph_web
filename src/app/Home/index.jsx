@@ -32,24 +32,21 @@ export default function Home({ data }) {
     <>
       <Stack spacing={4} py={4} alignItems="center">
         <Stack spacing={1} px={{ xs: 0, md: 4 }} alignItems="center">
-          <Stack spacing={1} direction="row" alignItems="center">
-            <Typography variant="h4">Find a home that </Typography>
-            <Typography
-              sx={{
+          <Typography variant="h2">
+            Find a home that{" "}
+            <span
+              style={{
                 fontSize: "2.5rem",
                 fontFamily: theme.typography.fontFamily.Damion,
                 color: theme.palette.info.main,
               }}
             >
               loves you
-            </Typography>
-          </Stack>
-
+            </span>
+          </Typography>
           <SearchBlock />
         </Stack>
-
         <CategoryBoxes />
-
         <Stack display={{ xs: "none", md: "flex" }}>
           <ZeroBoxes />
         </Stack>

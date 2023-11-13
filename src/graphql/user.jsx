@@ -25,12 +25,6 @@ export const USER_FIELDS = gql`
         createdAt
       }
     }
-    userDeviceTokens {
-      nodes {
-        deviceToken
-        deviceType
-      }
-    }
   }
 `;
 

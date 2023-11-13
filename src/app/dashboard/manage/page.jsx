@@ -42,7 +42,7 @@ function ManageProperties() {
 
   return (
     <Suspense fallback={<ListSkeleton n={8} />}>
-      <Stack spacing={4}>
+      <Stack spacing={4} sx={{ overflow: "hidden" }}>
         <PropertyList data={properties} onCloseEditor={refetch} />
         {totalPages > 1 && (
           <Stack alignItems="center" justifyContent="center">

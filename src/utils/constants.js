@@ -74,13 +74,13 @@ export const AREA_UNITS = {
 };
 
 export const ALL_CITIES = [
-  "BANGALORE",
-  "CHENNAI",
-  "DELHI",
-  "GURGAON",
+  // "BANGALORE",
+  // "CHENNAI",
+  // "DELHI",
+  // "GURGAON",
   "HYDERABAD",
-  "MUMBAI",
-  "PUNE",
+  // "MUMBAI",
+  // "PUNE",
   "VIJAYAWADA",
   "VISHAKAPATNAM",
 ];
@@ -112,11 +112,11 @@ export const navlinksSale = [
     link: "commercial-properties-for-sale",
     title: "Commercial Properties For Sale",
   },
-  {
-    link: "bungalows-for-sale",
-    title: "Bungalows For Sale",
-  },
-  { link: "properties-for-sale", title: "Properties For Sale" },
+  // {
+  //   link: "bungalows-for-sale",
+  //   title: "Bungalows For Sale",
+  // },
+  // { link: "properties-for-sale", title: "Properties For Sale" },
 ];
 
 export const navlinksRent = [
@@ -127,19 +127,19 @@ export const navlinksRent = [
     link: "commercial-properties-for-rent",
     title: "Commerical Properties For Rent",
   },
-  {
-    link: "bungalows-for-rent",
-    title: "Bungalows For Rent",
-  },
-  { link: "properties-for-rent", title: "Properties For Rent" },
-  { link: "properties-for-lease", title: "Properties For Lease" },
+  // {
+  //   link: "bungalows-for-rent",
+  //   title: "Bungalows For Rent",
+  // },
+  // { link: "properties-for-rent", title: "Properties For Rent" },
+  // { link: "properties-for-lease", title: "Properties For Lease" },
 ];
 
 export const navlinksOthers = [
-  { link: "pg", title: "Paying Guest" },
-  { link: "paying-guests-accommodation", title: "Paying Guest" },
-  { link: "hostel-accommodation", title: "Hostels" },
-  { link: "hostels", title: "Hostels" },
+  // { link: "pg", title: "Paying Guest" },
+  // { link: "paying-guests-accommodation", title: "Paying Guest" },
+  // { link: "hostel-accommodation", title: "Hostels" },
+  // { link: "hostels", title: "Hostels" },
 ];
 
 export const navlinks = [...navlinksSale, ...navlinksRent, ...navlinksOthers];
