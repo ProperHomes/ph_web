@@ -5,18 +5,18 @@ export const USER_TYPE = {
 };
 
 export const PROPERTY_TYPE = {
-  HOUSE: "HOUSE",
-  VILLA: "VILLA",
-  LAND: "LAND",
+  // LAND: "LAND",
   FLAT: "FLAT",
-  APARTMENT: "APARTMENT",
-  BUNGALOW: "BUNGALOW",
+  VILLA: "VILLA",
+  HOUSE: "HOUSE",
+  // APARTMENT: "APARTMENT",
+  // BUNGALOW: "BUNGALOW",
   FARM_HOUSE: "FARM HOUSE",
-  PROJECT: "PROJECT",
+  // PROJECT: "PROJECT",
   COMMERCIAL: "COMMERCIAL",
-  PG: "PG",
-  HOSTEL: "HOSTEL",
-  ROOM: "ROOM",
+  // PG: "PG",
+  // HOSTEL: "HOSTEL",
+  // ROOM: "ROOM",
 };
 
 export const LISTING_TYPE = {

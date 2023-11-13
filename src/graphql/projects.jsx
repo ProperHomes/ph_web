@@ -23,6 +23,7 @@ export const PROJECT_FIELDS = gql`
       id
       name
       slug
+      phoneNumber
       logo {
         signedUrl
       }
@@ -95,6 +96,7 @@ export const FETCH_PROJECT_BY_SLUG = gql`
           id
           slug
           type
+          bedrooms
           description
           listedFor
           title

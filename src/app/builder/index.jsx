@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import VerifiedIcon from "@mui/icons-material/Verified";
+
 import NavTabs from "./NavTabs";
 import ProjectCards from "./ProjectsCards";
 
@@ -85,9 +88,17 @@ export default function BuilderProfile({ data }) {
 
       <Stack p={4} spacing={4}>
         <Stack spacing={2}>
-          <Typography variant="h1" fontWeight={800}>
-            {name}
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Typography variant="h1" fontWeight={800}>
+              {name}
+            </Typography>
+            <Chip
+              icon={<VerifiedIcon color="info" />}
+              color="info"
+              label="Verified"
+            />
+          </Stack>
+
           <Stack py={2} spacing={1}>
             <Typography fontWeight={700}>Office Address</Typography>
             <Typography>{officeAddress}</Typography>

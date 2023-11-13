@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import CancelIcon from "@mui/icons-material/Cancel";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import NavTabs from "./NavTabs";
 import Card from "../property/Card";
+import ContactButtons from "./ContactButtons";
 
 export default function ProjectProfile({ data }) {
   const {
@@ -95,6 +98,7 @@ export default function ProjectProfile({ data }) {
               borderRadius: "1.4rem 1.4em 0 0",
             }}
           />
+          <ContactButtons url={brochure?.signedUrl} />
         </Stack>
 
         <NavTabs />
@@ -102,9 +106,17 @@ export default function ProjectProfile({ data }) {
 
       <Stack p={4} spacing={4}>
         <Stack spacing={2}>
-          <Typography variant="h1" fontWeight={800}>
-            {name}
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Typography variant="h1" fontWeight={800}>
+              {name}
+            </Typography>
+            <Chip
+              icon={<VerifiedIcon color="info" />}
+              color="info"
+              label="Verified"
+            />
+          </Stack>
+
           <Stack py={2} spacing={1}>
             <Typography fontWeight={700}>Address</Typography>
             <Typography>{address}</Typography>

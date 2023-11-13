@@ -112,6 +112,7 @@ export default function Footer() {
                 }}
               />
             </Link>
+            <Typography>For any enquiries call us @ +916305078250</Typography>
 
             <Stack my={1} direction="row" alignItems="center">
               <Typography fontWeight={600}>Follow us on: </Typography>

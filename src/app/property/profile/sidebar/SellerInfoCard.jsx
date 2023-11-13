@@ -111,12 +111,12 @@ function SellerInfoCard(props) {
         property ?
       </Typography>
 
-      {isLoggedIn && !hasPaidAlready && (
+      {/* {isLoggedIn && !hasPaidAlready && (
         <Typography fontSize="1rem">
           You have {userCredits} {userCredits === 1 ? "credit" : "credits"}{" "}
           {userCredits !== 0 ? "remaining" : ""}
         </Typography>
-      )}
+      )} */}
       <Button
         variant="contained"
         color="info"

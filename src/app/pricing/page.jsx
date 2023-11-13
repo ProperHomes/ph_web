@@ -58,32 +58,32 @@ const sellerPricing = [
     price: 0,
     features: [
       "List 1 Property.",
-      "Basic Analytics.",
-      "Rental Management with Autopay.",
-      "Rental Agreement and Receipt Generation.",
-      "Realtime Customer Interest Notification Alerts.",
+      "Real time alerts. No insights and no analytics.",
+      "1-2 leads per month.",
+      "Boost feature not available on free plan.",
+      "Buyers need to pay ₹25 to contact you.",
     ],
   },
   {
-    name: "Prime",
+    name: "Silver",
     price: 2500,
     features: [
-      "Everything in free plan.",
-      "List upto 10 Properties.",
-      "Basic Support.",
-      "Separate Business Profile Page.",
-      "Buyers don't need to pay to view your property contact details (if agreed by you).",
+      "List 10 Properties.",
+      "Real time alerts. Basic insights and Analytics.",
+      "5 Leads per month on an Average.",
+      "Boost your Property once every 5 days. City level only.",
+      "Buyers don't need to pay to contact you. (if agreed by you).",
     ],
   },
   {
-    name: "Premium",
+    name: "Gold",
     price: 5000,
     features: [
-      "Everything in Prime Plan.",
-      "List upto 25 Properties.",
-      "Priority Support.",
-      "Boost 1 property in 1 city everyday.",
-      "Full fledged Analytics, insights and alerts.",
+      "List Unlimited Properties.",
+      "Full fledged insights, alerts and Analytics.",
+      "10 Leads per month on an Average.",
+      "Boost your Property once every 2 days. City and Locality level.",
+      "Buyers don't need to pay to contact you. (if agreed by you).",
     ],
   },
 ];
@@ -135,8 +135,11 @@ export default function Pricing() {
 
         <CustomTabPanel index={0} value={index}>
           <Stack spacing={2}>
+            <Typography textAlign="center" fontSize="1.2rem" fontWeight={800}>
+              Zero Hidden Charges.
+            </Typography>
             <Typography textAlign="center" fontSize="1.2rem">
-              All Paid plans come with a <b>10% Annual Discount</b> ..!
+              Pay annually and get <b>10% Discount on total</b> ..!
             </Typography>
             <Stack
               display={{ xs: "none", md: "flex" }}
@@ -166,7 +169,7 @@ export default function Pricing() {
                         {name}
                       </Typography>
                       <Typography
-                        fontSize="1rem"
+                        fontSize="1.2rem"
                         color="#ff5757"
                         fontWeight={800}
                       >
@@ -273,23 +276,20 @@ export default function Pricing() {
             }}
           >
             <Typography sx={{ fontSize: "1.2rem" }}>
-              a&#41; Every property listed on <Link href="/">ProperHomes</Link>{" "}
-              is
-              <b> manually verified by us.</b>
+              a&#41;<b> View unlimited properties for free</b> except the
+              contact details. You need credits to view contact details.
             </Typography>
             <Typography sx={{ fontSize: "1.2rem" }}>
-              b&#41; As a buyer or tenant, you can{" "}
-              <b> view unlimited properties for free.</b>
+              b&#41;You get <b>1 credit for free when you signup.</b> Each
+              credit is equal to <b>₹25</b>.
             </Typography>
             <Typography sx={{ fontSize: "1.2rem" }}>
-              c&#41; To access contact details of properties, you need credits
-              which costs <b>{getRupees(25)}</b> each. So with 1 credit you can
-              view contact details of one property.
+              c&#41;With each credit you can view contact details of one
+              property <b>forever</b>.
             </Typography>
+
             <Typography sx={{ fontSize: "1.2rem" }}>
-              d&#41; <b>Credits never expire </b> unlike other platforms.
-              You&apos;ll always have acccess to previously viewed contact
-              details of a property forever.
+              e&#41; <b>Buy more credits </b> to contact more properties.
             </Typography>
             <Button
               variant="outlined"
@@ -307,17 +307,52 @@ export default function Pricing() {
           </ListBox>
         </CustomTabPanel>
 
-        <Typography>
-          If you have any questions, you can either read the{" "}
-          <Link
-            href="/faq"
-            prefetch={false}
-            style={{ textDecoration: "underline" }}
+        <Stack
+          spacing={2}
+          sx={{ maxWidth: "800px" }}
+          justifyContent="center"
+          alignContent="center"
+        >
+          <Typography
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: 800,
+              textDecoration: "underline",
+            }}
           >
-            FAQ questions
-          </Link>{" "}
-          or contact us directly at support@properhomes.in
-        </Typography>
+            Note:
+          </Typography>
+          <Typography sx={{ fontSize: "1.2rem" }}>
+            - Every property must be verified by us to get listed on on{" "}
+            <Link
+              prefetch={false}
+              style={{ textDecoration: "underline" }}
+              href="/"
+            >
+              ProperHomes
+            </Link>
+            . No exceptions.
+          </Typography>
+          {index === 1 && (
+            <Typography sx={{ fontSize: "1.2rem" }}>
+              - Get your credit refunded, if the property (you spent your credit
+              on) was not available anymore.
+            </Typography>
+          )}
+          <Typography sx={{ fontSize: "1.2rem" }}>
+            - If you have any questions, you can either read the{" "}
+            <Link
+              href="/faq"
+              prefetch={false}
+              style={{ textDecoration: "underline" }}
+            >
+              FAQ
+            </Link>{" "}
+            or email us directly at veera@properhomes.in or call/sms/whatsapp us
+            directly @ +916305078250
+          </Typography>
+        </Stack>
+
         {Auth}
       </Stack>
     </StyledContainer>
