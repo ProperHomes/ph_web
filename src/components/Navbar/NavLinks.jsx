@@ -43,15 +43,15 @@ const links = [
     path: "/list-your-property-for-sale-rent-lease",
     isListingLink: true,
   },
-  {
-    title: "Home Services",
-    path: "/home-services",
-    tooltipLinks: homeServicesTooltipLinks,
-  },
-  {
-    title: "Manage Rentals",
-    path: "/property-rental-management-for-owners-managers",
-  },
+  // {
+  //   title: "Home Services",
+  //   path: "/home-services",
+  //   tooltipLinks: homeServicesTooltipLinks,
+  // },
+  // {
+  //   title: "Manage Rentals",
+  //   path: "/property-rental-management-for-owners-managers",
+  // },
 ];
 
 function NavLinks() {

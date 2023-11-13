@@ -52,11 +52,11 @@ const forRentlinks = [
     link: "/commercial-properties-for-rent",
     Icon: WarehouseOutlined,
   },
-  {
-    label: "Paying Guests (PG)",
-    link: "/paying-guests-accommodation",
-    Icon: CabinOutlined,
-  },
+  // {
+  //   label: "Paying Guests (PG)",
+  //   link: "/paying-guests-accommodation",
+  //   Icon: CabinOutlined,
+  // },
 ];
 
 const allLinks = [...forSaleLinks, ...forRentlinks];

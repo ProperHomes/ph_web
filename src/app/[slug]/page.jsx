@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
@@ -118,7 +119,7 @@ export default async function Page({ params, searchParams }) {
   if (isRentalAgreement) {
     return <RentalAgreement />;
   }
-  
+
   if (isCitySlug) {
     const citySlug = slug.toUpperCase();
     const variables = {
@@ -201,7 +202,9 @@ export default async function Page({ params, searchParams }) {
     }
     return (
       <Stack spacing={4} py={2}>
-        <CategoryBoxes />
+        <Box sx={{ display: { xs: "none", md: "block" } }}>
+          <CategoryBoxes />
+        </Box>
         <PropertyList
           data={data}
           type={variables.type}

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, memo } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -14,19 +15,11 @@ import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import AddIcon from "@mui/icons-material/Add";
 import PersonIcon from "@mui/icons-material/Person2";
 
-import { usePathname } from "next/navigation";
-import useToggleAuth from "src/hooks/useToggleAuth";
-
 const dashboardTabList = [
   {
     label: "Home",
     href: "/",
     Icon: HomeIcon,
-  },
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    Icon: DashboardIcon,
   },
   {
     label: "Manage",
@@ -68,34 +61,10 @@ const homeList = [
   },
 ];
 
-const homeListLoggedIn = [
-  {
-    label: "Home",
-    href: "/",
-    Icon: HomeIcon,
-  },
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    Icon: DashboardIcon,
-  },
-  {
-    label: "Sell/Rent",
-    href: "/list-your-property-for-sale-rent-lease",
-    Icon: AddIcon,
-  },
-  {
-    label: "Settings",
-    href: "/settings",
-    Icon: SettingsIcon,
-  },
-];
-
 function BottomNavbar() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
-  const { isLoggedIn } = useToggleAuth();
   const isDashboardOrSettings =
     pathname.includes("/dashboard") || pathname.includes("/settings");
   const [value, setValue] = useState("/home");
@@ -104,11 +73,7 @@ function BottomNavbar() {
     setValue(pathname);
   }, [pathname]);
 
-  const list = isDashboardOrSettings
-    ? dashboardTabList
-    : isLoggedIn
-    ? homeListLoggedIn
-    : homeList;
+  const list = isDashboardOrSettings ? dashboardTabList : homeList;
 
   return (
     <Paper

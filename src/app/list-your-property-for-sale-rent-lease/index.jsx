@@ -359,7 +359,7 @@ function CreatePropertySaleRentLease({
         )}
       </Stack>
 
-      <StyledForm p={{ xs: 2, md: 6 }} px={{ xs: 0 }}>
+      <StyledForm p={{ xs: 2, md: 6 }}>
         <Stack spacing={4}>
           <StyledGrid>
             <Stack>

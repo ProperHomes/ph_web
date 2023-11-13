@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { client } from "@/graphql/serverClient";
 import { GET_PROPERTIES } from "@/graphql/properties";
@@ -12,7 +13,9 @@ export default async function Page({ searchParams }) {
   const data = res?.properties?.edges?.map((edge) => edge.node) ?? [];
   return (
     <Stack py={2} spacing={4}>
-      <CategoryBoxes />
+      <Box sx={{ display: { xs: "none", md: "block" } }}>
+        <CategoryBoxes />
+      </Box>
       <PropertyList
         data={data}
         infiniteScroll

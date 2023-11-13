@@ -57,7 +57,7 @@ function AboutUs() {
             paramount to us.
           </Typography>
         </Stack>
-        <Stack spacing={1}>
+        {/* <Stack spacing={1}>
           <Typography sx={{ fontSize: "1.3rem", fontWeight: 600 }}>
             Our Future Plans
           </Typography>
@@ -103,7 +103,7 @@ function AboutUs() {
               </Typography>
             </Stack>
           </Stack>
-        </Stack>
+        </Stack> */}
 
         <Typography sx={{ fontSize: "1.2rem" }}>
           ProperHomes is dedicated to reshaping the real estate landscape, one
