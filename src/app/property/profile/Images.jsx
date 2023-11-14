@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,14 +7,8 @@ import Skeleton from "@mui/material/Skeleton";
 
 import { ImageGrid } from "./styles";
 
+import Swiper from "@/components/Swiper";
 import useImagesModalGallery from "src/hooks/useImagesModalGallery";
-
-const Swiper = dynamic(() => import("@/components/Swiper"), {
-  ssr: false,
-  loading: () => (
-    <Skeleton variant="rounded" width={480} height={250} animation={false} />
-  ),
-});
 
 function PropertyImages({ images }) {
   const { toggleModal, ImageGallery } = useImagesModalGallery({ images });
@@ -42,20 +35,50 @@ function PropertyImages({ images }) {
         sx={{
           display: { xs: "block", md: "none" },
           position: "relative",
+          borderRadius: "10px",
           maxHeight: "280px",
           overflow: "hidden",
         }}
       >
-        <Swiper images={imagesToLoad} />
-
+        <Swiper>
+          {imagesToLoad.map(({ url }, i) => {
+            const isLoaded = imagesLoaded.includes(i);
+            return (
+              <Box key={i}>
+                {!isLoaded && (
+                  <Skeleton
+                    variant="rounded"
+                    width={450}
+                    height={280}
+                    animation={false}
+                  />
+                )}
+                <Image
+                  src={url}
+                  onClick={toggleModal}
+                  alt=""
+                  priority
+                  quality={100}
+                  width={450}
+                  height={280}
+                  onLoadingComplete={handleLoadingComplete(i)}
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    cursor: "pointer",
+                  }}
+                />
+              </Box>
+            );
+          })}
+        </Swiper>
         <Button
           size="small"
           variant="outlined"
           sx={{
             position: "absolute",
-            bottom: 10,
+            bottom: 0,
             left: "50%",
-            zIndex: 10,
             backgroundColor: "rgba(0,0,0,0.5)",
             color: "#fff",
             borderColor: "#fafafa4d",
