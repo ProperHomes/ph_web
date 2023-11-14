@@ -1,25 +1,42 @@
-"use client";
-import { useState } from "react";
-import SwipeableViews from "react-swipeable-views";
-import useTheme from "@mui/material/styles/useTheme";
+import Image from "next/image";
+import { register } from "swiper/element/bundle";
+import "swiper/css";
+import "swiper/css/effect-cards";
 
-function Swiper({ children }) {
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = useState(0);
+// register Swiper custom elements
+register();
 
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
-
+function Swiper({ images }) {
   return (
-    <SwipeableViews
-      axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-      index={activeStep}
-      onChangeIndex={handleStepChange}
-      enableMouseEvents
+    <swiper-container
+      class="mySwiper"
+      pagination="true"
+      effect="cards"
+      grab-cursor="true"
     >
-      {children}
-    </SwipeableViews>
+      {images.map(({ url }) => {
+        return (
+          <swiper-slide key={url} lazy="true">
+            <Image
+              src={url}
+              alt="property image"
+              priority
+              quality={100}
+              width={450}
+              height={280}
+              style={{
+                borderRadius: "10px",
+                width: "auto",
+                height: "auto",
+                objectFit: "cover",
+                objectPosition: "center",
+                cursor: "pointer",
+              }}
+            />
+          </swiper-slide>
+        );
+      })}
+    </swiper-container>
   );
 }
 

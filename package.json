@@ -50,6 +50,7 @@
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
     "sharp": "^0.32.6",
+    "swiper": "^11.0.4",
     "yup": "^1.2.0",
     "yup-password": "^0.2.2",
     "yup-phone-lite": "^2.0.1"
