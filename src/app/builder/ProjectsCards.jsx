@@ -23,9 +23,6 @@ export default function ProjectCards({ projects }) {
   };
   return (
     <Stack direction="row" spacing={2}>
-      {projects.length === 0 && (
-        <Typography>No ongoing projects right now.</Typography>
-      )}
       {projects.map((data) => {
         const { id, name, slug, address, priceRange, coverImage } = data;
         return (

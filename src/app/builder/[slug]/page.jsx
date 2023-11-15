@@ -5,11 +5,13 @@ import {
 } from "@/graphql/builders";
 import BuilderProfile from "..";
 
+export const dynamicParams = true;
+
 export async function generateMetadata({ params }) {
   let res = await client.request(FETCH_BUILDER_BY_SLUG, { slug: params.slug });
   const { name, description, logo } = res?.builderBySlug;
   return {
-    title: `${name} - ProperHomes`,
+    title: `${name} - Builder Profile at ProperHomes`,
     description,
     openGraph: {
       images: [logo?.signedUrl].filter((x) => x),

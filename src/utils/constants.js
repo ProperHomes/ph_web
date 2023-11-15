@@ -82,7 +82,7 @@ export const ALL_CITIES = [
   // "MUMBAI",
   // "PUNE",
   "VIJAYAWADA",
-  "VISHAKAPATNAM",
+  // "VISHAKAPATNAM",
 ];
 
 export const LOCALITIES = {

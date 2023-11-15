@@ -140,14 +140,24 @@ export default function BuilderProfile({ data }) {
         <Typography variant="h2" fontWeight={800}>
           Ongoing Projects
         </Typography>
-        <ProjectCards projects={onGoingProjects ?? []} />
+        {onGoingProjects.length === 0 ? (
+          <Typography>No ongoing projects right now.</Typography>
+        ) : (
+          <ProjectCards projects={onGoingProjects ?? []} />
+        )}
       </Stack>
 
       <Stack p={4} id="#completedProjects" spacing={2}>
         <Typography variant="h2" fontWeight={800}>
           Completed Projects
         </Typography>
-        <ProjectCards projects={completedProjects ?? []} />
+        {completedProjects.length === 0 ? (
+          <Typography>
+            No completed projects yet.! Projects are still ongoing.
+          </Typography>
+        ) : (
+          <ProjectCards projects={completedProjects ?? []} />
+        )}
       </Stack>
     </Stack>
   );
