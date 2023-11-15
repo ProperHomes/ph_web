@@ -7,12 +7,14 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 
 import NavTabs from "./NavTabs";
 import ProjectCards from "./ProjectsCards";
+import ContactButtons from "../project/ContactButtons";
 
 // Todo: add other builders
 export default function BuilderProfile({ data }) {
   const {
     name,
     logo,
+    phoneNumber,
     coverImage,
     description,
     experience,
@@ -55,6 +57,11 @@ export default function BuilderProfile({ data }) {
             }}
           />
 
+          <ContactButtons
+            disableBrochure
+            isBuilder
+            builder={{ name, officeAddress, phoneNumber }}
+          />
           <Stack
             p={2}
             spacing={2}
@@ -88,7 +95,11 @@ export default function BuilderProfile({ data }) {
 
       <Stack p={4} spacing={4}>
         <Stack spacing={2}>
-          <Stack direction="row" alignItems="center" spacing={2}>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            alignItems={{ xs: "flex-start", md: "center" }}
+            spacing={2}
+          >
             <Typography variant="h1" fontWeight={800}>
               {name}
             </Typography>

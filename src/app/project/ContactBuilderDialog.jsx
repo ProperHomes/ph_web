@@ -12,7 +12,12 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
 
-export default function ContactDetailDialog({ open, builder, handleClose }) {
+export default function ContactDetailDialog({
+  open,
+  builder,
+  isBuilder,
+  handleClose,
+}) {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -49,7 +54,9 @@ export default function ContactDetailDialog({ open, builder, handleClose }) {
             fontWeight={500}
             sx={{ margin: "0 auto" }}
           >
-            Project Builder Contact Details
+            {isBuilder
+              ? "Builder Contact Details"
+              : "Project Builder Contact Details"}
           </Typography>
         </Stack>
       </DialogTitle>
@@ -71,9 +78,11 @@ export default function ContactDetailDialog({ open, builder, handleClose }) {
             );
           })}
         </Stack>
-        <Button variant="contained" color="info" onClick={navigateToBuilder}>
-          View Builder Profile
-        </Button>
+        {!isBuilder && (
+          <Button variant="contained" color="info" onClick={navigateToBuilder}>
+            View Builder Profile
+          </Button>
+        )}
       </DialogContent>
     </Dialog>
   );

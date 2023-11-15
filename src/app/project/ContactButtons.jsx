@@ -7,7 +7,12 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ContactDetailDialog from "./ContactBuilderDialog";
 import useToggleAuth from "src/hooks/useToggleAuth";
 
-export default function ContactButtons({ url, builder }) {
+export default function ContactButtons({
+  url,
+  builder,
+  isBuilder,
+  disableBrochure = false,
+}) {
   const { isLoggedIn, toggleAuth, Auth } = useToggleAuth();
   const [showContactDetails, setShowContactDialog] = useState(false);
 
@@ -42,21 +47,24 @@ export default function ContactButtons({ url, builder }) {
       >
         Contact Builder
       </Button>
-      <Button
-        size="medium"
-        variant="contained"
-        color="info"
-        sx={{
-          maxWidth: "200px",
-        }}
-        onClick={handleDownload}
-        startIcon={<DownloadIcon />}
-      >
-        Download Brochure
-      </Button>
+      {!disableBrochure && (
+        <Button
+          size="medium"
+          variant="contained"
+          color="info"
+          sx={{
+            maxWidth: "200px",
+          }}
+          onClick={handleDownload}
+          startIcon={<DownloadIcon />}
+        >
+          Download Brochure
+        </Button>
+      )}
       {showContactDetails && (
         <ContactDetailDialog
           builder={builder}
+          isBuilder={isBuilder}
           handleClose={toggleContactDialog}
           open={showContactDetails}
         />

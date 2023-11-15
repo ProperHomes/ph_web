@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 
 export default function ProjectCards({ projects }) {
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
       {projects.map((data) => {
         const { id, name, slug, address, priceRange, coverImage } = data;
         return (
