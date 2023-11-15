@@ -5,6 +5,8 @@ import {
 } from "@/graphql/projects";
 import ProjectProfile from "..";
 
+export const dynamicParams = true;
+
 export async function generateMetadata({ params }) {
   let res = await client.request(FETCH_PROJECT_BY_SLUG, { slug: params.slug });
   const { name, description, coverImage } = res?.projectBySlug;

@@ -13,13 +13,20 @@ import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 import Add from "@mui/icons-material/Add";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 
 import useToggleAuth from "src/hooks/useToggleAuth";
 import useUploadFile from "src/hooks/useUploadFile";
 import { convertStringToSlug } from "@/utils/helper";
 import { CREATE_BUILDER } from "@/graphql/builders";
 import Loading from "@/components/Loading";
+import { ALL_CITIES } from "@/utils/constants";
 
 const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
   ssr: false,
@@ -29,6 +36,8 @@ const propertyResolver = {
   name: yup.string().required(),
   experience: yup.number().required().moreThan(0),
   description: yup.string().required(),
+  operatingCities: yup.array().required(),
+  officeAddress: yup.string().required(),
   phoneNumber: yup.string().required("Phone number is required"),
 };
 
@@ -283,6 +292,51 @@ export default function CreateBuilder({ handleCancel }) {
           <Editor
             setValue={handleChangeDescription}
             isError={!!errors?.description}
+          />
+        </Stack>
+
+        <Stack>
+          <Label>Operating Cities*</Label>
+          <Controller
+            name="operatingCities"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <Select
+                  multiple
+                  value={value ?? []}
+                  onChange={onChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) => selected.join(", ")}
+                >
+                  {ALL_CITIES.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      <Checkbox checked={value?.indexOf(name) > -1} />
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          />
+        </Stack>
+
+        <Stack>
+          <Label>Office Address*</Label>
+          <Controller
+            name="officeAddress"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Eg: 2"
+                type="number"
+                value={value ?? ""}
+                onChange={onChange}
+                error={!!error?.message}
+              />
+            )}
           />
         </Stack>
 
