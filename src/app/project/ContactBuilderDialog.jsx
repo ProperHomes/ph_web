@@ -1,4 +1,6 @@
 "use client";
+import { useRouter } from "next/navigation";
+import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,31 +11,22 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
-import { useQuery } from "@apollo/client";
 
-import { FETCH_PROPERTY_OWNER_BUILDER_DETAILS } from "@/graphql/properties";
-
-export default function ContactDetailDialog({
-  open,
-  city,
-  pincode,
-  propertyId,
-  handleClose,
-}) {
+export default function ContactDetailDialog({ open, builder, handleClose }) {
+  const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const contactDetails = {};
+  const keysNotNeeded = ["__typename", "id", "slug", "logo"];
+  for (let key in builder) {
+    if (!keysNotNeeded.includes(key)) {
+      contactDetails[key] = builder[key];
+    }
+  }
 
-  const { data } = useQuery(FETCH_PROPERTY_OWNER_BUILDER_DETAILS, {
-    variables: { propertyId },
-  });
-
-  const contactDetails = {
-    city,
-    pincode,
-    ...(data?.property?.owner ?? data?.property?.project?.builder ?? {}),
+  const navigateToBuilder = () => {
+    router.push(`/builder/${builder?.slug}`);
   };
-  delete contactDetails.id;
-  delete contactDetails?.["__typename"];
 
   return (
     <Dialog
@@ -56,13 +49,17 @@ export default function ContactDetailDialog({
             fontWeight={500}
             sx={{ margin: "0 auto" }}
           >
-            Property Contact Details
+            Project Builder Contact Details
           </Typography>
         </Stack>
       </DialogTitle>
       <Divider />
       <DialogContent sx={{ minWidth: { xs: "100%", md: "380px" } }}>
-        <Stack sx={{ position: "relative", borderRadius: "1em" }} spacing={2}>
+        <Stack
+          sx={{ position: "relative", borderRadius: "1em" }}
+          spacing={2}
+          pb={2}
+        >
           {Object.keys(contactDetails).map((key) => {
             return (
               <Stack direction="row" spacing={2} alignItems="center">
@@ -74,6 +71,9 @@ export default function ContactDetailDialog({
             );
           })}
         </Stack>
+        <Button variant="contained" color="info" onClick={navigateToBuilder}>
+          View Builder Profile
+        </Button>
       </DialogContent>
     </Dialog>
   );

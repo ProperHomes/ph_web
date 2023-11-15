@@ -153,9 +153,7 @@ export default function BuilderProfile({ data }) {
           Completed Projects
         </Typography>
         {completedProjects.length === 0 ? (
-          <Typography>
-            No completed projects yet.! Projects are still ongoing.
-          </Typography>
+          <Typography>No completed projects yet!</Typography>
         ) : (
           <ProjectCards projects={completedProjects ?? []} />
         )}

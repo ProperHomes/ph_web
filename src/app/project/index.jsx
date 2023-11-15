@@ -20,6 +20,7 @@ export default function ProjectProfile({ data }) {
     description,
     address,
     properties,
+    builder,
   } = data ?? {};
 
   const {
@@ -98,7 +99,7 @@ export default function ProjectProfile({ data }) {
               borderRadius: "1.4rem 1.4em 0 0",
             }}
           />
-          <ContactButtons url={brochure?.signedUrl} />
+          <ContactButtons url={brochure?.signedUrl} builder={builder} />
         </Stack>
 
         <NavTabs />

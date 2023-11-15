@@ -24,6 +24,7 @@ export const PROJECT_FIELDS = gql`
       name
       slug
       phoneNumber
+      officeAddress
       logo {
         signedUrl
       }

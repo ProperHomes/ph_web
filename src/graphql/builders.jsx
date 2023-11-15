@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const BUILDER_FIELDS = gql`
   fragment BuilderFields on Builder {
     id
+    slug
     name
     description
     logo {

@@ -94,17 +94,17 @@ function AppProvider({ children }) {
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
       dispatch({ type: appActionTypes.RESET });
-      await axios({
+      router.push("/login");
+      axios({
         method: "POST",
         url: `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
         headers: {
           withCredentials: true,
         },
       });
-      router.push("/login");
     } catch (err) {
       console.log(err);
     }

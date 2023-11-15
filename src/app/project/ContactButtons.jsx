@@ -1,13 +1,26 @@
 "use client";
-
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import DownloadIcon from "@mui/icons-material/Download";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import ContactDetailDialog from "./ContactBuilderDialog";
+import useToggleAuth from "src/hooks/useToggleAuth";
 
-export default function ContactButtons({ url }) {
+export default function ContactButtons({ url, builder }) {
+  const { isLoggedIn, toggleAuth, Auth } = useToggleAuth();
+  const [showContactDetails, setShowContactDialog] = useState(false);
+
   const handleDownload = () => {
     window.open(url, "_blank");
+  };
+
+  const toggleContactDialog = () => {
+    if (isLoggedIn) {
+      setShowContactDialog((prev) => !prev);
+    } else {
+      toggleAuth();
+    }
   };
 
   return (
@@ -24,7 +37,7 @@ export default function ContactButtons({ url }) {
         sx={{
           maxWidth: "200px",
         }}
-        onClick={handleDownload}
+        onClick={toggleContactDialog}
         startIcon={<LocalPhoneIcon />}
       >
         Contact Builder
@@ -41,6 +54,14 @@ export default function ContactButtons({ url }) {
       >
         Download Brochure
       </Button>
+      {showContactDetails && (
+        <ContactDetailDialog
+          builder={builder}
+          handleClose={toggleContactDialog}
+          open={showContactDetails}
+        />
+      )}
+      {Auth}
     </Stack>
   );
 }

@@ -1,26 +1,11 @@
-"use client";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import useToggleAuth from "src/hooks/useToggleAuth";
-
 export default function ProjectCards({ projects }) {
-  const { Auth, toggleAuth, isLoggedIn } = useToggleAuth();
-
-  const handleContactBuilder = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (isLoggedIn) {
-    } else {
-      toggleAuth();
-    }
-  };
   return (
     <Stack direction="row" spacing={2}>
       {projects.map((data) => {
@@ -62,20 +47,9 @@ export default function ProjectCards({ projects }) {
                 </Stack>
               </CardContent>
             </Link>
-            <CardActions>
-              <Button
-                variant="contained"
-                size="medium"
-                color="info"
-                onClick={handleContactBuilder}
-              >
-                Contact Builder
-              </Button>
-            </CardActions>
           </Card>
         );
       })}
-      {Auth}
     </Stack>
   );
 }

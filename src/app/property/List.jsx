@@ -156,10 +156,10 @@ function PropertyList({
         <Typography
           gutterBottom
           fontWeight={600}
-          variant="h1"
+          variant="h2"
           textAlign="left"
           color={theme.palette.text.primary}
-          fontSize={{ xs: "1.4rem", sm: "1.6rem" }}
+          fontSize={{ xs: "1.4rem !important", sm: "1.6rem !important" }}
         >
           {pageTitle}
         </Typography>

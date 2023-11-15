@@ -374,13 +374,20 @@ export const CHECK_IF_USER_SAVED_PROPERTY = gql`
   }
 `;
 
-export const FETCH_PROPERTY_OWNER_DETAILS = gql`
-  query fetchPropertyOwnerDetails($propertyId: UUID!) {
+export const FETCH_PROPERTY_OWNER_BUILDER_DETAILS = gql`
+  query fetchPropertyOwnerProjectDetails($propertyId: UUID!) {
     property(id: $propertyId) {
       owner {
         id
         name
         phoneNumber
+      }
+      project {
+        builder {
+          name
+          phoneNumber
+          officeAddress
+        }
       }
     }
   }
