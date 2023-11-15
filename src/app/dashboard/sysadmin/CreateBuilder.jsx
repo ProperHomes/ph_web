@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, forwardRef } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -12,7 +12,6 @@ import TextField from "@mui/material/TextField";
 import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
-import Add from "@mui/icons-material/Add";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
@@ -23,6 +22,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import useToggleAuth from "src/hooks/useToggleAuth";
 import useUploadFile from "src/hooks/useUploadFile";
+import AddFileBlock from "@/components/AddFileBlock";
 import { convertStringToSlug } from "@/utils/helper";
 import { CREATE_BUILDER } from "@/graphql/builders";
 import Loading from "@/components/Loading";
@@ -47,25 +47,7 @@ const Label = styled("label")(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const AddPicture = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "118px",
-  height: "118px",
-  borderRadius: "8px",
-  cursor: "pointer",
-  position: "relative",
-  border: "1px solid #fff",
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? theme.palette.common.white
-      : theme.palette.common.black,
-}));
-
 export default function CreateBuilder({ handleCancel }) {
-  const logoInputRef = useRef();
-  const coverImgInputRef = useRef();
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
 
@@ -137,9 +119,6 @@ export default function CreateBuilder({ handleCancel }) {
     }
   };
 
-  const handleClickLogoInput = () => {
-    logoInputRef?.current?.click();
-  };
   const handleInputLogo = (e) => {
     const logo = e.target?.files?.[0];
     if (logo) {
@@ -147,9 +126,6 @@ export default function CreateBuilder({ handleCancel }) {
     }
   };
 
-  const handleClickCoverImgInput = () => {
-    coverImgInputRef?.current?.click();
-  };
   const handleInputCover = (e) => {
     const coverImage = e.target?.files?.[0];
     if (coverImage) {
@@ -161,49 +137,6 @@ export default function CreateBuilder({ handleCancel }) {
   };
 
   const { submitting, errors } = formState;
-
-  const PictureBlock = forwardRef(({ img, onClickInput, onChangePic }, ref) => {
-    return (
-      <AddPicture onClick={onClickInput}>
-        {img?.preview ? (
-          <img
-            alt=""
-            src={img.preview}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              opacity: img ? 1 : 0,
-              objectFit: "cover",
-              borderRadius: "10px",
-            }}
-          />
-        ) : (
-          <Add sx={{ color: "#515050" }} />
-        )}
-
-        <input
-          ref={ref}
-          type="file"
-          hidden
-          multiple
-          accept="image/*"
-          onChange={onChangePic}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            opacity: 0,
-          }}
-        />
-      </AddPicture>
-    );
-  });
 
   return (
     <Box
@@ -224,21 +157,15 @@ export default function CreateBuilder({ handleCancel }) {
       <Stack direction="row" alignItems="center" spacing={2} py={2}>
         <Stack spacing={2}>
           <Label>Add Logo</Label>
-          <PictureBlock
-            img={logo}
-            ref={logoInputRef}
-            onClickInput={handleClickLogoInput}
-            onChangePic={handleInputLogo}
-          />
+          <AddFileBlock isImageType file={logo} onChange={handleInputLogo} />
         </Stack>
 
         <Stack spacing={2}>
           <Label>Add Cover Image </Label>
-          <PictureBlock
-            img={coverImage}
-            ref={coverImgInputRef}
-            onClickInput={handleClickCoverImgInput}
-            onChangePic={handleInputCover}
+          <AddFileBlock
+            isImageType
+            file={coverImage}
+            onChange={handleInputCover}
           />
         </Stack>
       </Stack>

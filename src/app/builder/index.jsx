@@ -124,6 +124,7 @@ export default function BuilderProfile({ data }) {
               },
               "& > p": {
                 fontSize: "1.1rem",
+                marginBottom: "8px",
               },
               "& > ul": {
                 padding: "8px 1rem",

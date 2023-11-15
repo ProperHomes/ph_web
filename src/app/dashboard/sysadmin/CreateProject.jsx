@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, forwardRef } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useMutation } from "@apollo/client";
 import * as yup from "yup";
@@ -17,13 +17,13 @@ import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
-import Add from "@mui/icons-material/Add";
 
 import useToggleAuth from "src/hooks/useToggleAuth";
 import useUploadFile from "src/hooks/useUploadFile";
 import { convertStringToSlug } from "@/utils/helper";
 import { CREATE_PROJECT } from "@/graphql/projects";
 import Loading from "@/components/Loading";
+import AddFileBlock from "@/components/AddFileBlock";
 import { PROJECT_STATUS } from "@/utils/constants";
 
 const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
@@ -54,26 +54,7 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
   },
 }));
 
-const AddPicture = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "118px",
-  height: "118px",
-  borderRadius: "8px",
-  cursor: "pointer",
-  position: "relative",
-  border: "1px solid #fff",
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? theme.palette.common.white
-      : theme.palette.common.black,
-}));
-
 export default function CreateProject({ handleCancel }) {
-  const logoInputRef = useRef();
-  const coverImgInputRef = useRef();
-  const brochureInputRef = useRef();
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
 
@@ -156,9 +137,6 @@ export default function CreateProject({ handleCancel }) {
     }
   };
 
-  const handleClickLogoInput = () => {
-    logoInputRef?.current?.click();
-  };
   const handleInputLogo = (e) => {
     const logo = e.target?.files?.[0];
     if (logo) {
@@ -166,9 +144,6 @@ export default function CreateProject({ handleCancel }) {
     }
   };
 
-  const handleClickCoverImgInput = () => {
-    coverImgInputRef?.current?.click();
-  };
   const handleInputCover = (e) => {
     const coverImage = e.target?.files?.[0];
     if (coverImage) {
@@ -179,9 +154,6 @@ export default function CreateProject({ handleCancel }) {
     }
   };
 
-  const handleClickBrochureInput = () => {
-    logoInputRef?.current?.click();
-  };
   const handleInputBrochure = (e) => {
     const brochure = e.target?.files?.[0];
     if (brochure) {
@@ -190,50 +162,6 @@ export default function CreateProject({ handleCancel }) {
   };
 
   const { submitting, errors } = formState;
-
-  console.log(errors);
-  const PictureBlock = forwardRef(({ file, onClickInput, onChange }, ref) => {
-    return (
-      <AddPicture onClick={onClickInput}>
-        {file?.preview ? (
-          <img
-            alt=""
-            src={file.preview}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              opacity: file ? 1 : 0,
-              objectFit: "cover",
-              borderRadius: "10px",
-            }}
-          />
-        ) : (
-          <Add sx={{ color: "#515050" }} />
-        )}
-
-        <input
-          ref={ref}
-          type="file"
-          hidden
-          multiple
-          accept="image/*"
-          onChange={onChange}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            opacity: 0,
-          }}
-        />
-      </AddPicture>
-    );
-  });
 
   return (
     <Box
@@ -254,32 +182,21 @@ export default function CreateProject({ handleCancel }) {
       <Stack direction="row" alignItems="center" spacing={2} py={2}>
         <Stack spacing={2}>
           <Label>Add Logo</Label>
-          <PictureBlock
-            file={logo}
-            ref={logoInputRef}
-            onChange={handleInputLogo}
-            onClickInput={handleClickLogoInput}
-          />
+          <AddFileBlock isImageType file={logo} onChange={handleInputLogo} />
         </Stack>
 
         <Stack spacing={2}>
           <Label>Add Cover Image </Label>
-          <PictureBlock
+          <AddFileBlock
+            isImageType
             file={coverImage}
-            ref={coverImgInputRef}
             onChange={handleInputCover}
-            onClickInput={handleClickCoverImgInput}
           />
         </Stack>
 
         <Stack spacing={2}>
           <Label>Add Brochure </Label>
-          <PictureBlock
-            file={brochure}
-            ref={brochureInputRef}
-            onChange={handleInputBrochure}
-            onClickInput={handleClickBrochureInput}
-          />
+          <AddFileBlock file={brochure} onChange={handleInputBrochure} />
         </Stack>
       </Stack>
 
