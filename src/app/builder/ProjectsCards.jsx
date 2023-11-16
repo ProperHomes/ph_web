@@ -22,7 +22,7 @@ export default function ProjectCards({ projects }) {
             >
               <CardMedia
                 sx={{ height: 200 }}
-                image={coverImage?.signedUrl ?? "https://placehold.co/345x140"}
+                image={coverImage?.signedUrl}
                 title="project cover image"
               />
               <CardContent sx={{ paddingBottom: "8px !important" }}>

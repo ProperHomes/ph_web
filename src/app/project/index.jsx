@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Box from '@mui/material/Box'
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -9,7 +10,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import NavTabs from "./NavTabs";
 import Card from "../property/Card";
 import ContactButtons from "./ContactButtons";
-import Description from "../property/profile/Description";
 
 export default function ProjectProfile({ data }) {
   const {
@@ -89,7 +89,7 @@ export default function ProjectProfile({ data }) {
             alt="builder profile cover image"
             quality={100}
             priority
-            src={coverImage?.signedUrl ?? "https://placehold.co/1024X300"}
+            src={coverImage?.signedUrl}
             fill
             sizes="100vw"
             style={{
@@ -131,7 +131,24 @@ export default function ProjectProfile({ data }) {
           <Typography variant="h2" fontWeight={800}>
             About {name}
           </Typography>
-          <Description content={description} />
+          <Box
+            dangerouslySetInnerHTML={{ __html: description }}
+            sx={{
+              "& > h2, h3, h4": {
+                marginTop: "1rem",
+              },
+              "& > p": {
+                fontSize: "1.1rem",
+                marginBottom: "8px",
+              },
+              "& > ul": {
+                padding: "8px 1rem",
+              },
+              "& > p > a, & > a": {
+                textDecoration: "underline !important",
+              },
+            }}
+          />
         </Stack>
       </Stack>
 

@@ -40,7 +40,7 @@ function PropertyImages({ images }) {
           overflow: "hidden",
         }}
       >
-        <Swiper images={imagesToLoad}>
+        <Swiper>
           {imagesToLoad.map(({ url }, i) => {
             const isLoaded = imagesLoaded.includes(i);
             return (
