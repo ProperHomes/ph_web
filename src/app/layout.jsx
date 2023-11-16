@@ -11,6 +11,10 @@ const BottomNavbar = dynamic(() => import("../components/BottomNavbar"), {
 });
 const Footer = dynamic(() => import("../components/Footer"), { ssr: false });
 
+import AppMain from "./appMain";
+
+import "../styles/globals.css";
+
 export const metadata = {
   title:
     "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
@@ -39,7 +43,7 @@ export const metadata = {
   openGraph: {
     title:
       "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
+    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.`,
     siteName: "ProperHomes",
     url: "https://www.properhomes.in",
     type: "website",
@@ -49,15 +53,11 @@ export const metadata = {
     card: "summary_large_image",
     title:
       "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
+    description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.`,
     creator: "@ProperHomes",
     images: ["/logo.png"],
   },
 };
-
-import AppMain from "./appMain";
-
-import "../styles/globals.css";
 
 export const manRope = Manrope({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -74,7 +74,7 @@ function RootLayout({ children }) {
     url: "https://www.properhomes.in/",
     alternateName: "Proper Homes",
     description:
-      "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.",
+      "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.",
     logo: {
       "@type": "ImageObject",
       url: "https://properhomes.in/logo.png",

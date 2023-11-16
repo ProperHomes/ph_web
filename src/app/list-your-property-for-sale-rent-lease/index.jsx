@@ -225,6 +225,8 @@ function CreatePropertySaleRentLease({
           "media",
           "slug",
           "ownerId",
+          "projectId",
+          "project",
           "tenantId",
           "createdAt",
         ];

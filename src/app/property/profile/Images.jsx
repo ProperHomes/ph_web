@@ -61,7 +61,7 @@ function PropertyImages({ images }) {
                   quality={100}
                   width={450}
                   height={280}
-                  onLoadingComplete={handleLoadingComplete(i)}
+                  onLoad={handleLoadingComplete(i)}
                   style={{
                     objectFit: "cover",
                     objectPosition: "center",
@@ -140,7 +140,7 @@ function PropertyImages({ images }) {
                       ? "(max-width: 324px) 80vw, (min-width: 1200px) 40vw, 40vw"
                       : "(max-width: 324px) 80vw, (min-width: 1200px) 20vw, 20vw"
                   }
-                  onLoadingComplete={handleLoadingComplete(i)}
+                  onLoad={handleLoadingComplete(i)}
                   style={{
                     objectFit: "cover",
                     opacity: isLoaded ? 1 : 0,
