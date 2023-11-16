@@ -26,7 +26,9 @@ export default {
       const isProd = app.stage === "prod";
 
       const site = new NextjsSite(stack, "site", {
+        runtime: "nodejs18.x",
         warm: 10,
+        memorySize: "2048 MB",
         logging: "combined",
         bind: [
           REVALIDATION_SECRET_KEY,
