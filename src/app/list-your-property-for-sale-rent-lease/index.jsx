@@ -49,6 +49,7 @@ const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
 const propertyResolver = {
   type: yup.string().oneOf(Object.keys(PROPERTY_TYPE)).required(),
   title: yup.string().required(),
+  slug: yup.string().required(),
   price: yup.number().required(),
   bedrooms: yup.number().required().moreThan(0),
   bathrooms: yup.number().required().moreThan(0),
@@ -268,19 +269,13 @@ function CreatePropertySaleRentLease({
     try {
       const dataNew = { ...data };
       delete dataNew.media;
-      const slug = `${convertStringToSlug(data.title)}-${
-        ownerNumber ?? loggedInUser?.number
-      }`;
       const res = await createProperty({
         variables: {
           input: {
             property: {
               ...dataNew,
-              slug,
               ownerId: ownerId ?? loggedInUser?.id, // Todo: remove this if we need to attach ord_id
               country: "INDIA",
-              isFurnished: Boolean(data.isFurnished),
-              hasParking: Boolean(data.hasParking),
             },
           },
         },
@@ -302,6 +297,17 @@ function CreatePropertySaleRentLease({
 
   const handleSubmitForReview = (data) => {
     handleCreateProperty({ ...data, listingStatus: "IN_REVIEW" });
+  };
+
+  const handleChangeTitle = (e) => {
+    const updatedTitle = e.target.value;
+    setValue("title", updatedTitle);
+    setValue(
+      "slug",
+      `${convertStringToSlug(updatedTitle)}-${
+        ownerNumber ?? loggedInUser?.number
+      }`
+    );
   };
 
   const handleChangeDescription = (htmlDescription) => {
@@ -780,6 +786,25 @@ function CreatePropertySaleRentLease({
             <Controller
               name="title"
               control={control}
+              render={({ field: { value }, fieldState: { error } }) => (
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  placeholder="Eg: 4bhk fully furnished flat for sale in the financial district of hyderabad."
+                  type="text"
+                  value={value ?? ""}
+                  onChange={handleChangeTitle}
+                  error={!!error?.message}
+                />
+              )}
+            />
+          </Stack>
+
+          <Stack>
+            <Label>URL path(optional)</Label>
+            <Controller
+              name="slug"
+              control={control}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
@@ -787,7 +812,6 @@ function CreatePropertySaleRentLease({
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Eg: 4bhk fully furnished flat for sale in the financial district of hyderabad."
                   type="text"
                   value={value ?? ""}
                   onChange={onChange}
