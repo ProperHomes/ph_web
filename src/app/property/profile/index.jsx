@@ -114,13 +114,14 @@ function PropertyProfile({ data, similarProperties }) {
       <Content py={2}>
         <Stack spacing={2} p={1}>
           <Stack
-            direction="row"
+            spacing={{ xs: 1, md: 0 }}
+            direction={{ xs: "column", md: "row" }}
             justifyContent="space-between"
             alignItems="center"
           >
             <Typography
               variant="h1"
-              fontSize={{ xs: "1.4rem !important", md: "2.2rem !important" }}
+              fontSize={{ xs: "1.4rem !important", md: "2rem !important" }}
               fontWeight={600}
               textTransform="capitalize"
             >

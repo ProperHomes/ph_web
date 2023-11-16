@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -10,6 +9,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import NavTabs from "./NavTabs";
 import Card from "../property/Card";
 import ContactButtons from "./ContactButtons";
+import Description from "../property/profile/Description";
 
 export default function ProjectProfile({ data }) {
   const {
@@ -107,7 +107,11 @@ export default function ProjectProfile({ data }) {
 
       <Stack p={4} spacing={4}>
         <Stack spacing={2}>
-          <Stack direction="row" alignItems="center" spacing={2}>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            alignItems={{ xs: "flex-start", md: "center" }}
+            spacing={2}
+          >
             <Typography variant="h1" fontWeight={800}>
               {name}
             </Typography>
@@ -127,23 +131,7 @@ export default function ProjectProfile({ data }) {
           <Typography variant="h2" fontWeight={800}>
             About {name}
           </Typography>
-          <Box
-            dangerouslySetInnerHTML={{ __html: description }}
-            sx={{
-              "& > h2, h3, h4": {
-                marginTop: "1rem",
-              },
-              "& > p": {
-                fontSize: "1.1rem",
-              },
-              "& > ul": {
-                padding: "8px 1rem",
-              },
-              "& > p > a, & > a": {
-                textDecoration: "underline !important",
-              },
-            }}
-          />
+          <Description content={description} />
         </Stack>
       </Stack>
 

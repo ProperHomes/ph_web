@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -8,6 +7,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import NavTabs from "./NavTabs";
 import ProjectCards from "./ProjectsCards";
 import ContactButtons from "../project/ContactButtons";
+import Description from "../property/profile/Description";
 
 // Todo: add other builders
 export default function BuilderProfile({ data }) {
@@ -127,24 +127,7 @@ export default function BuilderProfile({ data }) {
           <Typography variant="h2" fontWeight={800}>
             About {name}
           </Typography>
-          <Box
-            dangerouslySetInnerHTML={{ __html: description }}
-            sx={{
-              "& > h2, h3, h4": {
-                marginTop: "1rem",
-              },
-              "& > p": {
-                fontSize: "1.1rem",
-                marginBottom: "8px",
-              },
-              "& > ul": {
-                padding: "8px 1rem",
-              },
-              "& > p > a, & > a": {
-                textDecoration: "underline !important",
-              },
-            }}
-          />
+          <Description content={description} />
         </Stack>
       </Stack>
 
