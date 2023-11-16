@@ -32,6 +32,7 @@ const Section = styled(Box)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
   gap: "1.2rem",
+  rowGap: "2em",
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
   },

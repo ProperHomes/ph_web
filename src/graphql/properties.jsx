@@ -27,8 +27,17 @@ export const PROPERTY_FIELDS = gql`
     areaUnit
     ownerId
     tenantId
+    projectId
     status
     facing
+    project {
+      slug
+      builder {
+        name
+        phoneNumber
+        officeAddress
+      }
+    }
     media: propertyMedias {
       nodes {
         id
@@ -381,13 +390,6 @@ export const FETCH_PROPERTY_OWNER_BUILDER_DETAILS = gql`
         id
         name
         phoneNumber
-      }
-      project {
-        builder {
-          name
-          phoneNumber
-          officeAddress
-        }
       }
     }
   }

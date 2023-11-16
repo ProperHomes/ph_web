@@ -297,9 +297,6 @@ function PropertyCard({
           maxWidth: { xs: "100%", md: "280px" },
           fontWeight: "medium",
           textTransform: "capitalize",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
         }}
       >
         <Link

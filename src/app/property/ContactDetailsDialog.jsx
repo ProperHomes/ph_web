@@ -1,4 +1,7 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@apollo/client";
+import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,31 +12,31 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
-import { useQuery } from "@apollo/client";
 
 import { FETCH_PROPERTY_OWNER_BUILDER_DETAILS } from "@/graphql/properties";
 
-export default function ContactDetailDialog({
-  open,
-  city,
-  pincode,
-  propertyId,
-  handleClose,
-}) {
+export default function ContactDetailDialog({ open, data, handleClose }) {
+  const { propertyId, city, pincode, ownerId, projectId, project } = data;
+  const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { data } = useQuery(FETCH_PROPERTY_OWNER_BUILDER_DETAILS, {
+  const { data: ownerData } = useQuery(FETCH_PROPERTY_OWNER_BUILDER_DETAILS, {
     variables: { propertyId },
+    skip: !ownerId && !!projectId,
   });
 
   const contactDetails = {
     city,
     pincode,
-    ...(data?.property?.owner ?? data?.property?.project?.builder ?? {}),
+    ...(ownerData?.property?.owner ?? project?.builder ?? {}),
   };
   delete contactDetails.id;
   delete contactDetails?.["__typename"];
+
+  const navigateToProject = () => {
+    router.push(`/project/${project?.slug}`);
+  };
 
   return (
     <Dialog
@@ -73,6 +76,15 @@ export default function ContactDetailDialog({
               </Stack>
             );
           })}
+          {project?.slug && (
+            <Button
+              variant="contained"
+              color="info"
+              onClick={navigateToProject}
+            >
+              View Project Profile
+            </Button>
+          )}
         </Stack>
       </DialogContent>
     </Dialog>

@@ -17,13 +17,13 @@ import {
 import { LISTING_TYPE } from "@/utils/constants";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import { UPDATE_USER } from "@/graphql/user";
-import { appActionTypes, useAppContext } from "src/appContext";
+import { useAppContext } from "src/appContext";
 import ContactDetailDialog from "../../ContactDetailsDialog";
 
-function SellerInfoCard(props) {
+function SellerInfoCard({ data }) {
   const theme = useTheme();
-  const { createdAt, listedFor, id: propertyId, city, pincode } = props;
-  const { state, dispatch } = useAppContext();
+  const { createdAt, listedFor, id: propertyId } = data;
+  const { state } = useAppContext();
   const { user } = state;
   const { Auth, isLoggedIn, loggedInUser, toggleAuth } = useToggleAuth();
 
@@ -34,18 +34,22 @@ function SellerInfoCard(props) {
   const [showContactDetails, setShowContactDetails] = useState(false);
   const [showPaymentDialog, setShowPaymentDialog] = useState(false);
 
-  const { data, refetch } = useQuery(GET_PROPERTY_CREDIT_EXPENSE_OF_USER, {
-    variables: { userId: loggedInUser?.id, propertyId },
-    skip: !isLoggedIn || !propertyId,
-    fetchPolicy: "network-only",
-  });
+  const { data: expenseData, refetch } = useQuery(
+    GET_PROPERTY_CREDIT_EXPENSE_OF_USER,
+    {
+      variables: { userId: loggedInUser?.id, propertyId },
+      skip: true, // !isLoggedIn || !propertyId,
+      fetchPolicy: "network-only",
+    }
+  );
 
   const [addPropertyCreditExpense] = useMutation(
     CREATE_PROPERTY_CREDIT_EXPENSE
   );
   const [updateUser] = useMutation(UPDATE_USER);
 
-  const hasPaidAlready = !!data?.propertyCreditExpenseByUserIdAndPropertyId?.id;
+  const hasPaidAlready =
+    !!expenseData?.propertyCreditExpenseByUserIdAndPropertyId?.id;
 
   const isForSale = listedFor === LISTING_TYPE.SALE;
   const isForLease = listedFor === LISTING_TYPE.LEASE;
@@ -144,11 +148,9 @@ function SellerInfoCard(props) {
       {Auth}
       {showContactDetails && (
         <ContactDetailDialog
-          propertyId={propertyId}
+          data={data}
           open={showContactDetails}
           handleClose={toggleContactDetails}
-          city={city}
-          pincode={pincode}
         />
       )}
     </Stack>

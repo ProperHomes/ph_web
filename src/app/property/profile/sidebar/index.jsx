@@ -68,7 +68,7 @@ function Sidebar({ data }) {
         </Button>
       </Stack>
       <Stack spacing={2} my={2}>
-        <SellerInfoCard {...data} />
+        <SellerInfoCard data={data} />
       </Stack>
     </Suspense>
   );
