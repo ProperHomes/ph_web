@@ -26,6 +26,7 @@ export default {
       const isProd = app.stage === "prod";
 
       const site = new NextjsSite(stack, "site", {
+        warm: 10,
         logging: "combined",
         bind: [
           REVALIDATION_SECRET_KEY,
