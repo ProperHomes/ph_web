@@ -155,7 +155,7 @@ function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLD) }}
         />
-        {/* <Script
+        <Script
           defer
           src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
           strategy="afterInteractive"
@@ -166,7 +166,7 @@ function RootLayout({ children }) {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-B3E4HE2Y6F');`}
-        </Script> */}
+        </Script>
       </head>
       <body className={manRope.className}>
         <Suspense fallback={null}>
