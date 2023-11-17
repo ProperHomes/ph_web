@@ -11,7 +11,7 @@ const BottomNavbar = dynamic(() => import("../components/BottomNavbar"), {
 });
 const Footer = dynamic(() => import("../components/Footer"), { ssr: false });
 
-import AppMain from "./appMain";
+import AppMain from "./AppMain/index";
 
 import "../styles/globals.css";
 import PageLoadProgress from "@/components/PageLoadProgress";

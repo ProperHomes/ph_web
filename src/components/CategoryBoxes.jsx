@@ -63,7 +63,6 @@ const allLinks = [...forSaleLinks, ...forRentlinks];
 
 function CategoryBoxes() {
   const theme = useTheme();
-  const isDarkMode = theme.palette.mode === "dark";
   const pathname = usePathname();
   return (
     <Box
@@ -93,7 +92,7 @@ function CategoryBoxes() {
                   : "none",
                 borderRadius: "0.5rem",
                 transition: "0.3s ease",
-                backgroundColor: isDarkMode ? "#000" : "#fff",
+                backgroundColor:  "#fff",
                 "&: hover": {
                   boxShadow: theme.shadows[3],
                   "& svg": {
