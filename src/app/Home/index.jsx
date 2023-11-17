@@ -1,34 +1,21 @@
-"use client";
-import { useQuery } from "@apollo/client";
-
+import dynamic from "next/dynamic";
+import { Damion } from "next/font/google";
 import Stack from "@mui/material/Stack";
-import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 
-import { GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
-import { useAppContext } from "src/appContext";
-import PropertyList from "src/app/property/List";
-import SearchBlock from "@/components/SearchBlock";
-import CategoryBoxes from "@/components/CategoryBoxes";
-import ZeroBoxes from "@/components/ZeroBoxes";
+const SearchBlock = dynamic(() => import("../../components/SearchBlock"));
+const CategoryBoxes = dynamic(() => import("../..//components/CategoryBoxes"));
+const ZeroBoxes = dynamic(() => import("../../components/ZeroBoxes"));
+const HomePageProperties = dynamic(() => import("./Properties"));
+
+const DamionFont = Damion({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
 
 export default function Home({ data }) {
-  const theme = useTheme();
-  const { state } = useAppContext();
-  const loggedInUserId = state.user?.id;
-  const { data: properties } = useQuery(GET_PROPERTIES_LOGGED_IN, {
-    variables: {
-      userId: loggedInUserId,
-      first: 10,
-      orderBy: ["CREATED_AT_DESC"],
-    },
-    skip: !loggedInUserId,
-  });
-  const list =
-    (!!loggedInUserId
-      ? properties?.properties?.edges?.map((edge) => edge.node) ?? data ?? []
-      : data) ?? [];
-
   return (
     <>
       <Stack spacing={4} py={4} alignItems="center">
@@ -38,8 +25,8 @@ export default function Home({ data }) {
             <span
               style={{
                 fontSize: "2.5rem",
-                fontFamily: theme.typography.fontFamily.Damion,
-                color: theme.palette.info.main,
+                fontFamily: DamionFont.style.fontFamily,
+                color: "#0080FF",
               }}
             >
               loves you
@@ -52,12 +39,7 @@ export default function Home({ data }) {
           <ZeroBoxes />
         </Stack>
       </Stack>
-      <PropertyList
-        data={list}
-        showSkeleton={list.length === 0}
-        viewMoreLink="/new-properties-for-sale-rent-lease"
-        title="Recently Added Properties"
-      />
+      <HomePageProperties data={data} />
     </>
   );
 }

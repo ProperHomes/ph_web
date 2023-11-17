@@ -6,9 +6,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { usePathname } from "next/navigation";
 
 import { NotificationsProvider } from "src/app/notifications/context";
-import useDarkMode from "src/hooks/useDarkMode";
 import ThemeRegistry from "../ThemeRegistry";
-import { darkTheme, lightTheme } from "../theme";
+import { lightTheme } from "../theme";
 import apolloClient from "@/graphql/apolloClient";
 import { AppProvider } from "src/appContext";
 
@@ -26,41 +25,33 @@ const links = [
   "/property-rental-management-for-owners-managers",
 ];
 
-function Main({ children }) {
-  const { isDarkModeActive } = useDarkMode();
+function AppMain({ children }) {
   const pathname = usePathname();
   const isBuilderOrProject =
     pathname.includes("/builder") || pathname.includes("/project");
-  const theme = isDarkModeActive ? darkTheme : lightTheme;
-
+  const theme = lightTheme;
   return (
-    <ThemeRegistry theme={theme} options={{ key: "mui" }}>
+    <ThemeRegistry theme={lightTheme} options={{ key: "mui" }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box
-          sx={{
-            backgroundColor:
-              links.includes(pathname) || isBuilderOrProject
-                ? theme.palette.background.secondary
-                : theme.palette.background.default,
-            margin: "0 auto",
-          }}
-        >
-          {children}
-        </Box>
+        <ApolloProvider client={apolloClient}>
+          <AppProvider>
+            <NotificationsProvider>
+              <Box
+                sx={{
+                  backgroundColor:
+                    links.includes(pathname) || isBuilderOrProject
+                      ? theme.palette.background.secondary
+                      : theme.palette.background.default,
+                  margin: "0 auto",
+                }}
+              >
+                {children}
+              </Box>
+            </NotificationsProvider>
+          </AppProvider>
+        </ApolloProvider>
       </LocalizationProvider>
     </ThemeRegistry>
-  );
-}
-
-function AppMain({ children }) {
-  return (
-    <ApolloProvider client={apolloClient}>
-      <AppProvider>
-        <NotificationsProvider>
-          <Main>{children}</Main>
-        </NotificationsProvider>
-      </AppProvider>
-    </ApolloProvider>
   );
 }
 

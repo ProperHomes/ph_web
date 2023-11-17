@@ -165,7 +165,6 @@ function RootLayout({ children }) {
         <Suspense fallback={null}>
           <PageLoadProgress showSpinner={false} />
         </Suspense>
-
         <AppMain>
           <Box
             sx={{

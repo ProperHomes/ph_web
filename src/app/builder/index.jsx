@@ -116,7 +116,7 @@ export default function BuilderProfile({ data }) {
           </Stack>
           <Stack py={2} spacing={1}>
             <Typography fontWeight={700}>Operating Cities</Typography>
-            <Typography>{operatingCities.join(", ")}</Typography>
+            <Typography>{operatingCities?.join(", ")}</Typography>
           </Stack>
           <Stack py={2} spacing={1}>
             <Typography fontWeight={700}>Experience</Typography>

@@ -7,14 +7,10 @@ import styled from "@mui/material/styles/styled";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useToggleAuth from "src/hooks/useToggleAuth";
-import useDarkMode from "src/hooks/useDarkMode";
 import SlideDrawer from "./Drawer";
 import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
 import Dashboard from "@mui/icons-material/Dashboard";
 import Login from "@mui/icons-material/Login";
-import DarkMode from "@mui/icons-material/DarkMode";
-import LightMode from "@mui/icons-material/LightMode";
-import CurrencyRupeeOutlined from "@mui/icons-material/CurrencyRupeeOutlined";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 
 const StyledBtn = styled(Button)(({ theme }) => ({
@@ -38,9 +34,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { Auth, loggedInUser, isLoggedIn, toggleAuth, logout } =
-    useToggleAuth();
-  const { isDarkModeActive, toggleDarkMode } = useDarkMode();
+  const { Auth, loggedInUser, isLoggedIn, toggleAuth } = useToggleAuth();
 
   const navigateTo = (link) => () => {
     router.push(link);
@@ -72,20 +66,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
                 ? `Hello, ${loggedInUser?.name}`
                 : "Welcome to ProperHomes"}
             </Typography>
-
-            {isDarkModeActive ? (
-              <LightMode
-                sx={{ marginLeft: "auto", cursor: "pointer" }}
-                onClick={toggleDarkMode}
-                htmlColor="#fff"
-              />
-            ) : (
-              <DarkMode
-                sx={{ marginLeft: "auto", cursor: "pointer" }}
-                onClick={toggleDarkMode}
-                htmlColor="#000"
-              />
-            )}
           </Stack>
 
           <StyledBtn
@@ -127,13 +107,6 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           spacing={2}
           sx={{ margin: "0 auto", width: "100%" }}
         >
-          {/* <StyledBtn
-            fullWidth
-            startIcon={<CurrencyRupeeOutlined />}
-            onClick={navigateTo("/pay-rent-online")}
-          >
-            Pay Rent
-          </StyledBtn> */}
           <StyledBtn
             startIcon={<CalculateOutlined />}
             onClick={navigateTo("/homeloans/emi-calculator")}
@@ -148,12 +121,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           >
             Manage Rentals
           </StyledBtn>
-          {/* <StyledBtn
-            startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/free-rent-receipt-generator-online")}
-          >
-            Generate Rent Receipt
-          </StyledBtn> */}
+
           <StyledBtn
             startIcon={<CalculateOutlined />}
             onClick={navigateTo("/create-rental-agreement")}

@@ -130,6 +130,7 @@ function AppProvider({ children }) {
     }
     fetchLoggedInUser();
   }, []);
+  
   return (
     <AppContext.Provider
       value={{
