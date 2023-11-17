@@ -1,19 +1,5 @@
-import { Raleway, Damion } from "next/font/google";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-
-export const ralewayFont = Raleway({
-  weight: ["500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-export const DamionFont = Damion({
-  weight: ["400"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
+import { DamionFont, ralewayFont } from "./utils/constants";
 
 const defaultThemeOptions = {
   typography: {

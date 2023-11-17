@@ -1,3 +1,19 @@
+import { Raleway, Damion } from "next/font/google";
+
+export const ralewayFont = Raleway({
+  weight: ["500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
+
+export const DamionFont = Damion({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
+
 export const USER_TYPE = {
   SELLER: "SELLER",
   BUYER: "BUYER",

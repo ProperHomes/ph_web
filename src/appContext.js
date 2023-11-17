@@ -2,11 +2,11 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { UPDATE_USER, FETCH_USER_PROFILE } from "@/graphql/user";
 
-import { USER_TYPE, PRIVATE_ROUTES } from "./utils/constants";
+import { USER_TYPE } from "./utils/constants";
 
 const AppContext = createContext(null);
 
@@ -43,13 +43,11 @@ function appReducer(state = initialState, action) {
 
 function AppProvider({ children }) {
   const router = useRouter();
-  const pathname = usePathname();
   const [state, dispatch] = useReducer(appReducer, initialState);
   const { user } = state;
   const isBuyer = user?.type === USER_TYPE.BUYER;
   const isSeller = user?.type === USER_TYPE.SELLER;
   const isBuyerAndSeller = user?.type === USER_TYPE.BOTH;
-  const isPrivateRoute = PRIVATE_ROUTES.includes(pathname);
 
   const [updateUser] = useMutation(UPDATE_USER);
   const [fetchUserFullProfile] = useLazyQuery(FETCH_USER_PROFILE);
@@ -130,7 +128,7 @@ function AppProvider({ children }) {
     }
     fetchLoggedInUser();
   }, []);
-  
+
   return (
     <AppContext.Provider
       value={{
@@ -139,7 +137,6 @@ function AppProvider({ children }) {
         isBuyer,
         isSeller,
         isBuyerAndSeller,
-        isPrivateRoute,
         handleLogout,
         handleFetchUser,
         handleUpdateUser,
