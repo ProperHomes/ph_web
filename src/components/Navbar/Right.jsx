@@ -78,15 +78,14 @@ function NavbarRight() {
       <Button
         component="div"
         size="large"
+        color="orange"
         aria-label="navbar user menu button"
         sx={{
           maxWidth: { xs: "150px", sm: "100%" },
           marginLeft: "auto",
-          borderRadius: "1em",
+          borderRadius: "2em",
           fontWeight: 600,
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.background.default,
-          borderColor: theme.palette.grey[200],
+          borderColor: theme.palette.orange.main,
           transition: "0.3s ease",
           boxShadow: theme.shadows[1],
           transition: "0.3s ease",
@@ -98,7 +97,12 @@ function NavbarRight() {
       >
         <Avatar
           alt={loggedInUser?.name ?? ""}
-          sx={{ width: 30, height: 30, marginRight: "0.5em" }}
+          sx={{
+            width: 30,
+            height: 30,
+            marginRight: "0.5em",
+            border: `1px solid ${theme.palette.orange.main}`,
+          }}
         />
         {!!loggedInUser ? (
           <Typography

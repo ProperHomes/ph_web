@@ -123,7 +123,7 @@ function SellerInfoCard({ data }) {
       )} */}
       <Button
         variant="contained"
-        color="info"
+        color="orange"
         disabled={isSubmitting}
         onClick={handleClickContactView}
         startIcon={hasPaidAlready ? <VisibilityIcon /> : <Phone />}
@@ -131,7 +131,7 @@ function SellerInfoCard({ data }) {
           fontSize: "large",
         }}
       >
-        {hasPaidAlready ? "View Contact Details" : "Get  Contact Details"}
+        {hasPaidAlready ? "View Contact Details" : "Get Contact Details"}
       </Button>
       <Stack
         spacing={1}

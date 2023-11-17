@@ -79,7 +79,7 @@ export default function ContactDetailDialog({
           })}
         </Stack>
         {!isBuilder && (
-          <Button variant="contained" color="info" onClick={navigateToBuilder}>
+          <Button variant="contained" color="orange" onClick={navigateToBuilder}>
             View Builder Profile
           </Button>
         )}

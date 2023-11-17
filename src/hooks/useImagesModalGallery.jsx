@@ -42,7 +42,7 @@ function useImagesModalGallery({ images }) {
 
   return {
     toggleModal,
-    ImageGallery: (
+    ImageGallery: open ? (
       <Suspense fallback={<></>}>
         <ImageGallery
           open={open}
@@ -54,7 +54,7 @@ function useImagesModalGallery({ images }) {
           handleStepChange={handleStepChange}
         />
       </Suspense>
-    ),
+    ) : null,
   };
 }
 

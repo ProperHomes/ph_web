@@ -9,8 +9,6 @@ import { styled, useTheme } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import dynamic from "next/dynamic";
 
-import Card from "./Card";
-
 import useToggleAuth from "src/hooks/useToggleAuth";
 import usePagination from "src/hooks/usePagination";
 import {
@@ -19,6 +17,7 @@ import {
 } from "@/utils/helper";
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 
+const Card = dynamic(() => import("./Card"));
 const ListSkeleton = dynamic(() => import("../../components/ListSkeleton"), {
   ssr: false,
 });
@@ -62,7 +61,7 @@ function PropertyList({
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
-  const { Auth, toggleAuth, isLoggedIn, loggedInUser } = useToggleAuth();
+  const { isLoggedIn, loggedInUser } = useToggleAuth();
 
   const { city, listedFor, bedrooms, type, priceSort } = searchParams ?? {};
 
@@ -206,6 +205,7 @@ function PropertyList({
           <Button
             aria-label="view more button"
             variant="contained"
+            color="orange"
             LinkComponent={Link}
             href={viewMoreLink}
             sx={{
@@ -231,7 +231,6 @@ function PropertyList({
                   showFavorite
                   isPriority={i < 9}
                   isFullWidth={listToShow.length > 3}
-                  toggleAuth={toggleAuth}
                   togglePropertyEditor={toggleEditor(l.id)}
                 />
               </Box>
@@ -257,7 +256,6 @@ function PropertyList({
                     showFavorite
                     isPriority={i < 9}
                     isFullWidth={listToShow.length > 3}
-                    toggleAuth={toggleAuth}
                     togglePropertyEditor={toggleEditor(l.id)}
                   />
                 </Box>
@@ -273,7 +271,6 @@ function PropertyList({
           handleCancel={toggleEditor()}
         />
       )}
-      {Auth}
     </Stack>
   );
 }

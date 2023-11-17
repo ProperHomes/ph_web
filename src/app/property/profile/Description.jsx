@@ -1,5 +1,3 @@
-"use client";
-import DOMPurify from "dompurify";
 import Box from "@mui/material/Box";
 
 export default function Description({ content, sx }) {
@@ -22,9 +20,7 @@ export default function Description({ content, sx }) {
         },
       }}
       dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(content, {
-          ALLOW_DATA_ATTR: false,
-        }),
+        __html: content,
       }}
     />
   );

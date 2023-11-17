@@ -108,6 +108,10 @@ const darkTheme = responsiveFontSizes(
       info: {
         main: "#0080ff",
       },
+      orange: {
+        main: "#ff5657",
+        contrastText: "#fff",
+      },
     },
     ...defaultThemeOptions,
   })
@@ -133,6 +137,10 @@ const lightTheme = responsiveFontSizes(
       },
       info: {
         main: "#0080ff",
+      },
+      orange: {
+        main: "#ff5657",
+        contrastText: "#fff",
       },
     },
     ...defaultThemeOptions,

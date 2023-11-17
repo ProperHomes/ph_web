@@ -114,6 +114,7 @@ function SearchInput({ showSearchBtn }) {
         <Button
           variant="contained"
           onClick={handleSubmit}
+          color="orange"
           sx={{
             display: { xs: "none", md: "flex" },
             borderRadius: "2rem",

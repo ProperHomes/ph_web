@@ -1,61 +1,45 @@
 "use client";
-import { useEffect, useState } from "react";
-import Stack from "@mui/material/Stack";
-import { EditorState } from "draft-js";
-import { convertToHTML, convertFromHTML } from "draft-convert";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-export default function DraftEditor({ initialState, isError, setValue }) {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["link"],
+  ],
+};
 
-  useEffect(() => {
-    if (initialState) {
-      const editorContent = EditorState.createWithContent(
-        convertFromHTML(initialState)
-      );
-      setEditorState(editorContent);
-    }
-  }, [initialState]);
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+];
 
-  const handleChangeEditorState = (state) => {
-    setEditorState(state);
-    const contentState = state.getCurrentContent();
-    const htmlContent = convertToHTML(contentState);
-    setValue(htmlContent);
-  };
-
+export default function QuillEditor({ initialState, isError, setValue }) {
   return (
-    <Stack>
-      <Editor
-        wrapperClassName="wrapper-class"
-        editorClassName="editor-class"
-        toolbarClassName="toolbar-class"
-        editorStyle={{
-          border: isError ? "1px solid red" : "1px solid #ccc",
-          padding: "1rem",
-        }}
-        editorState={editorState}
-        onEditorStateChange={handleChangeEditorState}
-        toolbar={{
-          options: ["inline", "textAlign", "list"],
-          inline: {
-            inDropdown: false,
-            className: undefined,
-            component: undefined,
-            dropdownClassName: undefined,
-            options: [
-              "bold",
-              "italic",
-              "underline",
-              "strikethrough",
-              "monospace",
-            ],
-          },
-        }}
-      />
-    </Stack>
+    <ReactQuill
+      defaultValue={initialState}
+      onChange={setValue}
+      modules={modules}
+      formats={formats}
+      style={{
+        border: isError ? "1px solid red" : "none",
+        height: "100%",
+      }}
+    />
   );
 }

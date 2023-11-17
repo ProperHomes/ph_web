@@ -327,6 +327,7 @@ function AuthModal({ open, handleClose }) {
 
           {!isLoginWithOtp && !otpReqSuccessful && (
             <Button
+              color="orange"
               aria-label={`Submit ${
                 showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"
               } button`}
@@ -375,6 +376,7 @@ function AuthModal({ open, handleClose }) {
           )}
           {!otpReqSuccessful && !otpError && (
             <Button
+              color="orange"
               sx={{
                 cursor: "pointer",
                 fontWeight: 800,

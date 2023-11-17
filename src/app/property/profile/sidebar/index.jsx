@@ -49,7 +49,7 @@ function Sidebar({ data }) {
         <Button
           aria-label="save property"
           startIcon={<Save />}
-          color="info"
+          color="orange"
           size="large"
           sx={{ whiteSpace: "nowrap" }}
           onClick={handleToggleFavorite}
@@ -59,7 +59,7 @@ function Sidebar({ data }) {
         <Button
           aria-label="share property"
           startIcon={<Share />}
-          color="info"
+          color="orange"
           size="large"
           sx={{ whiteSpace: "nowrap" }}
           onClick={toggleShareModal}

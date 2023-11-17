@@ -67,44 +67,45 @@ export const manRope = Manrope({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
+const rootJsonLD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ProperHomes",
+  url: "https://www.properhomes.in/",
+  alternateName: "Proper Homes",
+  description:
+    "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://properhomes.in/logo.png",
+    width: 374,
+    height: 72,
+  },
+  // sameAs: [
+  //   "https://www.facebook.com/magicbricks",
+  //   "https://www.twitter.com/magicbricks",
+  //   "https://www.youtube.com/user/magicbricksvideo",
+  //   "https://www.linkedin.com/company/magicbricks/",
+  // ],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress:
+      "Proper Eleven Technologies Private Limited (properhomes.in), Sarojini Heights, Kanuru, 520007",
+    addressLocality: "Vijayawada",
+    addressRegion: "India",
+    postalCode: "520007",
+  },
+  // contactPoint: [
+  //   {
+  //     "@type": "ContactPoint",
+  //     telephone: "+91 120-6866600",
+  //     contactType: "Customer Service",
+  //     areaServed: "India",
+  //   },
+  // ],
+};
+
 function RootLayout({ children }) {
-  const jsonLD = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "ProperHomes",
-    url: "https://www.properhomes.in/",
-    alternateName: "Proper Homes",
-    description:
-      "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://properhomes.in/logo.png",
-      width: 374,
-      height: 72,
-    },
-    // sameAs: [
-    //   "https://www.facebook.com/magicbricks",
-    //   "https://www.twitter.com/magicbricks",
-    //   "https://www.youtube.com/user/magicbricksvideo",
-    //   "https://www.linkedin.com/company/magicbricks/",
-    // ],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress:
-        "Proper Eleven Technologies Private Limited (properhomes.in), Sarojini Heights, Kanuru, 520007",
-      addressLocality: "Vijayawada",
-      addressRegion: "India",
-      postalCode: "520007",
-    },
-    // contactPoint: [
-    //   {
-    //     "@type": "ContactPoint",
-    //     telephone: "+91 120-6866600",
-    //     contactType: "Customer Service",
-    //     areaServed: "India",
-    //   },
-    // ],
-  };
   return (
     <html lang="en">
       <head>
@@ -148,8 +149,12 @@ function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/favicon.png" />
         <link rel="shortcut icon" href="/favicon.png" />
-        <Script
-          async
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLD) }}
+        />
+        {/* <Script
+          defer
           src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
           strategy="afterInteractive"
         />
@@ -159,7 +164,7 @@ function RootLayout({ children }) {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-B3E4HE2Y6F');`}
-        </Script>
+        </Script> */}
       </head>
       <body className={manRope.className}>
         <Suspense fallback={null}>
@@ -190,10 +195,6 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
-        />
       </body>
     </html>
   );

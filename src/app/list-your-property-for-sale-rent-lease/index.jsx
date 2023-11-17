@@ -136,10 +136,11 @@ function CreatePropertySaleRentLease({
 
   const isEditMode = !!data;
 
-  const { control, handleSubmit, setValue, watch, formState } = useForm({
-    resolver: yupResolver(yup.object().shape(propertyResolver)),
-    defaultValues: data,
-  });
+  const { control, handleSubmit, setValue, watch, formState } =
+    useForm({
+      resolver: yupResolver(yup.object().shape(propertyResolver)),
+      defaultValues: data,
+    });
   watch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -823,7 +824,7 @@ function CreatePropertySaleRentLease({
             />
           </Stack>
 
-          <Stack sx={{ minHeight: { xs: "50px", md: "200px" } }} spacing={2}>
+          <Stack sx={{ minHeight: { xs: "50px", md: "150px" } }} spacing={2}>
             <Label>Add property details* </Label>
             <Editor
               setValue={handleChangeDescription}

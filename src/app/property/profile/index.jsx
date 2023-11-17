@@ -7,13 +7,15 @@ import StickyBox from "src/components/StickyBox";
 import Divider from "@mui/material/Divider";
 
 import { Content } from "./styles";
-import Breadcrumbs from "src/components/Breadcrumbs";
 import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
 
-const Description = dynamic(() => import("./Description"), { ssr: false });
-const SimilarProperties = dynamic(() => import("./SimilarProperties"));
+const Breadcrumbs = dynamic(() => import("./Breadcrumbs"));
 const PropertyImages = dynamic(() => import("./Images"));
-const Sidebar = dynamic(() => import("./sidebar/index"));
+const Description = dynamic(() => import("./Description"));
+const Sidebar = dynamic(() => import("./sidebar/index"), { ssr: false });
+const SimilarProperties = dynamic(() => import("./SimilarProperties"), {
+  ssr: false,
+});
 
 function PropertyProfile({ data, similarProperties }) {
   const {
@@ -46,8 +48,6 @@ function PropertyProfile({ data, similarProperties }) {
     };
   });
 
-  const isForSale = listedFor === LISTING_TYPE.SALE;
-
   let formattedType = type;
   if (type) {
     formattedType = `${type.split("_").join("-").toLowerCase()}s`;
@@ -57,29 +57,6 @@ function PropertyProfile({ data, similarProperties }) {
       formattedType = "paying-guests";
     }
   }
-
-  const isPayingGuests = formattedType === "paying-guests";
-
-  const getBreadcrumbLinks = () => {
-    const typeWithoutHypens = formattedType.split("-").join(" ");
-    const typeLink = {
-      label: isPayingGuests
-        ? "Paying Guests Accommodation"
-        : `${typeWithoutHypens} For ${isForSale ? "Sale" : "Rent"}`,
-      path: isPayingGuests
-        ? "/paying-guests-accommodation"
-        : `/${formattedType}-for-${isForSale ? "sale" : "rent"}`,
-    };
-
-    return [
-      { label: "property", path: "/property" },
-      typeLink,
-      {
-        label: city,
-        path: `${typeLink.path}-in-${city?.toLowerCase()}`,
-      },
-    ];
-  };
 
   const importantInfo = [
     { label: bedrooms?.length === 1 ? "Bedroom" : "Bedrooms", value: bedrooms },
@@ -109,7 +86,11 @@ function PropertyProfile({ data, similarProperties }) {
 
   return (
     <Stack p={1} spacing={2}>
-      <Breadcrumbs links={getBreadcrumbLinks()} />
+      <Breadcrumbs
+        formattedType={formattedType}
+        listedFor={listedFor}
+        city={city}
+      />
       <PropertyImages images={images} />
       <Content py={2}>
         <Stack spacing={2} p={1}>
@@ -133,11 +114,13 @@ function PropertyProfile({ data, similarProperties }) {
               variant="contained"
               disableRipple
               component="p"
+              color="orange"
               sx={{
                 width: { xs: "100%", md: "200px" },
                 whiteSpace: "nowrap",
                 fontWeight: 600,
                 fontSize: "1rem",
+                fontWeight: 800,
                 borderRadius: "1rem",
               }}
             >

@@ -79,7 +79,7 @@ export default function ContactDetailDialog({ open, data, handleClose }) {
           {project?.slug && (
             <Button
               variant="contained"
-              color="info"
+              color="orange"
               onClick={navigateToProject}
             >
               View Project Profile

@@ -38,7 +38,7 @@ export default function ContactButtons({
       <Button
         size="medium"
         variant="contained"
-        color="info"
+        color="orange"
         sx={{
           maxWidth: "200px",
         }}
@@ -51,7 +51,7 @@ export default function ContactButtons({
         <Button
           size="medium"
           variant="contained"
-          color="info"
+          color="orange"
           sx={{
             maxWidth: "200px",
           }}

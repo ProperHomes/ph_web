@@ -49,6 +49,7 @@ function ImageGallery({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                borderRadius: "1rem",
               }}
             >
               <Image
@@ -59,11 +60,11 @@ function ImageGallery({
                 width={500}
                 height={500}
                 style={{
-                  width: "80%",
+                  width: "fit-content",
                   height: "80%",
                   objectFit: "contain",
                   objectPosition: "center",
-                  borderRadius: "10px",
+                  borderRadius: "1rem",
                 }}
               />
             </Box>

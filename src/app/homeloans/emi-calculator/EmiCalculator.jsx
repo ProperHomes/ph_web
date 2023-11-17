@@ -133,6 +133,7 @@ function EMICalculator() {
           )}
           <Button
             size="large"
+            color="orange"
             variant="contained"
             onClick={handleSubmit(handleCalculate)}
           >

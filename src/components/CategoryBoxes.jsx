@@ -88,18 +88,18 @@ function CategoryBoxes() {
                 width: { xs: "100%", md: "110px" },
                 height: "100%",
                 border: isActive
-                  ? `2px solid ${theme.palette.info.main}`
+                  ? `1px solid ${theme.palette.orange.main}`
                   : "none",
                 borderRadius: "0.5rem",
                 transition: "0.3s ease",
-                backgroundColor:  "#fff",
+                backgroundColor: "#fff",
                 "&: hover": {
                   boxShadow: theme.shadows[3],
                   "& svg": {
-                    color: theme.palette.info.main,
+                    color: theme.palette.orange.main,
                   },
                   "& p": {
-                    color: theme.palette.info.main,
+                    color: theme.palette.orange.main,
                   },
                 },
               }}
@@ -107,19 +107,17 @@ function CategoryBoxes() {
               <Icon
                 htmlColor={
                   isActive
-                    ? theme.palette.info.main
+                    ? theme.palette.orange.main
                     : theme.palette.primary.main
                 }
               />
               <Typography
                 textAlign="center"
-                color={theme.palette.text[isActive ? "primary" : "secondary"]}
                 fontSize="0.9rem"
-                fontWeight={isActive ? 800 : 500}
                 sx={{
                   transition: "all 0.3s ease",
                   color: isActive
-                    ? theme.palette.info.main
+                    ? theme.palette.orange.main
                     : theme.palette.primary.main,
                 }}
               >
