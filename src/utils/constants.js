@@ -1,4 +1,11 @@
-import { Raleway, Damion } from "next/font/google";
+import { Raleway, Damion, Manrope } from "next/font/google";
+
+export const manRope = Manrope({
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
 
 export const ralewayFont = Raleway({
   weight: ["500", "600", "700", "800", "900"],

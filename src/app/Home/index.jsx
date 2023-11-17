@@ -1,13 +1,11 @@
-import dynamic from "next/dynamic";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import SearchBlock from "@/components/SearchBlock";
+import CategoryBoxes from "@/components/CategoryBoxes";
+import ZeroBoxes from "@/components/ZeroBoxes";
+import HomePageProperties from "./Properties";
 import { DamionFont } from "@/utils/constants";
-
-const SearchBlock = dynamic(() => import("../../components/SearchBlock"));
-const CategoryBoxes = dynamic(() => import("../..//components/CategoryBoxes"));
-const ZeroBoxes = dynamic(() => import("../../components/ZeroBoxes"));
-const HomePageProperties = dynamic(() => import("./Properties"));
 
 export default function Home({ data }) {
   return (

@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import StickyBox from "src/components/StickyBox";
 import Divider from "@mui/material/Divider";
 
 import { Content } from "./styles";
@@ -12,6 +11,9 @@ import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
 const Breadcrumbs = dynamic(() => import("./Breadcrumbs"));
 const PropertyImages = dynamic(() => import("./Images"));
 const Description = dynamic(() => import("./Description"));
+const StickyBox = dynamic(() => import("../../../components/StickyBox"), {
+  ssr: false,
+});
 const Sidebar = dynamic(() => import("./sidebar/index"), { ssr: false });
 const SimilarProperties = dynamic(() => import("./SimilarProperties"), {
   ssr: false,

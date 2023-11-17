@@ -5,7 +5,6 @@ import { GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
 import PropertyList from "src/app/property/List";
 
-
 export default function HomePageProperties({ data }) {
   const { state } = useAppContext();
   const loggedInUserId = state.user?.id;
@@ -23,13 +22,11 @@ export default function HomePageProperties({ data }) {
       : data) ?? [];
 
   return (
-    <>
-      <PropertyList
-        data={list}
-        showSkeleton={list.length === 0}
-        viewMoreLink="/new-properties-for-sale-rent-lease"
-        title="Recently Added Properties"
-      />
-    </>
+    <PropertyList
+      data={list}
+      showSkeleton={list.length === 0}
+      viewMoreLink="/new-properties-for-sale-rent-lease"
+      title="Recently Added Properties"
+    />
   );
 }

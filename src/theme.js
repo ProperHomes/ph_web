@@ -78,13 +78,6 @@ const defaultThemeOptions = {
       },
     },
   },
-  overrides: {
-    MuiCssBaseline: {
-      "@global": {
-        "@font-face": "Manrope",
-      },
-    },
-  },
 };
 
 const darkTheme = responsiveFontSizes(

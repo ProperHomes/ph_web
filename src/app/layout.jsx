@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import Box from "@mui/material/Box";
-import { Manrope } from "next/font/google";
 import Container from "@mui/material/Container";
+import { manRope } from "@/utils/constants";
 
 const Navbar = dynamic(() => import("../components/Navbar"));
 const BottomNavbar = dynamic(() => import("../components/BottomNavbar"), {
@@ -62,13 +62,6 @@ export const metadata = {
     images: ["/logo.png"],
   },
 };
-
-export const manRope = Manrope({
-  weight: ["300", "400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
 
 const rootJsonLD = {
   "@context": "https://schema.org",
