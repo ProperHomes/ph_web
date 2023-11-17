@@ -155,18 +155,6 @@ function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLD) }}
         />
-        <Script
-          defer
-          src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
-          strategy="afterInteractive"
-        />
-        <Script strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-B3E4HE2Y6F');`}
-        </Script>
       </head>
       <body className={manRope.className}>
         <Suspense fallback={null}>
@@ -197,6 +185,18 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
+        <Script
+          defer
+          src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
+          strategy="lazyOnload"
+        />
+        <Script strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-B3E4HE2Y6F');`}
+        </Script>
       </body>
     </html>
   );
