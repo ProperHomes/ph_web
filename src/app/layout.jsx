@@ -40,6 +40,9 @@ export const metadata = {
     "ProperHomes",
     "Proper Homes",
   ],
+  alternates: {
+    canonical: "https://www.properhomes.in",
+  },
   metadataBase: new URL("https://www.properhomes.in"),
   openGraph: {
     title:
@@ -127,7 +130,6 @@ function RootLayout({ children }) {
         <meta name="msapplication-TileColor" content="#2B5797" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#ffffff" />
-        <link rel="canonical" href="https://www.properhomes.in" />
         <link rel="apple-touch-icon" href="/assets/images/LogoIcon.png" />
         <link
           rel="apple-touch-icon"
@@ -153,7 +155,7 @@ function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLD) }}
         />
-        <Script
+        {/* <Script
           defer
           src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
           strategy="afterInteractive"
@@ -164,7 +166,7 @@ function RootLayout({ children }) {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-B3E4HE2Y6F');`}
-        </Script>
+        </Script> */}
       </head>
       <body className={manRope.className}>
         <Suspense fallback={null}>

@@ -77,6 +77,9 @@ export async function generateMetadata({ params }) {
     title,
     description,
     metadataBase: new URL("https://www.properhomes.in"),
+    alternates: {
+      canonical: `https://www.properhomes.in/${params.slug}`,
+    },
     openGraph: {
       title,
       description,

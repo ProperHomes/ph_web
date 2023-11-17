@@ -37,6 +37,13 @@ const info = [
   },
 ];
 
+export const metadata = {
+  alternates: {
+    canonical:
+      "https://www.properhomes.in/property-rental-management-for-owners-managers",
+  },
+};
+
 export default function PropertyManagement() {
   return (
     <StyledContainer maxWidth="xl">

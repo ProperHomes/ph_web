@@ -36,6 +36,7 @@ export const FETCH_POST_BY_SLUG = `
       authorId
       title
       content
+      excerpt
       status
       uri
       slug

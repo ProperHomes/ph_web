@@ -76,7 +76,7 @@ function PropertyImages({ images }) {
       <Box sx={{ display: { xs: "none", md: "block" } }}>
         <ImageGrid>
           {imagesToLoad.map(({ url }, i) => {
-            const isLastImage = i === imagesToLoad.length - 1;
+            const isLastImage = i === 4;
             return (
               <Box
                 key={url}

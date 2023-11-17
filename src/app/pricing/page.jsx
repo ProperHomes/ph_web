@@ -88,6 +88,12 @@ const sellerPricing = [
   },
 ];
 
+export const metadata = {
+  alternates: {
+    canonical: "https://www.properhomes.in/pricing",
+  },
+};
+
 export default function Pricing() {
   const theme = useTheme();
   const [index, setIndex] = useState(0);

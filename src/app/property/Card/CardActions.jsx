@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppContext } from "src/appContext";
-import CardOptionsTooltip from "./CardOptions";
+import CardOptionsTooltip from "../CardOptions";
 import useToggleFavoriteProperty from "src/hooks/useToggleFavoriteProperty";
 import useToggleAuth from "src/hooks/useToggleAuth";
 

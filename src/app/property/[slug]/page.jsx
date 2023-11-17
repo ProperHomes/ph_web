@@ -24,6 +24,9 @@ export async function generateMetadata({ params }, parent) {
   return {
     title: `${title} - ProperHomes`,
     description,
+    alternates: {
+      canonical: `https://www.properhomes.in/property/${params.slug}`,
+    },
     openGraph: {
       images: [coverImage, ...previousImages].filter((x) => x),
     },

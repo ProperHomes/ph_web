@@ -3,6 +3,12 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { StyledContainer } from "@/styles/styles";
 
+export const metadata = {
+  alternates: {
+    canonical: "https://www.properhomes.in/about",
+  },
+};
+
 function AboutUs() {
   return (
     <StyledContainer>

@@ -4,6 +4,12 @@ import { GET_PROPERTIES } from "@/graphql/properties";
 import PropertyList from "src/app/property/List";
 import CategoryBoxes from "@/components/CategoryBoxes";
 
+export const metadata = {
+  alternates: {
+    canonical: "https://www.properhomes.in/new-properties-for-sale-rent-lease",
+  },
+};
+
 export default async function Page({ searchParams }) {
   const res = await client.request(GET_PROPERTIES, {
     first: 20,

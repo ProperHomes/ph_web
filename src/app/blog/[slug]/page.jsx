@@ -5,6 +5,33 @@ import {
   FETCH_ALL_POSTS_FOR_STATIC_PATHS,
 } from "@/graphql/blog";
 
+export async function generateMetadata({ params }) {
+  const res = await axios({
+    url: "https://wpsuperadmin.properhomes.in/graphql",
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+    },
+    data: {
+      query: FETCH_POST_BY_SLUG,
+      variables: { slug: params.slug },
+    },
+  });
+  const post = res?.data?.data?.postBy;
+  const { title, excerpt, featuredImage } = post;
+  const image = featuredImage?.node;
+  return {
+    title: `${title} - ProperHomes Blog`,
+    description: excerpt,
+    alternates: {
+      canonical: `https://www.properhomes.in/blog/${params.slug}`,
+    },
+    openGraph: {
+      images: [image.mediaItemUrl],
+    },
+  };
+}
+
 export default async function Page({ params }) {
   let post = null;
   try {

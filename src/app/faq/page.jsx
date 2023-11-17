@@ -8,6 +8,12 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { StyledContainer } from "@/styles/styles";
 
+export const metadata = {
+  alternates: {
+    canonical: "https://www.properhomes.in/faq",
+  },
+};
+
 const buyerFAQ = [
   {
     question: `How can I access property contact details on ProperHomes?`,

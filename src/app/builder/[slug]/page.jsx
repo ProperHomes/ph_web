@@ -13,6 +13,9 @@ export async function generateMetadata({ params }) {
   return {
     title: `${name} - Builder Profile at ProperHomes`,
     description,
+    alternates: {
+      canonical: `https://www.properhomes.in/builder/${params.slug}`,
+    },
     openGraph: {
       images: [logo?.signedUrl].filter((x) => x),
     },

@@ -5,6 +5,12 @@ import Typography from "@mui/material/Typography";
 import { FETCH_POSTS } from "@/graphql/blog";
 import BlogPosts from "./BlogPosts";
 
+export const metadata = {
+  alternates: {
+    canonical: "https://www.properhomes.in/blog",
+  },
+};
+
 export default async function Page() {
   const res = await axios({
     url: "https://wpsuperadmin.properhomes.in/graphql",
