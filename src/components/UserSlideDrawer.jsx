@@ -133,14 +133,12 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
             Generate Rental Agreement
           </StyledBtn>
         </Stack>
-
-        {!isLoggedIn && (
-          <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
-            Login or Signup
-          </StyledBtn>
-        )}
       </Stack>
-
+      {!isLoggedIn && (
+        <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
+          Login or Signup
+        </StyledBtn>
+      )}
       {Auth}
     </SlideDrawer>
   );

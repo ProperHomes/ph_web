@@ -2,12 +2,17 @@
 import Box from "@mui/material/Box";
 import useImagesModalGallery from "src/hooks/useImagesModalGallery";
 
-export default function ImageShadowCover({ images }) {
+export default function ImageShadowCover({ images, noToggle }) {
   const { toggleModal, ImageGallery } = useImagesModalGallery({ images });
+  const handleToggle = () => {
+    if (!noToggle) {
+      toggleModal();
+    }
+  };
   return (
     <>
       <Box
-        onClick={toggleModal}
+        onClick={handleToggle}
         sx={{
           position: "absolute",
           top: 0,

@@ -30,9 +30,9 @@ export default function ContactButtons({
 
   return (
     <Stack
-      direction="row"
+      direction={{ xs: "column", md: "row" }}
       spacing={2}
-      alignItems="center"
+      alignItems={{ xs: "flex-start", md: "center" }}
       sx={{ position: "absolute", bottom: 20, right: 20, zIndex: 10 }}
     >
       <Button
@@ -41,6 +41,7 @@ export default function ContactButtons({
         color="orange"
         sx={{
           maxWidth: "200px",
+          whiteSpace: "nowrap",
         }}
         onClick={toggleContactDialog}
         startIcon={<LocalPhoneIcon />}
@@ -54,6 +55,7 @@ export default function ContactButtons({
           color="orange"
           sx={{
             maxWidth: "200px",
+            whiteSpace: "nowrap",
           }}
           onClick={handleDownload}
           startIcon={<DownloadIcon />}

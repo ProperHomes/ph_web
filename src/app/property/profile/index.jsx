@@ -11,9 +11,6 @@ import { AREA_UNITS, LISTING_TYPE } from "@/utils/constants";
 const Breadcrumbs = dynamic(() => import("./Breadcrumbs"));
 const PropertyImages = dynamic(() => import("./Images"));
 const Description = dynamic(() => import("./Description"));
-const StickyBox = dynamic(() => import("../../../components/StickyBox"), {
-  ssr: false,
-});
 const Sidebar = dynamic(() => import("./sidebar/index"), { ssr: false });
 const SimilarProperties = dynamic(() => import("./SimilarProperties"), {
   ssr: false,
@@ -167,16 +164,7 @@ function PropertyProfile({ data, similarProperties }) {
             <SimilarProperties city={city} properties={similarProperties} />
           )}
         </Stack>
-
-        <StickyBox
-          offsetTop={150}
-          offsetBottom={20}
-          style={{
-            maxHeight: "250px",
-          }}
-        >
-          <Sidebar data={data} />
-        </StickyBox>
+        <Sidebar data={data} />
       </Content>
     </Stack>
   );

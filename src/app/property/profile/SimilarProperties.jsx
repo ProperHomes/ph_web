@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from "@/utils/helper";
 
 export default function SimilarProperties({ properties, city }) {
   return (
-    <Stack spacing={2} p={2}>
+    <Stack spacing={2}>
       <Typography fontWeight={600} fontSize="1.5rem">
         Similar Properties in the city of {capitalizeFirstLetter(city)}
       </Typography>

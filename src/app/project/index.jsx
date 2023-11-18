@@ -172,7 +172,12 @@ export default function ProjectProfile({ data }) {
         </Stack>
       </Stack>
 
-      <Stack p={4} id="#projectProperties" spacing={2}>
+      <Stack
+        p={4}
+        id="#projectProperties"
+        spacing={2}
+        sx={{ overflowX: "scroll" }}
+      >
         <Typography variant="h2" fontWeight={800}>
           Properties
         </Typography>

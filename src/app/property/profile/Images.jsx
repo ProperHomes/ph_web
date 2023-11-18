@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
 
 import { ImageGrid } from "./styles";
-import Swiper from "@/components/Swiper";
 
+const Swiper = dynamic(() => import("../../../components/Swiper"));
 const ImageShadowCover = dynamic(() => import("./ImageShadowCover"), {
   ssr: false,
 });
@@ -27,11 +27,12 @@ function PropertyImages({ images }) {
     <>
       <Box
         sx={{
-          display: { xs: "block", md: "none" },
+          display: { xs: "block", sm: "none" },
           position: "relative",
           borderRadius: "10px",
           maxHeight: "280px",
           overflow: "hidden",
+          width: "100%",
         }}
       >
         <Swiper>
@@ -48,6 +49,7 @@ function PropertyImages({ images }) {
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8v3z5JgAHOwLRlUgOqwAAAABJRU5ErkJggg=="
                   style={{
+                    width: "100%",
                     objectFit: "cover",
                     objectPosition: "center",
                     cursor: "pointer",
@@ -73,7 +75,7 @@ function PropertyImages({ images }) {
         />
       </Box>
 
-      <Box sx={{ display: { xs: "none", md: "block" } }}>
+      <Box sx={{ display: { xs: "none", sm: "block" } }}>
         <ImageGrid>
           {imagesToLoad.map(({ url }, i) => {
             const isLastImage = i === 4;
@@ -114,7 +116,10 @@ function PropertyImages({ images }) {
                   }}
                 />
 
-                {!isLastImage && <ImageShadowCover images={imagesToLoad} />}
+                <ImageShadowCover
+                  images={imagesToLoad}
+                  noToggle={isLastImage}
+                />
 
                 {isLastImage && (
                   <ViewAllImages

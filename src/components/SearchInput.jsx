@@ -106,7 +106,7 @@ function SearchInput({ showSearchBtn }) {
         alignItems="center"
         sx={{ display: { xs: "flex", md: "none" } }}
       >
-        <Place sx={{ fontSize: "28px" }} htmlColor={isDark ? "#fff" : "#000"} />
+        <Place sx={{ fontSize: "28px" }} color="orange" />
         <Typography>Search By City, Type, Price...</Typography>
       </Stack>
 
@@ -134,13 +134,9 @@ function SearchInput({ showSearchBtn }) {
         sx={{
           display: { xs: "flex", md: "none" },
           fontSize: "1rem",
-          backgroundColor: isDark ? "#fff" : "#000",
         }}
       >
-        <SearchIcon
-          sx={{ fontSize: "28px" }}
-          htmlColor={isDark ? "#000" : "#fff"}
-        />
+        <SearchIcon sx={{ fontSize: "28px" }} color="orange" />
       </IconButton>
     </Stack>
   );

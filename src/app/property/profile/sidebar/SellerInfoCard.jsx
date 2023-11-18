@@ -129,6 +129,7 @@ function SellerInfoCard({ data }) {
         startIcon={hasPaidAlready ? <VisibilityIcon /> : <Phone />}
         sx={{
           fontSize: "large",
+          borderRadius: "1rem",
         }}
       >
         {hasPaidAlready ? "View Contact Details" : "Get Contact Details"}

@@ -34,20 +34,28 @@ const socialLinks = [
 ];
 
 const subLinks = [
-  { title: "Pricing", path: "/pricing" },
-  {
-    title: "EMI Calculator",
-    path: "/homeloans/emi-calculator",
-  },
   {
     title: "About Us",
     path: "/about",
   },
+  { title: "Pricing", path: "/pricing" },
+
   { title: "Blog", path: "/blog" },
   {
     title: "FAQ",
     path: "/faq",
   },
+  {
+    title: "EMI Calculator",
+    path: "/homeloans/emi-calculator",
+  },
+  {
+    title: "Create Rental Agreement",
+    path: "/create-rental-agreement",
+  },
+];
+
+const legalLinks = [
   {
     title: "Privacy Policy",
     path: "/privacypolicy",
@@ -178,6 +186,21 @@ export default function Footer() {
           <CityLinks links={allNavLinks} city={city} />
         </Box>
 
+        <Stack direction="row" spacing={3}>
+          {legalLinks.map((l) => {
+            return (
+              <Link
+                key={l.path}
+                href={l.path}
+                prefetch={false}
+                title={l.title}
+                style={{ position: "relative" }}
+              >
+                <Typography variant="subtitle2">{l.title}</Typography>
+              </Link>
+            );
+          })}
+        </Stack>
         <Typography
           color={theme.palette.getContrastText(theme.palette.background.paper)}
           fontSize="14px"
