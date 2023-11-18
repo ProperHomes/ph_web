@@ -54,8 +54,9 @@ function NavbarRight() {
           size="large"
           aria-label="login or signup button"
           onClick={toggleAuth}
+          sx={{ whiteSpace: "nowrap" }}
         >
-          Login / Signup
+          Login or Signup
         </Button>
       )}
       {!!loggedInUser && !isDashboard && !isMobile && (
