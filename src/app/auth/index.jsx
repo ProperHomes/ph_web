@@ -20,11 +20,9 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 
 import SignupForm from "./Signup";
 import LoginForm from "./Login";
-import ForgorPasswordForm from "./ForgotPassword";
 import Loading from "src/components/Loading";
 import { passwordRules } from "@/utils/helper";
-import { useAppContext } from "src/appContext";
-import { USER_TYPE } from "@/utils/constants";
+import { useAppContext, appActionTypes } from "src/appContext";
 
 const OtpInput = styled(MuiOtpInput)({
   "& input": {
@@ -48,18 +46,8 @@ const LoginWithTypography = styled(Typography)(({ theme }) => ({
 const authResolvers = {
   signup: {
     name: yup.string().required("Name is required"),
-    phoneNumber: yup
-      .string()
-      .phone("IN", "Must be a valid phone number")
-      .required("Phone number is required"),
     password: passwordRules,
     city: yup.string().required("City is required"),
-  },
-  forgotPassword: {
-    phoneNumber: yup
-      .string()
-      .phone("IN", "Must be a valid phone number")
-      .required("Phone number is required"),
   },
   loginWithOtp: {
     phoneNumber: yup
@@ -83,22 +71,14 @@ function AuthModal({ open, handleClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [otpReqSuccessful, setOtpReqSuccesful] = useState(false);
   const [otpError, setOtpError] = useState(false);
-  const [isLoginWithOtp, setIsLoginWithOtp] = useState(false);
-  const [showLogin, setShowLogin] = useState(true);
   const [showSignup, setShowSignup] = useState(false);
-  const [showForgotPassword, setForgotPassword] = useState(false);
+  const [isLoginWithOtp, setIsLoginWithOtp] = useState(false);
 
-  const { handleFetchUser } = useAppContext();
+  const { dispatch, state, handleFetchUser } = useAppContext();
 
   const resolverObj =
     authResolvers[
-      showSignup
-        ? "signup"
-        : showForgotPassword
-        ? "forgotPassword"
-        : isLoginWithOtp
-        ? "loginWithOtp"
-        : "login"
+      showSignup ? "signup" : isLoginWithOtp ? "loginWithOtp" : "login"
     ];
 
   const formValues = useForm({
@@ -108,39 +88,13 @@ function AuthModal({ open, handleClose }) {
     formValues;
   const { submitting } = formState;
 
-  const toggleForgotPassword = () => {
-    setForgotPassword((prev) => !prev);
-    if (showLogin) {
-      setShowLogin(false);
-    }
-    reset();
-  };
-
   const toggleIsLoginWithOtp = () => {
     setIsLoginWithOtp((prev) => !prev);
     reset();
   };
 
-  const toggleLogin = () => {
-    setShowLogin((prev) => !prev);
-    if (showSignup) {
-      setShowSignup(false);
-    }
-    if (showForgotPassword) {
-      setForgotPassword(false);
-    }
-    reset();
-  };
-
   const toggleSignup = () => {
     setShowSignup((prev) => !prev);
-    if (showLogin) {
-      setShowLogin(false);
-    }
-    if (showForgotPassword) {
-      setForgotPassword(false);
-    }
-    reset();
   };
 
   const handleChangeOtp = (val) => {
@@ -167,31 +121,6 @@ function AuthModal({ open, handleClose }) {
     }
   };
 
-  const handleSignup = async (data) => {
-    try {
-      const res = await axios({
-        method: "post",
-        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-        data: {
-          ...data,
-          type: USER_TYPE.BUYER,
-          country: "INDIA",
-          phoneNumber: `91${data.phoneNumber}`,
-        },
-        withCredentials: true,
-      });
-      if (res?.data?.id) {
-        await handleFetchUser(res.data.id);
-        handleClose();
-      }
-    } catch (err) {
-      setError("password", {
-        type: "server",
-        message: "Incorrect credentials",
-      });
-    }
-  };
-
   const handleSendOtp = async (data) => {
     try {
       await axios({
@@ -199,8 +128,6 @@ function AuthModal({ open, handleClose }) {
         url: `${process.env.NEXT_PUBLIC_API_URL}/auth/phonenumber/sendotp`,
         data: {
           phoneNumber: `+91${data.phoneNumber}`,
-          isForgotPassword: showForgotPassword,
-          isSignup: showSignup,
         },
         withCredentials: true,
       });
@@ -214,15 +141,12 @@ function AuthModal({ open, handleClose }) {
   };
 
   const handleSubmitOtp = async (otpVal) => {
-    const verifyUrlPath = showSignup
-      ? `/auth/phonenumber/verifyotp`
-      : `/auth/phonenumber/verifyotplogin`;
     setIsLoading(true);
     const inputData = getValues();
     try {
       const res = await axios({
         method: "post",
-        url: `${process.env.NEXT_PUBLIC_API_URL}${verifyUrlPath}`,
+        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/phonenumber/verifyotplogin`,
         data: {
           phoneNumber: `+91${inputData.phoneNumber}`,
           otp: otpVal,
@@ -230,13 +154,11 @@ function AuthModal({ open, handleClose }) {
         withCredentials: true,
       });
       if (res.status === 200 && !!res.data) {
-        if (isLoginWithOtp) {
-          await handleFetchUser(res.data.userId);
+        await handleFetchUser(res.data.userId);
+        if (res.data.isSignup) {
+          toggleSignup();
+        } else {
           handleClose();
-        } else if (showSignup) {
-          await handleSignup(getValues());
-        } else if (showForgotPassword) {
-          // Todo:
         }
       } else {
         setOtpError(true);
@@ -247,7 +169,30 @@ function AuthModal({ open, handleClose }) {
     setIsLoading(false);
   };
 
-  const handleForgotpassword = (data) => {};
+  const updateUser = async (data) => {
+    setIsLoading(true);
+    try {
+      await axios({
+        method: "post",
+        url: `${process.env.NEXT_PUBLIC_API_URL}/update/user`,
+        data: {
+          ...data,
+          userId: state.user?.id,
+        },
+        withCredentials: true,
+      });
+      const updatedData = { ...data };
+      delete updatedData.password;
+      dispatch({
+        type: appActionTypes.UPDATE_LOGGED_IN_USER,
+        user: { ...(state.user ?? {}), ...updatedData },
+      });
+      handleClose();
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
+  };
 
   const handleModalClose = () => {
     if (!otpReqSuccessful) {
@@ -256,10 +201,8 @@ function AuthModal({ open, handleClose }) {
   };
 
   const onSubmit = (data) => {
-    if (showForgotPassword) {
-      handleForgotpassword(data);
-    } else if (showSignup) {
-      handleSendOtp(data);
+    if (showSignup) {
+      updateUser(data);
     } else {
       handleLogin(data);
     }
@@ -306,40 +249,34 @@ function AuthModal({ open, handleClose }) {
           <Typography variant="subtitle1" fontWeight="bold">
             Welcome to Proper Homes
           </Typography>
-          {showLogin && (
+          {showSignup ? (
+            <SignupForm control={control} />
+          ) : (
             <LoginForm control={control} isLoginWithOtp={isLoginWithOtp} />
           )}
-          {showSignup && !showForgotPassword && !otpReqSuccessful && (
-            <SignupForm control={control} />
-          )}
-          {showForgotPassword && <ForgorPasswordForm control={control} />}
-
           {isLoginWithOtp && !otpReqSuccessful && (
             <Button
               aria-label="send otp button"
               variant="contained"
               fullWidth
+              color="orange"
               onClick={handleSubmit(handleSendOtp)}
             >
-              Send otp
+              Send OTP
             </Button>
           )}
-
-          {!isLoginWithOtp && !otpReqSuccessful && (
+          {((!isLoginWithOtp && !otpReqSuccessful) || showSignup) && (
             <Button
               color="orange"
-              aria-label={`Submit ${
-                showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"
-              } button`}
+              aria-label={`Submit Login button`}
               variant="contained"
               fullWidth
               onClick={handleSubmit(onSubmit)}
             >
-              {showSignup ? "Signup" : showForgotPassword ? "Submit" : "Login"}
+              {showSignup ? "FINISH SIGNUP" : "LOGIN"}
             </Button>
           )}
-
-          {otpReqSuccessful && (
+          {!showSignup && otpReqSuccessful && (
             <>
               <OtpInput
                 autoFocus
@@ -358,40 +295,16 @@ function AuthModal({ open, handleClose }) {
               </Typography>
             </>
           )}
-
-          {!showForgotPassword && !showSignup && (
-            <Stack
-              spacing={2}
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <LoginWithTypography onClick={toggleIsLoginWithOtp}>
-                Login with {isLoginWithOtp ? "Password" : "OTP"}
-              </LoginWithTypography>
-              {/* <LoginWithTypography onClick={toggleForgotPassword}>
-                Forgot Password?
-              </LoginWithTypography> */}
-            </Stack>
-          )}
-          {!otpReqSuccessful && !otpError && (
-            <Button
-              color="orange"
-              sx={{
-                cursor: "pointer",
-                fontWeight: 800,
-                fontSize: "1.2rem",
-                textDecoration: "underline",
-              }}
-              onClick={showLogin ? toggleSignup : toggleLogin}
-            >
-              {showLogin
-                ? "Signup Here"
-                : showForgotPassword
-                ? "Back"
-                : "Login Here"}
-            </Button>
-          )}
+          <Stack
+            spacing={2}
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <LoginWithTypography onClick={toggleIsLoginWithOtp}>
+              Login with {isLoginWithOtp ? "Password" : "OTP"}
+            </LoginWithTypography>
+          </Stack>
         </Stack>
       </DialogContent>
     </Dialog>

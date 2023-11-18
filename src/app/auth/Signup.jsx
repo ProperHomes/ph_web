@@ -5,7 +5,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -43,32 +42,6 @@ function SignupForm({ control }) {
             helperText={error?.message ?? ""}
           />
         )}
-      />
-      <Controller
-        name="phoneNumber"
-        control={control}
-        render={({ field: { onChange, value }, fieldState: { error } }) => {
-          return (
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Mobile Number"
-              inputMode="tel"
-              type="tel"
-              value={value ?? ""}
-              onChange={onChange}
-              error={!!error?.message}
-              helperText={error?.message ?? ""}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Typography fontSize={"1.2rem"}>+91</Typography>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          );
-        }}
       />
       <Controller
         name="password"

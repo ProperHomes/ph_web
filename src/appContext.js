@@ -75,7 +75,7 @@ function AppProvider({ children }) {
   const handleUpdateUser = async (id, data) => {
     try {
       const res = await updateUser({
-        variables: { input: { id, patch: { ...data, isOnboarded: true } } },
+        variables: { input: { id, patch: { ...data } } },
       });
       const updatedUser = res?.data?.updateUser?.user;
       if (updatedUser) {

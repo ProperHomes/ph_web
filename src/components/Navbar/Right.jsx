@@ -96,7 +96,7 @@ function NavbarRight() {
         onClick={toggleDrawer}
       >
         <Avatar
-          alt={loggedInUser?.name ?? ""}
+          alt={loggedInUser?.name ?? loggedInUser?.phoneNumber ?? ""}
           sx={{
             width: 30,
             height: 30,
@@ -113,7 +113,7 @@ function NavbarRight() {
             }}
             fontWeight={theme.typography.fontWeightMedium}
           >
-            {loggedInUser?.name}
+            {loggedInUser?.name ?? loggedInUser?.phoneNumber ?? ""}
           </Typography>
         ) : (
           <MenuIcon htmlColor={theme.palette.text.secondary} />

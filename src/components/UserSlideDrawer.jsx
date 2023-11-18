@@ -48,7 +48,9 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
       open={showDrawer}
       handleClose={toggleDrawer}
       title={
-        !isLoggedIn ? "Welcome to ProperHomes" : `Hello ${loggedInUser?.name}`
+        !isLoggedIn
+          ? "Welcome to ProperHomes"
+          : `Hello ${loggedInUser?.name ?? loggedInUser?.phoneNumber ?? ""}`
       }
       position={isMobile ? "bottom" : "right"}
     >
@@ -63,7 +65,9 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
               ml={{ xs: "1rem", md: 0 }}
             >
               {isLoggedIn
-                ? `Hello, ${loggedInUser?.name}`
+                ? `Hello, ${
+                    loggedInUser?.name ?? loggedInUser?.phoneNumber ?? ""
+                  }`
                 : "Welcome to ProperHomes"}
             </Typography>
           </Stack>
