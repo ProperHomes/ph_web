@@ -8,7 +8,7 @@ import { capitalizeFirstLetter } from "@/utils/helper";
 export default function SimilarProperties({ properties, city }) {
   return (
     <Stack spacing={2}>
-      <Typography fontWeight={600} fontSize="1.5rem">
+      <Typography fontWeight={600} fontSize="1.5rem" color="info.main">
         Similar Properties in the city of {capitalizeFirstLetter(city)}
       </Typography>
       <Box
@@ -19,7 +19,7 @@ export default function SimilarProperties({ properties, city }) {
         }}
       >
         {properties.map((p) => {
-          return <Card key={p.id} data={p} showFavorite={false} />;
+          return <Card key={p.id} data={p} isFullWidth showFavorite={false} />;
         })}
       </Box>
     </Stack>

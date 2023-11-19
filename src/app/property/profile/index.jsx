@@ -104,6 +104,7 @@ function PropertyProfile({ data, similarProperties }) {
               fontSize={{ xs: "1.4rem !important", md: "2rem !important" }}
               fontWeight={600}
               textTransform="capitalize"
+              color="info.main"
             >
               {formattedTitle}
             </Typography>
@@ -144,12 +145,18 @@ function PropertyProfile({ data, similarProperties }) {
                   aria-label={`${value} ${label}`}
                   component="p"
                   sx={{
+                    cursor: "default",
                     whiteSpace: "nowrap",
                     fontWeight: 600,
                     borderRadius: "0.5rem",
                     fontSize: { xs: "0.8rem", sm: "1rem" },
+                    color: "info.main",
+                    backgroundColor: "secondary.main",
+                    "&:hover": {
+                      backgroundColor: "secondary.light",
+                    },
                   }}
-                  variant="outlined"
+                  variant="contained"
                 >
                   {value} {label !== "Area" ? label : ""}
                 </Button>

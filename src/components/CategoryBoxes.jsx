@@ -96,15 +96,16 @@ function CategoryBoxes() {
                 "&: hover": {
                   boxShadow: theme.shadows[3],
                   "& svg": {
-                    color: theme.palette.orange.main,
+                    color: "orange.main",
                   },
                   "& p": {
-                    color: theme.palette.orange.main,
+                    color: "orange.main",
                   },
                 },
               }}
             >
               <Icon
+                fontSize="medium"
                 htmlColor={
                   isActive
                     ? theme.palette.orange.main
@@ -116,9 +117,7 @@ function CategoryBoxes() {
                 fontSize="0.9rem"
                 sx={{
                   transition: "all 0.3s ease",
-                  color: isActive
-                    ? theme.palette.orange.main
-                    : theme.palette.primary.main,
+                  color: isActive ? "orange.main" : "primary.main",
                 }}
               >
                 {label}

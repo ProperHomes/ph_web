@@ -8,7 +8,7 @@ import { GET_USER_SAVED_PROPERTIES } from "@/graphql/properties";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 import ListSkeleton from "@/components/ListSkeleton";
 
-const PropertyList = lazy(() => import("src/app/property/List"));
+const PropertyList = lazy(() => import("src/app/property/List/index"));
 
 function SavedProperties() {
   const { state } = useAppContext();

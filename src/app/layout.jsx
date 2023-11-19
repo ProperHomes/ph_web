@@ -19,7 +19,7 @@ import PageLoadProgress from "@/components/PageLoadProgress";
 export const metadata = {
   title:
     "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
-  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes.`,
+  description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.`,
   keywords: [
     "2BHK apartments for sale",
     "3BHK apartments for sale",

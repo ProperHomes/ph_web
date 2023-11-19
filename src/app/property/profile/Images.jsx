@@ -38,24 +38,23 @@ function PropertyImages({ images }) {
         <Swiper>
           {imagesToLoad.map(({ url }, i) => {
             return (
-              <Box key={i}>
-                <Image
-                  src={url}
-                  alt=""
-                  priority
-                  quality={100}
-                  width={450}
-                  height={280}
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8v3z5JgAHOwLRlUgOqwAAAABJRU5ErkJggg=="
-                  style={{
-                    width: "100%",
-                    objectFit: "cover",
-                    objectPosition: "center",
-                    cursor: "pointer",
-                  }}
-                />
-              </Box>
+              <Image
+                key={i}
+                src={url}
+                alt=""
+                priority={i === 0}
+                quality={100}
+                width={280}
+                height={280}
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8v3z5JgAHOwLRlUgOqwAAAABJRU5ErkJggg=="
+                style={{
+                  width: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  cursor: "pointer",
+                }}
+              />
             );
           })}
         </Swiper>

@@ -11,7 +11,7 @@ import {
 } from "@/graphql/properties";
 import ListSkeleton from "@/components/ListSkeleton";
 
-const PropertyList = lazy(() => import("src/app/property/List"));
+const PropertyList = lazy(() => import("src/app/property/List/index"));
 
 function ManageProperties() {
   const [page, setPage] = useState(0);

@@ -29,6 +29,7 @@ function Navbar() {
         pt={2}
         pb={{ xs: 1, sm: 0 }}
         sx={{
+          width: "100vw",
           position: "sticky",
           top: 0,
           zIndex: 10,
@@ -47,7 +48,11 @@ function Navbar() {
               spacing={1}
             >
               <Stack direction="row" alignItems="center">
-                <Link href="/" title="ProperHomes">
+                <Link
+                  href="/"
+                  title="ProperHomes"
+                  style={{ width: 200, height: 50 }}
+                >
                   <Image
                     src="/logo.png"
                     width={200}

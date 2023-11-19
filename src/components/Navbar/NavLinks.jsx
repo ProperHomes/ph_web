@@ -97,7 +97,7 @@ function NavLinks() {
                         <Typography
                           sx={{
                             color: theme.palette.text.primary,
-                            fontWeight: 600,
+                            fontWeight: 500,
                             "&:hover": { color: theme.palette.info.main },
                           }}
                         >
@@ -121,9 +121,9 @@ function NavLinks() {
             >
               <Link href={path} key={path} style={{ position: "relative" }}>
                 <TypographyUnderline
-                  fontWeight={600}
+                  fontWeight={500}
                   fontSize={theme.spacing(2)}
-                  color={theme.palette.text.secondary}
+                  color="info.main"
                 >
                   {title}
                 </TypographyUnderline>
@@ -140,9 +140,9 @@ function NavLinks() {
             title={title}
           >
             <TypographyUnderline
-              fontWeight={600}
+              fontWeight={500}
               fontSize={theme.spacing(2)}
-              color={theme.palette.text.secondary}
+              color="info.main"
             >
               {title}
             </TypographyUnderline>
@@ -150,8 +150,13 @@ function NavLinks() {
               <Chip
                 size="small"
                 label="Free"
-                color="info"
-                sx={{ position: "absolute", top: 20, right: -10 }}
+                color="orange"
+                sx={{
+                  position: "absolute",
+                  top: 20,
+                  right: -10,
+                  fontWeight: 800,
+                }}
               />
             )}
           </Link>

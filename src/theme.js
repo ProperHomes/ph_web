@@ -129,7 +129,7 @@ const lightTheme = responsiveFontSizes(
         secondary: "#374151",
       },
       info: {
-        main: "#0080ff",
+        main: "#004bac",
       },
       orange: {
         main: "#ff5657",

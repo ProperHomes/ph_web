@@ -16,7 +16,7 @@ const CreatePropertySaleRentLease = dynamic(
   () => import("../../list-your-property-for-sale-rent-lease"),
   { ssr: false }
 );
-const PropertyList = dynamic(() => import("../../property/List"), {
+const PropertyList = dynamic(() => import("../../property/List/index"), {
   ssr: false,
 });
 

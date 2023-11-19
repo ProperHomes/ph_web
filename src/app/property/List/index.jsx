@@ -1,11 +1,8 @@
 "use client";
 import { useState, memo } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Link from "next/link";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import dynamic from "next/dynamic";
 
@@ -17,15 +14,15 @@ import {
 } from "@/utils/helper";
 import { GET_PROPERTIES, GET_PROPERTIES_LOGGED_IN } from "@/graphql/properties";
 
-const Card = dynamic(() => import("./Card"));
-const ListSkeleton = dynamic(() => import("../../components/ListSkeleton"), {
+const Card = dynamic(() => import("../Card/index"));
+const ListHeader = dynamic(() => import("./ListHeader"));
+const ListSkeleton = dynamic(() => import("../../../components/ListSkeleton"), {
   ssr: false,
 });
 const CreatePropertySaleRentLease = dynamic(
-  () => import("../list-your-property-for-sale-rent-lease"),
+  () => import("../../list-your-property-for-sale-rent-lease"),
   { ssr: false }
 );
-const Filters = dynamic(() => import("@/components/Filters"), { ssr: false });
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -57,7 +54,6 @@ function PropertyList({
   searchParams = {},
   showSkeleton,
 }) {
-  const theme = useTheme();
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
@@ -123,10 +119,6 @@ function PropertyList({
     }
   };
 
-  const onChangeFilters = () => {
-    handleLoadNext(false);
-  };
-
   const listToShow =
     isSearch ||
     (infiniteScroll && count) ||
@@ -147,77 +139,16 @@ function PropertyList({
 
   return (
     <Stack spacing={2} sx={{ height: "100%" }}>
-      <Stack
-        spacing={2}
-        direction={{ xs: "column", sm: "row" }}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Typography
-          gutterBottom
-          fontWeight={600}
-          variant="h2"
-          textAlign="left"
-          color={theme.palette.text.primary}
-          fontSize={{ xs: "1.4rem !important", sm: "1.6rem !important" }}
-        >
-          {pageTitle}
-        </Typography>
-
-        {showFilters && (
-          <Box
-            sx={{
-              display: "flex",
-              flexFlow: "row wrap",
-              [theme.breakpoints.down("md")]: {
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr 1fr",
-                  md: "repeat(6, 1fr)",
-                },
-              },
-              gap: "1em",
-              width: { xs: "100%", md: "auto" },
-            }}
-          >
-            <Filters
-              typeLabel="Property Type"
-              hideCity={!!cityProp}
-              hideType={!!typeProp}
-              hideListedFor={!!listedForProp}
-              onChangeCity={onChangeFilters}
-              onChangeBedrooms={onChangeFilters}
-              onChangeListedFor={onChangeFilters}
-              onChangePriceSort={onChangeFilters}
-              onChangePropertyType={onChangeFilters}
-              onReset={onChangeFilters}
-              sx={{
-                "& fieldset": {
-                  borderRadius: "8px",
-                  borderColor: "#00000020",
-                },
-              }}
-            />
-          </Box>
-        )}
-
-        {viewMoreLink && (
-          <Button
-            aria-label="view more button"
-            variant="contained"
-            color="orange"
-            LinkComponent={Link}
-            href={viewMoreLink}
-            sx={{
-              display: { xs: "none", sm: "flex" },
-              borderRadius: "8px",
-              fontSize: "1rem",
-            }}
-          >
-            View More
-          </Button>
-        )}
-      </Stack>
+      <ListHeader
+        title={pageTitle}
+        city={cityProp}
+        type={typeProp}
+        listedFor={listedForProp}
+        searchParams={searchParams}
+        handleLoadNext={handleLoadNext}
+        showFilters={showFilters}
+        viewMoreLink={viewMoreLink}
+      />
 
       {showSkeleton && <ListSkeleton n={10} />}
 

@@ -204,7 +204,7 @@ export default async function Page({ params, searchParams }) {
       data = getDefaultProperties();
     }
     return (
-      <Stack spacing={4} py={2}>
+      <Stack spacing={4} pb={2}>
         <Box sx={{ display: { xs: "none", md: "block" } }}>
           <CategoryBoxes />
         </Box>

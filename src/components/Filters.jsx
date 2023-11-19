@@ -176,7 +176,6 @@ export default function Filters({
           fontSize: "0.8rem",
           ...(sx ?? {}),
         }}
-        
         value={city ?? ""}
         onChange={handleChangeCity}
         MenuProps={{

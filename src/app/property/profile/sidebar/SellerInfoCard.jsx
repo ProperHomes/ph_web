@@ -109,12 +109,6 @@ function SellerInfoCard({ data }) {
         backgroundColor: theme.palette.mode === "dark" ? "#000" : "#fafafa2c",
       }}
     >
-      <Typography fontSize="large" color={theme.palette.text.secondary}>
-        Interested in{" "}
-        {isForSale ? "buying" : isForLease ? "leasing" : "renting"} this
-        property ?
-      </Typography>
-
       {/* {isLoggedIn && !hasPaidAlready && (
         <Typography fontSize="1rem">
           You have {userCredits} {userCredits === 1 ? "credit" : "credits"}{" "}

@@ -16,7 +16,6 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 import { useAppContext } from "src/appContext";
 import { useNotificationsContext } from "src/app/notifications/context";
-import useToggleAuth from "src/hooks/useToggleAuth";
 
 const UserSlideDrawer = dynamic(() => import("../UserSlideDrawer"), {
   ssr: false,
@@ -33,7 +32,6 @@ function NavbarRight() {
   const loggedInUser = appState.user;
   const [showDrawer, setShowDrawer] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const { toggleAuth, Auth } = useToggleAuth();
 
   const { state: notifState } = useNotificationsContext();
 
@@ -49,16 +47,6 @@ function NavbarRight() {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      {!loggedInUser && (
-        <Button
-          size="large"
-          aria-label="login or signup button"
-          onClick={toggleAuth}
-          sx={{ whiteSpace: "nowrap" }}
-        >
-          Login or Signup
-        </Button>
-      )}
       {!!loggedInUser && !isDashboard && !isMobile && (
         <Button
           size="large"
@@ -117,12 +105,11 @@ function NavbarRight() {
             {loggedInUser?.name ?? loggedInUser?.phoneNumber ?? ""}
           </Typography>
         ) : (
-          <MenuIcon htmlColor={theme.palette.text.secondary} />
+          <MenuIcon htmlColor={theme.palette.info.main} />
         )}
       </Button>
       <UserSlideDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
       <Notifications open={showNotifications} toggle={toggleNotifications} />
-      {Auth}
     </Stack>
   );
 }

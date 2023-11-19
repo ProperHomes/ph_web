@@ -18,7 +18,6 @@ import Filters from "./Filters";
 function SearchInput({ showSearchBtn }) {
   const router = useRouter();
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const searchParams = useSearchParams();
@@ -107,7 +106,9 @@ function SearchInput({ showSearchBtn }) {
         sx={{ display: { xs: "flex", md: "none" } }}
       >
         <Place sx={{ fontSize: "28px" }} color="orange" />
-        <Typography>Search By City, Type, Price...</Typography>
+        <Typography color="info.main">
+          Search By City, Type, Price...
+        </Typography>
       </Stack>
 
       {showSearchBtn && (

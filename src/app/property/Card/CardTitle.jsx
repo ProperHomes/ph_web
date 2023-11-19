@@ -42,7 +42,7 @@ function CardTitle({ data }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography fontWeight="bold">
+          <Typography fontWeight="bold" color="info.main">
             {formattedPrice.slice(0, -3)}{" "}
             {listedFor === LISTING_TYPE.RENT ? " monthly " : ""}
           </Typography>

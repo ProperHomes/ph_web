@@ -13,7 +13,7 @@ const infoBoxes = [
     Icon: PersonOffIcon,
     description: (
       <Typography variant="body2">
-        Contact Owners directly. <b>No brokers or agents involved.</b>
+        Contact owners directly. <b>No brokers or agents involved.</b>
       </Typography>
     ),
   },
@@ -79,12 +79,7 @@ export default function ZeroBoxes() {
           >
             <Stack direction="row" alignItems="center" spacing={2}>
               <Icon fontSize="medium" />
-              <Typography
-                variant="body2"
-                fontSize="1.4rem"
-                fontWeight="700"
-                gutterBottom
-              >
+              <Typography fontSize="1.4rem" gutterBottom color="info.main">
                 {title}
               </Typography>
             </Stack>
