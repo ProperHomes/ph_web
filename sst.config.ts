@@ -28,7 +28,7 @@ export default {
       const site = new NextjsSite(stack, "site", {
         runtime: "nodejs18.x",
         warm: 10,
-        memorySize: "2048 MB",
+        memorySize: "1024 MB",
         logging: "combined",
         bind: [
           REVALIDATION_SECRET_KEY,

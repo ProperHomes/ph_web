@@ -1,6 +1,5 @@
 "use client";
 import { useCallback } from "react";
-import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,9 +11,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchIcon from "@mui/icons-material/Search";
 import Place from "@mui/icons-material/Place";
 
+import Filters from "./Filters";
 import useKeyDown from "src/hooks/useKeyDown";
-
-const Filters = dynamic(() => import("./Filters"));
 
 function SearchInput({ showSearchBtn }) {
   const router = useRouter();
