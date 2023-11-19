@@ -21,6 +21,7 @@ function Navbar() {
         top: 0,
         zIndex: 10,
         boxShadow: "0px 2px 20px 0px rgba(0, 0, 0, 0.1)",
+        backgroundColor: "#fff",
       }}
     >
       <Container maxWidth="xl">
