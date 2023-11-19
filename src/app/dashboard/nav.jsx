@@ -83,6 +83,7 @@ function Dashboardnav() {
           }
           return (
             <Button
+              aria-label={label}
               size="large"
               key={href}
               startIcon={<Icon />}

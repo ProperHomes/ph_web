@@ -132,6 +132,7 @@ export default function Filters({
         }}
         value={priceSort ?? ""}
         onChange={handlePriceSort}
+        inputProps={{ "aria-label": "select by price dropdown" }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -178,6 +179,7 @@ export default function Filters({
         }}
         value={city ?? ""}
         onChange={handleChangeCity}
+        inputProps={{ "aria-label": "select city dropdown" }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -228,6 +230,7 @@ export default function Filters({
         }}
         value={type ?? ""}
         onChange={handleChangePropertyType}
+        inputProps={{ "aria-label": "Select property type dropdown" }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -273,6 +276,7 @@ export default function Filters({
         }}
         value={bedrooms ?? ""}
         onChange={handleChangeBedrooms}
+        inputProps={{ "aria-label": "select bedrooms count dropdown" }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -318,6 +322,7 @@ export default function Filters({
         }}
         value={listedFor ?? ""}
         onChange={handleChangeListedFor}
+        inputProps={{ "aria-label": "select listed for dropdown" }}
         MenuProps={{
           PaperProps: {
             style: {

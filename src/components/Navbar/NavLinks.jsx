@@ -1,9 +1,7 @@
-"use client";
 import Link from "next/link";
 import Chip from "@mui/material/Chip";
 import Grow from "@mui/material/Grow";
 import Stack from "@mui/material/Stack";
-import useTheme from "@mui/material/styles/useTheme";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -55,8 +53,6 @@ const links = [
 ];
 
 function NavLinks() {
-  const theme = useTheme();
-  const isDarkMode = theme.palette.mode === "dark";
   return (
     <Stack
       ml={4}
@@ -96,9 +92,9 @@ function NavLinks() {
                       >
                         <Typography
                           sx={{
-                            color: theme.palette.text.primary,
+                            color: "info.main",
                             fontWeight: 500,
-                            "&:hover": { color: theme.palette.info.main },
+                            "&:hover": { color: "primary.main" },
                           }}
                         >
                           {l.title}
@@ -111,20 +107,15 @@ function NavLinks() {
               componentsProps={{
                 tooltip: {
                   sx: {
-                    backgroundColor: isDarkMode
-                      ? theme.palette.common.black
-                      : theme.palette.common.white,
-                    boxShadow: theme.shadows[2],
+                    backgroundColor: "#fff",
+                    border: "1px solid",
+                    borderColor: "secondary.main",
                   },
                 },
               }}
             >
               <Link href={path} key={path} style={{ position: "relative" }}>
-                <TypographyUnderline
-                  fontWeight={500}
-                  fontSize={theme.spacing(2)}
-                  color="info.main"
-                >
+                <TypographyUnderline fontWeight={500} color="info.main">
                   {title}
                 </TypographyUnderline>
               </Link>
@@ -139,11 +130,7 @@ function NavLinks() {
             prefetch={false}
             title={title}
           >
-            <TypographyUnderline
-              fontWeight={500}
-              fontSize={theme.spacing(2)}
-              color="info.main"
-            >
+            <TypographyUnderline fontWeight={500} color="info.main">
               {title}
             </TypographyUnderline>
             {isListingLink && (
@@ -155,7 +142,7 @@ function NavLinks() {
                   position: "absolute",
                   top: 20,
                   right: -10,
-                  fontWeight: 800,
+                  color: "#000",
                 }}
               />
             )}

@@ -132,6 +132,7 @@ function SearchInput({ showSearchBtn }) {
       )}
 
       <IconButton
+        aria-label="search button icon"
         onClick={handleSubmit}
         sx={{
           display: { xs: "flex", md: "none" },

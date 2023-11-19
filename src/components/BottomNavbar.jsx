@@ -104,6 +104,7 @@ function BottomNavbar() {
             <BottomNavigationAction
               key={href}
               label={label}
+              aria-label={label}
               value={href}
               icon={<Icon />}
               component={Link}

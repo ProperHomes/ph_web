@@ -126,7 +126,12 @@ export default function Footer() {
               <Typography fontWeight={600}>Follow us on: </Typography>
               {socialLinks.map(({ Icon, href }, i) => {
                 return (
-                  <IconButton LinkComponent={Link} href={href} key={i}>
+                  <IconButton
+                    aria-label="social media icon"
+                    LinkComponent={Link}
+                    href={href}
+                    key={i}
+                  >
                     <Icon round size="30" />
                   </IconButton>
                 );
@@ -196,7 +201,7 @@ export default function Footer() {
                 title={l.title}
                 style={{ position: "relative" }}
               >
-                <Typography variant="subtitle2">{l.title}</Typography>
+                <Typography fontSize="0.8rem">{l.title}</Typography>
               </Link>
             );
           })}
