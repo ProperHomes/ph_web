@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import dynamic from "next/dynamic";
 
-const ListFilters = dynamic(() => import("./ListFilters"));
+const ListFilters = dynamic(() => import("./ListFilters"), { ssr: false });
 
 function ListHeader({
   title,

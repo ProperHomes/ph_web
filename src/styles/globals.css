@@ -26,6 +26,10 @@ a {
   transition-duration: 0s !important;
 }
 
+.MuiSelect-select {
+  animation: none !important
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

@@ -2,7 +2,7 @@ import { memo } from "react";
 import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
 
-const Filters = dynamic(() => import("@/components/Filters"));
+const Filters = dynamic(() => import("@/components/Filters"), { ssr: false });
 
 function ListFilters({ city, listedFor, type, handleLoadNext }) {
   const onChangeFilters = () => {

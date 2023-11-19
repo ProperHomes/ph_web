@@ -55,7 +55,6 @@ function CardImage({ data, isPriority, isFullWidth }) {
             backgroundColor: "#000",
             borderRadius: "1em",
             objectFit: "cover",
-            objectPosition: "center",
           }}
           alt={`image of ${title}`}
         />

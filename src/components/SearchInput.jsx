@@ -13,7 +13,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import Place from "@mui/icons-material/Place";
 
 import useKeyDown from "src/hooks/useKeyDown";
-import Filters from "./Filters";
+
+const Filters = dynamic(() => import("./Filters"));
 
 function SearchInput({ showSearchBtn }) {
   const router = useRouter();
