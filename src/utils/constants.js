@@ -97,15 +97,15 @@ export const AREA_UNITS = {
 };
 
 export const ALL_CITIES = [
-  // "BANGALORE",
-  // "CHENNAI",
-  // "DELHI",
-  // "GURGAON",
+  "BANGALORE",
+  "CHENNAI",
+  "DELHI",
+  "GURGAON",
   "HYDERABAD",
-  // "MUMBAI",
-  // "PUNE",
+  "MUMBAI",
+  "PUNE",
   "VIJAYAWADA",
-  // "VISHAKAPATNAM",
+  "VISHAKAPATNAM",
 ];
 
 export const LOCALITIES = {

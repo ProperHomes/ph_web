@@ -23,7 +23,7 @@ import CityLinks from "./CityLinks";
 import { ALL_CITIES, navlinksSale, navlinksRent } from "@/utils/constants";
 import TypographyUnderline from "../TypographyUnderline";
 
-const tabSections = ALL_CITIES.map((c) => ({ label: c }));
+const tabSections = ["HYDERABAD", "VIJAYAWADA"].map((c) => ({ label: c }));
 
 const socialLinks = [
   { Icon: FacebookIcon, href: "/" },

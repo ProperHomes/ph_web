@@ -189,7 +189,7 @@ export default function Filters({
           },
         }}
       >
-        {ALL_CITIES.map((city) => {
+        {["HYDERABAD", "VIJAYAWADA"].map((city) => {
           return (
             <MenuItem
               key={city}
