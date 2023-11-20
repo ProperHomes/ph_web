@@ -20,7 +20,7 @@ import {
 } from "next-share";
 
 import CityLinks from "./CityLinks";
-import { ALL_CITIES, navlinksSale, navlinksRent } from "@/utils/constants";
+import { navlinksSale, navlinksRent } from "@/utils/constants";
 import TypographyUnderline from "../TypographyUnderline";
 
 const tabSections = ["HYDERABAD", "VIJAYAWADA"].map((c) => ({ label: c }));
@@ -75,7 +75,7 @@ export default function Footer() {
   const handleChange = (_e, newIndex) => {
     setIndex(newIndex);
   };
-  const city = ALL_CITIES[index];
+  const city = ["HYDERABAD", "VIJAYAWADA"][index];
 
   const allNavLinks = [
     ...navlinksSale,
