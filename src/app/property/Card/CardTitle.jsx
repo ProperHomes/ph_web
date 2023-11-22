@@ -20,6 +20,21 @@ function CardTitle({ data }) {
 
   return (
     <Stack spacing={1}>
+      <Link href={linkHref} prefetch={false} title={formattedTitle}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography fontWeight="bold" color="info.main">
+            {formattedPrice.slice(0, -3)}{" "}
+            {listedFor === LISTING_TYPE.RENT ? " monthly " : ""}
+          </Typography>
+          <Typography fontWeight={500} fontSize="0.9rem" mr={2}>
+            {area} {AREA_UNITS[areaUnit]}
+          </Typography>
+        </Stack>
+      </Link>
       <Typography
         variant="h2"
         className={`property-card-title-${number}`}
@@ -35,22 +50,6 @@ function CardTitle({ data }) {
           {title}
         </Link>
       </Typography>
-
-      <Link href={linkHref} prefetch={false} title={formattedTitle}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Typography fontWeight="bold" color="info.main">
-            {formattedPrice.slice(0, -3)}{" "}
-            {listedFor === LISTING_TYPE.RENT ? " monthly " : ""}
-          </Typography>
-        </Stack>
-        <Typography fontWeight={500} fontSize="0.9rem">
-          {area} {AREA_UNITS[areaUnit]}
-        </Typography>
-      </Link>
     </Stack>
   );
 }
