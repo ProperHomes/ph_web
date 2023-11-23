@@ -1,5 +1,6 @@
 "use client";
 import { useState, memo } from "react";
+import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -54,10 +55,13 @@ function PropertyList({
   searchParams = {},
   showSkeleton,
 }) {
+  const pathname = usePathname();
   const [properties, setProperties] = useState([]);
   const [propertyIdToEdit, setPropertyIdToEdit] = useState(null);
 
   const { isLoggedIn, loggedInUser } = useToggleAuth();
+
+  const isDashboardManage = pathname.includes(`/dashboard/manage`);
 
   const { city, listedFor, bedrooms, type, priceSort } = searchParams ?? {};
 
@@ -161,6 +165,7 @@ function PropertyList({
                   data={l}
                   showFavorite
                   isPriority={i < 9}
+                  isManage={isDashboardManage}
                   isFullWidth={listToShow.length > 3}
                   togglePropertyEditor={toggleEditor(l.id)}
                 />
@@ -185,6 +190,7 @@ function PropertyList({
                   <Card
                     data={l}
                     showFavorite
+                    isManage={isDashboardManage}
                     isPriority={i < 9}
                     isFullWidth={listToShow.length > 3}
                     togglePropertyEditor={toggleEditor(l.id)}

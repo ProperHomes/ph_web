@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { AREA_UNITS, LISTING_TYPE, PROPERTY_TYPE } from "@/utils/constants";
 
-function CardTitle({ data }) {
+function CardTitle({ data, isManage }) {
   const { slug, number, title, listedFor, type, price, city, area, areaUnit } =
     data;
 
@@ -12,7 +12,9 @@ function CardTitle({ data }) {
     currency: "INR",
   });
 
-  const linkHref = `/property/${slug}`;
+  const linkHref = isManage
+    ? `/dashboard/manage/property/${slug}`
+    : `/property/${slug}`;
 
   const formattedTitle = `${PROPERTY_TYPE[type]?.toLowerCase()} ${
     PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""

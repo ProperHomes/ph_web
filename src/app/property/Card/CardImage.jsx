@@ -7,14 +7,16 @@ import { PROPERTY_TYPE } from "@/utils/constants";
 
 const CardDescription = dynamic(() => import("./CardDescription"));
 
-function CardImage({ data, isPriority, isFullWidth }) {
+function CardImage({ data, isManage, isPriority, isFullWidth }) {
   const { description, number, slug, media, title, listedFor, type, city } =
     data;
 
   const images = media?.nodes ?? [];
   const mainImage = images.find((im) => !!im.isCoverImage) ?? images[0];
 
-  const linkHref = `/property/${slug}`;
+  const linkHref = isManage
+    ? `/dashboard/manage/property/${slug}`
+    : `/property/${slug}`;
 
   const formattedTitle = `${PROPERTY_TYPE[type]?.toLowerCase()} ${
     PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""

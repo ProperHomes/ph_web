@@ -12,6 +12,7 @@ function PropertyCard({
   data,
   isPriority,
   isFullWidth,
+  isManage,
   showFavorite = true,
   togglePropertyEditor,
 }) {
@@ -38,18 +39,20 @@ function PropertyCard({
       >
         <CardImage
           data={data}
+          isManage={isManage}
           isFullWidth={isFullWidth}
           isPriority={isPriority}
         />
 
         <CardActions
           data={data}
+          isManage={isManage}
           showFavorite={showFavorite}
           togglePropertyEditor={togglePropertyEditor}
         />
         <CardChips data={data} />
       </Box>
-      <CardTitle data={data} />
+      <CardTitle data={data} isManage={isManage} />
     </Stack>
   );
 }

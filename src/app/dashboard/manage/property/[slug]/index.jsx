@@ -13,9 +13,11 @@ import Tabs from "@mui/material/Tabs";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import CurrencyRupee from "@mui/icons-material/CurrencyRupee";
 import MoneyOff from "@mui/icons-material/MoneyOff";
-import { DocumentScannerOutlined } from "@mui/icons-material";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import DocumentScannerOutlined from "@mui/icons-material/DocumentScannerOutlined";
 
 import { LISTING_TYPE, PROPERTY_STATUS } from "@/utils/constants";
+import Analytics from "./Analytics";
 import PropertyPayments from "src/app/dashboard/payments";
 import { useAppContext } from "src/appContext";
 import RentalAgreements from "src/app/dashboard/rentalAgreements";
@@ -27,6 +29,7 @@ function getItems(isRentalProperty, isRentalOccupied, isOwner) {
   if (isRentalProperty) {
     if (isOwner) {
       list = [
+        { label: "Analytics", id: "analytics", Icon: AnalyticsIcon },
         {
           label: "Rental Agreements",
           id: "rentalAgreements",
@@ -70,6 +73,13 @@ function getItems(isRentalProperty, isRentalOccupied, isOwner) {
         },
       ];
     }
+  } else {
+    if (isOwner) {
+      list = [
+        { label: "Analytics", id: "analytics", Icon: AnalyticsIcon },
+        { label: "Interests", id: "interests", Icon: AnalyticsIcon },
+      ];
+    }
   }
   return list;
 }
@@ -98,17 +108,19 @@ export default function ManageProperty({ slug }) {
     ...(new Set(getItems(isRentalProperty, isRentalOccupied, isOwner)) ?? []),
   ];
 
-  const [activeTabId, setActiveTabId] = useState(list[0]?.id);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showRentalAgreementCreator, setShowRentalAgreementCreator] =
     useState(false);
 
   const handleChange = (_event, value) => {
-    setActiveTabId(value);
+    setActiveTabIndex(value);
   };
 
   const toggleRentalAgreementCreator = () => {
     setShowRentalAgreementCreator((prev) => !prev);
   };
+
+  const isAnalytics = list[activeTabIndex]?.id === "analytics";
 
   return (
     <>
@@ -134,12 +146,11 @@ export default function ManageProperty({ slug }) {
 
           <Stack sx={{ maxWidth: "100vw" }}>
             <Tabs
-              value={activeTabId}
+              value={activeTabIndex}
               onChange={handleChange}
               textColor="inherit"
               indicatorColor="secondary"
               aria-label="manage property tabs"
-              TabIndicatorProps={{ sx: { display: "none" } }}
               sx={{
                 "& .MuiTabs-flexContainer": {
                   flexWrap: "wrap",
@@ -150,7 +161,6 @@ export default function ManageProperty({ slug }) {
                 return (
                   <Tab
                     key={id}
-                    value={id}
                     icon={<Icon />}
                     iconPosition="start"
                     label={<Typography fontSize="large">{label}</Typography>}
@@ -163,10 +173,13 @@ export default function ManageProperty({ slug }) {
               })}
             </Tabs>
 
-            {activeTabId === "rentPayments" && (
+            {isAnalytics && <Analytics propertyPath={`/property/${slug}`} />}
+
+            {activeTabIndex === "rentPayments" && (
               <PropertyPayments propertyId={data?.id} paymentFor="RENT" />
             )}
-            {activeTabId === "rentalAgreements" && (
+
+            {activeTabIndex === "rentalAgreements" && (
               <RentalAgreements
                 propertyId={data?.id}
                 ownerId={ownerId}
