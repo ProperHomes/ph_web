@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import Script from "next/script";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { manRope } from "@/utils/constants";
@@ -148,6 +147,11 @@ function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLD) }}
         />
+        <script
+          defer
+          data-domain="properhomes.in"
+          src="https://plausible.properhomes.in/js/script.js"
+        ></script>
       </head>
       <body className={manRope.className}>
         <Suspense fallback={null}>
@@ -178,18 +182,6 @@ function RootLayout({ children }) {
             <BottomNavbar />
           </Box>
         </AppMain>
-        <Script
-          defer
-          src="https://www.googletagmanager.com/gtag/js?id=G-B3E4HE2Y6F"
-          strategy="lazyOnload"
-        />
-        <Script strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-B3E4HE2Y6F');`}
-        </Script>
       </body>
     </html>
   );
