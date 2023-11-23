@@ -17,7 +17,7 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import DocumentScannerOutlined from "@mui/icons-material/DocumentScannerOutlined";
 
 import { LISTING_TYPE, PROPERTY_STATUS } from "@/utils/constants";
-import Analytics from "./Analytics";
+import Analytics from "./analytics";
 import PropertyPayments from "src/app/dashboard/payments";
 import { useAppContext } from "src/appContext";
 import RentalAgreements from "src/app/dashboard/rentalAgreements";
