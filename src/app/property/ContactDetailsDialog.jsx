@@ -16,7 +16,7 @@ import Divider from "@mui/material/Divider";
 import { FETCH_PROPERTY_OWNER_BUILDER_DETAILS } from "@/graphql/properties";
 
 export default function ContactDetailDialog({ open, data, handleClose }) {
-  const { propertyId, city, pincode, ownerId, projectId, project } = data;
+  const { id: propertyId, city, pincode, ownerId, projectId, project } = data;
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -72,7 +72,7 @@ export default function ContactDetailDialog({ open, data, handleClose }) {
                 <Typography key={key} fontWeight="bold">
                   {key}:
                 </Typography>{" "}
-                <Typography key={key}>{contactDetails[key]}</Typography>
+                <Typography>{contactDetails[key]}</Typography>
               </Stack>
             );
           })}
