@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Chip from "@mui/material/Chip";
 import Grow from "@mui/material/Grow";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -37,7 +36,7 @@ const links = [
     tooltipLinks: exploreTooltipLinks,
   },
   {
-    title: "List your Property",
+    title: "List your Property (Free)",
     path: "/list-your-property-for-sale-rent-lease",
     isListingLink: true,
   },
@@ -133,19 +132,6 @@ function NavLinks() {
             <TypographyUnderline fontWeight={500} color="info.main">
               {title}
             </TypographyUnderline>
-            {isListingLink && (
-              <Chip
-                size="small"
-                label="Free"
-                color="orange"
-                sx={{
-                  position: "absolute",
-                  top: 20,
-                  right: -10,
-                  color: "#000",
-                }}
-              />
-            )}
           </Link>
         );
       })}

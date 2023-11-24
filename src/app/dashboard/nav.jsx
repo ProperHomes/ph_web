@@ -11,16 +11,17 @@ import PersonIcon from "@mui/icons-material/Person2";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import AddIcon from "@mui/icons-material/Add";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 import BottomNavbar from "src/components/BottomNavbar";
 import { useAppContext } from "src/appContext";
 
 let list = [
-  // {
-  //   label: "Dashboard",
-  //   href: "/dashboard",
-  //   Icon: DashboardIcon,
-  // },
+  {
+    label: "Analytics",
+    href: "/dashboard/analytics",
+    Icon: AnalyticsIcon,
+  },
   {
     label: "Manage Properties",
     href: "/dashboard/manage",

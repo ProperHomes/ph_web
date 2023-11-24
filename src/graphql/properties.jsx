@@ -297,6 +297,16 @@ export const GET_ALL_PROPERTIES_FOR_STATIC_PATHS = gql`
   }
 `;
 
+export const GET_ALL_OWNER_PROPERTIES_FOR_ANALYTICS = gql`
+  query getOwnerPropertiesForAnalytics($ownerId: UUID!) {
+    properties(condition: { ownerId: $ownerId }) {
+      nodes {
+        slug
+      }
+    }
+  }
+`;
+
 export const GET_PROPERTY_CREDIT_EXPENSE_OF_USER = gql`
   query getPropertyCreditExpenseOfUser($userId: UUID!, $propertyId: UUID!) {
     propertyCreditExpenseByUserIdAndPropertyId(

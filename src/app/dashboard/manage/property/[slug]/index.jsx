@@ -17,7 +17,6 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import DocumentScannerOutlined from "@mui/icons-material/DocumentScannerOutlined";
 
 import { LISTING_TYPE, PROPERTY_STATUS } from "@/utils/constants";
-import Analytics from "./analytics";
 import PropertyPayments from "src/app/dashboard/payments";
 import { useAppContext } from "src/appContext";
 import RentalAgreements from "src/app/dashboard/rentalAgreements";
@@ -29,7 +28,6 @@ function getItems(isRentalProperty, isRentalOccupied, isOwner) {
   if (isRentalProperty) {
     if (isOwner) {
       list = [
-        { label: "Analytics", id: "analytics", Icon: AnalyticsIcon },
         {
           label: "Rental Agreements",
           id: "rentalAgreements",
@@ -75,10 +73,7 @@ function getItems(isRentalProperty, isRentalOccupied, isOwner) {
     }
   } else {
     if (isOwner) {
-      list = [
-        { label: "Analytics", id: "analytics", Icon: AnalyticsIcon },
-        { label: "Interests", id: "interests", Icon: AnalyticsIcon },
-      ];
+      list = [{ label: "Interests", id: "interests", Icon: AnalyticsIcon }];
     }
   }
   return list;
@@ -120,7 +115,8 @@ export default function ManageProperty({ slug }) {
     setShowRentalAgreementCreator((prev) => !prev);
   };
 
-  const isAnalytics = list[activeTabIndex]?.id === "analytics";
+  const isRentPayments = list[activeTabIndex]?.id === "rentPayments";
+  const isRentalAgreements = list[activeTabIndex]?.id === "rentalAgreements";
 
   return (
     <>
@@ -173,13 +169,11 @@ export default function ManageProperty({ slug }) {
               })}
             </Tabs>
 
-            {isAnalytics && <Analytics propertyPath={`/property/${slug}`} />}
-
-            {activeTabIndex === "rentPayments" && (
+            {isRentPayments && (
               <PropertyPayments propertyId={data?.id} paymentFor="RENT" />
             )}
 
-            {activeTabIndex === "rentalAgreements" && (
+            {isRentalAgreements && (
               <RentalAgreements
                 propertyId={data?.id}
                 ownerId={ownerId}

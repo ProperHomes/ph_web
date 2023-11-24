@@ -12,6 +12,7 @@ import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
 import Dashboard from "@mui/icons-material/Dashboard";
 import Login from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
+import Link from "next/link";
 
 const StyledBtn = styled(Button)(({ theme }) => ({
   maxWidth: { xs: "150px", sm: "100%" },
@@ -19,13 +20,14 @@ const StyledBtn = styled(Button)(({ theme }) => ({
   borderRadius: "1em",
   fontWeight: 600,
   color: theme.palette.text.primary,
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.secondary.main,
   borderColor: theme.palette.grey[200],
   transition: "0.3s ease",
   boxShadow: theme.shadows[2],
   transition: "0.3s ease",
   "&:hover": {
     boxShadow: theme.shadows[4],
+    backgroundColor: theme.palette.secondary.light,
   },
 }));
 
@@ -83,13 +85,19 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
             <>
               <StyledBtn
                 startIcon={<Dashboard />}
-                onClick={navigateTo("/dashboard/manage")}
+                LinkComponent={Link}
+                prefetch={false}
+                href="/dashboard/manage"
+                onClick={toggleDrawer}
               >
                 Dashboard
               </StyledBtn>
               <StyledBtn
                 startIcon={<Dashboard />}
-                onClick={navigateTo("/dashboard/settings")}
+                LinkComponent={Link}
+                prefetch={false}
+                href="/dashboard/settings"
+                onClick={toggleDrawer}
               >
                 Settings
               </StyledBtn>
@@ -98,7 +106,10 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
           {isSysAdmin && (
             <StyledBtn
               startIcon={<Dashboard />}
-              onClick={navigateTo("/dashboard/sysadmin")}
+              LinkComponent={Link}
+              prefetch={false}
+              href="/dashboard/sysadmin"
+              onClick={toggleDrawer}
             >
               SysAdmin
             </StyledBtn>
@@ -113,22 +124,29 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
         >
           <StyledBtn
             startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/homeloans/emi-calculator")}
+            LinkComponent={Link}
+            prefetch={false}
+            href="/homeloans/emi-calculator"
+            onClick={toggleDrawer}
           >
             EMI Calculator
           </StyledBtn>
           <StyledBtn
             startIcon={<CalculateOutlined />}
-            onClick={navigateTo(
-              "/property-rental-management-for-owners-managers"
-            )}
+            LinkComponent={Link}
+            prefetch={false}
+            onClick={toggleDrawer}
+            href="/property-rental-management-for-owners-managers"
           >
             Manage Rentals
           </StyledBtn>
 
           <StyledBtn
             startIcon={<CalculateOutlined />}
-            onClick={navigateTo("/create-rental-agreement")}
+            LinkComponent={Link}
+            prefetch={false}
+            onClick={toggleDrawer}
+            href="/create-rental-agreement"
           >
             Generate Rental Agreement
           </StyledBtn>

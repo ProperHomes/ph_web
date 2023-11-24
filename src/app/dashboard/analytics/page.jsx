@@ -1,10 +1,14 @@
 "use client";
 import { useState } from "react";
+import { useQuery } from "@apollo/client";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+
+import { GET_ALL_OWNER_PROPERTIES_FOR_ANALYTICS } from "@/graphql/properties";
+import { useAppContext } from "src/appContext";
 
 const ANALYTICS_TIME_PERIOD = {
   ALL: { label: "All", value: "all" },
@@ -13,11 +17,35 @@ const ANALYTICS_TIME_PERIOD = {
   TODAY: { label: "Today", value: "day" },
 };
 
-export default function Analytics({ propertyPath }) {
+export default function Analytics() {
+  const { state } = useAppContext();
+  const { data: ownerProperties } = useQuery(
+    GET_ALL_OWNER_PROPERTIES_FOR_ANALYTICS,
+    {
+      variables: { ownerId: state.user?.id },
+      skip: !state.user?.id,
+    }
+  );
+
+  const slugPaths =
+    ownerProperties?.properties?.nodes?.map(({ slug }) => slug) ?? [];
+
+  const propertyPaths = (
+    slugPaths.map((slug) => `/property/${slug}`) ?? []
+  )?.join("|");
+
+  const [pagePath, setPagePath] = useState("All Properties");
+  const handleChangePage = (e) => {
+    setPagePath(e.target.value);
+  };
+
   const [period, setPeriod] = useState("7d");
   const handleChangePeriod = (e) => {
     setPeriod(e.target.value);
   };
+
+  const pageFilter =
+    pagePath === "All Properties" ? propertyPaths : `/property/${pagePath}`;
 
   return (
     <Box
@@ -27,11 +55,12 @@ export default function Analytics({ propertyPath }) {
       }}
     >
       <Stack
-        justifyContent="center"
+        direction="row"
+        spacing={4}
         pl={8}
         sx={{
           position: "absolute",
-          top: 0,
+          top: 10,
           left: 0,
           width: "100%",
           height: "80px",
@@ -39,6 +68,20 @@ export default function Analytics({ propertyPath }) {
           zIndex: 99,
         }}
       >
+        <FormControl variant="standard" sx={{ width: "150px" }}>
+          <Select
+            value={pagePath ?? "All Properties"}
+            onChange={handleChangePage}
+          >
+            {["All Properties", ...slugPaths].map((p) => {
+              return (
+                <MenuItem key={p} value={p}>
+                  {p}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
         <FormControl variant="standard" sx={{ width: "150px" }}>
           <Select value={period} onChange={handleChangePeriod}>
             {Object.keys(ANALYTICS_TIME_PERIOD).map((t) => {
@@ -55,14 +98,15 @@ export default function Analytics({ propertyPath }) {
 
       <Box>
         <iframe
-          plausible-embed
-          src={`https://plausible.properhomes.in/share/properhomes.in?auth=_-kFtozt_dSmIpT_aAIHb&page=${propertyPath}&period=${period}&embed=true&theme=light`}
+          plausible-embed="true"
+          src={`https://plausible.properhomes.in/share/properhomes.in?auth=_-kFtozt_dSmIpT_aAIHb&page=${encodeURIComponent(
+            pageFilter
+          )}&period=${period}&embed=true&theme=light`}
           loading="lazy"
           frameBorder="0"
           scrolling="no"
-          style={{ width: "1px", minWidth: "100%", height: "1600px" }}
+          style={{ minWidth: "100%", height: "1700px" }}
         ></iframe>
-
         <script
           async
           src="https://plausible.properhomes.in/js/embed.host.js"

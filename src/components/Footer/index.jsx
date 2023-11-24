@@ -69,7 +69,6 @@ const legalLinks = [
 export default function Footer() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isDark = theme.palette.mode == "dark";
   const [index, setIndex] = useState(0);
 
   const handleChange = (_e, newIndex) => {
@@ -91,7 +90,7 @@ export default function Footer() {
       sx={{
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[2],
-        borderRadius: !isDark ? "2em 2em 0 0" : "0",
+
         width: "100%",
         position: "absolute",
         bottom: 0,
@@ -101,7 +100,7 @@ export default function Footer() {
       <Container maxWidth="xl">
         <Stack
           direction={{ xs: "column", md: "row" }}
-          alignItems="center"
+          alignItems="flex-start"
           justifyContent={{ xs: "center", md: "space-between" }}
         >
           <Stack alignItems={{ xs: "center", md: "start" }}>
@@ -120,8 +119,6 @@ export default function Footer() {
                 }}
               />
             </Link>
-            <Typography>For any enquiries call us @ +916305078250</Typography>
-
             <Stack my={1} direction="row" alignItems="center">
               <Typography fontWeight={600}>Follow us on: </Typography>
               {socialLinks.map(({ Icon, href }, i) => {
@@ -137,6 +134,15 @@ export default function Footer() {
                 );
               })}
             </Stack>
+            <Typography>
+              ProperHomes is India's first spam free Real Estate Listing App.{" "}
+              <br />
+              At ProperHomes, no middlemen is involved between buyers and
+              sellers or tenants and owners. 
+              <br />
+              For any feedback, enquiries or complaints: <br /> call: &nbsp;
+              +916305078250 <br /> email: veera@properhomes.in
+            </Typography>
           </Stack>
           <Stack
             direction="row"
@@ -144,6 +150,7 @@ export default function Footer() {
             alignItems="center"
             justifyContent="center"
             spacing={3}
+            mt={2}
           >
             {subLinks.map((l) => {
               return (
