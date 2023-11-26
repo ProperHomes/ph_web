@@ -30,9 +30,9 @@ const advancedHeaders = [
 const withPWA = require("next-pwa")({
   dest: "public",
   mode: "production",
-  // disable:
-  //   process.env.NODE_ENV === "development" ||
-  //   process.env.NODE_ENV === "preview",
+  disable:
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "preview",
 });
 
 module.exports = withPWA({

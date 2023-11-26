@@ -4380,6 +4380,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.3.tgz#ca83a5a006e0d5709a3fe8966112f26436071d81"
   integrity sha512-Yu3+r4Mn/iY6Mf0aihncZQ1qOjOUrCiodbHHY1hds5O+7BbKp9t+Li7zLO13zO8j9L2C6euz8xsYQP0rjGvVXw==
 
+"@types/nprogress@^0.2.1":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@types/nprogress/-/nprogress-0.2.3.tgz#b2150b054a13622fabcba12cf6f0b54c48b14287"
+  integrity sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -7887,6 +7892,15 @@ next@^14.0.3:
     "@next/swc-win32-arm64-msvc" "14.0.3"
     "@next/swc-win32-ia32-msvc" "14.0.3"
     "@next/swc-win32-x64-msvc" "14.0.3"
+
+nextjs-toploader@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/nextjs-toploader/-/nextjs-toploader-1.6.4.tgz#1a498fc8c9b073d937fb932382aeb5bb1d007339"
+  integrity sha512-KYLQ+0MvGdFk9JwOQfRtaYBAsyuX67Ca5QTa51RGNO4gQx64KLSE+ryHjUQ5LcDczHotp0l32GgksQW9vucUkw==
+  dependencies:
+    "@types/nprogress" "^0.2.1"
+    nprogress "^0.2.0"
+    prop-types "^15.8.1"
 
 node-fetch@^2.6.12:
   version "2.6.12"

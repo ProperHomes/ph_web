@@ -1,7 +1,7 @@
-import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import NextTopLoader from "nextjs-toploader";
 
 import { manRope } from "@/utils/constants";
 
@@ -12,7 +12,6 @@ const BottomNavbar = dynamic(() => import("../components/BottomNavbar"), {
 const Footer = dynamic(() => import("../components/Footer"), { ssr: false });
 
 import AppMain from "./AppMain/index";
-import PageLoadProgress from "@/components/PageLoadProgress";
 
 import "../styles/globals.css";
 
@@ -155,9 +154,7 @@ function RootLayout({ children }) {
         ></script>
       </head>
       <body className={manRope.className}>
-        <Suspense fallback={null}>
-          <PageLoadProgress showSpinner={false} />
-        </Suspense>
+        <NextTopLoader showSpinner={false} />
         <AppMain>
           <Box
             sx={{

@@ -8,6 +8,7 @@ import { lightTheme } from "../../theme";
 import { ApolloProvider } from "@apollo/client";
 import apolloClient from "@/graphql/apolloClient";
 
+
 const links = [
   "/about",
   "/faq",

@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://www.properhomes.in
-
-# Sitemaps
-Sitemap: https://www.properhomes.in/sitemap.xml
