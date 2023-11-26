@@ -45,7 +45,7 @@ export default function BlogPost({ post }) {
               fontSize: "1.4rem",
             },
             "& > h2, h3, h4": {
-              marginTop: "1rem",
+              margin: "1rem 0",
             },
             "& > p": {
               fontSize: "1.1rem",
@@ -56,6 +56,15 @@ export default function BlogPost({ post }) {
             "& > p > a, & > a": {
               textDecoration: "underline !important",
             },
+            ".centered-link": {
+              padding: "1.5rem 0",
+              textAlign: "center",
+              fontSize: "2rem",
+            },
+            ".emphasized-link": {
+              padding: "1.5rem 0",
+              fontSize: "2rem",
+            },
           }}
           dangerouslySetInnerHTML={{ __html: content }}
         />
@@ -63,6 +72,3 @@ export default function BlogPost({ post }) {
     </Container>
   );
 }
-
-
-
