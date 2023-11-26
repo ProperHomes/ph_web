@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+
 import { manRope } from "@/utils/constants";
 
 const Navbar = dynamic(() => import("../components/Navbar"));
@@ -11,9 +12,9 @@ const BottomNavbar = dynamic(() => import("../components/BottomNavbar"), {
 const Footer = dynamic(() => import("../components/Footer"), { ssr: false });
 
 import AppMain from "./AppMain/index";
+import PageLoadProgress from "@/components/PageLoadProgress";
 
 import "../styles/globals.css";
-import PageLoadProgress from "@/components/PageLoadProgress";
 
 export const metadata = {
   title:
@@ -66,7 +67,7 @@ const rootJsonLD = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "ProperHomes",
-  url: "https://www.properhomes.in/",
+  url: "https://www.properhomes.in",
   alternateName: "Proper Homes",
   description:
     "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.",

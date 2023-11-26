@@ -30,9 +30,9 @@ const advancedHeaders = [
 const withPWA = require("next-pwa")({
   dest: "public",
   mode: "production",
-  disable:
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "preview",
+  // disable:
+  //   process.env.NODE_ENV === "development" ||
+  //   process.env.NODE_ENV === "preview",
 });
 
 module.exports = withPWA({
@@ -50,10 +50,10 @@ module.exports = withPWA({
     formats: ["image/webp"],
     minimumCacheTTL: 31536000, // 1 year
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "loremflickr.com",
-      },
+      // {
+      //   protocol: "https",
+      //   hostname: "loremflickr.com",
+      // },
       // {
       //   protocol: "https",
       //   hostname: "placehold.co",
