@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import useTheme from "@mui/material/styles/useTheme";
 
 import SaveIcon from "@mui/icons-material/Save";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import PaidIcon from "@mui/icons-material/Paid";
 import PersonIcon from "@mui/icons-material/Person2";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
@@ -57,6 +57,18 @@ function Dashboardnav() {
         label: "SysAdmin",
         href: "/dashboard/sysadmin",
         Icon: PersonIcon,
+      },
+      ,
+      ...navList,
+    ];
+  }
+
+  if (state?.user?.isAffiliate) {
+    navList = [
+      {
+        label: "Affiliate",
+        href: "/dashboard/affiliate",
+        Icon: PaidIcon,
       },
       ,
       ...navList,

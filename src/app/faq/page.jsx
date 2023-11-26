@@ -66,7 +66,7 @@ const sellerFAQ = [
   {
     question: `How can I list my property on ProperHomes?`,
     answer: `You can list your property on ProperHomes for free. If you want to list more than one property then you have to choose one of our seller paid plans. 
-    We offer Prime, and Premium paid plans with different features and pricing.`,
+    We offer Silver, and Gold paid plans with different features and pricing.`,
   },
   {
     question: `What are the features of the Free Plan for sellers on ProperHomes?`,
@@ -74,17 +74,17 @@ const sellerFAQ = [
     It includes basic analytics, rental management with autopay, rental agreement and receipt generation, and real-time customer interest notification alerts.`,
   },
   {
-    question: `What additional features come with the Prime Plan for sellers on ProperHomes, and what is the cost?`,
-    answer: `The Prime Plan on ProperHomes costs ₹2,500 per month and includes everything in the Free Plan. 
+    question: `What additional features come with the Silver Plan for sellers on ProperHomes, and what is the cost?`,
+    answer: `The Silver Plan on ProperHomes costs ₹2,500 per month and includes everything in the Free Plan. 
     Additionally, you can list up to 10 properties, have basic support, a separate business profile page, and buyers don't need to pay to view your property contact details (if agreed by you).`,
   },
   {
-    question: `What are the features of the Premium Plan for sellers on ProperHomes, and how much does it cost?`,
-    answer: `The Premium Plan on ProperHomes costs ₹5,000 per month and includes everything in the Prime Plan. 
+    question: `What are the features of the Gold Plan for sellers on ProperHomes, and how much does it cost?`,
+    answer: `The Gold Plan on ProperHomes costs ₹5,000 per month and includes everything in the Silver Plan. 
     You can list up to 25 properties, receive priority support, boost one property in one city every day, and access full-fledged analytics, insights, and alerts.`,
   },
   {
-    question: `Can I change my seller plan later if I start with a Free or Prime Plan on ProperHomes?`,
+    question: `Can I change my seller plan later if I start with a Free or Silver Plan on ProperHomes?`,
     answer: `Yes, you can upgrade or downgrade your seller plan on ProperHomes at any time based on your needs. Your subscription will be adjusted accordingly.`,
   },
   {
@@ -94,7 +94,7 @@ const sellerFAQ = [
   },
   {
     question: `Can I feature or highlight my listings for better visibility on ProperHomes?`,
-    answer: `Yes, if you're on the Premium Plan on ProperHomes, you have the option to boost one property in one city every day. This helps improve the visibility of your property and attract more potential buyers or tenants.`,
+    answer: `Yes, if you're on the Gold Plan on ProperHomes, you have the option to boost one property in one city every day. This helps improve the visibility of your property and attract more potential buyers or tenants.`,
   },
   {
     question: `Is there a limit to the number of photos and details I can include in my property listings on ProperHomes?`,
@@ -102,15 +102,15 @@ const sellerFAQ = [
   },
   {
     question: `How do I set up my business profile page on ProperHomes, and what should I include on it?`,
-    answer: `With the Prime and Premium Plans on ProperHomes, you get a separate business profile page. You can set it up by providing essential details about your business, including your logo, contact information, and a brief description. This enhances your credibility and visibility to potential clients.`,
+    answer: `With the Silver and Gold Plans on ProperHomes, you get a separate business profile page. You can set it up by providing essential details about your business, including your logo, contact information, and a brief description. This enhances your credibility and visibility to potential clients.`,
   },
   {
-    question: `Do I need to sign a contract for the Prime or Premium Plan on ProperHomes, and what is the billing cycle?`,
-    answer: `The Prime and Premium Plans on ProperHomes are billed on a monthly basis, and there's no long-term contract required. You can cancel or change your plan at any time based on your needs.`,
+    question: `Do I need to sign a contract for the Silver or Gold Plan on ProperHomes, and what is the billing cycle?`,
+    answer: `The Silver and Gold Plans on ProperHomes are billed on a monthly basis, and there's no long-term contract required. You can cancel or change your plan at any time based on your needs.`,
   },
   {
     question: `What kind of support can I expect with the different seller plans on ProperHomes?`,
-    answer: `The Free Plan on ProperHomes includes basic support, while the Prime and Premium Plans come with additional support and priority support, respectively. Our support team on ProperHomes is here to assist you with any questions or issues you may encounter.`,
+    answer: `The Free Plan on ProperHomes includes basic support, while the Silver and Gold Plans come with additional support and priority support, respectively. Our support team on ProperHomes is here to assist you with any questions or issues you may encounter.`,
   },
 ];
 

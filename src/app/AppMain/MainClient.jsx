@@ -13,6 +13,7 @@ const links = [
   "/faq",
   "/pricing",
   "/terms-and-conditions",
+  "/affiliate-program",
   "/privacypolicy",
   "/homeloans/emi-calculator",
   "/create-rental-agreement",

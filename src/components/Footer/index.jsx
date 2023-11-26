@@ -45,6 +45,7 @@ const subLinks = [
     title: "FAQ",
     path: "/faq",
   },
+  { title: "Affiliate", path: "/affiliate-program" },
   {
     title: "EMI Calculator",
     path: "/homeloans/emi-calculator",
@@ -134,14 +135,14 @@ export default function Footer() {
                 );
               })}
             </Stack>
-            <Typography>
+            <Typography fontWeight={600}>
               ProperHomes is India's first spam free Real Estate Listing App.{" "}
               <br />
               At ProperHomes, no middlemen is involved between buyers and
-              sellers or tenants and owners. 
+              sellers or tenants and owners.
               <br />
-              For any feedback, enquiries or complaints: <br /> call: &nbsp;
-              +916305078250 <br /> email: veera@properhomes.in
+              For any feedback, enquiries or complaints: <br /> Call: &nbsp;
+              +916305078250 <br /> Email: veera@properhomes.in
             </Typography>
           </Stack>
           <Stack
@@ -168,7 +169,7 @@ export default function Footer() {
           </Stack>
         </Stack>
 
-        <Box pb={4}>
+        <Box py={4}>
           <Tabs
             value={index}
             onChange={handleChange}
