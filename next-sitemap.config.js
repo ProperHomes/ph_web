@@ -64,11 +64,14 @@ module.exports = {
     "/dashboard",
     "/dashboard/*",
     "/privacypolicy",
-    "/affiliate-program",
     "/terms-and-conditions",
+    "/home-services",
+    "/home-cleaning-services",
+    "/home-painting-services",
+    "/home-plumbing-services",
   ],
   additionalPaths: () => {
-    const paths = [];
+    const paths = ["/"];
     for (let link of otherLinks) {
       paths.push({
         loc: `/${link}`,
