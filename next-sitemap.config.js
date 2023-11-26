@@ -58,7 +58,6 @@ const otherLinks = [
 
 module.exports = {
   siteUrl: "https://www.properhomes.in",
-  generateRobotsTxt: true,
   generateIndexSitemap: true,
   exclude: [
     "/dashboard",
@@ -69,6 +68,7 @@ module.exports = {
     "/home-cleaning-services",
     "/home-painting-services",
     "/home-plumbing-services",
+    "/home-repairs-services"
   ],
   additionalPaths: () => {
     const paths = ["/"];

@@ -6,7 +6,6 @@
     "dev": "AWS_PROFILE=properhomes_admin_veera sst bind next dev",
     "deploy:prod": "AWS_PROFILE=properhomes_admin_veera npx sst deploy --stage=prod",
     "build": "sst bind next build",
-    "build:analyze": "ANALYZE=true AWS_PROFILE=properhomes_admin_veera sst bind next build",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
@@ -52,6 +51,6 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
-    "sst": "^2.36.1"
+    "sst": "^2.36.6"
   }
 }
