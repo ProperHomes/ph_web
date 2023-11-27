@@ -1,6 +1,6 @@
 "use client";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import useTheme from "@mui/material/styles/useTheme";
@@ -44,7 +44,7 @@ let list = [
   },
 ];
 
-function Dashboardnav() {
+function Dashboardnav({ toggleDrawer }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
@@ -75,11 +75,16 @@ function Dashboardnav() {
     ];
   }
 
+  const handleClick = () => {
+    if (toggleDrawer) {
+      toggleDrawer();
+    }
+  };
+
   return (
     <>
       <Stack
         alignItems="flex-start"
-        display={{ xs: "none", md: "flex" }}
         spacing={1}
         mr={2}
         px={1}
@@ -102,6 +107,7 @@ function Dashboardnav() {
               startIcon={<Icon />}
               component={Link}
               href={href}
+              onClick={handleClick}
               sx={{
                 color: isActive
                   ? theme.palette.info.main
@@ -115,12 +121,33 @@ function Dashboardnav() {
           );
         })}
 
-        <Stack
-          py={4}
-          spacing={1}
-          alignItems="flex-start"
-          display={{ xs: "none", md: "flex" }}
-        >
+        <Stack py={4} spacing={1} alignItems="flex-start">
+          <Button
+            size="large"
+            startIcon={<AddIcon />}
+            component={Link}
+            href="/dashboard/create-builder"
+            sx={{
+              color: isDark ? theme.palette.text.secondary : "#000",
+            }}
+            onClick={handleClick}
+          >
+            Create Builder Profile
+          </Button>
+
+          <Button
+            size="large"
+            startIcon={<AddIcon />}
+            component={Link}
+            href="/dashboard/create-project"
+            sx={{
+              color: isDark ? theme.palette.text.secondary : "#000",
+            }}
+            onClick={handleClick}
+          >
+            Create Project Profile
+          </Button>
+
           <Button
             size="large"
             startIcon={<AddIcon />}
@@ -129,6 +156,7 @@ function Dashboardnav() {
             sx={{
               color: isDark ? theme.palette.text.secondary : "#000",
             }}
+            onClick={handleClick}
           >
             Add Your Property
           </Button>
@@ -140,6 +168,7 @@ function Dashboardnav() {
             sx={{
               color: isDark ? theme.palette.text.secondary : "#000",
             }}
+            onClick={handleClick}
           >
             Create Rental Agreement
           </Button>
@@ -152,6 +181,7 @@ function Dashboardnav() {
             sx={{
               color: isDark ? theme.palette.text.secondary : "#000",
             }}
+            onClick={handleClick}
           >
             Generate Rent Receipt
           </Button>

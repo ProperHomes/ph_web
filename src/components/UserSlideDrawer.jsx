@@ -10,6 +10,7 @@ import useToggleAuth from "src/hooks/useToggleAuth";
 import SlideDrawer from "./Drawer";
 import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
 import Dashboard from "@mui/icons-material/Dashboard";
+import SettingsIcon from "@mui/icons-material/Settings";
 import Login from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 import Link from "next/link";
@@ -93,7 +94,7 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
                 Dashboard
               </StyledBtn>
               <StyledBtn
-                startIcon={<Dashboard />}
+                startIcon={<SettingsIcon />}
                 LinkComponent={Link}
                 prefetch={false}
                 href="/dashboard/settings"

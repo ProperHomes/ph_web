@@ -74,10 +74,22 @@ export const FETCH_BUILDER_BY_SLUG = gql`
 
 export const GET_ALL_BUILDERS_FOR_STATIC_PATHS = gql`
   query getBuildersForStaticPaths {
-    builders {
+    builders(condition: { isActive: true }) {
       nodes {
         id
         slug
+      }
+    }
+  }
+`;
+
+export const GET_IN_ACTIVE_BUILDERS = gql`
+  query getInActiveBuilders {
+    builders(condition: { isActive: false, first: 5 }) {
+      nodes {
+        id
+        slug
+        name
       }
     }
   }

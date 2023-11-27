@@ -18,6 +18,7 @@ import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
 
+import useToast from "src/hooks/useToast";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import useUploadFile from "src/hooks/useUploadFile";
 import { convertStringToSlug } from "@/utils/helper";
@@ -54,9 +55,10 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
   },
 }));
 
-export default function CreateProject({ handleCancel }) {
+export default function CreateProject({ handleCancel, isSysAdmin = false }) {
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
+  const { toggleToast } = useToast();
 
   const [logo, setLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
@@ -115,10 +117,12 @@ export default function CreateProject({ handleCancel }) {
             project: {
               ...newData,
               slug,
+              isActive: isSysAdmin,
             },
           },
         },
       });
+      toggleToast("Project created. We'll let you once it is approved.");
     } catch (err) {
       console.log(err);
     }
@@ -179,7 +183,12 @@ export default function CreateProject({ handleCancel }) {
         Create Project
       </Typography>
 
-      <Stack direction="row" alignItems="center" spacing={2} py={2}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        alignItems="center"
+        spacing={2}
+        py={2}
+      >
         <Stack spacing={2}>
           <Label>Add Logo</Label>
           <AddFileBlock isImageType file={logo} onChange={handleInputLogo} />

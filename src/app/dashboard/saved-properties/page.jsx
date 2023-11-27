@@ -1,5 +1,6 @@
 "use client";
 import { Suspense, lazy, useState } from "react";
+import Stack from "@mui/material/Stack";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useAppContext } from "src/appContext";
@@ -44,7 +45,9 @@ function SavedProperties() {
       endMessage={<></>}
     >
       <Suspense fallback={<></>}>
-        <PropertyList data={savedProperties} />
+        <Stack spacing={4} sx={{ overflow: "hidden" }}>
+          <PropertyList data={savedProperties} />
+        </Stack>
       </Suspense>
     </InfiniteScroll>
   );

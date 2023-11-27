@@ -124,10 +124,22 @@ export const FETCH_PROJECT_BY_SLUG = gql`
 
 export const GET_ALL_PROJECTS_FOR_STATIC_PATHS = gql`
   query getProjectsForStaticPaths {
-    projects {
+    projects(condition: { isActive: true }) {
       nodes {
         id
         slug
+      }
+    }
+  }
+`;
+
+export const GET_IN_ACTIVE_PROJECTS = gql`
+  query getInActiveProjects {
+    projects(condition: { isActive: false, first: 5 }) {
+      nodes {
+        id
+        slug
+        name
       }
     }
   }

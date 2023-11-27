@@ -57,7 +57,7 @@ export default function Analytics() {
       <Stack
         direction="row"
         spacing={4}
-        pl={8}
+        pl={{ xs: 2, md: 8 }}
         sx={{
           position: "absolute",
           top: 10,

@@ -1,17 +1,24 @@
 "use client";
-
 import { useState } from "react";
+import { useQuery } from "@apollo/client";
 import dynamic from "next/dynamic";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 import usePagination from "src/hooks/usePagination";
 import { GET_PROPERTIES_BY_LISTING_STATUS } from "@/graphql/properties";
+import { GET_IN_ACTIVE_BUILDERS } from "@/graphql/builders";
+import { GET_IN_ACTIVE_PROJECTS } from "@/graphql/projects";
 import { removeDuplicateObjectsFromArray } from "@/utils/helper";
 
-const CreateBuilder = dynamic(() => import("./CreateBuilder"), { ssr: false });
-const CreateProject = dynamic(() => import("./CreateProject"), { ssr: false });
+const CreateBuilder = dynamic(() => import("../../builder/CreateBuilder"), {
+  ssr: false,
+});
+const CreateProject = dynamic(() => import("../../project/CreateProject"), {
+  ssr: false,
+});
 const CreatePropertySaleRentLease = dynamic(
   () => import("../../list-your-property-for-sale-rent-lease"),
   { ssr: false }
@@ -44,6 +51,16 @@ export default function SysAdmin() {
       });
     },
   });
+
+  const { data: buildersData } = useQuery(GET_IN_ACTIVE_BUILDERS, {
+    fetchPolicy: "network-only",
+  });
+  const { data: projectsData } = useQuery(GET_IN_ACTIVE_PROJECTS, {
+    fetchPolicy: "network-only",
+  });
+
+  const inActiveBuilders = buildersData?.builders?.nodes ?? [];
+  const inActiveProjects = projectsData?.projects?.nodes ?? [];
 
   const toggleCreateProperty = () => {
     setShowCreateProperty((prev) => !prev);
@@ -83,10 +100,10 @@ export default function SysAdmin() {
         </Button>
 
         {showCreateBuilder && (
-          <CreateBuilder handleCancel={toggleCreateBuilder} />
+          <CreateBuilder isSysAdmin handleCancel={toggleCreateBuilder} />
         )}
         {showCreateProject && (
-          <CreateProject handleCancel={toggleCreateProject} />
+          <CreateProject isSysAdmin handleCancel={toggleCreateProject} />
         )}
         {showCreateProperty && (
           <Stack spacing={1}>
@@ -120,6 +137,32 @@ export default function SysAdmin() {
       </Stack>
 
       <PropertyList data={properties} title="Properties Awaiting Approval" />
+
+      <Stack spacing={2} my={2}>
+        <Typography>Builders To Review</Typography>
+        {inActiveBuilders.map((b) => {
+          return (
+            <Stack spacing={2} key={b.id}>
+              <Typography>
+                {b.name}: {b.slug}
+              </Typography>
+            </Stack>
+          );
+        })}
+      </Stack>
+
+      <Stack spacing={2} my={2}>
+        <Typography>Projects To Review</Typography>
+        {inActiveProjects.map((p) => {
+          return (
+            <Stack spacing={2} key={p.id}>
+              <Typography>
+                {p.name}: {p.slug}
+              </Typography>
+            </Stack>
+          );
+        })}
+      </Stack>
     </Stack>
   );
 }

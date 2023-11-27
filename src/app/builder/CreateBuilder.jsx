@@ -20,13 +20,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 
+import useToast from "src/hooks/useToast";
 import useToggleAuth from "src/hooks/useToggleAuth";
 import useUploadFile from "src/hooks/useUploadFile";
 import AddFileBlock from "@/components/AddFileBlock";
 import { convertStringToSlug } from "@/utils/helper";
 import { CREATE_BUILDER } from "@/graphql/builders";
-import Loading from "@/components/Loading";
 import { ALL_CITIES } from "@/utils/constants";
+import Loading from "@/components/Loading";
 
 const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
   ssr: false,
@@ -47,9 +48,10 @@ const Label = styled("label")(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function CreateBuilder({ handleCancel }) {
+export default function CreateBuilder({ handleCancel, isSysAdmin = false }) {
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
+  const { toggleToast } = useToast();
 
   const [logo, setLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
@@ -96,10 +98,13 @@ export default function CreateBuilder({ handleCancel }) {
             builder: {
               ...newData,
               slug,
+              isActive: isSysAdmin,
             },
           },
         },
       });
+      toggleToast("Builder created. We'll let you once it is approved.");
+      // Todo: create builder employee
       //   const newBuilder = res?.data?.createBuilder?.builder;
     } catch (err) {
       console.log(err);
@@ -257,8 +262,7 @@ export default function CreateBuilder({ handleCancel }) {
               <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Eg: 2"
-                type="number"
+                type="text"
                 value={value ?? ""}
                 onChange={onChange}
                 error={!!error?.message}
