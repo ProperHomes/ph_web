@@ -144,3 +144,23 @@ export const GET_IN_ACTIVE_PROJECTS = gql`
     }
   }
 `;
+
+export const GET_ALL_ACTIVE_PROJECTS_BY_BUILDER_EMPLOYEE = gql`
+  query getActiveProjects($userId: UUID!) {
+    projects(
+      condition: { isActive: true }
+      filter: {
+        builder: {
+          builderEmployeesExist: true
+          builderEmployees: { some: { userId: { eq: $userId } } }
+        }
+      }
+    ) {
+      nodes {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;

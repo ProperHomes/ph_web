@@ -131,6 +131,7 @@ export default function SysAdmin() {
               ownerId={ownerId}
               ownerNumber={ownerNumber}
               isFromDashboard
+              isSysAdmin
             />
           </Stack>
         )}

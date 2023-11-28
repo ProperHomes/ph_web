@@ -2,7 +2,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
@@ -41,6 +41,7 @@ import useDeleteFile from "src/hooks/useDeleteFile";
 import useUploadFile from "src/hooks/useUploadFile";
 import { convertStringToSlug } from "@/utils/helper";
 import Loading from "@/components/Loading";
+import { GET_ALL_ACTIVE_PROJECTS_BY_BUILDER_EMPLOYEE } from "@/graphql/projects";
 
 const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
   ssr: false,
@@ -70,6 +71,7 @@ const propertyResolver = {
       "Must be exactly 6 characters",
       (val) => val.toString().length === 6
     ),
+  projectId: yup.string(),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
   isFurnished: yup.boolean(),
   isSemiFurnished: yup.boolean(),
@@ -77,8 +79,8 @@ const propertyResolver = {
   status: yup.string().oneOf(Object.keys(PROPERTY_STATUS)).nullable(),
   media: yup
     .array()
-    .min(5, "atleast fives images are required")
-    .max(20, "Only 20 maximum images can be added")
+    .min(5, "atleast five images are required")
+    .max(15, "Only 15 maximum images can be added")
     .required(),
 };
 
@@ -120,6 +122,7 @@ function CreatePropertySaleRentLease({
   isFromDashboard,
   ownerId,
   ownerNumber,
+  isSysAdmin,
 }) {
   const theme = useTheme();
   const router = useRouter();
@@ -136,12 +139,22 @@ function CreatePropertySaleRentLease({
 
   const isEditMode = !!data;
 
-  const { control, handleSubmit, setValue, watch, formState } =
-    useForm({
-      resolver: yupResolver(yup.object().shape(propertyResolver)),
-      defaultValues: data,
-    });
+  const { control, handleSubmit, setValue, watch, formState } = useForm({
+    resolver: yupResolver(yup.object().shape(propertyResolver)),
+    defaultValues: data,
+  });
   watch();
+
+  const { data: projectsData } = useQuery(
+    GET_ALL_ACTIVE_PROJECTS_BY_BUILDER_EMPLOYEE,
+    {
+      variables: { userId: loggedInUser?.id },
+      fetchPolicy: "network-only",
+      skip: !loggedInUser?.id,
+    }
+  );
+
+  const projects = projectsData?.projects?.nodes ?? [];
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -277,7 +290,7 @@ function CreatePropertySaleRentLease({
           input: {
             property: {
               ...dataNew,
-              ownerId: ownerId ?? loggedInUser?.id, // Todo: remove this if we need to attach ord_id
+              ownerId: !data?.projectId ? ownerId ?? loggedInUser?.id : null,
               country: "INDIA",
             },
           },
@@ -804,25 +817,67 @@ function CreatePropertySaleRentLease({
           </Stack>
 
           <Stack>
-            <Label>URL path(optional)</Label>
+            <Label>Select Project (optional)</Label>
             <Controller
-              name="slug"
+              name="projectId"
               control={control}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
               }) => (
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  type="text"
-                  value={value ?? ""}
+                <StyledSelect
+                  displayEmpty
+                  renderValue={(selected) => {
+                    if (!selected) {
+                      return <Typography>Select one</Typography>;
+                    }
+                    return selected;
+                  }}
+                  value={projects.find((b) => b.id === value)?.name ?? ""}
                   onChange={onChange}
                   error={!!error?.message}
-                />
+                >
+                  <MenuItem value="" disabled>
+                    Select one from below
+                  </MenuItem>
+                  {projects.map((b) => {
+                    return (
+                      <MenuItem
+                        key={b.id}
+                        value={b.id}
+                        style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                      >
+                        {b.name}
+                      </MenuItem>
+                    );
+                  })}
+                </StyledSelect>
               )}
             />
           </Stack>
+
+          {isSysAdmin && (
+            <Stack>
+              <Label>URL path(optional)</Label>
+              <Controller
+                name="slug"
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    type="text"
+                    value={value ?? ""}
+                    onChange={onChange}
+                    error={!!error?.message}
+                  />
+                )}
+              />
+            </Stack>
+          )}
 
           <Stack sx={{ minHeight: { xs: "50px", md: "150px" } }} spacing={2}>
             <Label>Add property details* </Label>
@@ -839,7 +894,7 @@ function CreatePropertySaleRentLease({
           sx={{ height: "100%", maxWidth: "300px" }}
         >
           <Typography fontSize={{ xs: "1rem", md: "1.5rem" }}>
-            Add Property Media (min. of 5 images)*
+            Add Property Media (minimum 5 images and max 15 images)*
           </Typography>
           <Box my={8}>
             <MediaBlocks
