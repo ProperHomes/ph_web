@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
@@ -26,6 +26,7 @@ import { CREATE_PROJECT } from "@/graphql/projects";
 import Loading from "@/components/Loading";
 import AddFileBlock from "@/components/AddFileBlock";
 import { PROJECT_STATUS } from "@/utils/constants";
+import { GET_ALL_ACTIVE_BUILDERS_BY_EMPLOYEE } from "@/graphql/builders";
 
 const Editor = dynamic(() => import("src/components/TextEditor/Editor"), {
   ssr: false,
@@ -38,7 +39,7 @@ const resolver = {
   address: yup.string().required(),
   priceRange: yup.array().required(),
   amenities: yup.object().required(),
-  status: yup.string().oneOf(Object.keys(PROJECT_STATUS)),
+  status: yup.string().oneOf(Object.keys(PROJECT_STATUS)).required(),
 };
 
 const Label = styled("label")(({ theme }) => ({
@@ -58,7 +59,7 @@ const StyledSelect = styled(Select)(({ theme, error }) => ({
 export default function CreateProject({ handleCancel, isSysAdmin = false }) {
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
-  const { toggleToast } = useToast();
+  const { toggleToast, Toast } = useToast();
 
   const [logo, setLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
@@ -66,12 +67,19 @@ export default function CreateProject({ handleCancel, isSysAdmin = false }) {
 
   const [createProject] = useMutation(CREATE_PROJECT);
 
+  const { data: buildersData } = useQuery(GET_ALL_ACTIVE_BUILDERS_BY_EMPLOYEE, {
+    variables: { userId: loggedInUser?.id },
+    fetchPolicy: "network-only",
+    skip: !loggedInUser?.id,
+  });
+
+  const builders = buildersData?.builders?.nodes ?? [];
+
   const handleFileUpload = useUploadFile();
 
-  const { control, handleSubmit, setValue, getValues, watch, formState } =
-    useForm({
-      resolver: yupResolver(yup.object().shape(resolver)),
-    });
+  const { control, handleSubmit, setValue, watch, reset, formState } = useForm({
+    resolver: yupResolver(yup.object().shape(resolver)),
+  });
   watch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -122,11 +130,15 @@ export default function CreateProject({ handleCancel, isSysAdmin = false }) {
           },
         },
       });
+      reset();
       toggleToast("Project created. We'll let you once it is approved.");
     } catch (err) {
       console.log(err);
     }
-    handleCancel();
+    if (handleCancel) {
+      handleCancel();
+    }
+    setIsLoading(false);
   };
 
   const handleChangeDescription = (htmlDescription) => {
@@ -211,19 +223,38 @@ export default function CreateProject({ handleCancel, isSysAdmin = false }) {
 
       <Stack spacing={4} sx={{ maxWidth: "800px" }}>
         <Stack>
-          <Label>Builder Id</Label>
+          <Label>Select Builder *</Label>
           <Controller
             name="builderId"
             control={control}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <TextField
-                fullWidth
-                variant="outlined"
-                type="text"
-                value={value ?? ""}
+              <StyledSelect
+                displayEmpty
+                renderValue={(selected) => {
+                  if (!selected) {
+                    return <Typography>Select one</Typography>;
+                  }
+                  return selected;
+                }}
+                value={builders.find((b) => b.id === value)?.name ?? ""}
                 onChange={onChange}
                 error={!!error?.message}
-              />
+              >
+                <MenuItem value="" disabled>
+                  Select one from below
+                </MenuItem>
+                {builders.map((b) => {
+                  return (
+                    <MenuItem
+                      key={b.id}
+                      value={b.id}
+                      style={{ fontWeight: 500, fontSize: "0.8rem" }}
+                    >
+                      {b.name}
+                    </MenuItem>
+                  );
+                })}
+              </StyledSelect>
             )}
           />
         </Stack>
@@ -586,6 +617,7 @@ export default function CreateProject({ handleCancel, isSysAdmin = false }) {
         </Stack>
       </Stack>
       {Auth}
+      {Toast}
     </Box>
   );
 }

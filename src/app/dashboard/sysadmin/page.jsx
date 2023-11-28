@@ -136,33 +136,39 @@ export default function SysAdmin() {
         )}
       </Stack>
 
-      <PropertyList data={properties} title="Properties Awaiting Approval" />
+      {properties.length > 0 && (
+        <PropertyList data={properties} title="Properties Awaiting Approval" />
+      )}
 
-      <Stack spacing={2} my={2}>
-        <Typography>Builders To Review</Typography>
-        {inActiveBuilders.map((b) => {
-          return (
-            <Stack spacing={2} key={b.id}>
-              <Typography>
-                {b.name}: {b.slug}
-              </Typography>
-            </Stack>
-          );
-        })}
-      </Stack>
+      {inActiveBuilders.length > 0 && (
+        <Stack spacing={2} my={2}>
+          <Typography fontWeight={600}>Builders To Review</Typography>
+          {inActiveBuilders.map((b) => {
+            return (
+              <Stack spacing={2} key={b.id}>
+                <Typography>
+                  {b.name}: {b.slug}
+                </Typography>
+              </Stack>
+            );
+          })}
+        </Stack>
+      )}
 
-      <Stack spacing={2} my={2}>
-        <Typography>Projects To Review</Typography>
-        {inActiveProjects.map((p) => {
-          return (
-            <Stack spacing={2} key={p.id}>
-              <Typography>
-                {p.name}: {p.slug}
-              </Typography>
-            </Stack>
-          );
-        })}
-      </Stack>
+      {inActiveProjects.length > 0 && (
+        <Stack spacing={2} my={2}>
+          <Typography fontWeight={600}>Projects To Review</Typography>
+          {inActiveProjects.map((p) => {
+            return (
+              <Stack spacing={2} key={p.id}>
+                <Typography>
+                  {p.name}: {p.slug}
+                </Typography>
+              </Stack>
+            );
+          })}
+        </Stack>
+      )}
     </Stack>
   );
 }

@@ -32,11 +32,11 @@ let list = [
     href: "/dashboard/saved-properties",
     Icon: SaveIcon,
   },
-  {
-    label: "Payments",
-    href: "/dashboard/subscription", // Todo: should be /payments
-    Icon: CreditCardIcon,
-  },
+  // {
+  //   label: "Payments",
+  //   href: "/dashboard/subscription", // Todo: should be /payments
+  //   Icon: CreditCardIcon,
+  // },
   {
     label: "Settings",
     href: "/dashboard/settings",
@@ -49,6 +49,8 @@ function Dashboardnav({ toggleDrawer }) {
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
   const { state, isBuyer, isSeller, isBuyerAndSeller } = useAppContext();
+
+  const isBuilderEmployee = state?.user?.builderEmployees?.totalCount >= 1;
 
   let navList = list;
   if (state?.user?.isSysAdmin) {
@@ -122,18 +124,20 @@ function Dashboardnav({ toggleDrawer }) {
         })}
 
         <Stack py={4} spacing={1} alignItems="flex-start">
-          <Button
-            size="large"
-            startIcon={<AddIcon />}
-            component={Link}
-            href="/dashboard/create-builder"
-            sx={{
-              color: isDark ? theme.palette.text.secondary : "#000",
-            }}
-            onClick={handleClick}
-          >
-            Create Builder Profile
-          </Button>
+          {!isBuilderEmployee && (
+            <Button
+              size="large"
+              startIcon={<AddIcon />}
+              component={Link}
+              href="/dashboard/create-builder"
+              sx={{
+                color: isDark ? theme.palette.text.secondary : "#000",
+              }}
+              onClick={handleClick}
+            >
+              Create Builder Profile
+            </Button>
+          )}
 
           <Button
             size="large"

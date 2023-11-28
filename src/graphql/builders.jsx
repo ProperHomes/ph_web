@@ -83,13 +83,41 @@ export const GET_ALL_BUILDERS_FOR_STATIC_PATHS = gql`
   }
 `;
 
+export const GET_ALL_ACTIVE_BUILDERS_BY_EMPLOYEE = gql`
+  query getActiveBuilders($userId: UUID!) {
+    builders(
+      condition: { isActive: true }
+      filter: {
+        builderEmployeesExist: true
+        builderEmployees: { some: { userId: { eq: $userId } } }
+      }
+    ) {
+      nodes {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
+
 export const GET_IN_ACTIVE_BUILDERS = gql`
   query getInActiveBuilders {
-    builders(condition: { isActive: false, first: 5 }) {
+    builders(condition: { isActive: false }, first: 5) {
       nodes {
         id
         slug
         name
+      }
+    }
+  }
+`;
+
+export const CREATE_BUILDER_EMPLOYEE = gql`
+  mutation createBuilderEmployee($input: CreateBuilderEmployeeInput!) {
+    createBuilderEmployee(input: $input) {
+      builderEmployee {
+        id
       }
     }
   }

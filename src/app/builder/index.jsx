@@ -46,7 +46,7 @@ export default function BuilderProfile({ data }) {
             alt="builder profile cover image"
             quality={100}
             priority
-            src={coverImage.signedUrl}
+            src={coverImage?.signedUrl}
             fill
             sizes="100vw"
             style={{
@@ -81,7 +81,7 @@ export default function BuilderProfile({ data }) {
               priority
               width={80}
               height={80}
-              src={logo.signedUrl}
+              src={logo?.signedUrl}
               style={{
                 objectFit: "contain",
                 verticalAlign: "center",

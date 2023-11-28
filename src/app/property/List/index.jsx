@@ -182,6 +182,7 @@ function PropertyList({
           hasMore={hasMore}
           endMessage={<></>}
           loader={<></>}
+          style={{ overflow: "hidden" }}
         >
           <Section>
             {listToShow.map((l, i) => {

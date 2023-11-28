@@ -54,6 +54,9 @@ export const FETCH_USER_PROFILE = gql`
   query fetchUserProfile($id: UUID!) {
     user(id: $id) {
       ...UserFields
+      builderEmployees {
+        totalCount
+      }
     }
   }
 `;

@@ -135,7 +135,7 @@ export const GET_ALL_PROJECTS_FOR_STATIC_PATHS = gql`
 
 export const GET_IN_ACTIVE_PROJECTS = gql`
   query getInActiveProjects {
-    projects(condition: { isActive: false, first: 5 }) {
+    projects(condition: { isActive: false }, first: 5) {
       nodes {
         id
         slug

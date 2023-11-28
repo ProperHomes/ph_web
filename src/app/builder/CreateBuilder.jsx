@@ -25,7 +25,7 @@ import useToggleAuth from "src/hooks/useToggleAuth";
 import useUploadFile from "src/hooks/useUploadFile";
 import AddFileBlock from "@/components/AddFileBlock";
 import { convertStringToSlug } from "@/utils/helper";
-import { CREATE_BUILDER } from "@/graphql/builders";
+import { CREATE_BUILDER, CREATE_BUILDER_EMPLOYEE } from "@/graphql/builders";
 import { ALL_CITIES } from "@/utils/constants";
 import Loading from "@/components/Loading";
 
@@ -51,16 +51,17 @@ const Label = styled("label")(({ theme }) => ({
 export default function CreateBuilder({ handleCancel, isSysAdmin = false }) {
   const theme = useTheme();
   const { isLoggedIn, loggedInUser, toggleAuth, Auth } = useToggleAuth();
-  const { toggleToast } = useToast();
+  const { toggleToast, Toast } = useToast();
 
   const [logo, setLogo] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
 
   const [createBuilder] = useMutation(CREATE_BUILDER);
+  const [createBuilderEmployee] = useMutation(CREATE_BUILDER_EMPLOYEE);
 
   const handleFileUpload = useUploadFile();
 
-  const { control, handleSubmit, setValue, watch, formState } = useForm({
+  const { control, handleSubmit, setValue, watch, reset, formState } = useForm({
     resolver: yupResolver(yup.object().shape(propertyResolver)),
   });
   watch();
@@ -103,13 +104,28 @@ export default function CreateBuilder({ handleCancel, isSysAdmin = false }) {
           },
         },
       });
+      const newBuilderId = res?.data?.createBuilder?.builder?.id;
+      if (newBuilderId) {
+        await createBuilderEmployee({
+          variables: {
+            input: {
+              builderEmployee: {
+                userId: loggedInUser?.id,
+                builderId: newBuilderId,
+              },
+            },
+          },
+        });
+      }
+      reset();
       toggleToast("Builder created. We'll let you once it is approved.");
-      // Todo: create builder employee
-      //   const newBuilder = res?.data?.createBuilder?.builder;
     } catch (err) {
       console.log(err);
     }
-    handleCancel();
+    if (handleCancel) {
+      handleCancel();
+    }
+    setIsLoading(false);
   };
 
   const handleChangeDescription = (htmlDescription) => {
@@ -316,6 +332,7 @@ export default function CreateBuilder({ handleCancel, isSysAdmin = false }) {
         </Stack>
       </Stack>
       {Auth}
+      {Toast}
     </Box>
   );
 }
