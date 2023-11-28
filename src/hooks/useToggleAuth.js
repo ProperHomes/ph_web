@@ -16,13 +16,15 @@ function useToggleAuth() {
 
   const logout = async () => {
     try {
+      dispatch({ type: appActionTypes.UPDATE_LOGGED_IN_USER, user: null });
       await axios({
         method: "post",
         url: `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
         withCredentials: true,
       });
-      dispatch({ type: appActionTypes.UPDATE_LOGGED_IN_USER, user: null });
-    } catch (err) {}
+    } catch (err) {
+      console.log("error logging out", err);
+    }
   };
 
   return {

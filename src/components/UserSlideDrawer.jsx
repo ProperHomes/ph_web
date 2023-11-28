@@ -1,6 +1,8 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import styled from "@mui/material/styles/styled";
@@ -13,7 +15,8 @@ import Dashboard from "@mui/icons-material/Dashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Login from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
-import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
+import Logout from "@mui/icons-material/Logout";
 
 const StyledBtn = styled(Button)(({ theme }) => ({
   maxWidth: { xs: "150px", sm: "100%" },
@@ -37,7 +40,8 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { Auth, loggedInUser, isLoggedIn, toggleAuth } = useToggleAuth();
+  const { Auth, loggedInUser, isLoggedIn, toggleAuth, logout } =
+    useToggleAuth();
 
   const navigateTo = (link) => () => {
     router.push(link);
@@ -59,7 +63,11 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
     >
       <Stack p={2} direction="column" sx={{ height: "100%" }} spacing={8}>
         <Stack spacing={2}>
-          <Stack direction="row" alignItems="center">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Typography
               color={theme.palette.text.primary}
               fontWeight={600}
@@ -73,6 +81,9 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
                   }`
                 : "Welcome to ProperHomes"}
             </Typography>
+            <IconButton onClick={toggleDrawer}>
+              <CloseIcon />
+            </IconButton>
           </Stack>
 
           <StyledBtn
@@ -152,12 +163,15 @@ function UserSlideDrawer({ showDrawer, toggleDrawer }) {
             Generate Rental Agreement
           </StyledBtn>
         </Stack>
-      </Stack>
-      {!isLoggedIn && (
-        <StyledBtn startIcon={<Login />} fullWidth onClick={toggleAuth}>
-          Login or Signup
+        <StyledBtn
+          startIcon={isLoggedIn ? <Logout /> : <Login />}
+          fullWidth
+          onClick={isLoggedIn ? logout : toggleAuth}
+        >
+          {isLoggedIn ? "Logout" : "Login or Signup"}
         </StyledBtn>
-      )}
+      </Stack>
+
       {Auth}
     </SlideDrawer>
   );

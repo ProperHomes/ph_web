@@ -20,6 +20,7 @@ function PropertyCard({
     <Stack
       spacing={1}
       sx={{
+        maxWidth: { xs: "100%", sm: "280px" },
         "&:hover": {
           [`.property-card-title-${data?.number}`]: {
             color: "#ff5657 !important",

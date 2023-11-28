@@ -21,8 +21,8 @@ function SlideDrawer({ open, handleClose, position = "right", children }) {
       }}
       PaperProps={{
         style: {
-          width: isMobile ? "100%" : "350px",
-          height: isMobile ? "70%" : "100%",
+          width: isMobile ? "100%" : "380px",
+          height: isMobile ? "90%" : "100%",
           padding: "0.5em 1em",
           borderRadius: isMobile ? "1em 1em 0 0" : "1em 0 0 1em",
           background: theme.palette.background.paper,

@@ -3,7 +3,7 @@ import { useState, memo } from "react";
 import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
+import styled from "@mui/material/styles/styled";
 import InfiniteScroll from "react-infinite-scroll-component";
 import dynamic from "next/dynamic";
 
@@ -27,17 +27,17 @@ const CreatePropertySaleRentLease = dynamic(
 
 const Section = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 280px))",
   gap: "1.2rem",
   rowGap: "2em",
+  width: "100%",
+  justifyContent: "space-around",
   [theme.breakpoints.down("md")]: {
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 280px))",
   },
   [theme.breakpoints.down("sm")]: {
-    display: "flex",
-    flexDirection: "column",
+    gridTemplateColumns: "minmax(280px, 320px)",
   },
-  width: "100%",
 }));
 
 function PropertyList({
@@ -186,7 +186,7 @@ function PropertyList({
           <Section>
             {listToShow.map((l, i) => {
               return (
-                <Box key={i} sx={{ justifySelf: "center", width: "100%" }}>
+                <Box key={i} sx={{ justifySelf: "center" }}>
                   <Card
                     data={l}
                     showFavorite
