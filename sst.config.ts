@@ -21,6 +21,11 @@ export default {
       const API_SECRET = new Config.Secret(stack, "API_SECRET");
       const LISTMONK_USERNAME = new Config.Secret(stack, "LISTMONK_USERNAME");
       const LISTMONK_PASSWORD = new Config.Secret(stack, "LISTMONK_PASSWORD");
+      const AWS_ACCESS_KEY_ID = new Config.Secret(stack, "AWS_ACCESS_KEY_ID");
+      const AWS_SECRET_ACCESS_KEY = new Config.Secret(
+        stack,
+        "AWS_SECRET_ACCESS_KEY"
+      );
 
       const isStaging = app.stage === "staging";
       const isProd = app.stage === "prod";
@@ -36,6 +41,8 @@ export default {
           API_SECRET,
           LISTMONK_USERNAME,
           LISTMONK_PASSWORD,
+          AWS_ACCESS_KEY_ID,
+          AWS_SECRET_ACCESS_KEY,
         ],
         customDomain: isProd
           ? {

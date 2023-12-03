@@ -5,12 +5,16 @@ import {
 import { NextResponse } from "next/server";
 import { Config } from "sst/node/config";
 
-export const dynamic = "force-dynamic";
-
-const cloudFront = new CloudFrontClient({});
+const cloudFront = new CloudFrontClient({
+  region: "ap-south-1",
+  credentials: {
+    accessKeyId: Config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 async function invalidateCFPaths(paths) {
-  await cloudFront.send(
+  cloudFront.send(
     new CreateInvalidationCommand({
       DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
       InvalidationBatch: {
@@ -44,7 +48,6 @@ export async function POST(req, res) {
     );
   }
   try {
-    process.env.__NEXT_PRIVATE_PREBUNDLED_REACT = "next";
     await Promise.all(
       paths.map(async (p) => {
         await res.revalidate(p);
