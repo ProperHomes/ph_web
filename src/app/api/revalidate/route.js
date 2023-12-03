@@ -7,12 +7,7 @@ import { Config } from "sst/node/config";
 
 export const dynamic = "force-dynamic";
 
-const cloudFront = new CloudFrontClient({
-  credentials: {
-    accessKeyId: Config.AWS_ACCESS_KEY_ID,
-    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  },
-});
+const cloudFront = new CloudFrontClient({});
 
 async function invalidateCFPaths(paths) {
   await cloudFront.send(
@@ -28,7 +23,6 @@ async function invalidateCFPaths(paths) {
     })
   );
 }
-
 
 export async function POST(req, res) {
   const body = await req.json();
