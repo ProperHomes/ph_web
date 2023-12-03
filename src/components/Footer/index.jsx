@@ -136,10 +136,12 @@ export default function Footer() {
               })}
             </Stack>
             <Typography fontWeight={600}>
-              ProperHomes is India's first spam free Real Estate Listing App.{" "}
-              <br />
+              ProperHomes is India's first spam free Real Estate Discovery and
+              Listing App. <br />
               At ProperHomes, no middlemen is involved between buyers and
-              sellers or tenants and owners.
+              sellers or tenants and owners. <br />
+              Find Properties like Flats, Villas, Individual Houses, Commercial
+              Units for Sale, Rent and Lease!.
               <br />
               For any feedback, enquiries or complaints: <br /> Call: &nbsp;
               +916305078250 <br /> Email: veera@properhomes.in

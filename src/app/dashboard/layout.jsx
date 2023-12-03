@@ -70,7 +70,7 @@ function DashboardLayout({ children }) {
 
       <Box sx={{ display: { xs: "flex", sm: "none" } }}>
         <SlideDrawer open={showDrawer} handleClose={toggleDrawer} title={""}>
-          <Dashboardnav toggleDrawer={toggleDrawer} />
+          <Dashboardnav toggleDrawer={toggleDrawer} inDrawer />
         </SlideDrawer>
       </Box>
     </Paper>

@@ -39,7 +39,7 @@ export default function BlogPost({ post }) {
 
         <Box
           sx={{
-            padding: "2rem",
+            padding: { xs: "0", md: "2rem" },
             "& > .content-header": {
               margin: "1rem 0",
               fontSize: "1.4rem",

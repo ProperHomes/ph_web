@@ -71,7 +71,7 @@ const propertyResolver = {
       "Must be exactly 6 characters",
       (val) => val.toString().length === 6
     ),
-  projectId: yup.string(),
+  projectId: yup.string().nullable(),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
   isFurnished: yup.boolean(),
   isSemiFurnished: yup.boolean(),

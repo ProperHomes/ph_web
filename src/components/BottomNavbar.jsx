@@ -9,17 +9,17 @@ import useTheme from "@mui/material/styles/useTheme";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import SettingsIcon from "@mui/icons-material/Settings";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import KeyIcon from "@mui/icons-material/Key";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import AddIcon from "@mui/icons-material/Add";
 import PersonIcon from "@mui/icons-material/Person2";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 const dashboardTabList = [
   {
-    label: "Home",
-    href: "/",
-    Icon: HomeIcon,
+    label: "Analytics",
+    href: "/dashboard/analytics",
+    Icon: AnalyticsIcon,
   },
   {
     label: "Manage",
@@ -113,13 +113,9 @@ function BottomNavbar() {
                 fontWeight: 700,
                 "&.MuiButtonBase-root.Mui-selected": {
                   fontWeight: 800,
-                  color: isDark
-                    ? theme.palette.info.main
-                    : theme.palette.info.dark,
+                  color: theme.palette.orange.main,
                   svg: {
-                    fill: isDark
-                      ? theme.palette.info.main
-                      : theme.palette.info.dark,
+                    fill: theme.palette.orange.main,
                   },
                 },
               }}

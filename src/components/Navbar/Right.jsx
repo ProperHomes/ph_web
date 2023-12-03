@@ -76,11 +76,8 @@ function NavbarRight() {
           fontWeight: 600,
           borderColor: theme.palette.orange.main,
           transition: "0.3s ease",
-          boxShadow: theme.shadows[1],
+          boxShadow: theme.shadows[4],
           transition: "0.3s ease",
-          "&:hover": {
-            boxShadow: theme.shadows[4],
-          },
         }}
         onClick={toggleDrawer}
       >

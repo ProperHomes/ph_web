@@ -27,7 +27,7 @@ function CardImage({ data, isManage, isPriority, isFullWidth }) {
       <Box
         sx={{
           position: "relative",
-          width: isFullWidth ? "100%" : "280px",
+          width: { xs: "100%", md: isFullWidth ? "100%" : "280px" },
           height: "280px",
           borderRadius: "1em",
           [`.property-card-description-${number}`]: {

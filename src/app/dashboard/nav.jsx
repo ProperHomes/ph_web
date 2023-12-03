@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -13,8 +14,11 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import AddIcon from "@mui/icons-material/Add";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 
-import BottomNavbar from "src/components/BottomNavbar";
 import { useAppContext } from "src/appContext";
+
+const BottomNavbar = dynamic(() => import("src/components/BottomNavbar"), {
+  ssr: false,
+});
 
 let list = [
   {
@@ -44,7 +48,7 @@ let list = [
   },
 ];
 
-function Dashboardnav({ toggleDrawer }) {
+function Dashboardnav({ toggleDrawer, inDrawer }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
@@ -91,7 +95,11 @@ function Dashboardnav({ toggleDrawer }) {
         mr={2}
         px={1}
         sx={{
-          borderRight: isDark ? "1px solid #ffffff20" : "1px solid #00000020",
+          borderRight: inDrawer
+            ? "none"
+            : isDark
+            ? "1px solid #ffffff20"
+            : "1px solid #00000020",
           minHeight: "85vh",
           maxHeight: "85vh",
         }}

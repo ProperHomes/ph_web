@@ -29,9 +29,7 @@ export default function Home({ data }) {
           <SearchBlock />
         </Stack>
         <CategoryBoxes />
-        <Stack display={{ xs: "none", md: "flex" }}>
-          <ZeroBoxes />
-        </Stack>
+        <ZeroBoxes />
       </Stack>
       <HomePageProperties data={data} />
     </>
