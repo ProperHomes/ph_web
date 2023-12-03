@@ -267,10 +267,7 @@ function CreatePropertySaleRentLease({
         if (updatedProperty?.id) {
           await handleUploadPropertyMedia(formData.media, updatedProperty.id);
           await handleDeletePropertyMedia(formData.media);
-          handleRevalidate([
-            `/property/${formData.slug}`,
-            `/dashboard/manage/property/${formData.slug}`,
-          ]);
+          await handleRevalidate([`/property/${formData.slug}`]);
           handleCancel();
         }
       } catch (err) {

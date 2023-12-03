@@ -5,22 +5,30 @@ import {
 import { NextResponse } from "next/server";
 import { Config } from "sst/node/config";
 
-// const cloudFront = new CloudFrontClient();
+export const dynamic = "force-dynamic";
 
-// function invalidateCloudFrontPaths(paths) {
-//   cloudFront.send(
-//     new CreateInvalidationCommand({
-//       DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
-//       InvalidationBatch: {
-//         CallerReference: `${Date.now()}`,
-//         Paths: {
-//           Quantity: paths.length,
-//           Items: paths,
-//         },
-//       },
-//     })
-//   );
-// }
+const cloudFront = new CloudFrontClient({
+  credentials: {
+    accessKeyId: Config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+async function invalidateCFPaths(paths) {
+  await cloudFront.send(
+    new CreateInvalidationCommand({
+      DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
+      InvalidationBatch: {
+        CallerReference: `${Date.now()}`,
+        Paths: {
+          Quantity: paths.length,
+          Items: paths,
+        },
+      },
+    })
+  );
+}
+
 
 export async function POST(req, res) {
   const body = await req.json();
@@ -48,7 +56,7 @@ export async function POST(req, res) {
         await res.revalidate(p);
       })
     );
-    // await invalidateCloudFrontPaths(paths);
+    await invalidateCFPaths(paths);
     return NextResponse.json({ revalidated: true });
   } catch (err) {
     return NextResponse.json({
