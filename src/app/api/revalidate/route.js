@@ -7,10 +7,10 @@ import { Config } from "sst/node/config";
 
 const cloudFront = new CloudFrontClient({
   region: "ap-south-1",
-  // credentials: {
-  //   accessKeyId: Config.AWS_ACCESS_KEY_ID,
-  //   secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  // },
+  credentials: {
+    accessKeyId: Config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
+  },
 });
 
 async function invalidateCFPaths(paths) {
