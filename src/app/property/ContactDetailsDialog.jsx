@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
 
-import { FETCH_PROPERTY_OWNER_BUILDER_DETAILS } from "@/graphql/properties";
+import { FETCH_PROPERTY_OWNER_DETAILS } from "@/graphql/properties";
 
 export default function ContactDetailDialog({ open, data, handleClose }) {
   const { id: propertyId, city, pincode, ownerId, projectId, project } = data;
@@ -21,7 +21,7 @@ export default function ContactDetailDialog({ open, data, handleClose }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { data: ownerData } = useQuery(FETCH_PROPERTY_OWNER_BUILDER_DETAILS, {
+  const { data: ownerData } = useQuery(FETCH_PROPERTY_OWNER_DETAILS, {
     variables: { propertyId },
     skip: !ownerId && !!projectId,
   });

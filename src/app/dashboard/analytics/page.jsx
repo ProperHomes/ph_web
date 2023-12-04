@@ -7,8 +7,9 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 
-import { GET_ALL_OWNER_PROPERTIES_FOR_ANALYTICS } from "@/graphql/properties";
 import { useAppContext } from "src/appContext";
+import { GET_ALL_OWNER_PROPERTIES_FOR_ANALYTICS } from "@/graphql/properties";
+import { FETCH_BUILDER_PROPERTIES } from "@/graphql/builders";
 
 const ANALYTICS_TIME_PERIOD = {
   ALL: { label: "All", value: "all" },
@@ -19,6 +20,9 @@ const ANALYTICS_TIME_PERIOD = {
 
 export default function Analytics() {
   const { state } = useAppContext();
+
+  const builderId = state?.user?.builderEmployees?.nodes?.[0]?.builderId;
+
   const { data: ownerProperties } = useQuery(
     GET_ALL_OWNER_PROPERTIES_FOR_ANALYTICS,
     {
@@ -27,8 +31,25 @@ export default function Analytics() {
     }
   );
 
-  const slugPaths =
+  const { data: builderProperties } = useQuery(FETCH_BUILDER_PROPERTIES, {
+    variables: { id: builderId },
+    skip: !state.user?.id,
+  });
+
+  const ownerPropertiesSlugPaths =
     ownerProperties?.properties?.nodes?.map(({ slug }) => slug) ?? [];
+
+  const builderProjects = builderProperties?.builder?.projects?.nodes ?? [];
+  const builderPropertiesSlugPaths = builderProjects.reduce((acc, curr) => {
+    let paths = curr?.properties?.nodes?.map(({ slug }) => slug) ?? [];
+    paths = [...acc, ...paths];
+    return paths;
+  }, []);
+
+  const slugPaths = [
+    ...ownerPropertiesSlugPaths,
+    ...builderPropertiesSlugPaths,
+  ];
 
   const propertyPaths = (
     slugPaths.map((slug) => `/property/${slug}`) ?? []

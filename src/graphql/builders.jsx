@@ -72,6 +72,23 @@ export const FETCH_BUILDER_BY_SLUG = gql`
   }
 `;
 
+export const FETCH_BUILDER_PROPERTIES = gql`
+  query fetchBuilderProperties($id: UUID!) {
+    builder(id: $id) {
+      projects {
+        nodes {
+          slug
+          properties {
+            nodes {
+              slug
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_ALL_BUILDERS_FOR_STATIC_PATHS = gql`
   query getBuildersForStaticPaths {
     builders(condition: { isActive: true }) {

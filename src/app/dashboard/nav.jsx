@@ -22,11 +22,6 @@ const BottomNavbar = dynamic(() => import("src/components/BottomNavbar"), {
 
 let list = [
   {
-    label: "Analytics",
-    href: "/dashboard/analytics",
-    Icon: AnalyticsIcon,
-  },
-  {
     label: "Manage Properties",
     href: "/dashboard/manage",
     Icon: PersonIcon,
@@ -52,11 +47,23 @@ function Dashboardnav({ toggleDrawer, inDrawer }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const pathname = usePathname();
-  const { state, isBuyer, isSeller, isBuyerAndSeller } = useAppContext();
+  const { state } = useAppContext();
 
   const isBuilderEmployee = state?.user?.builderEmployees?.totalCount >= 1;
+  const propertyOwnerOrSeller = state?.user?.properties?.totalCount >= 1;
+  const showAnalytics = isBuilderEmployee || propertyOwnerOrSeller;
 
   let navList = list;
+  if (showAnalytics) {
+    navList = [
+      {
+        label: "Analytics",
+        href: "/dashboard/analytics",
+        Icon: AnalyticsIcon,
+      },
+      ...navList,
+    ];
+  }
   if (state?.user?.isSysAdmin) {
     navList = [
       {
@@ -64,11 +71,9 @@ function Dashboardnav({ toggleDrawer, inDrawer }) {
         href: "/dashboard/sysadmin",
         Icon: PersonIcon,
       },
-      ,
       ...navList,
     ];
   }
-
   if (state?.user?.isAffiliate) {
     navList = [
       {

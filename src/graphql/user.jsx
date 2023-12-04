@@ -17,6 +17,9 @@ export const USER_FIELDS = gql`
     isSysAdmin
     email
     credits
+    properties: propertiesByOwnerId {
+      totalCount
+    }
     subscriptionPurchases {
       nodes {
         id
@@ -56,6 +59,9 @@ export const FETCH_USER_PROFILE = gql`
       ...UserFields
       builderEmployees {
         totalCount
+        nodes {
+          builderId
+        }
       }
     }
   }
