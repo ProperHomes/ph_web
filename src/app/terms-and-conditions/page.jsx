@@ -45,12 +45,15 @@ const TermsAndConditions = () => {
         <br />
         <Typography variant="h5">4. Credits and Payment</Typography>
         <Typography>
-          - ProperHomes uses a credit-based system to access property contact
-          details. Credits can be purchased for a fee.
+          - For sellers and owners, ProperHomes offers monthly/annual
+          subscription plans. - For buyers, ProperHomes provides a
+          credits/points based system to access property contact details. One
+          credit gives you access to one property contact details forever.
+          Credits can be purchased for a fee. - Every subscription or credit
+          bought is non-refunable and non-transferable. ProperHomes is not
+          responsible for any wrong contact details provided for a property.
         </Typography>
-        <Typography>
-          - Credit purchases are non-refundable and non-transferable.
-        </Typography>
+
         <Typography>
           - ProperHomes may change credit pricing and policies at any time.
         </Typography>

@@ -8,40 +8,48 @@ import { StyledContainer } from "@/styles/styles";
 export default function AffiliateProgram() {
   return (
     <StyledContainer>
-      <Stack py={4}>
-        <Typography
-          textAlign="center"
-          variant="h1"
-          color="info.main"
-          fontWeight={600}
-        >
+      <Stack p={4} justifyContent="center">
+        <Typography variant="h1" color="info.main" textAlign="center" fontWeight={600}>
           Become a ProperHomes Affiliate and Earn Lifelong Income
         </Typography>
 
-        <Stack my={2}>
+        <Stack spacing={2} py={4}>
           <Typography
             sx={{
-              fontSize: "1.4rem",
+              fontSize: "1.8rem",
             }}
           >
             How it works
           </Typography>
 
-          <Typography>Reach out to builders in your city.</Typography>
-          <Typography>
-            Explain about <Link href="/">ProperHomes</Link> features, benefits
-            and pricing in detail.
-          </Typography>
+          <Stack spacing={2} px={1}>
+            <Typography>Reach out to builders in your city.</Typography>
+            <Typography>
+              Explain about{" "}
+              <Link href="/" style={{ textDecoration: "underline" }}>
+                ProperHomes
+              </Link>{" "}
+              features, benefits and pricing in detail.
+            </Typography>
 
-          <Typography>
-            If they subscribes to one of our paid plans you get 20% of their
-            monthly payment.
-          </Typography>
+            <Typography>
+              If they buy one of our{" "}
+              <Link href="/pricing" style={{ textDecoration: "underline" }}>
+                paid plans
+              </Link>{" "}
+              you get 20% of their monthly payment.
+            </Typography>
+          </Stack>
+
+          <Button
+            sx={{ maxWidth: "250px" }}
+            size="large"
+            variant="contained"
+            color="orange"
+          >
+            Join Affiliate Program
+          </Button>
         </Stack>
-
-        <Button sx={{ maxWidth: "250px" }} variant="contained" color="orange">
-          Join Affiliate Program
-        </Button>
       </Stack>
     </StyledContainer>
   );

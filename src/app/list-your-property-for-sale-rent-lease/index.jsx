@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@apollo/client";
@@ -372,7 +373,8 @@ function CreatePropertySaleRentLease({
 
         {!isEditMode && !isFromDashboard && (
           <Typography fontSize="1.2rem" align="center" gutterBottom>
-            Add your property details to get your property listed on ProperHomes
+            Add your property details to get your property listed on{" "}
+            <Link href="/">ProperHomes</Link>
             for free.
           </Typography>
         )}
