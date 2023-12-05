@@ -238,7 +238,6 @@ function CreatePropertySaleRentLease({
           "id",
           "number",
           "media",
-          "slug",
           "ownerId",
           "projectId",
           "project",

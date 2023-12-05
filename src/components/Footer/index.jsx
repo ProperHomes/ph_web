@@ -26,11 +26,14 @@ import TypographyUnderline from "../TypographyUnderline";
 const tabSections = ["HYDERABAD", "VIJAYAWADA"].map((c) => ({ label: c }));
 
 const socialLinks = [
+  { Icon: TwitterIcon, href: "https://www.twitter.com/properhomesin" },
+  {
+    Icon: LinkedinIcon,
+    href: "https://www.linkedin.com/company/properhomesindia",
+  },
   { Icon: FacebookIcon, href: "/" },
   { Icon: InstagramIcon, href: "/" },
-  { Icon: LinkedinIcon, href: "/" },
   { Icon: PinterestIcon, href: "/" },
-  { Icon: TwitterIcon, href: "/" },
 ];
 
 const subLinks = [
@@ -142,6 +145,7 @@ export default function Footer() {
               sellers or tenants and owners. <br />
               Find Properties like Flats, Villas, Individual Houses, Commercial
               Units for Sale, Rent and Lease!.
+              <br />
               <br />
               For any feedback, enquiries or complaints: <br /> Call: &nbsp;
               +916305078250 <br /> Email: veera@properhomes.in
