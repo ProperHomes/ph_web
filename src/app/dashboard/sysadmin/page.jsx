@@ -82,21 +82,22 @@ export default function SysAdmin() {
           variant="contained"
           onClick={toggleCreateProperty}
         >
-          Show Create Property
+          {showCreateProperty ? "Hide Create Property" : "Show Create Property"}
         </Button>
         <Button
           sx={{ maxWidth: "300px" }}
           variant="contained"
           onClick={toggleCreateBuilder}
         >
-          Show Create Builder
+          {showCreateBuilder ? "Hide Create Builder" : "Show Create Builder"}
         </Button>
         <Button
           sx={{ maxWidth: "300px" }}
           variant="contained"
           onClick={toggleCreateProject}
         >
-          Show Create Project
+          {showCreateProject ? "Hide Create User": "Show Create User"}
+         
         </Button>
 
         {showCreateBuilder && (

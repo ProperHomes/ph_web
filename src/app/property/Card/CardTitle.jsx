@@ -20,6 +20,9 @@ function CardTitle({ data, isManage }) {
     PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""
   } for ${listedFor?.toLowerCase()} in ${city.toLowerCase()}`;
 
+  const isPGOrHostel =
+    PROPERTY_TYPE.PG === type || PROPERTY_TYPE.HOSTEL === type;
+
   return (
     <Stack spacing={1}>
       <Link href={linkHref} prefetch={false} title={formattedTitle}>
@@ -32,9 +35,11 @@ function CardTitle({ data, isManage }) {
             {formattedPrice.slice(0, -3)}{" "}
             {listedFor === LISTING_TYPE.RENT ? " monthly " : ""}
           </Typography>
-          <Typography fontWeight={500} fontSize="0.9rem" mr={2}>
-            {area} {AREA_UNITS[areaUnit]}
-          </Typography>
+          {!isPGOrHostel && (
+            <Typography fontWeight={500} fontSize="0.9rem" mr={2}>
+              {area} {AREA_UNITS[areaUnit]}
+            </Typography>
+          )}
         </Stack>
       </Link>
       <Typography
