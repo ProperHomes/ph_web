@@ -80,8 +80,8 @@ export default function Footer() {
   const allNavLinks = [
     ...navlinksSale,
     ...navlinksRent,
-    // { link: "paying-guests-accommodation", title: "Paying Guest" },
-    // { link: "hostel-accommodation", title: "Hostels" },
+    { link: "paying-guests-accommodation", title: "Paying Guest" },
+    { link: "hostel-accommodation", title: "Hostels" },
   ];
 
   return (

@@ -28,7 +28,7 @@ export const USER_TYPE = {
 };
 
 export const PROPERTY_TYPE = {
-  // LAND: "LAND",
+  LAND: "LAND",
   FLAT: "FLAT",
   VILLA: "VILLA",
   HOUSE: "HOUSE",
@@ -37,8 +37,8 @@ export const PROPERTY_TYPE = {
   FARM_HOUSE: "FARM HOUSE",
   // PROJECT: "PROJECT",
   COMMERCIAL: "COMMERCIAL",
-  // PG: "PG",
-  // HOSTEL: "HOSTEL",
+  PG: "PG",
+  HOSTEL: "HOSTEL",
   // ROOM: "ROOM",
 };
 
@@ -159,10 +159,10 @@ export const navlinksRent = [
 ];
 
 export const navlinksOthers = [
-  // { link: "pg", title: "Paying Guest" },
-  // { link: "paying-guests-accommodation", title: "Paying Guest" },
-  // { link: "hostel-accommodation", title: "Hostels" },
-  // { link: "hostels", title: "Hostels" },
+  { link: "pg", title: "Paying Guest" },
+  { link: "paying-guests-accommodation", title: "Paying Guest" },
+  { link: "hostel-accommodation", title: "Hostels" },
+  { link: "hostels", title: "Hostels" },
 ];
 
 export const navlinks = [...navlinksSale, ...navlinksRent, ...navlinksOthers];

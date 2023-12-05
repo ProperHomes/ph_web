@@ -23,11 +23,11 @@ const forSaleLinks = [
     link: "/houses-for-sale",
     Icon: HouseOutlined,
   },
-  {
-    label: "Farm Houses for Sale",
-    link: "/farm-houses-for-sale",
-    Icon: CabinOutlined,
-  },
+  // {
+  //   label: "Farm Houses for Sale",
+  //   link: "/farm-houses-for-sale",
+  //   Icon: CabinOutlined,
+  // },
   {
     label: "Commercial units for Sale",
     link: "/commercial-properties-for-sale",
@@ -36,6 +36,11 @@ const forSaleLinks = [
 ];
 
 const forRentlinks = [
+  {
+    label: "Paying Guests (PG)",
+    link: "/paying-guests-accommodation",
+    Icon: CabinOutlined,
+  },
   {
     label: "Flats for Rent",
     link: "/flats-for-rent",
@@ -52,11 +57,6 @@ const forRentlinks = [
     link: "/commercial-properties-for-rent",
     Icon: WarehouseOutlined,
   },
-  // {
-  //   label: "Paying Guests (PG)",
-  //   link: "/paying-guests-accommodation",
-  //   Icon: CabinOutlined,
-  // },
 ];
 
 const allLinks = [...forSaleLinks, ...forRentlinks];
