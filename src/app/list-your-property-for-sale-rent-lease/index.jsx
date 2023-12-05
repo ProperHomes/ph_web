@@ -62,7 +62,7 @@ const propertyResolver = {
   areaUnit: yup.string().required().oneOf(Object.keys(AREA_UNITS)),
   description: yup.string().required(),
   city: yup.string().oneOf(ALL_CITIES).required(),
-  facing: yup.string().oneOf(Object.keys(PROPERTY_FACING)),
+  facing: yup.string().oneOf(Object.keys(PROPERTY_FACING)).nullable(),
   pincode: yup
     .number()
     .positive()
