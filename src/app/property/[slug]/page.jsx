@@ -7,7 +7,7 @@ import {
 import { client } from "@/graphql/serverClient";
 
 import Profile from "../profile";
-import { numWords } from "@/utils/helper";
+import { numWords, removeTags } from "@/utils/helper";
 
 export const dynamicParams = true;
 
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }, parent) {
 
   return {
     title: `${title} - ProperHomes`,
-    description,
+    description: removeTags(description),
     alternates: {
       canonical: `https://www.properhomes.in/property/${params.slug}`,
     },
