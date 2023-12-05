@@ -74,9 +74,9 @@ const propertyResolver = {
     ),
   projectId: yup.string().nullable(),
   listedFor: yup.string().oneOf(Object.keys(LISTING_TYPE)).required(),
-  isFurnished: yup.boolean(),
-  isSemiFurnished: yup.boolean(),
-  hasParking: yup.boolean(),
+  isFurnished: yup.boolean().nullable(),
+  isSemiFurnished: yup.boolean().nullable(),
+  hasParking: yup.boolean().nullable(),
   status: yup.string().oneOf(Object.keys(PROPERTY_STATUS)).nullable(),
   media: yup
     .array()
