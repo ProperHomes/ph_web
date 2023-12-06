@@ -4,6 +4,7 @@ import {
   GET_ALL_PROJECTS_FOR_STATIC_PATHS,
 } from "@/graphql/projects";
 import ProjectProfile from "..";
+import { removeTags } from "@/utils/helper";
 
 export const dynamicParams = true;
 
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }) {
   const { name, description, coverImage } = res?.projectBySlug;
   return {
     title: `${name} - ProperHomes`,
-    description,
+    description: removeTags(description),
     alternates: {
       canonical: `https://www.properhomes.in/project/${params.slug}`,
     },

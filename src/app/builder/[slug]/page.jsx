@@ -4,6 +4,7 @@ import {
   GET_ALL_BUILDERS_FOR_STATIC_PATHS,
 } from "@/graphql/builders";
 import BuilderProfile from "..";
+import { removeTags } from "@/utils/helper";
 
 export const dynamicParams = true;
 
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }) {
   const { name, description, logo } = res?.builderBySlug;
   return {
     title: `${name} - Builder Profile at ProperHomes`,
-    description,
+    description: removeTags(description),
     alternates: {
       canonical: `https://www.properhomes.in/builder/${params.slug}`,
     },

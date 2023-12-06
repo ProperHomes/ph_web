@@ -141,8 +141,17 @@ export default function ProjectProfile({ data }) {
                 fontSize: "1.1rem",
                 marginBottom: "8px",
               },
-              "& > ul": {
+              "& > li": {
+                padding: "8px",
+                ".ql-indent-1": {
+                  marginLeft: "1rem",
+                },
+              },
+              "& > ul, ol": {
                 padding: "8px 1rem",
+                ".ql-indent-1": {
+                  marginLeft: "1rem",
+                },
               },
               "& > p > a, & > a": {
                 textDecoration: "underline !important",
