@@ -4,6 +4,7 @@ import {
   FETCH_POST_BY_SLUG,
   FETCH_ALL_POSTS_FOR_STATIC_PATHS,
 } from "@/graphql/blog";
+import { removeTags } from "@/utils/helper";
 
 export async function generateMetadata({ params }) {
   const res = await axios({
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }) {
   const image = featuredImage?.node;
   return {
     title: `${title} - ProperHomes Blog`,
-    description: excerpt,
+    description: removeTags(excerpt),
     alternates: {
       canonical: `https://www.properhomes.in/blog/${params.slug}`,
     },

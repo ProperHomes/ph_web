@@ -116,7 +116,7 @@ function PropertyProfile({ data, similarProperties }) {
               component="p"
               color="orange"
               sx={{
-                width: { xs: "100%", md: "200px" },
+                width: { xs: "100%", md: "250px" },
                 whiteSpace: "nowrap",
                 fontWeight: 600,
                 fontSize: "1rem",

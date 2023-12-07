@@ -51,15 +51,15 @@ export const metadata = {
     siteName: "ProperHomes",
     url: "https://www.properhomes.in",
     type: "website",
-    images: "/logo.png",
+    images: "/assets/images/open-graph-logo.png",
   },
   twitter: {
     card: "summary_large_image",
     title:
       "ProperHomes - Find Properties for Sale & Rent in India. List Property, Manage Rentals and more.",
     description: `Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.`,
-    creator: "@ProperHomes",
-    images: ["/logo.png"],
+    creator: "@properhomesin",
+    images: ["/assets/images/open-graph-logo.png"],
   },
 };
 
@@ -73,9 +73,9 @@ const rootJsonLD = {
     "Find Proper Homes, Flats, Commercial Properties for Sale, Rent, Lease! List property, Manage rentals and more at ProperHomes. Real Estate in India.",
   logo: {
     "@type": "ImageObject",
-    url: "https://properhomes.in/logo.png",
-    width: 374,
-    height: 72,
+    url: "https://properhomes.in/assets/images/open-graph-logo.png",
+    width: 1200,
+    height: 630,
   },
   // sameAs: [
   //   "https://www.facebook.com/magicbricks",

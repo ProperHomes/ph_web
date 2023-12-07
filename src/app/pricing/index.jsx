@@ -138,8 +138,13 @@ export default function Pricing() {
             <Typography textAlign="center" fontSize="1.2rem" fontWeight={800}>
               Zero Hidden Charges.
             </Typography>
-            <Typography textAlign="center" fontSize="1.2rem">
-              Pay annually and get <b>10% Discount on total</b> ..!
+            <Typography
+              color="info.main"
+              fontWeight={800}
+              textAlign="center"
+              fontSize="1.2rem"
+            >
+              Pay annually and get 10% Discount on total..!
             </Typography>
             <Stack
               display={{ xs: "none", md: "flex" }}
@@ -165,7 +170,11 @@ export default function Pricing() {
                         backgroundColor: theme.palette.background.default,
                       }}
                     >
-                      <Typography fontSize="1.5rem" fontWeight={800}>
+                      <Typography
+                        color="info.main"
+                        fontSize="1.5rem"
+                        fontWeight={800}
+                      >
                         {name}
                       </Typography>
                       <Typography
@@ -187,13 +196,14 @@ export default function Pricing() {
                       })}
                     </List>
                     <Button
-                      variant="outlined"
+                      variant="contained"
+                      color="info"
                       onClick={!isLoggedIn ? toggleAuth : () => {}}
                       sx={{
                         marginTop: "auto",
-                        borderRadius: "0.8rem",
+                        borderRadius: "0.5rem",
                         borderColor: theme.palette.info.main,
-                        color: theme.palette.info.main,
+                        color: "#fff",
                         fontWeight: 800,
                         fontSize: "1rem",
                       }}
@@ -284,12 +294,13 @@ export default function Pricing() {
               credit is equal to <b>₹25</b>.
             </Typography>
             <Typography sx={{ fontSize: "1.2rem" }}>
-              c&#41;With each credit you can view contact details of one
-              property <b>forever</b>.
+              c&#41;With one credit you can view contact details of one property{" "}
+              <b>forever</b>.
             </Typography>
 
             <Typography sx={{ fontSize: "1.2rem" }}>
-              e&#41; <b>Buy more credits </b> to contact more properties.
+              e&#41; <b>Buy more credits </b> to view contact details of more
+              properties.
             </Typography>
             <Button
               variant="outlined"
