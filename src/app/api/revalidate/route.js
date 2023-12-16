@@ -14,7 +14,7 @@ const cloudFront = new CloudFrontClient({
 });
 
 async function invalidateCFPaths(paths) {
-  cloudFront.send(
+  return await cloudFront.send(
     new CreateInvalidationCommand({
       DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
       InvalidationBatch: {

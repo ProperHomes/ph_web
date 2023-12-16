@@ -7885,10 +7885,10 @@ sst-aws-cdk@2.110.1-1:
   optionalDependencies:
     fsevents "2.3.2"
 
-sst@^2.36.6:
-  version "2.36.6"
-  resolved "https://registry.yarnpkg.com/sst/-/sst-2.36.6.tgz#f7df20ca39ea29f93d0ebfb94493e17f2d116a40"
-  integrity sha512-N5LkreTzAKuQdph1TJVHa4EjR7R2Q571UJ+Jl6yk5/GDaRVgyBWhB4HxOmkOHghLHQu8SnGDPqnGCQJKilJPug==
+sst@^2.38.7:
+  version "2.38.7"
+  resolved "https://registry.yarnpkg.com/sst/-/sst-2.38.7.tgz#e1ed91a902b5c8441638e61ea72712d4326294fe"
+  integrity sha512-1bwPv/8suQQ5qXybAN1C7oHB7gjA/daRCI0TY/jTjgQn7ebJRvCvsoYtoJsf7q3ToPf1xc5X+yo7p0vyeLvmSA==
   dependencies:
     "@aws-cdk/aws-apigatewayv2-alpha" "^2.110.1-alpha.0"
     "@aws-cdk/aws-apigatewayv2-authorizers-alpha" "^2.110.1-alpha.0"

@@ -51,6 +51,6 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
-    "sst": "^2.36.6"
+    "sst": "^2.38.7"
   }
 }
