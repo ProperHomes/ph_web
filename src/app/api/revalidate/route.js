@@ -49,11 +49,24 @@ export async function POST(req, res) {
         await res.revalidate(p);
       })
     );
-    await invalidateCFPaths(paths);
+
+    try {
+      await invalidateCFPaths(paths);
+    } catch (err) {
+      console.log("error invalidating Cloudfront paths: ", err);
+      return NextResponse.json(
+        { error: "Error invalidating cloudfront paths" },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({ revalidated: true });
   } catch (err) {
-    return NextResponse.json({
-      error: err,
-    });
+    return NextResponse.json(
+      {
+        error: err,
+      },
+      { status: 500 }
+    );
   }
 }
