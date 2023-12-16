@@ -22,16 +22,16 @@ export async function POST(req, res) {
       { status: 500 }
     );
   }
-  if (!secret) {
-    return NextResponse.json({ error: "secret not provided" }, { status: 500 });
-  }
-  const validSecret = secret === Config.REVALIDATION_SECRET_KEY;
-  if (!validSecret) {
-    return NextResponse.json(
-      { error: "Invalid request. Not authorized" },
-      { status: 401 }
-    );
-  }
+  // if (!secret) {
+  //   return NextResponse.json({ error: "secret not provided" }, { status: 500 });
+  // }
+  // const validSecret = secret === Config.REVALIDATION_SECRET_KEY;
+  // if (!validSecret) {
+  //   return NextResponse.json(
+  //     { error: "Invalid request. Not authorized" },
+  //     { status: 401 }
+  //   );
+  // }
   await Promise.all(
     paths.map(async (p) => {
       await res.revalidate(p);
@@ -58,7 +58,6 @@ export async function POST(req, res) {
       { status: 500 }
     );
   }
-
   return NextResponse.json({ revalidated: true });
   // } catch (err) {
   //   return NextResponse.json(

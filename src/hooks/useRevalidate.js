@@ -7,7 +7,7 @@ export default function useRevalidate() {
     }
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/revalidate`,
+        `/api/revalidate`,
         {
           paths,
         },
