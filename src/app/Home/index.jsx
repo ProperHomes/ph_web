@@ -29,7 +29,7 @@ export default function Home({ data }) {
           <SearchBlock />
         </Stack>
         <Typography textAlign="center">
-          We are currently live in <b>Vijayawada and Hyderabad</b> cities.
+          We are currently operating in the cities of <b>Vijayawada and Hyderabad</b>.
         </Typography>
         <CategoryBoxes />
         <ZeroBoxes />
