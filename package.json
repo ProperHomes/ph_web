@@ -13,7 +13,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.17",
     "@apollo/link-error": "^2.0.0-beta.3",
-    "@aws-sdk/client-cloudfront": "^3.385.0",
+    "@aws-sdk/client-cloudfront": "^3.474.0",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
@@ -32,7 +32,7 @@
     "graphql-ws": "^5.14.0",
     "lodash.isequal": "^4.5.0",
     "mui-one-time-password-input": "^1.1.2",
-    "next": "^14.0.3",
+    "next": "^14.0.4",
     "next-share": "^0.27.0",
     "next-sitemap": "^4.2.3",
     "nprogress": "^0.2.0",

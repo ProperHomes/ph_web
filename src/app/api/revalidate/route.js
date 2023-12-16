@@ -32,40 +32,40 @@ export async function POST(req, res) {
       { status: 401 }
     );
   }
+  await Promise.all(
+    paths.map(async (p) => {
+      await res.revalidate(p);
+    })
+  );
+
   try {
-    await Promise.all(
-      paths.map(async (p) => {
-        await res.revalidate(p);
+    await cfClient.send(
+      new CreateInvalidationCommand({
+        DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
+        InvalidationBatch: {
+          CallerReference: `${Date.now()}`,
+          Paths: {
+            Quantity: paths.length,
+            Items: paths,
+          },
+        },
       })
     );
-
-    try {
-      await cfClient.send(
-        new CreateInvalidationCommand({
-          DistributionId: Config.CLOUDFRONT_DISTRIBUTION_ID,
-          InvalidationBatch: {
-            CallerReference: `${Date.now()}`,
-            Paths: {
-              Quantity: paths.length,
-              Items: paths,
-            },
-          },
-        })
-      );
-    } catch (err) {
-      console.log("error invalidating Cloudfront paths: ", err);
-      return NextResponse.json(
-        { error: "Error invalidating cloudfront paths" },
-        { status: 500 }
-      );
-    }
-    return NextResponse.json({ revalidated: true });
   } catch (err) {
+    console.log("error invalidating Cloudfront paths: ", err);
     return NextResponse.json(
-      {
-        error: err,
-      },
+      { error: "Error invalidating cloudfront paths" },
       { status: 500 }
     );
   }
+
+  return NextResponse.json({ revalidated: true });
+  // } catch (err) {
+  //   return NextResponse.json(
+  //     {
+  //       error: err,
+  //     },
+  //     { status: 500 }
+  //   );
+  // }
 }
