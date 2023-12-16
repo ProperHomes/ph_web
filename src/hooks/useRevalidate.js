@@ -1,15 +1,15 @@
 import axios from "axios";
 
 export default function useRevalidate() {
-  const handleRevalidate = async (paths = []) => {
-    if (paths.length === 0) {
+  const handleRevalidate = async (path) => {
+    if (!path) {
       return;
     }
     try {
       await axios.post(
-        `/api/revalidate`,
+        `${process.env.NEXT_PUBLIC_API_URL}/revalidate`,
         {
-          paths,
+          path,
         },
         { withCredentials: true }
       );
