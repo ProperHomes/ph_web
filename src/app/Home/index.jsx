@@ -28,6 +28,9 @@ export default function Home({ data }) {
           </Typography>
           <SearchBlock />
         </Stack>
+        <Typography textAlign="center">
+          We are currently live in <b>Vijayawada and Hyderabad</b> cities.
+        </Typography>
         <CategoryBoxes />
         <ZeroBoxes />
       </Stack>
