@@ -29,9 +29,9 @@ const advancedHeaders = [
 
 module.exports = {
   swcMinify: true,
-  // compiler: {
-  //   // removeConsole: process.env.NODE_ENV === "production",
-  // },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   poweredByHeader: false,
   eslint: {
     // Warning: This allows production builds to successfully complete even if
@@ -39,6 +39,7 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
   images: {
+    unoptimized: true, // temporarily enabled this. Remove later.
     formats: ["image/webp"],
     minimumCacheTTL: 31536000, // 1 year
     remotePatterns: [
