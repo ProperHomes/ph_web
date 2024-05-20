@@ -50,7 +50,6 @@ module.exports = {
         protocol: "https",
         hostname: "wpsuperadmin.properhomes.in",
       },
-      { protocol: "https", hostname: "**", },
       {
         protocol: "https",
         hostname: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}`,
