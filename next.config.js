@@ -29,9 +29,9 @@ const advancedHeaders = [
 
 module.exports = {
   swcMinify: true,
-  compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
-  },
+  // compiler: {
+  //   // removeConsole: process.env.NODE_ENV === "production",
+  // },
   poweredByHeader: false,
   eslint: {
     // Warning: This allows production builds to successfully complete even if

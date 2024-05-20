@@ -44,7 +44,7 @@ function CardImage({ data, isManage, isPriority, isFullWidth }) {
         }}
       >
         <Image
-          src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl}
+          src={mainImage?.media?.signedUrl ?? mainImage?.mediaUrl ?? ""}
           fill
           priority={isPriority}
           quality={100}
