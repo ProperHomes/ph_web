@@ -148,11 +148,6 @@ function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLD) }}
         />
-        <script
-          defer
-          data-domain="properhomes.in"
-          src="https://plausible.properhomes.in/js/script.js"
-        ></script>
       </head>
       <body className={manRope.className}>
         <Suspense fallback={<></>}>

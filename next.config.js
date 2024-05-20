@@ -41,22 +41,21 @@ module.exports = {
   images: {
     formats: ["image/webp"],
     minimumCacheTTL: 31536000, // 1 year
-    remotePatterns: [ { protocol: "https", hostname: "**", }, ],
-
-    // remotePatterns: [
-    //   // {
-    //   //   protocol: "https",
-    //   //   hostname: "loremflickr.com",
-    //   // },
-    //   // {
-    //   //   protocol: "https",
-    //   //   hostname: "wpsuperadmin.properhomes.in",
-    //   // },
-    //   {
-    //     protocol: "https",
-    //     hostname: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}`,
-    //   },
-    // ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "loremflickr.com",
+      },
+      {
+        protocol: "https",
+        hostname: "wpsuperadmin.properhomes.in",
+      },
+      { protocol: "https", hostname: "**", },
+      {
+        protocol: "https",
+        hostname: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}`,
+      },
+    ],
   },
   async headers() {
     return [
