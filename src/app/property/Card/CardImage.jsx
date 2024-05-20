@@ -22,6 +22,8 @@ function CardImage({ data, isManage, isPriority, isFullWidth }) {
     PROPERTY_TYPE[type] === PROPERTY_TYPE.COMMERCIAL ? "Unit" : ""
   } for ${listedFor?.toLowerCase()} in ${city.toLowerCase()}`;
 
+  console.log(data);
+
   return (
     <Link href={linkHref} prefetch={false} title={formattedTitle}>
       <Box
