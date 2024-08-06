@@ -1,3 +1,5 @@
+## Backend Code is at: https://github.com/properhomes/ph_server
+
 ## Deployment
 - We're using sst to deploy the site on AWS rather than vercel which has absurd plans and pricing. 
 - Even better than SST is to just have something like coolify and get done with it. But we're going with SST for now.
